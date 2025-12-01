@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="menu.html">Menú</a>
+        <a href="fingers-salados.html">Fingers Salados</a>
+        <a href="fingers-dulces.html">Fingers Dulces</a>
+        <a href="tortas.html">Tortas</a>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="eventos.html">Eventos</a>
+    </nav>
+
+    <div class="menu-page-container">
+        <!-- Imagen de portada con hover (fija) -->
+        <div class="menu-hero">
+            <div class="menu-hero-logo">
+                <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
+            </div>
+            <img id="menuHeroImage" src="images/pizza-party.jpg" alt="Menú">
+            
+            <!-- Botones de Navegación -->
+            <div class="navigation-buttons">
+                <a href="menu.html" class="nav-btn">Menú</a>
+                <a href="fingers-salados.html" class="nav-btn">Fingers Salados</a>
+                <a href="fingers-dulces.html" class="nav-btn">Fingers Dulces</a>
+                <a href="tortas.html" class="nav-btn">Tortas</a>
+                <a href="desayunos.html" class="nav-btn">Desayunos</a>
+                <a href="eventos.html" class="nav-btn">Eventos</a>
+            </div>
+        </div>
+
+        <div class="menu-scroll-container">
+            <!-- Menú Eventos -->
+            <section class="menu-section">
+                <h2 class="section-title">Menú Eventos</h2>
+                
+                <div class="menu-item" data-image="images/pizza-party.jpg">
+                    <h3>Pizza Party</h3>
+                    <p class="item-description">Pizzas caseras de muzzarella, napolitana, calabresa y fugazzeta. Acompañadas de papas fritas y ensalada fresca</p>
+                </div>
+
+                <div class="menu-item" data-image="images/picada.jpg">
+                    <h3>Picada</h3>
+                    <p class="item-description">Tabla de quesos, fiambres, frutos secos, aceitunas, encurtidos y panes artesanales</p>
+                </div>
+
+                <div class="menu-item" data-image="images/clasico.jpg">
+                    <h3>Clásico</h3>
+                    <p class="item-description">Empanadas de carne, pollo y jamón y queso. Mini sandwiches de miga. Acompañados de salsas caseras</p>
+                </div>
+
+                <div class="menu-item" data-image="images/gourmet.jpg">
+                    <h3>Gourmet</h3>
+                    <p class="item-description">Selección premium de finger foods, tablas de quesos importados, carnes frías premium y opciones vegetarianas</p>
+                </div>
+            </section>
+
+            <!-- Box Saladas -->
+            <section class="menu-section">
+                <h2 class="section-title">Box Saladas</h2>
+                
+                <div class="menu-item" data-image="images/box-frio.jpg">
+                    <h3>Box Frío</h3>
+                    <p class="item-description">Selección de sandwiches de miga, wraps fríos, ensaladas y bocaditos salados</p>
+                </div>
+
+                <div class="menu-item" data-image="images/box-frio-caliente.jpg">
+                    <h3>Box Frío Caliente</h3>
+                    <p class="item-description">Combinación de opciones frías y calientes. Empanadas, mini pizzas, wraps y sandwiches gourmet</p>
+                </div>
+
+                <div class="menu-item" data-image="images/box-mix.jpg">
+                    <h3>Box Mix</h3>
+                    <p class="item-description">Mix variado de finger foods salados, mini tartas, vol au vent y bocaditos premium</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer 
+    <footer class="footer">
+        <div class="footer-container">
+        Menú de secciones
+            <div class="footer-menu">
+                <div class="footer-column">
+                    <h4><a href="menu.html">Menú</a></h4>
+                    <ul>
+                        <li><a href="menu.html">Menú Eventos</a></li>
+                        <li><a href="menu.html">Box Saladas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4><a href="fingers-salados.html">Finger Salados</a></h4>
+                    <ul>
+                        <li><a href="fingers-salados.html">Frío</a></li>
+                        <li><a href="fingers-salados.html">Caliente</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4><a href="fingers-dulces.html">Finger Dulces</a></h4>
+                    <ul>
+                        <li><a href="fingers-dulces.html">Box Dulces</a></li>
+                        <li><a href="fingers-dulces.html">Shot</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4><a href="tortas.html">Tortas</a></h4>
+                    <ul>
+                        <li><a href="tortas.html">Clásicas</a></li>
+                        <li><a href="tortas.html">Decoradas</a></li>
+                        <li><a href="tortas.html">Combos Dulces</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4><a href="desayunos.html">Desayunos</a></h4>
+                </div>
+            </div>
+
+            Contacto 
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <div class="contact-items">
+                    <a href="https://wa.me/5491169318930" target="_blank" class="contact-item">
+                        <img src="images/WhatsAppPng.png" alt="WhatsApp" class="contact-icon">
+                        <span>11 - 6931 - 8930</span>
+                    </a>
+                    <a href="mailto:deby2109@hotmail.com" class="contact-item">
+                        <span class="footer-icon">✉️</span>
+                        <span>deby2109@hotmail.com</span>
+                    </a>
+                    <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">
+                        <img src="images/FacebookPng.png" alt="Facebook" class="contact-icon">
+                        <span>facebook.com/cateringintegral</span>
+                    </a>
+                    <a href="https://www.instagram.com/dulcecoco__catering" target="_blank" class="contact-item">
+                        <img src="images/InstagramPng.png" alt="Instagram" class="contact-icon">
+                        <span>@dulcecoco__catering</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>-->
+
+    <script src="mobile-menu.js"></script>
+    <script src="menu-script.js"></script>
+</body>
+</html>
