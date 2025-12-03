@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="carrito.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="menu.html">Menú</a>
+        <a href="fingers-salados.html">Fingers Salados</a>
+        <a href="fingers-dulces.html">Fingers Dulces</a>
+        <a href="tortas.html">Tortas</a>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="carrito.html">Carrito</a>
+    </nav>
+
+    <div class="carrito-page-container">
+        <!-- Header -->
+        <div class="carrito-header">
+            <h1>Mi Carrito</h1>
+            
+            <!-- Desktop Navigation Menu -->
+            <nav class="carrito-nav-menu">
+                <a href="menu.html" class="nav-link">Menú</a>
+                <a href="fingers-salados.html" class="nav-link">Fingers Salados</a>
+                <a href="fingers-dulces.html" class="nav-link">Fingers Dulces</a>
+                <a href="tortas.html" class="nav-link">Tortas</a>
+                <a href="desayunos.html" class="nav-link">Desayunos</a>
+                <a href="eventos.html" class="nav-link">Eventos</a>
+                <a href="carrito.html" class="nav-link active">Carrito</a>
+            </nav>
+        </div>
+
+        <!-- Cart Content -->
+        <div class="carrito-content">
+            <!-- Cart Items -->
+            <div class="carrito-items-container">
+                <div id="cartItems" class="cart-items">
+                    <!-- Los items se agregarán dinámicamente aquí -->
+                </div>
+                
+                <div id="emptyCart" class="empty-cart">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <h2>Tu carrito está vacío</h2>
+                    <a href="index.html" class="btn-primary">Volver al inicio</a>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="carrito-summary">
+                <h2>Resumen del Pedido</h2>
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0</span>
+                </div>
+                <div class="summary-line">
+                    <span>Envío:</span>
+                    <span id="envio">A calcular</span>
+                </div>
+                <div class="summary-line envio-info">
+                    <span id="envioMessage">Envío gratis para compras mayores a $180.000</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total:</span>
+                    <span id="total">$0</span>
+                </div>
+                
+                <button id="continuarCompraBtn" class="btn-checkout" onclick="continuarCompra()">Continuar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-contact">
+            <h4>Contacto</h4>
+            <div class="contact-items">
+                <a href="https://wa.me/5491169318930" target="_blank" class="contact-item">
+                    <img src="images/WhatsAppPng.png" alt="WhatsApp" class="contact-icon">
+                    <span>11 - 6931 - 8930</span>
+                </a>
+                <a href="mailto:deby2109@hotmail.com" class="contact-item">
+                    <span class="footer-icon">✉️</span>
+                    <span>deby2109@hotmail.com</span>
+                </a>
+                <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">
+                    <img src="images/FacebookPng.png" alt="Facebook" class="contact-icon">
+                    <span>facebook.com/cateringintegral</span>
+                </a>
+                <a href="https://www.instagram.com/dulcecoco__catering" target="_blank" class="contact-item">
+                    <img src="images/InstagramPng.png" alt="Instagram" class="contact-icon">
+                    <span>@dulcecoco__catering</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+    <script src="carrito.js"></script>
+</body>
+</html>

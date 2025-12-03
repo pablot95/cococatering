@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fingers Dulces - Cocó Catering</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="fingers-dulces.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="carrito-fingers-dulces.css">
 </head>
 <body>
     <!-- Hamburger Menu -->
@@ -15,6 +16,16 @@
         <span></span>
     </div>
 
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
         <a href="menu.html">Menú</a>
@@ -23,15 +34,16 @@
         <a href="tortas.html">Tortas</a>
         <a href="desayunos.html">Desayunos</a>
         <a href="eventos.html">Eventos</a>
+        <a href="carrito.html">Carrito</a>
     </nav>
 
-    <div class="dulces-page-container">
-        <!-- Imagen de portada superior con hover y logo -->
-        <div class="dulces-hero">
-            <div class="dulces-hero-logo">
+    <div class="menu-page-container">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
-            <img id="dulcesHeroImage" src="images/dulces.jpg" alt="Fingers Dulces">
+            <img id="menuHeroImage" src="images/dulces.jpg" alt="Fingers Dulces">
             
             <!-- Botones de Navegación -->
             <div class="navigation-buttons">
@@ -44,140 +56,136 @@
             </div>
         </div>
 
-        <!-- Contenido en dos columnas lado a lado -->
-        <div class="dulces-grid-container">
-            <div class="dulces-item a" data-image="images/brownie.jpg">
-                <h3>Brownies</h3>
-                <p class="dulces-item-description">Con trozos de nuez. Opción con dulce de leche</p>
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Box Dulces -->
+            <div class="menu-section">
+                <h2 class="section-title">Box Dulces</h2>
+                <div class="menu-item">
+                    <ul class="product-list">
+                        <li class="product-item" data-image="images/brownie.jpg" data-id="brownies" data-name="Brownies" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Brownies</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/alfajores.jpeg" data-id="alfajores" data-name="Alfajores" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Alfajores</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/lemon-pie.jpg" data-id="lemon-pie" data-name="Lemon Pie" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Lemon Pie</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/mini-cheesecake.jpg" data-id="mini-cheesecake" data-name="Mini Cheesecake" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Mini Cheesecake</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="dulces-item a" data-image="images/alfajores.jpeg">
-                <h3>Alfajores</h3>
-                <p class="dulces-item-description">Rellenos de dulce de leche y bañados en chocolate</p>
-            </div>
-
-            <div class="dulces-item a" data-image="images/lemon-pie.jpg">
-                <h3>Lemon Pie</h3>
-                <p class="dulces-item-description">Base crocante, crema de limón y merengue italiano</p>
-            </div>
-
-            <div class="dulces-item a" data-image="images/mini-cheesecake.jpg">
-                <h3>Mini Cheesecake</h3>
-                <p class="dulces-item-description">Suave crema de queso y salsa de frutos rojos</p>
+            <!-- Shots -->
+            <div class="menu-section">
+                <h2 class="section-title">Shots</h2>
+                <div class="menu-item">
+                    <ul class="product-list">
+                        <li class="product-item" data-image="images/shot.jpeg" data-id="shot-tiramisu" data-name="Shot de Tiramisú" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Shot de Tiramisú</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/shot-mousse.jpg" data-id="shot-mousse" data-name="Shot de Mousse" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Shot de Mousse</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/shot-chocotorta.jpg" data-id="shot-chocotorta" data-name="Shot de Chocotorta" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Shot de Chocotorta</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/shot-flan.jpg" data-id="shot-flan" data-name="Shot de Flan" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Shot de Flan</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/shot-panna-cotta.jpg" data-id="shot-panna-cotta" data-name="Shot de Panna Cotta" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Shot de Panna Cotta</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-
-        <h2 class="dulces-section-title">Box Dulces</h2>
-            <!-- Descripción de Box Dulces -->
-            <div class="section-description">
-                <p>Nuestros Box Dulces son el complemento perfecto para cualquier evento. Elaborados artesanalmente con ingredientes premium, cada bocado es una experiencia única que combina sabor, textura y presentación impecable. Ideales para endulzar momentos especiales con familia, amigos o colegas.</p>
-            </div>
-
-            <!-- Imagen Hero para Shots -->
-            <div class="dulces-hero">
-                <img id="shotsHeroImage" src="images/shot.jpeg" alt="Shots">
-            </div>
-
-            <!-- Sección 2: Shots - Mismo diseño que Box Dulces -->
-            <div class="dulces-grid-container">
-                <div class="dulces-item b" data-image="images/shot.jpeg">
-                    <h3>Shot de Tiramisú</h3>
-                    <p class="dulces-item-description">Embebido en café, crema mascarpone y cacao amargo</p>
-                </div>
-
-                <div class="dulces-item b" data-image="images/shot-mousse.jpg">
-                    <h3>Shot de Mousse</h3>
-                    <p class="dulces-item-description">Chocolate belga o de limón en vasitos individuales</p>
-                </div>
-
-                <div class="dulces-item b" data-image="images/shot-chocotorta.jpg">
-                    <h3>Shot de Chocotorta</h3>
-                    <p class="dulces-item-description">Con galletitas de chocolate y dulce de leche</p>
-                </div>
-
-                <div class="dulces-item b" data-image="images/shot-flan.jpg">
-                    <h3>Shot de Flan</h3>
-                    <p class="dulces-item-description">Con caramelo y crema chantilly</p>
-                </div>
-
-                <div class="dulces-item b" data-image="images/shot-panna-cotta.jpg">
-                    <h3>Shot de Panna Cotta</h3>
-                    <p class="dulces-item-description">Panna cotta de vainilla con coulis de frutos rojos o caramelo</p>
-                </div>
-            </div>
-
-            <h2 class="dulces-section-title">Shots</h2>
-            <!-- Descripción de Shots -->
-            <div class="section-description">
-                <p>Nuestros Shots son el toque perfecto para finalizar cualquier evento. Presentados en vasitos individuales, cada shot es una experiencia de sabor concentrada que deleita a tus invitados. Ideales para postres elegantes y modernos que sorprenden por su presentación y sabor.</p>
-            </div>
     </div>
 
-    <!-- Footer 
-    <footer class="footer">
-        <div class="footer-container">
-            Menú de secciones 
-            <div class="footer-menu">
-                <div class="footer-column">
-                    <h4><a href="menu.html">Menú</a></h4>
-                    <ul>
-                        <li><a href="menu.html">Menú Eventos</a></li>
-                        <li><a href="menu.html">Box Saladas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="fingers-salados.html">Finger Salados</a></h4>
-                    <ul>
-                        <li><a href="fingers-salados.html">Frío</a></li>
-                        <li><a href="fingers-salados.html">Caliente</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="fingers-dulces.html">Finger Dulces</a></h4>
-                    <ul>
-                        <li><a href="fingers-dulces.html">Box Dulces</a></li>
-                        <li><a href="fingers-dulces.html">Shot</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="tortas.html">Tortas</a></h4>
-                    <ul>
-                        <li><a href="tortas.html">Clásicas</a></li>
-                        <li><a href="tortas.html">Decoradas</a></li>
-                        <li><a href="tortas.html">Combos Dulces</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="desayunos.html">Desayunos</a></h4>
-                </div>
-            </div>
-
-            Contacto 
-            <div class="footer-contact">
-                <h4>Contacto</h4>
-                <div class="contact-items">
-                    <a href="https://wa.me/5491169318930" target="_blank" class="contact-item">
-                        <img src="images/WhatsAppPng.png" alt="WhatsApp" class="contact-icon">
-                        <span>11 - 6931 - 8930</span>
-                    </a>
-                    <a href="mailto:deby2109@hotmail.com" class="contact-item">
-                        <span class="footer-icon">✉️</span>
-                        <span>deby2109@hotmail.com</span>
-                    </a>
-                    <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">
-                        <img src="images/FacebookPng.png" alt="Facebook" class="contact-icon">
-                        <span>facebook.com/cateringintegral</span>
-                    </a>
-                    <a href="https://www.instagram.com/dulcecoco__catering" target="_blank" class="contact-item">
-                        <img src="images/InstagramPng.png" alt="Instagram" class="contact-icon">
-                        <span>@dulcecoco__catering</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>-->
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
 
     <script src="mobile-menu.js"></script>
-    <script src="fingers-dulces-script.js"></script>
+    <script src="carrito.js"></script>
+    <script src="menu-script.js"></script>
 </body>
 </html>

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fingers Salados - Cocó Catering</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="fingers-salados.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="carrito-fingers-salados.css">
 </head>
 <body>
     <!-- Hamburger Menu -->
@@ -15,6 +16,16 @@
         <span></span>
     </div>
 
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
         <a href="menu.html">Menú</a>
@@ -23,15 +34,16 @@
         <a href="tortas.html">Tortas</a>
         <a href="desayunos.html">Desayunos</a>
         <a href="eventos.html">Eventos</a>
+        <a href="carrito.html">Carrito</a>
     </nav>
 
-    <div class="dulces-page-container">
-        <!-- Imagen de portada superior con hover y logo -->
-        <div class="dulces-hero">
-            <div class="dulces-hero-logo">
+    <div class="menu-page-container">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
-            <img id="saladosHeroImage" src="images/salados.jpg" alt="Fingers Salados">
+            <img id="menuHeroImage" src="images/salados.jpg" alt="Fingers Salados">
             
             <!-- Botones de Navegación -->
             <div class="navigation-buttons">
@@ -43,104 +55,95 @@
                 <a href="eventos.html" class="nav-btn">Eventos</a>
             </div>
         </div>
-        
 
-
-        <!-- Contenido en dos columnas lado a lado -->
-        <div class="salados-grid-container">
-            <div class="dulces-item" data-image="images/empanada.jpg">
-                <h3>Empanadas</h3>
-                <p class="dulces-item-description">Carne, pollo, jamón y queso, humita</p>
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Fingers Salados -->
+            <div class="menu-section">
+                <h2 class="section-title">Fingers Salados</h2>
+                <div class="menu-item">
+                    <ul class="product-list">
+                        <li class="product-item" data-image="images/empanada.jpg" data-id="empanadas" data-name="Empanadas" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Empanadas</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/croquetas.jpg" data-id="croquetas" data-name="Croquetas" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Croquetas</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/arrollados.jpeg" data-id="arrollados" data-name="Arrollados" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Arrollados</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/mini-sandwich.jpg" data-id="mini-sandwiches" data-name="Mini Sándwiches" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Mini Sándwiches</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/tequeños.jpg" data-id="tequeños" data-name="Tequeños" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Tequeños</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-item" data-image="images/mini-pizza.jpg" data-id="mini-pizzas" data-name="Mini Pizzas" data-price="0">
+                            <div class="product-info">
+                                <span class="product-name">Mini Pizzas</span>
+                                <span class="product-price">$0</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="dulces-item" data-image="images/croquetas.jpg">
-                <h3>Croquetas</h3>
-                <p class="dulces-item-description">De jamón, pollo o espinaca</p>
-            </div>
-
-            <div class="dulces-item" data-image="images/arrollados.jpeg">
-                <h3>Arrollados</h3>
-                <p class="dulces-item-description">De jamón y queso, verdura o pollo</p>
-            </div>
-
-            <div class="dulces-item" data-image="images/mini-sandwich.jpg">
-                <h3>Mini Sándwiches</h3>
-                <p class="dulces-item-description">Variedad de sabores en pan de miga</p>
-            </div>
-        </div>
-
-        <h2 class="dulces-section-title">Fingers Salados</h2>
-        <!-- Descripción de Fingers Salados -->
-        <div class="section-description">
-            <p>Nuestros Fingers Salados son la elección ideal para eventos corporativos, cumpleaños y reuniones. Preparados con ingredientes frescos y recetas tradicionales, ofrecen una variedad de sabores que satisfacen todos los paladares. Perfectos para picar y compartir en cualquier ocasión.</p>
         </div>
     </div>
 
-    <!-- Footer 
-    <footer class="footer">
-        <div class="footer-container">
-            Menú de secciones 
-            <div class="footer-menu">
-                <div class="footer-column">
-                    <h4><a href="menu.html">Menú</a></h4>
-                    <ul>
-                        <li><a href="menu.html">Menú Eventos</a></li>
-                        <li><a href="menu.html">Box Saladas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="fingers-salados.html">Finger Salados</a></h4>
-                    <ul>
-                        <li><a href="fingers-salados.html">Frío</a></li>
-                        <li><a href="fingers-salados.html">Caliente</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="fingers-dulces.html">Finger Dulces</a></h4>
-                    <ul>
-                        <li><a href="fingers-dulces.html">Box Dulces</a></li>
-                        <li><a href="fingers-dulces.html">Shot</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="tortas.html">Tortas</a></h4>
-                    <ul>
-                        <li><a href="tortas.html">Clásicas</a></li>
-                        <li><a href="tortas.html">Decoradas</a></li>
-                        <li><a href="tortas.html">Combos Dulces</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4><a href="desayunos.html">Desayunos</a></h4>
-                </div>
-            </div>
-
-        Contacto 
-            <div class="footer-contact">
-                <h4>Contacto</h4>
-                <div class="contact-items">
-                    <a href="https://wa.me/5491169318930" target="_blank" class="contact-item">
-                        <img src="images/WhatsAppPng.png" alt="WhatsApp" class="contact-icon">
-                        <span>11 - 6931 - 8930</span>
-                    </a>
-                    <a href="mailto:deby2109@hotmail.com" class="contact-item">
-                        <span class="footer-icon">✉️</span>
-                        <span>deby2109@hotmail.com</span>
-                    </a>
-                    <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">
-                        <img src="images/FacebookPng.png" alt="Facebook" class="contact-icon">
-                        <span>facebook.com/cateringintegral</span>
-                    </a>
-                    <a href="https://www.instagram.com/dulcecoco__catering" target="_blank" class="contact-item">
-                        <img src="images/InstagramPng.png" alt="Instagram" class="contact-icon">
-                        <span>@dulcecoco__catering</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer> -->
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
 
     <script src="mobile-menu.js"></script>
-    <script src="fingers-salados-script.js"></script>
+    <script src="carrito.js"></script>
+    <script src="menu-script.js"></script>
 </body>
 </html>

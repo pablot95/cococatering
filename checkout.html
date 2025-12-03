@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="checkout.css">
+    <!-- MercadoPago SDK -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="menu.html">Menú</a>
+        <a href="fingers-salados.html">Fingers Salados</a>
+        <a href="fingers-dulces.html">Fingers Dulces</a>
+        <a href="tortas.html">Tortas</a>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="eventos.html">Eventos</a>
+    </nav>
+
+    <div class="checkout-page-container">
+        <!-- Header -->
+        <div class="checkout-header">
+            <h1>Finalizar Compra</h1>
+            
+            <!-- Desktop Navigation Menu -->
+            <nav class="checkout-nav-menu">
+                <a href="menu.html" class="nav-link">Menú</a>
+                <a href="fingers-salados.html" class="nav-link">Fingers Salados</a>
+                <a href="fingers-dulces.html" class="nav-link">Fingers Dulces</a>
+                <a href="tortas.html" class="nav-link">Tortas</a>
+                <a href="desayunos.html" class="nav-link">Desayunos</a>
+                <a href="eventos.html" class="nav-link">Eventos</a>
+            </nav>
+            
+            <div class="checkout-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <span>Datos de Envío</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <span>Pago</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="checkout-content">
+            <!-- Forms -->
+            <div class="checkout-forms">
+                <!-- Datos del Comprador -->
+                <div class="checkout-section" id="datosSection">
+                    <h2>Datos del Comprador</h2>
+                    <form id="datosCompradorForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombre">Nombre Completo *</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dni">DNI/CUIL *</label>
+                                <input type="text" id="dni" name="dni" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <h3>Dirección de Entrega</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="calle">Calle *</label>
+                                <input type="text" id="calle" name="calle" required>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="altura">Altura *</label>
+                                <input type="text" id="altura" name="altura" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="piso">Piso</label>
+                                <input type="text" id="piso" name="piso">
+                            </div>
+                            <div class="form-group">
+                                <label for="depto">Depto</label>
+                                <input type="text" id="depto" name="depto">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ciudad">Ciudad *</label>
+                                <input type="text" id="ciudad" name="ciudad" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="provincia">Provincia *</label>
+                                <input type="text" id="provincia" name="provincia" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="codigoPostal">Código Postal *</label>
+                                <input type="text" id="codigoPostal" name="codigoPostal" required>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Datos de Facturación -->
+                    <h2 style="margin-top: 40px;">Datos de Facturación</h2>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="mismosDatos" checked onchange="toggleFacturacion()">
+                        <label for="mismosDatos">Los datos de facturación son los mismos que los de envío</label>
+                    </div>
+                    
+                    <form id="facturacionForm">
+                        <div class="facturacion-fields" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombreFacturacion">Nombre/Razón Social *</label>
+                                    <input type="text" id="nombreFacturacion" name="nombreFacturacion" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dniFacturacion">DNI/CUIT *</label>
+                                    <input type="text" id="dniFacturacion" name="dniFacturacion" required>
+                                </div>
+                            </div>
+                            
+                            <h3>Dirección de Facturación</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label for="calleFacturacion">Calle *</label>
+                                    <input type="text" id="calleFacturacion" name="calleFacturacion" required>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label for="alturaFacturacion">Altura *</label>
+                                    <input type="text" id="alturaFacturacion" name="alturaFacturacion" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pisoFacturacion">Piso</label>
+                                    <input type="text" id="pisoFacturacion" name="pisoFacturacion">
+                                </div>
+                                <div class="form-group">
+                                    <label for="deptoFacturacion">Depto</label>
+                                    <input type="text" id="deptoFacturacion" name="deptoFacturacion">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ciudadFacturacion">Ciudad *</label>
+                                    <input type="text" id="ciudadFacturacion" name="ciudadFacturacion" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provinciaFacturacion">Provincia *</label>
+                                    <input type="text" id="provinciaFacturacion" name="provinciaFacturacion" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="codigoPostalFacturacion">Código Postal *</label>
+                                    <input type="text" id="codigoPostalFacturacion" name="codigoPostalFacturacion" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-back" onclick="window.location.href='/carrito.html'">Volver</button>
+                            <button type="button" class="btn-next" onclick="continuarPago()">Continuar al Pago</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Pago con MercadoPago -->
+                <div class="checkout-section hidden" id="pagoSection">
+                    <h2>Método de Pago</h2>
+                    <p class="payment-info">Completa tu pago de forma segura con MercadoPago</p>
+                    
+                    <!-- Aquí se cargará el botón de MercadoPago -->
+                    <div id="mercadopago-button"></div>
+                    
+                    <div class="credenciales-pendientes">
+                        <p><strong>Nota:</strong> La integración con MercadoPago requiere las credenciales de tu cuenta.</p>
+                        <p>Una vez que las proporciones, el botón de pago aparecerá aquí automáticamente.</p>
+                        <p>Configuración necesaria en <code>checkout.js</code>:</p>
+                        <ul>
+                            <li>PUBLIC_KEY de MercadoPago</li>
+                            <li>ACCESS_TOKEN (backend)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="volverFacturacion()">Volver</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div class="order-summary">
+                <h2>Resumen del Pedido</h2>
+                <div id="orderItems" class="order-items">
+                    <!-- Los items se cargarán aquí -->
+                </div>
+                
+                <div class="order-totals">
+                    <div class="summary-line">
+                        <span>Subtotal:</span>
+                        <span id="orderSubtotal">$0</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Envío:</span>
+                        <span id="orderEnvio">A calcular</span>
+                    </div>
+                    <div class="envio-info" id="orderEnvioMessage">
+                        Envío gratis para compras mayores a $180.000
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total:</span>
+                        <span id="orderTotal">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-contact">
+            <h4>Contacto</h4>
+            <div class="contact-items">
+                <a href="https://wa.me/5491169318930" target="_blank" class="contact-item">
+                    <img src="images/WhatsAppPng.png" alt="WhatsApp" class="contact-icon">
+                    <span>11 - 6931 - 8930</span>
+                </a>
+                <a href="mailto:deby2109@hotmail.com" class="contact-item">
+                    <span class="footer-icon">✉️</span>
+                    <span>deby2109@hotmail.com</span>
+                </a>
+                <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">
+                    <img src="images/FacebookPng.png" alt="Facebook" class="contact-icon">
+                    <span>facebook.com/cateringintegral</span>
+                </a>
+                <a href="https://www.instagram.com/dulcecoco__catering" target="_blank" class="contact-item">
+                    <img src="images/InstagramPng.png" alt="Instagram" class="contact-icon">
+                    <span>@dulcecoco__catering</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+    <script src="carrito.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>

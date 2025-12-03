@@ -10,7 +10,7 @@
 /* Hero Section */
 .dulces-hero {
     width: 100%;
-    height: 75vh;
+    height: 80vh;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -196,6 +196,61 @@
     padding-left: 30px;
 }
 
+/* ===================================
+   Cart Icon - Fingers Dulces Page
+   =================================== */
+.cart-icon {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    z-index: 999;
+    background: rgba(254, 254, 254, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(254, 254, 254, 0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cart-icon:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+.cart-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--blanco);
+    transition: stroke 0.3s ease;
+}
+
+.cart-icon:hover svg {
+    stroke: var(--bordo);
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--bordo);
+    color: var(--blanco);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 2px solid var(--blanco);
+}
+
 /* Content Section */
 .dulces-grid-container{
     display: flex;
@@ -365,7 +420,7 @@
     }
 
     .dulces-hero::after {
-        content: 'Dulces';
+        content: 'Fingers Dulces';
         position: absolute;
         bottom: 30px;
         left: 50%;
@@ -376,6 +431,18 @@
         font-weight: 600;
         color: var(--blanco);
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .cart-icon {
+        top: 20px;
+        right: 80px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .cart-icon svg {
+        width: 24px;
+        height: 24px;
     }
 
     .dulces-hero-logo img {

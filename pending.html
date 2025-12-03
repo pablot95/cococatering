@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Pendiente - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .result-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(232, 201, 173, 0.05);
+            padding: 20px;
+        }
+        
+        .result-container {
+            background: var(--blanco);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .result-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: #ff9800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        .result-icon svg {
+            width: 60px;
+            height: 60px;
+            stroke: white;
+            stroke-width: 3;
+        }
+        
+        .result-container h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--negro);
+            margin-bottom: 20px;
+        }
+        
+        .result-container p {
+            font-size: 1.2rem;
+            color: #777;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .order-details {
+            background: rgba(255, 152, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .order-details h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #ff9800;
+            margin-bottom: 15px;
+        }
+        
+        .order-details p {
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+        
+        .btn-home {
+            background: var(--bordo);
+            color: var(--blanco);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-home:hover {
+            background: var(--negro);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 46, 58, 0.3);
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="result-page">
+        <div class="result-container">
+            <div class="result-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            
+            <h1>Pago Pendiente</h1>
+            <p>Tu pago está siendo procesado.</p>
+            
+            <div class="order-details">
+                <h3>Información Importante</h3>
+                <p><strong>Número de orden:</strong> <span id="orderNumber"></span></p>
+                <p><strong>Estado:</strong> Pendiente de confirmación</p>
+                <p>Estamos esperando la confirmación del pago.</p>
+                <p>Recibirás un email cuando se confirme tu pedido.</p>
+                <p>Este proceso puede tardar unos minutos.</p>
+            </div>
+            
+            <a href="index.html" class="btn-home">Volver al Inicio</a>
+        </div>
+    </div>
+    
+    <script>
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('payment_id');
+        
+        // Mostrar número de orden
+        if (paymentId) {
+            document.getElementById('orderNumber').textContent = paymentId;
+        }
+    </script>
+</body>
+</html>

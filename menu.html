@@ -6,6 +6,7 @@
     <title>Menú - Cocó Catering</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="carrito-menu.css">
 </head>
 <body>
     <!-- Hamburger Menu -->
@@ -15,6 +16,16 @@
         <span></span>
     </div>
 
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
         <a href="menu.html">Menú</a>
@@ -23,6 +34,7 @@
         <a href="tortas.html">Tortas</a>
         <a href="desayunos.html">Desayunos</a>
         <a href="eventos.html">Eventos</a>
+        <a href="carrito.html">Carrito</a>
     </nav>
 
     <div class="menu-page-container">
@@ -45,48 +57,612 @@
         </div>
 
         <div class="menu-scroll-container">
-            <!-- Menú Eventos -->
+            <!-- Menú Gourmet -->
             <section class="menu-section">
-                <h2 class="section-title">Menú Eventos</h2>
+                <h2 class="section-title">MENÚ GOURMET</h2>
                 
-                <div class="menu-item" data-image="images/pizza-party.jpg">
-                    <h3>Pizza Party</h3>
-                    <p class="item-description">Pizzas caseras de muzzarella, napolitana, calabresa y fugazzeta. Acompañadas de papas fritas y ensalada fresca</p>
+                <div class="menu-item">
+                    <h3>PARTE FRÍA</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Tarteletas frías de hummus y atún</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Degustación de quesos</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Scon de queso al romero con lájas de salmón</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Dip de queso azul y nueces</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Locatelli de pollo y tomate</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Figacita de lomo y morrones asados</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Chipacitos de crudo y brie</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="menu-item" data-image="images/picada.jpg">
-                    <h3>Picada</h3>
-                    <p class="item-description">Tabla de quesos, fiambres, frutos secos, aceitunas, encurtidos y panes artesanales</p>
+                <div class="menu-item">
+                    <h3>PARTE CALIENTE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Triangulito de masa philo y bondiola braseada</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Quiché de champignones</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Papas rosti</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Brochetitas de ternera</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Hamburguesitas</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/gourmet.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Cazuela de ravioles con salsa rosa</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="menu-item" data-image="images/clasico.jpg">
-                    <h3>Clásico</h3>
-                    <p class="item-description">Empanadas de carne, pollo y jamón y queso. Mini sandwiches de miga. Acompañados de salsas caseras</p>
+                <div class="menu-item">
+                    <h3>POSTRE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de lemon pie</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de oreo</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="menu-note">Se calcula uno por persona</p>
+                </div>
+                
+                <a href="https://wa.me/5491169318930?text=Hola%20quer%C3%ADa%20consultar%20por%20el%20*Men%C3%BA%20Gourmet* de Coco Catering" target="_blank" class="btn-consultar-precio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Consultar Precio
+                </a>
+            </section>
+
+            <!-- Menú Clásico -->
+            <section class="menu-section">
+                <h2 class="section-title">MENÚ CLÁSICO</h2>
+                
+                <div class="menu-item">
+                    <h3>PARTE FRÍA</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Masitas de queso</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Pinchos bocconcinos</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Dip de queso azul con nueces</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Criollito capresse</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Sconcito de crudo y rúcula</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Locatelli de pavita y tomate</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Figacita de peceto, lechuga y tomate</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="menu-item" data-image="images/gourmet.jpg">
-                    <h3>Gourmet</h3>
-                    <p class="item-description">Selección premium de finger foods, tablas de quesos importados, carnes frías premium y opciones vegetarianas</p>
+                <div class="menu-item">
+                    <h3>PARTE CALIENTE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Pinchos de pollo y panceta</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Figacita de bondiola, queso fresco y salsa malbec</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas de espinaca</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Roll de masa philo con jamón y queso</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Figacita de roast beef tiernizado, cheddar y cebolla caramelizada</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>POSTRE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de lemon pie</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de oreo</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="menu-note">Se calcula uno por persona</p>
+                </div>
+                
+                <a href="https://wa.me/5491169318930?text=Hola%20quer%C3%ADa%20consultar%20por%20el%20*Men%C3%BA%20Cl%C3%A1sico* de Coco Catering" target="_blank" class="btn-consultar-precio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Consultar Precio
+                </a>
+            </section>
+
+            <!-- Menú Picada -->
+            <section class="menu-section">
+                <h2 class="section-title">MENÚ PICADA</h2>
+                
+                <div class="menu-item">
+                    <h3>PARTE FRÍA</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/picada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Picaditas individuales</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/carousel-ensalada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Ensaladita caesar</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/clasico.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Sandwiche de peceto</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>PARTE CALIENTE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/pexels-thatguycraig000-2306281.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Papitas rosty</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Pinchos de pollo crispy</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Mini hamburguesitas con queso cheddar</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Mini tacos de bondiola</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>POSTRE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de cheesecake</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de oreo</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="menu-note">Se calcula uno por persona</p>
+                </div>
+                
+                <a href="https://wa.me/5491169318930?text=Hola%20quer%C3%ADa%20consultar%20por%20el%20*Men%C3%BA%20Picada* de Coco Catering" target="_blank" class="btn-consultar-precio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Consultar Precio
+                </a>
+            </section>
+
+            <!-- Menú Pizza -->
+            <section class="menu-section">
+                <h2 class="section-title">MENÚ PIZZA</h2>
+                
+                <div class="menu-item">
+                    <h3>ENTRADA</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Pan de queso con oliva y provenzal</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>EMPANADAS</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/empanada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Bondiola</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/empanada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Jamón y queso</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/empanada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Pollo</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/empanada.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Criolla</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>CANASTITAS</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Caprese</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Roquefort</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/salados.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Panceta</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>PIZZAS</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Muzzarella</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Tomate, oliva y albahaca</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Tomate y provenzal</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Jamón y morrones</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Rúcula, parmesano y jamón crudo</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Rúcula, brie y champignones</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Rúcula, cherrys y bocconcinos</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Calabresa</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Fugazzeta</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Roquefort y cebolla caramelizada</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Panceta y huevo</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/pizza-party.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Espinaca y salsa blanca</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-item">
+                    <h3>POSTRE</h3>
+                    <ul class="product-list">
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de lemon</span>
+                            </div>
+                        </li>
+                        <li class="product-item no-cart" data-image="images/shots.jpg">
+                            <div class="product-info">
+                                <span class="product-name">Shot de oreo</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="menu-note">Se calcula uno por persona</p>
+                </div>
+                
+                <a href="https://wa.me/5491169318930?text=Hola%20quer%C3%ADa%20consultar%20por%20el%20*Men%C3%BA%20Pizza* de Coco Catering" target="_blank" class="btn-consultar-precio">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Consultar Precio
+                </a>
+            </section>
+
+            <!-- Box Uno -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX UNO – TODO FRÍO</h2>
+                
+                <div class="box-container" data-image="images/salados.jpg" data-id="box-uno" data-name="BOX UNO - Todo Frío (10-12 personas)" data-price="165000">
+                    <div class="box-details">
+                        <ul class="product-list">
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos bocconcinos</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Sconcitos de queso con crudo y rúcula</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pecetitos con tomate</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Papitas rosty</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Chipácitos con parmesano y morrones asados</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">10 Dip de queso azul y nueces</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-footer">
+                        <p class="box-description">Rinde: 10 a 12 personas como entrada</p>
+                        <div class="box-actions">
+                            <span class="box-price">$165.000</span>
+                            <div class="box-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                                <button class="btn-add-to-cart" onclick="addBoxToCart(this)">
+                                    Agregar
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Box Saladas -->
+            <!-- Box Dos -->
             <section class="menu-section">
-                <h2 class="section-title">Box Saladas</h2>
+                <h2 class="section-title">BOX DOS – FRÍO/CALIENTE</h2>
                 
-                <div class="menu-item" data-image="images/box-frio.jpg">
-                    <h3>Box Frío</h3>
-                    <p class="item-description">Selección de sandwiches de miga, wraps fríos, ensaladas y bocaditos salados</p>
+                <div class="box-container" data-image="images/salados.jpg" data-id="box-dos" data-name="BOX DOS - Frío/Caliente (12-15 personas)" data-price="175000">
+                    <div class="box-details">
+                        <ul class="product-list">
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Sconcitos de queso con crudo y rúcula</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Papitas rosty</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Criollitos capresse</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos de pollo y panceta</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Figacitas de bondiola con salsa malbec</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Triangulitos de queso azul y peras caramelizadas</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-footer">
+                        <p class="box-description">Rinde: 12 a 15 personas como entrada</p>
+                        <div class="box-actions">
+                            <span class="box-price">$175.000</span>
+                            <div class="box-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                                <button class="btn-add-to-cart" onclick="addBoxToCart(this)">
+                                    Agregar
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <div class="menu-item" data-image="images/box-frio-caliente.jpg">
-                    <h3>Box Frío Caliente</h3>
-                    <p class="item-description">Combinación de opciones frías y calientes. Empanadas, mini pizzas, wraps y sandwiches gourmet</p>
-                </div>
-
-                <div class="menu-item" data-image="images/box-mix.jpg">
-                    <h3>Box Mix</h3>
-                    <p class="item-description">Mix variado de finger foods salados, mini tartas, vol au vent y bocaditos premium</p>
+            <!-- Box Tres -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX TRES – MIX</h2>
+                
+                <div class="box-container" data-image="images/salados.jpg" data-id="box-tres" data-name="BOX TRES - Mix (12-15 personas)" data-price="185000">
+                    <div class="box-details">
+                        <ul class="product-list">
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Picaditas individuales acompañadas con dip de hummus, mayo de zanahoria y pancitos</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Empanaditas de jamón y queso</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos de pollo crispy con salsa honey</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Taquitos de bondiola</span>
+                                </div>
+                            </li>
+                            <li class="product-item no-cart" data-image="images/salados.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Hamburguesitas</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="box-footer">
+                        <p class="box-description">Rinde: 12 a 15 personas como entrada</p>
+                        <div class="box-actions">
+                            <span class="box-price">$185.000</span>
+                            <div class="box-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                                <button class="btn-add-to-cart" onclick="addBoxToCart(this)">
+                                    Agregar
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -156,7 +732,15 @@
         </div>
     </footer>-->
 
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+
     <script src="mobile-menu.js"></script>
+    <script src="carrito.js"></script>
     <script src="menu-script.js"></script>
 </body>
 </html>

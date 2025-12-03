@@ -125,7 +125,7 @@ a {
    Footer
    =================================== */
 .footer {
-    background-color: #c88e83;
+    background-color: #f1c2b8;
     color: white;
     padding: 20px 0px;
 }
@@ -148,11 +148,11 @@ a {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.2em;
     margin-bottom: 15px;
-    color: var(--nude);
+    color: white;
 }
 
 .footer-column h4 a {
-    color: var(--nude);
+    color: white;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -195,7 +195,8 @@ a {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.2em;
     margin-bottom: 15px;
-    color: var(--nude);
+    color: white;
+    text-shadow: #2C2C2C 0px 2px 10px;
 }
 
 .contact-items {
@@ -213,6 +214,7 @@ a {
     text-decoration: none;
     font-size: 0.9em;
     transition: opacity 0.3s;
+    text-shadow: #2C2C2C 0px 2px 10px;
 }
 
 .contact-item:hover {
@@ -248,16 +250,19 @@ a {
 @media (max-width: 480px) {
     .footer-container {
         gap: 25px;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
     }
     .footer-menu {
+        display: flex;
         flex-direction: column;
         gap: 25px;
     }
     .footer-contact {
+        display: flex;
         flex-direction: column;
         gap: 0px;
         align-items: center;
@@ -265,12 +270,15 @@ a {
         text-align: center;
     }
     .contact-item {
+        display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         gap: 10px;
     }
-    .contact-items2{
+    .contact-items{
+        display: flex;
+        flex-direction: column;
         margin-top: 20px;
     }
 }
