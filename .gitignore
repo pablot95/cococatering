@@ -1,0 +1,30 @@
+# Credenciales y configuración sensible
+.env
+.env.local
+.env.production
+firebase-config.js
+
+# Dependencias
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+
+# Temporales
+*.tmp
+*.temp

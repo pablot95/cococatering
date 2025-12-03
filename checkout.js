@@ -1,5 +1,10 @@
 // Checkout Page - Cocó Catering
-// Integración con MercadoPago Checkout Pro
+// Integración con MercadoPago Checkout Pro y Firebase Firestore
+
+// ===================================
+// IMPORTAR FIRESTORE SERVICE
+// ===================================
+import { createOrder, saveCustomer } from './firestore-service.js';
 
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
@@ -202,20 +207,108 @@ function toggleFacturacion() {
 }
 
 // ===================================
-// INTEGRACIÓN MERCADOPAGO
+// INTEGRACIÓN MERCADOPAGO Y FIRESTORE
 // ===================================
 async function initMercadoPago() {
-    // Verificar si tenemos las credenciales configuradas
+    // Preparar datos de la orden para Firestore
+    const cart = getCart();
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const envioGratis = subtotal >= 180000;
+    
+    // Guardar orden en Firestore
+    try {
+        const orderData = {
+            // Datos del cliente
+            cliente: {
+                nombre: datosComprador.nombre,
+                dni: datosComprador.dni,
+                telefono: datosComprador.telefono,
+                email: datosComprador.email
+            },
+            // Dirección de envío
+            direccionEnvio: {
+                calle: datosComprador.calle,
+                altura: datosComprador.altura,
+                piso: datosComprador.piso || '',
+                depto: datosComprador.depto || '',
+                ciudad: datosComprador.ciudad,
+                provincia: datosComprador.provincia,
+                codigoPostal: datosComprador.codigoPostal
+            },
+            // Dirección de facturación
+            direccionFacturacion: {
+                nombre: datosFacturacion.nombre,
+                dni: datosFacturacion.dni,
+                calle: datosFacturacion.calle,
+                altura: datosFacturacion.altura,
+                piso: datosFacturacion.piso || '',
+                depto: datosFacturacion.depto || '',
+                ciudad: datosFacturacion.ciudad,
+                provincia: datosFacturacion.provincia,
+                codigoPostal: datosFacturacion.codigoPostal
+            },
+            // Productos
+            productos: cart.map(item => ({
+                id: item.id,
+                nombre: item.name,
+                precio: item.price,
+                cantidad: item.quantity,
+                imagen: item.image
+            })),
+            // Totales
+            subtotal: subtotal,
+            envioGratis: envioGratis,
+            total: subtotal,
+            // Estado
+            status: 'pending',
+            paymentStatus: 'pending',
+            // Metadatos
+            origen: 'web'
+        };
+        
+        // Guardar en Firestore
+        const orderId = await createOrder(orderData);
+        console.log('Orden guardada en Firestore con ID:', orderId);
+        
+        // Guardar cliente en Firestore si no existe
+        await saveCustomer({
+            nombre: datosComprador.nombre,
+            dni: datosComprador.dni,
+            telefono: datosComprador.telefono,
+            email: datosComprador.email,
+            direccion: {
+                calle: datosComprador.calle,
+                altura: datosComprador.altura,
+                ciudad: datosComprador.ciudad,
+                provincia: datosComprador.provincia
+            }
+        });
+        
+        // Guardar orderId en localStorage para referencia
+        localStorage.setItem('lastOrderId', orderId);
+        
+    } catch (error) {
+        console.error('Error al guardar orden en Firestore:', error);
+    }
+    
+    // Verificar si tenemos las credenciales de MercadoPago configuradas
     if (!mercadopago || MP_PUBLIC_KEY === 'TU_PUBLIC_KEY_AQUI') {
-        console.log('Esperando credenciales de MercadoPago...');
+        console.log('MercadoPago no configurado. Orden guardada en Firestore.');
+        // Mostrar mensaje temporal
+        const pagoContainer = document.getElementById('mercadopago-button');
+        pagoContainer.innerHTML = `
+            <div style="padding: 20px; background: #f0f0f0; border-radius: 10px; text-align: center;">
+                <p style="margin-bottom: 15px;">✅ Tu orden ha sido registrada exitosamente</p>
+                <p style="color: #777; font-size: 14px;">En breve nos pondremos en contacto contigo</p>
+                <button onclick="window.location.href='index.html'" style="margin-top: 15px; padding: 10px 20px; background: var(--bordo); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Volver al inicio
+                </button>
+            </div>
+        `;
         return;
     }
     
     try {
-        // Preparar datos de la orden
-        const cart = getCart();
-        const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-        
         const orderData = {
             items: cart.map(item => ({
                 id: item.id,
@@ -258,7 +351,8 @@ async function initMercadoPago() {
             },
             auto_return: 'approved',
             metadata: {
-                datosFacturacion: datosFacturacion
+                datosFacturacion: datosFacturacion,
+                firestoreOrderId: localStorage.getItem('lastOrderId')
             }
         };
         
