@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desayunos - Cocó Catering</title>
+    <title>Shots - Cocó Catering</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="eventos.css">
 </head>
@@ -66,7 +66,7 @@
             <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
-            <img id="menuHeroImage" src="images/desayuno.jpg" alt="Desayunos">
+            <img id="menuHeroImage" src="images/dulces.jpg" alt="Shots">
             
             <!-- Botones de Navegación -->
             <div class="navigation-buttons">
@@ -105,76 +105,64 @@
 
         <!-- Scroll Container -->
         <div class="menu-scroll-container">
-            <!-- Desayuno a Domicilio -->
+            <!-- Shots -->
             <section class="menu-section">
-                <h2 class="section-title">DESAYUNO A DOMICILIO</h2>
+                <h2 class="section-title">SHOTS</h2>
+                
+                <div class="box-container" data-id="shots" data-name="SHOTS - Docena (12 unidades)" data-price="32000">
+                <div class="shots-container">
+                    <ul class="product-list">
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Lemon pie</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cheesecake</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Oreo</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Chocotorta</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Mousse de chocolate (opción sin TACC)</span>
+                        </li>
+                    </ul>
+                </div>
 
-                <div class="box-container" data-id="desayuno-domicilio" data-name="Desayuno a Domicilio" data-price="70000">
-                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--bordo); margin: 20px 0 10px 20px; font-weight: 600; font-style: italic;">¿Qué contiene?</h3>
-                    <div>
-                        <ul class="product-list">
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">Taza</span>
-                                </div>
-                            </li>
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">Box de desayunitos</span>
-                                </div>
-                            </li>
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">4 cuadraditos dulces</span>
-                                </div>
-                            </li>
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">4 patisserie</span>
-                                </div>
-                            </li>
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">2 medialunitas con JYQ</span>
-                                </div>
-                            </li>
-                            <li class="product-item2" data-image="images/desayuno.jpg">
-                                <div class="product-info">
-                                    <span class="product-name">Chipacitos</span>
-                                </div>
-                            </li>
-                        </ul>
+                <div class="shots-controls-wrapper">
+                    <div class="shots-info" data-size="docena" data-price="32000" data-units="12">
+                        <span class="shots-label">Docena</span>
+                        <span class="shots-units">12 unidades</span>
+                        <span class="shots-price">$32.000</span>
                     </div>
-
-                    <div class="box-footer">
-                        <div class="box-actions">
-                            <span class="box-price">$70.000</span>
-                            <div class="box-controls">
-                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
-                                <span class="qty-display">0</span>
-                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
-                                <button class="btn-add-to-cart" onclick="addBoxToCart(this)">
-                                    Agregar
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                                    </svg>
-                                </button>
-                            </div>
+                    <div class="box-actions">
+                        <div class="box-controls">
+                            <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                            <span class="qty-display">0</span>
+                            <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                         </div>
+                        <button class="btn-add-to-cart" onclick="addBoxToCart(this)" data-image="images/dulces.jpg">
+                            Agregar
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
+            </div>
             </section>
         </div>
     </div>
 
-    <!-- Botón flotante para agregar todos los productos 
+    <!-- Botón flotante para agregar todos los productos
     <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
         <span class="btn-text">Agregar al Carrito</span>
         <span class="btn-counter" id="total-items-counter">0</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    </button>-->
+    </button> -->
 
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>

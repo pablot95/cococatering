@@ -6,6 +6,7 @@
     <title>Cocó Catering - Inicio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="eventos.css">
     <link rel="stylesheet" href="carrito-index.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -18,13 +19,38 @@
     </div>
 
     <!-- Mobile Navigation Menu -->
-    <nav class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="menu.html">Menú</a>
-        <a href="fingers-salados.html">Fingers Salados</a>
-        <a href="fingers-dulces.html">Fingers Dulces</a>
-        <a href="tortas.html">Tortas</a>
+<nav class="mobile-nav-menu" id="mobileNavMenu">
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
         <a href="desayunos.html">Desayunos</a>
-        <a href="eventos.html">Eventos</a>
+        <a href="carrito.html">Carrito</a>
     </nav>
 
     <!-- Logo -->
@@ -56,12 +82,36 @@
         </div>
                 <!-- Botones de Navegación -->
         <div class="navigation-buttons">
-            <a href="menu.html" class="nav-btn">Menú</a>
-            <a href="fingers-salados.html" class="nav-btn">Fingers Salados</a>
-            <a href="fingers-dulces.html" class="nav-btn">Fingers Dulces</a>
-            <a href="tortas.html" class="nav-btn">Tortas</a>
+            <div class="nav-dropdown">
+                <button class="nav-btn dropdown-toggle">Menú</button>
+                <div class="dropdown-menu">
+                    <a href="eventos.html">Eventos</a>
+                    <a href="box-salados.html">Box Salados</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="nav-btn dropdown-toggle">Fingers Salados</button>
+                <div class="dropdown-menu">
+                    <a href="fingers-frios.html">Fríos</a>
+                    <a href="fingers-calientes.html">Calientes</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="nav-btn dropdown-toggle">Fingers Dulces</button>
+                <div class="dropdown-menu">
+                    <a href="box-dulces.html">Box Dulces</a>
+                    <a href="shots.html">Shots</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <button class="nav-btn dropdown-toggle">Tortas</button>
+                <div class="dropdown-menu">
+                    <a href="tortas-clasicas.html">Clásicas</a>
+                    <a href="tortas-decoradas.html">Decoradas</a>
+                    <a href="combos-dulces.html">Combos Dulces</a>
+                </div>
+            </div>
             <a href="desayunos.html" class="nav-btn">Desayunos</a>
-            <a href="eventos.html" class="nav-btn">Eventos</a>
             <a href="carrito.html" class="index-cart-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="9" cy="21" r="1"></circle>

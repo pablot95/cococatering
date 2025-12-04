@@ -1,0 +1,1677 @@
+/* ===================================
+   Menu Page Styles - Cocó Catering
+   =================================== */
+
+.menu-page-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.menu-hero {
+    width: 60%;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.menu-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.menu-hero-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    background-color: rgba(240, 248, 255, 0.227);
+    backdrop-filter: blur(1px);
+    padding: 10px 10px;
+    border-radius: 100px;
+    box-shadow: 0 8px 30px rgba(139, 46, 58, 0.15);
+    transition: all 0.4s ease;
+}
+
+.menu-hero-logo:hover {
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+}
+
+.menu-hero-logo img {
+    height: 100px;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.menu-hero img#menuHeroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-scroll-container {
+    width: 40%;
+    margin-left: 60%;
+    background: var(--blanco);
+
+}
+
+.menu-section {
+    padding: 10px 35px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: #656565 0px 2px 2px;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-weight: 600;
+    height: 40px;
+    background: #f1c2b8;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    border-radius: 24px;
+    position: relative;
+}
+
+/* Subsección para agrupar productos */
+.subsection-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--bordo);
+    text-align: left;
+    margin: 30px 0 15px 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(139, 46, 58, 0.2);
+    padding-bottom: 10px;
+}
+
+@keyframes slideInBounce {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(5px);
+    }
+    80% {
+        transform: translateX(-50%) translateY(-3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+.menu-item {
+padding: 10px 40px;
+
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+
+.menu-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--negro);
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Notas de menú */
+.menu-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: black;
+    font-style: italic;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+}
+
+/* Detalles de boxes */
+.box-details {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding-bottom: 10px;
+    padding-top: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 0;
+    cursor: pointer;
+}
+
+
+.box-details p strong {
+    color: var(--bordo);
+    font-weight: 600;
+}
+
+.box-details ul {
+    list-style: none;
+    color: #000000;
+}
+
+.box-details ul li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #000000;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+
+/* Botón Consultar Precio */
+.btn-consultar-precio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #8b2e3ae8;
+    color: white;
+    text-decoration: none;
+    padding: 7px 0px;
+    border-radius: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 30px auto 40px;
+    max-width: 240px;
+    transition: all 0.3s ease;
+}
+
+.btn-consultar-precio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+}
+
+.btn-consultar-precio svg {
+    flex-shrink: 0;
+}
+
+/* Nuevo diseño de Boxes */
+.box-container {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding-bottom: 1px;
+    padding-top: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.box-container:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.box-footer {
+    padding-top: 30px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-description {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: black;
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+}
+
+.box-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.box-price {
+    font-family: 'Cormorant Garamond', serif;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: var(--bordo);
+    font-weight: 700;
+}
+
+.box-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.btn-add-to-cart {
+    background: linear-gradient(135deg, var(--bordo) 0%, #8b2e3a 100%);
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.3);
+    margin-left: 15px;
+}
+
+.btn-add-to-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 46, 58, 0.4);
+    background: linear-gradient(135deg, #8b2e3a 0%, var(--bordo) 100%);
+}
+
+.btn-add-to-cart:active {
+    transform: translateY(0);
+}
+
+.item-description {
+    color: black;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 15px;
+}
+
+/* Product List */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 10px 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+}
+
+
+/* Items sin carrito (solo informativos) */
+.product-item2{
+    cursor: pointer;
+    padding: 4px 0px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.product-item2::after {
+    content: '/';
+    margin: 0 8px;
+    color: var(--bordo);
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.product-item2:last-child::after {
+    content: '';
+    margin: 0;
+}
+
+.product-item2:hover {
+    background-color: rgba(232, 213, 196, 0.15);
+}
+
+.product-item2 .product-name {
+    font-size: 1.1rem;
+    color: black;
+}
+
+/* Product-item2 en box-salados - vertical sin separador */
+.box-container .product-item2 {
+    padding: 6px 15px;
+    width: 100%;
+    display: block;
+}
+
+.box-container .product-item2::after {
+    display: none;
+}
+
+/* Product-item2 en box-dulces - inline con separador / como eventos */
+.box-details .product-item2 {
+    padding: 2px 4px;
+    display: inline-flex;
+}
+
+.box-details .product-item2::after {
+    content: '/';
+    margin: 0 5px;
+    color: var(--bordo);
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.box-details .product-item2:last-child::after {
+    content: '';
+    margin: 0;
+}
+
+/* Estilos específicos para SHOTS - productos verticales */
+.shots-details .product-item2 {
+    padding: 8px 15px;
+    width: 100%;
+    display: block;
+}
+
+.shots-details .product-item2::after {
+    content: '';
+    margin: 0;
+}
+
+/* Controles de shots en una sola línea */
+.shots-controls-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-left: 30px;
+    flex-wrap: wrap;
+}
+
+.shots-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.shots-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    text-transform: uppercase;
+}
+
+.shots-units {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.shots-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--bordo);
+    margin-left: 40px;
+}
+
+.shots-actions {
+    gap: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.no-cart {
+    cursor: pointer;
+    padding: 4px 0px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.no-cart::after {
+    content: '/';
+    margin: 0 8px;
+    color: var(--bordo);
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.no-cart:last-child::after {
+    content: '';
+    margin: 0;
+}
+
+.no-cart:hover {
+    background-color: rgba(232, 213, 196, 0.15);
+}
+
+.no-cart .product-name {
+    font-size: 1.1rem;
+    color: black;
+    font-style: italic;
+}
+
+/* Items con carrito (productos comprables) */
+.product-cart-item {
+    background: rgba(254, 254, 254, 0.95);
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    transition: all 0.3s ease;
+    width: 98%;
+    cursor: pointer;
+}
+
+.product-cart-item:hover {
+    border-color: var(--bordo);
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.15);
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    cursor: pointer;
+}
+
+.product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--negro);
+    font-weight: 500;
+}
+
+.product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--bordo);
+    font-weight: 600;
+}
+
+.product-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.qty-btn {
+    background: rgba(139, 46, 58, 0.1);
+    border: 1px solid var(--bordo);
+    color: var(--bordo);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-btn:hover {
+    background: var(--bordo);
+    color: var(--blanco);
+    transform: scale(1.15);
+}
+
+.qty-display {
+    min-width: 35px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--negro);
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Botón flotante para agregar todos */
+.floating-add-all-btn {
+    position: fixed;
+    bottom: -100px;
+    right: 13%;
+    background: var(--bordo);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 25px rgba(139, 46, 58, 0.5);
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 3px solid var(--nude);
+}
+
+.floating-add-all-btn.visible {
+    bottom: 10px;
+    animation: bounceIn 0.6s ease-out;
+}
+
+
+.floating-add-all-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.floating-add-all-btn .btn-text {
+    font-size: 1rem;
+}
+
+.floating-add-all-btn .btn-counter {
+    background: var(--blanco);
+    color: var(--bordo);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.floating-add-all-btn svg {
+    flex-shrink: 0;
+}
+
+@keyframes bounceIn {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+    }
+    50% {
+        bottom: 40px;
+    }
+    70% {
+        bottom: 25px;
+    }
+    100% {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* Notificación del carrito */
+.cart-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: #f1c2b8;
+    color: var(--blanco);
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.cart-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Navigation Buttons en Menu Hero */
+.menu-hero .navigation-buttons {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 3;
+    flex-wrap: nowrap;
+    justify-content: center;
+    max-width: 95%;
+    animation: fadeInUp 1s ease 0.5s backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 30px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.menu-hero .nav-btn {
+    background: rgba(254, 254, 254, 0.15);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(254, 254, 254, 0.3);
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: inline-block;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    color: var(--blanco);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-family: 'Cormorant Garamond', serif;
+    white-space: nowrap;
+}
+
+.menu-hero .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-5px);
+    color: black;
+}
+
+.menu-hero .nav-btn:active {
+    transform: translateY(-5px) scale(0.98);
+}
+
+.imagenBoxSalado{
+    display: none;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: rgba(254, 254, 254, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(254, 254, 254, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--blanco);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.hamburger-menu:hover span {
+    background: var(--bordo);
+}
+
+.hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.mobile-nav-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: right 0.4s ease;
+    padding: 80px 20px 20px;
+    overflow-y: auto;
+}
+
+.mobile-nav-menu.active {
+    right: 0;
+}
+
+.mobile-nav-menu > a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(139, 46, 58, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-menu > a:hover {
+    background: rgba(139, 46, 58, 0.05);
+    padding-left: 30px;
+}
+
+/* Mobile Dropdown Styles */
+.mobile-dropdown {
+    border-bottom: 1px solid rgba(139, 46, 58, 0.1);
+}
+
+.mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.mobile-dropdown-toggle:hover {
+    background: rgba(139, 46, 58, 0.05);
+    padding-left: 30px;
+}
+
+.mobile-dropdown-toggle::after {
+    content: '▼';
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(139, 46, 58, 0.03);
+    transition: max-height 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-menu {
+    max-height: 300px;
+}
+
+.mobile-dropdown-menu a {
+    display: block;
+    padding: 12px 20px 12px 40px;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.mobile-dropdown-menu a:hover {
+    background: rgba(139, 46, 58, 0.08);
+    padding-left: 50px;
+}
+
+/* ===================================
+   Cart Icon - Menu Page
+   =================================== */
+.cart-icon {
+    position: fixed;
+    top: 15px;
+    right: 40px;
+    z-index: 999;
+    background: rgba(254, 254, 254, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(254, 254, 254, 0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cart-icon:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+.cart-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--bordo);
+    transition: stroke 0.3s ease;
+    margin-top: 3px;
+    margin-right: 4px;
+}
+
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--bordo);
+    color: var(--blanco);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 2px solid var(--blanco);
+}
+
+/* ===================================
+   Box Size Selector - New Design
+   =================================== */
+.box-size-selector {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    padding: 25px;
+    flex-wrap: wrap;
+}
+
+.size-option {
+    flex: 1;
+    min-width: 140px;
+    background: rgba(254, 254, 254, 0.5);
+    border: 2px solid rgba(139, 46, 58, 0.2);
+    border-radius: 12px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.size-option:hover {
+    background: rgba(254, 254, 254, 0.8);
+    border-color: rgba(139, 46, 58, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 46, 58, 0.15);
+}
+
+.size-option.selected {
+    background: rgba(241, 194, 184, 0.3);
+    border-color: var(--bordo);
+    border-width: 3px;
+}
+
+.size-option.selected::before {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: var(--bordo);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.size-label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--bordo);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.size-units {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: rgba(139, 46, 58, 0.7);
+    margin-bottom: 8px;
+}
+
+.size-price {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--bordo);
+    letter-spacing: 0.3px;
+}
+
+/* Box Controls - New Modern Design */
+.box-footer-new {
+    margin-top: 15px;
+    padding: 5px 15px;
+}
+
+.box-controls-new {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.qty-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bordo);
+}
+
+.qty-controls-new {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(254, 254, 254, 0.6);
+    border: 2px solid rgba(139, 46, 58, 0.2);
+    border-radius: 50px;
+    padding: 3px 20px;
+}
+
+.qty-btn-new {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--bordo);
+    color: var(--blanco);
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.qty-btn-new:hover {
+    background: #a33545;
+    transform: scale(1.15);
+}
+
+.qty-btn-new:active {
+    transform: scale(0.95);
+}
+
+.qty-display-new {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--bordo);
+}
+
+.btn-add-new {
+    background: linear-gradient(135deg, var(--bordo) 0%, #a33545 100%);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-add-new:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 46, 58, 0.4);
+}
+
+.btn-add-new:active {
+    transform: translateY(0);
+}
+
+.btn-add-new svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .menu-hero {
+        width: 50%;
+    }
+
+    .menu-scroll-container {
+        width: 50%;
+        margin-left: 50%;
+        padding: 0px 10px;
+    }
+
+    .menu-hero-logo img {
+        height: 60px;
+    }
+
+    .menu-hero .navigation-buttons {
+        gap: 12px;
+        bottom: 70px;
+    }
+
+    .menu-hero .nav-btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-page-container {
+        flex-direction: column;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
+
+    .mobile-nav-menu {
+        display: block;
+    }
+
+    .cart-icon {
+        top: 30px;
+        right: 80px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .cart-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .cart-count {
+        font-size: 0.75rem;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    /* Controles de producto responsive */
+    .product-info {
+        min-width: 150px;
+    }
+
+    .product-name {
+        font-size: 1rem;
+    }
+
+    .product-price {
+        font-size: 1rem;
+    }
+
+    .qty-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+
+    .qty-display {
+        font-size: 1.1rem;
+        min-width: 35px;
+    }
+
+    .floating-add-all-btn {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+
+    .floating-add-all-btn .btn-counter {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    /* Boxes responsive */
+    .box-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 25px;
+    }
+
+    .box-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+
+    .box-price {
+        font-size: 1.2rem;
+    }
+
+    .btn-add-to-cart {
+        width: 80%;
+        justify-content: center;
+        font-size: 1.1rem;
+        padding: 8px 15px;
+    }
+
+    .cart-notification {
+        top: 140px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+        font-size: 0.95rem;
+        padding: 12px 20px;
+    }
+
+    .menu-hero .navigation-buttons {
+        display: none !important;
+    }
+
+    .menu-hero::after {
+        content: 'Menú';
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--blanco);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+    .menu-note{
+        font-size: 1.2rem;
+        padding-bottom: 15px;
+    }
+    .menu-hero {
+        width: 100%;
+        height: 40vh;
+        position: sticky;
+        z-index: 10;
+    }
+
+    .menu-scroll-container {
+        width: 100%;
+        margin-left: 0;
+        padding: 0px 20px;
+    }
+
+    .menu-hero-logo {
+        top: 20px;
+    }
+
+    .menu-hero-logo img {
+        height: 50px;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+        padding: 12px 30px;
+        border-radius: 40px;
+    }
+
+    .menu-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .item-description {
+        font-size: 1rem;
+    }
+
+    .box-description {
+        font-size: 1rem;
+    }
+
+    /* Size selector responsive */
+    .size-option {
+        min-width: 120px;
+        padding: 10px 12px;
+    }
+
+    .size-label {
+        font-size: 0.95rem;
+    }
+
+    .size-units {
+        font-size: 0.85rem;
+    }
+
+    .size-price {
+        font-size: 1.1rem;
+    }
+
+    .btn-add-new {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    .qty-controls-new .qty-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+
+    .qty-controls-new .qty-display {
+        font-size: 1rem;
+        min-width: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Controles de producto en móviles pequeños */
+    .product-cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 15px;
+        gap: 12px;
+    }
+    .menu-section {
+        padding: 20px 5px;
+    }
+
+    .product-info {
+        width: 100%;
+    }
+
+
+    .product-price {
+        font-size: 0.95rem;
+    }
+    
+    .product-controls {
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .qty-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+    .product-list {
+        margin: 0;
+        padding: 10px 25px;
+    }
+    .qty-display {
+        min-width: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    /* Boxes en móviles pequeños */
+    .box-price {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    .box-description {
+        font-size: 0.95rem;
+    }
+
+    .btn-add-to-cart {
+        font-size: 1rem;
+        padding: 10px 0px;
+        max-width: 300px;
+    }
+
+    .floating-add-all-btn {
+        right: 85px;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        box-shadow: none;
+        border: none;
+    }
+
+    .floating-add-all-btn.visible {
+        bottom: 5px !important;
+    }
+
+    .floating-add-all-btn .btn-text {
+        font-size: 0.95rem;
+    }
+
+    .floating-add-all-btn .btn-counter {
+        width: 26px;
+        height: 26px;
+        font-size: 0.85rem;
+    }
+
+    .cart-notification {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+        text-shadow: none;
+        font-style: normal;
+    }
+
+    .menu-item{
+        padding: 0 15px;
+    }
+    .menu-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .item-description {
+        font-size: 0.95rem;
+    }
+
+    /* Size selector en móviles pequeños */
+    .size-option {
+        min-width: 110px;
+        padding: 8px 10px;
+    }
+
+    .size-label {
+        font-size: 0.9rem;
+    }
+
+    .size-units {
+        font-size: 0.8rem;
+    }
+
+    .size-price {
+        font-size: 1rem;
+    }
+
+    .btn-add-new {
+        font-size: 0.95rem;
+        padding: 8px 12px;
+    }
+
+    .qty-controls-new .qty-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+    }
+
+    .qty-controls-new .qty-display {
+        font-size: 0.95rem;
+        min-width: 28px;
+    }
+
+    .cart-icon {
+        width: 55px;
+        height: 55px;
+        right: 20px;
+        top: 80px;
+    }
+
+    .cart-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .cart-count {
+        font-size: 0.7rem;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+    }
+
+    .imagenBoxSalado {
+        display: block;
+        width: 100%;
+    }
+
+    /* Específico para Fingers Salados - NO cambiar section-title */
+    .fingers-salados-page .section-title {
+        font-size: 1.4rem !important;
+    }
+
+    /* Controles de producto específicos para Fingers Salados */
+    .fingers-salados-page .product-cart-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0px;
+        gap: 15px;
+    }
+
+    .fingers-salados-page .product-info {
+        flex: 1;
+        width: auto;
+    }
+
+    .fingers-salados-page .product-controls {
+        flex-shrink: 0;
+        gap: 6px;
+        justify-content: flex-end;
+    }
+
+    .fingers-salados-page .qty-btn {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 1rem !important;
+    }
+
+    .fingers-salados-page .qty-display {
+        min-width: 25px !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* 1. EVENTOS - Productos en columna como SHOTS, sin "/" */
+    .no-cart {
+        padding: 6px 15px !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .no-cart::after {
+        display: none !important;
+    }
+
+    .no-cart .product-name {
+        font-size: 1.1rem !important;
+    }
+
+    .menu-item h3 {
+        text-align: center;
+    }
+
+    /* 2. FINGERS SALADOS - Más width, menos padding lateral */
+    .fingers-salados-page .product-cart-item {
+        padding: 10px 5px !important;
+    }
+
+    .fingers-salados-page .menu-item {
+        padding: 0 5px !important;
+    }
+
+    .fingers-salados-page .menu-section {
+        padding: 20px 0px !important;
+    }
+
+    /* 3. SHOTS - Botón centrado y tamaño correcto */
+    .shots-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+
+    .shots-label,
+    .shots-units {
+        display: inline !important;
+    }
+
+    .shots-price {
+        margin-left: 0 !important;
+        display: block !important;
+    }
+
+    .shots-controls-wrapper {
+        gap: 20px !important;
+        padding-left: 0 !important;
+    }
+
+    .shots-controls-wrapper .box-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .shots-controls-wrapper .box-controls {
+        justify-content: center;
+    }
+
+    .shots-controls-wrapper .btn-add-to-cart {
+        width: 70% !important;
+        justify-content: center !important;
+        font-size: 1rem !important;
+        padding: 10px 18px !important;
+    }
+
+    /* 4. BOX DULCES - Sin padding/margin en productos, controles como box-salados */
+    .box-details .product-item2 {
+        padding: 5px 2px !important;
+        margin: 0 !important;
+    }
+
+    .box-details .product-item2::after {
+        margin: 0 3px !important;
+    }
+
+    .box-details .product-item2 .product-name {
+        font-size: 0.85rem !important;
+    }
+
+    /* Box dulces - Controles iguales a box-salados */
+    .box-footer-new {
+        padding-top: 30px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .box-controls-new {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 20px !important;
+    }
+
+    .qty-section {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .qty-label {
+        display: none !important;
+    }
+
+    .qty-controls-new {
+        gap: 2px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .qty-controls-new .qty-btn-new {
+        width: 32px !important;
+        height: 32px !important;
+        background: rgba(139, 46, 58, 0.1) !important;
+        border: 1px solid var(--bordo) !important;
+        color: var(--bordo) !important;
+        font-size: 1.2rem !important;
+    }
+
+    .qty-controls-new .qty-btn-new:hover {
+        background: var(--bordo) !important;
+        color: var(--blanco) !important;
+    }
+
+    .qty-controls-new .qty-display-new {
+        min-width: 35px;
+        font-size: 1.1rem !important;
+    }
+
+    .btn-add-new {
+        width: 80% !important;
+        justify-content: center !important;
+        padding: 10px 18px !important;
+        font-size: 1rem !important;
+        text-transform: none !important;
+    }
+
+    .btn-add-new svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}

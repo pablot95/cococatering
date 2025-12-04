@@ -20,12 +20,17 @@
 
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="menu.html">Menú</a>
-        <a href="fingers-salados.html">Fingers Salados</a>
-        <a href="fingers-dulces.html">Fingers Dulces</a>
-        <a href="tortas.html">Tortas</a>
-        <a href="desayunos.html">Desayunos</a>
         <a href="eventos.html">Eventos</a>
+        <a href="box-salados.html">Box Salados</a>
+        <a href="fingers-frios.html">Fingers Fríos</a>
+        <a href="fingers-calientes.html">Fingers Calientes</a>
+        <a href="box-dulces.html">Box Dulces</a>
+        <a href="shots.html">Shots</a>
+        <a href="tortas-clasicas.html">Tortas Clásicas</a>
+        <a href="tortas-decoradas.html">Tortas Decoradas</a>
+        <a href="combos-dulces.html">Combos Dulces</a>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="carrito.html">Carrito</a>
     </nav>
 
     <div class="checkout-page-container">
@@ -35,12 +40,36 @@
             
             <!-- Desktop Navigation Menu -->
             <nav class="checkout-nav-menu">
-                <a href="menu.html" class="nav-link">Menú</a>
-                <a href="fingers-salados.html" class="nav-link">Fingers Salados</a>
-                <a href="fingers-dulces.html" class="nav-link">Fingers Dulces</a>
-                <a href="tortas.html" class="nav-link">Tortas</a>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Menú</button>
+                    <div class="dropdown-menu">
+                        <a href="eventos.html">Eventos</a>
+                        <a href="box-salados.html">Box Salados</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Salados</button>
+                    <div class="dropdown-menu">
+                        <a href="fingers-frios.html">Fríos</a>
+                        <a href="fingers-calientes.html">Calientes</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Dulces</button>
+                    <div class="dropdown-menu">
+                        <a href="box-dulces.html">Box Dulces</a>
+                        <a href="shots.html">Shots</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Tortas</button>
+                    <div class="dropdown-menu">
+                        <a href="tortas-clasicas.html">Clásicas</a>
+                        <a href="tortas-decoradas.html">Decoradas</a>
+                        <a href="combos-dulces.html">Combos Dulces</a>
+                    </div>
+                </div>
                 <a href="desayunos.html" class="nav-link">Desayunos</a>
-                <a href="eventos.html" class="nav-link">Eventos</a>
             </nav>
             
             <div class="checkout-steps">
@@ -69,16 +98,9 @@
                                 <label for="nombre">Nombre Completo *</label>
                                 <input type="text" id="nombre" name="nombre" required>
                             </div>
-                        </div>
-                        
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="dni">DNI/CUIL *</label>
                                 <input type="text" id="dni" name="dni" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="telefono">Teléfono *</label>
-                                <input type="tel" id="telefono" name="telefono" required>
                             </div>
                         </div>
                         
@@ -87,6 +109,14 @@
                                 <label for="email">Email *</label>
                                 <input type="email" id="email" name="email" required>
                             </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" name="telefono" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+
                         </div>
                         
                         <h3>Dirección de Entrega</h3>

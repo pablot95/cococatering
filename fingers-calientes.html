@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingers Calientes - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="eventos.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="carrito.html">Carrito</a>
+    </nav>
+
+    <div class="menu-page-container fingers-salados-page">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-logo">
+                <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
+            </div>
+            <img id="menuHeroImage" src="images/salados.jpg" alt="Fingers Calientes">
+            
+            <!-- Botones de Navegación -->
+            <div class="navigation-buttons">
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Menú</button>
+                    <div class="dropdown-menu">
+                        <a href="eventos.html">Eventos</a>
+                        <a href="box-salados.html">Box Salados</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Salados</button>
+                    <div class="dropdown-menu">
+                        <a href="fingers-frios.html">Fríos</a>
+                        <a href="fingers-calientes.html">Calientes</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Dulces</button>
+                    <div class="dropdown-menu">
+                        <a href="box-dulces.html">Box Dulces</a>
+                        <a href="shots.html">Shots</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Tortas</button>
+                    <div class="dropdown-menu">
+                        <a href="tortas-clasicas.html">Clásicas</a>
+                        <a href="tortas-decoradas.html">Decoradas</a>
+                        <a href="combos-dulces.html">Combos Dulces</a>
+                    </div>
+                </div>
+                <a href="desayunos.html" class="nav-btn">Desayunos</a>
+            </div>
+        </div>
+
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Fingers Calientes -->
+            <div class="menu-section">
+                <h2 class="section-title">Fingers Calientes</h2>
+                <div class="menu-item">
+                    <h3 class="subsection-title">Empanaditas</h3>
+                    <ul class="product-list">
+                        <li class="product-cart-item" data-image="images/salado.jpg" data-id="empanaditas-bondiola" data-name="Empanaditas de bondiola – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de bondiola – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="empanaditas-jyq" data-name="Empanaditas de JyQ – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de JyQ – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="empanaditas-pollo" data-name="Empanaditas de Pollo – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de Pollo – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="empanaditas-carne" data-name="Empanaditas de carne – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de carne – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="empanaditas-osobuco" data-name="Empanaditas de Osobuco – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de Osobuco – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="empanaditas-lomo" data-name="Empanaditas de Lomo – x12" data-price="30000">
+                            <div class="product-info">
+                                <span class="product-name">Empanaditas de Lomo – x12</span>
+                                <span class="product-price">$30.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3 class="subsection-title">Canastitas</h3>
+                    <ul class="product-list">
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="canastitas-capresse" data-name="Canastitas de capresse" data-price="20000">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas de capresse</span>
+                                <span class="product-price">$20.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="canastitas-queso-azul" data-name="Canastitas Queso azul y cebolla caramelizada" data-price="20000">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas Queso azul y cebolla caramelizada</span>
+                                <span class="product-price">$20.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="canastitas-panceta-ciruela" data-name="Canastitas Panceta y ciruela" data-price="20000">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas Panceta y ciruela</span>
+                                <span class="product-price">$20.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="canastitas-calabaza" data-name="Canastitas Calabaza" data-price="18000">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas Calabaza</span>
+                                <span class="product-price">$18.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="canastitas-espinaca" data-name="Canastitas Espinaca" data-price="20000">
+                            <div class="product-info">
+                                <span class="product-name">Canastitas Espinaca</span>
+                                <span class="product-price">$20.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3 class="subsection-title">Otros Fingers Calientes</h3>
+                    <ul class="product-list">
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="pollitos-crispy" data-name="Pollitos crispy con salsa honey – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Pollitos crispy con salsa honey – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="hamburguesitas-cheddar" data-name="Hamburguesitas con cheddar – x12" data-price="36000">
+                            <div class="product-info">
+                                <span class="product-name">Hamburguesitas con cheddar – x12</span>
+                                <span class="product-price">$36.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="tacos-bondiola" data-name="Tacos de bondiola – x12" data-price="36000">
+                            <div class="product-info">
+                                <span class="product-name">Tacos de bondiola – x12</span>
+                                <span class="product-price">$36.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="pinchos-pollo-panceta" data-name="Pinchos de pollo y panceta con salsa manzana – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Pinchos de pollo y panceta con salsa manzana – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="tarteletas-espinaca" data-name="Tarteletas espinaca – x12" data-price="18000">
+                            <div class="product-info">
+                                <span class="product-name">Tarteletas espinaca – x12</span>
+                                <span class="product-price">$18.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="roast-beef" data-name="Roast beef – x12" data-price="30000">
+                            <div class="product-info">
+                                <span class="product-name">Roast beef – x12</span>
+                                <span class="product-price">$30.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="roll-philo-jyq" data-name="Roll de masa philo con JYQ – x12" data-price="28000">
+                            <div class="product-info">
+                                <span class="product-name">Roll de masa philo con JYQ – x12</span>
+                                <span class="product-price">$28.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="triangulito-bondiola" data-name="Triangulito de bondiola – x12" data-price="40000">
+                            <div class="product-info">
+                                <span class="product-name">Triangulito de bondiola – x12</span>
+                                <span class="product-price">$40.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="tarteleta-champi" data-name="Tarteleta de champi – x12" data-price="30000">
+                            <div class="product-info">
+                                <span class="product-name">Tarteleta de champi – x12</span>
+                                <span class="product-price">$30.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="brochetitas-ternera" data-name="Brochetitas de ternera con salsa malbec – x12" data-price="40000">
+                            <div class="product-info">
+                                <span class="product-name">Brochetitas de ternera con salsa malbec – x12</span>
+                                <span class="product-price">$40.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="verduritas-asadas-caliente" data-name="Verduritas asadas – x12" data-price="22000">
+                            <div class="product-info">
+                                <span class="product-name">Verduritas asadas – x12</span>
+                                <span class="product-price">$22.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="medialunitas-jyq-caliente" data-name="Medialunitas JYQ – x12" data-price="28000">
+                            <div class="product-info">
+                                <span class="product-name">Medialunitas JYQ – x12</span>
+                                <span class="product-price">$28.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                        <li class="product-cart-item" data-image="images/salados.jpg" data-id="roll-philo-queso-cebolla" data-name="Roll de masa philo con queso y cebolla caramelizada – x12" data-price="30000">
+                            <div class="product-info">
+                                <span class="product-name">Roll de masa philo con queso y cebolla caramelizada – x12</span>
+                                <span class="product-price">$30.000</span>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+
+    <script src="mobile-menu.js"></script>
+    <script src="carrito.js"></script>
+    <script src="menu-script.js"></script>
+</body>
+</html>

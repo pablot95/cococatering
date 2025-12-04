@@ -445,3 +445,12 @@ app.post('/api/create-preference', async (req, res) => {
 
 Documentación oficial: https://www.mercadopago.com.ar/developers/es/docs/checkout-pro/landing
 */
+
+// ===================================
+// EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
+// ===================================
+// Necesario para que los eventos onclick funcionen con módulos ES6
+window.toggleMobileMenu = toggleMobileMenu;
+window.continuarPago = continuarPago;
+window.volverFacturacion = volverFacturacion;
+window.toggleFacturacion = toggleFacturacion;

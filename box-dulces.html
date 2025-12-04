@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Dulces - Cocó Catering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="eventos.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="carrito.html">Carrito</a>
+    </nav>
+
+    <div class="menu-page-container">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-logo">
+                <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
+            </div>
+            <img id="menuHeroImage" src="images/dulces.jpg" alt="Box Dulces">
+            
+            <!-- Botones de Navegación -->
+            <div class="navigation-buttons">
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Menú</button>
+                    <div class="dropdown-menu">
+                        <a href="eventos.html">Eventos</a>
+                        <a href="box-salados.html">Box Salados</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Salados</button>
+                    <div class="dropdown-menu">
+                        <a href="fingers-frios.html">Fríos</a>
+                        <a href="fingers-calientes.html">Calientes</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Dulces</button>
+                    <div class="dropdown-menu">
+                        <a href="box-dulces.html">Box Dulces</a>
+                        <a href="shots.html">Shots</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Tortas</button>
+                    <div class="dropdown-menu">
+                        <a href="tortas-clasicas.html">Clásicas</a>
+                        <a href="tortas-decoradas.html">Decoradas</a>
+                        <a href="combos-dulces.html">Combos Dulces</a>
+                    </div>
+                </div>
+                <a href="desayunos.html" class="nav-btn">Desayunos</a>
+            </div>
+        </div>
+
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Pattiserie -->
+            <section class="menu-section">
+                <h2 class="section-title">PATTISERIE</h2>
+                
+                <div class="box-details">
+                    <ul class="product-list">
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Brownie, dulce de leche y merengue</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulce.jpg">
+                            <span class="product-name">Pavlovas (sin tacc)</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Lemon pie</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Rogelitos</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Mousse de chocolate amargo</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Mousse de coco</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cheescake de frutos rojos</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cheescake de maracuyá</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Mousse de café y caramelo</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Oreo</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Havanette</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Macarons (sin tacc)</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Sable de almendras</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Brownie, DDL, crema y frutilla</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Chocotorta</span>
+                        </li>
+                    </ul>
+                
+
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="35000" data-units="16" onclick="selectSize(this, 'pattiserie')">
+                        <span class="size-label">Caja Chica</span>
+                        <span class="size-units">16 unidades</span>
+                        <span class="size-price">$35.000</span>
+                    </div>
+                    <div class="size-option" data-size="grande" data-price="85000" data-units="42" onclick="selectSize(this, 'pattiserie')">
+                        <span class="size-label">Caja Grande</span>
+                        <span class="size-units">42 unidades</span>
+                        <span class="size-price">$85.000</span>
+                    </div>
+                </div>
+
+                <div class="box-footer-new">
+                    <div class="box-controls-new">
+                        <div class="qty-section">
+                            <span class="qty-label">Cantidad:</span>
+                            <div class="qty-controls-new">
+                                <button class="qty-btn-new minus" onclick="updateQtyNew(this, -1)">−</button>
+                                <span class="qty-display-new">0</span>
+                                <button class="qty-btn-new plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="btn-add-new" onclick="addToCartNew(this, 'pattiserie')" data-image="images/dulces.jpg">
+                            Agregar al carrito
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Box Alfajorcitos -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX ALFAJORCITOS</h2>
+                
+                <div class="box-details">
+                    <ul class="product-list">
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de maizena</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de manteca</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de almendras</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de chocolate</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de pistacho</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfacookies de chocolate negro</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Alfajorcitos de coco</span>
+                        </li>
+                    </ul>
+                
+
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="32000" data-units="28" onclick="selectSize(this, 'alfajorcitos')">
+                        <span class="size-label">Caja Chica</span>
+                        <span class="size-units">28 unidades</span>
+                        <span class="size-price">$32.000</span>
+                    </div>
+                    <div class="size-option" data-size="grande" data-price="50000" data-units="47" onclick="selectSize(this, 'alfajorcitos')">
+                        <span class="size-label">Caja Grande</span>
+                        <span class="size-units">47 unidades</span>
+                        <span class="size-price">$50.000</span>
+                    </div>
+                </div>
+
+                <div class="box-footer-new">
+                    <div class="box-controls-new">
+                        <div class="qty-section">
+                            <span class="qty-label">Cantidad:</span>
+                            <div class="qty-controls-new">
+                                <button class="qty-btn-new minus" onclick="updateQtyNew(this, -1)">−</button>
+                                <span class="qty-display-new">0</span>
+                                <button class="qty-btn-new plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="btn-add-new" onclick="addToCartNew(this, 'alfajorcitos')" data-image="images/dulces.jpg">
+                            Agregar al carrito
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </section>
+
+            <!-- Box Cuadraditos -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX CUADRADITOS</h2>
+                
+                <div class="box-details">
+                    <ul class="product-list">
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Crumble de manzana</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cuadradito de brownie</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Lemonies</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Pastafrola</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cuadradito de coco con DDL</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Crumble de frambuesas</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cuadradito de nuez</span>
+                        </li>
+                    </ul>
+                
+
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="34000" data-units="28" onclick="selectSize(this, 'cuadraditos')">
+                        <span class="size-label">Caja Chica</span>
+                        <span class="size-units">28 unidades</span>
+                        <span class="size-price">$34.000</span>
+                    </div>
+                    <div class="size-option" data-size="grande" data-price="60000" data-units="49" onclick="selectSize(this, 'cuadraditos')">
+                        <span class="size-label">Caja Grande</span>
+                        <span class="size-units">49 unidades</span>
+                        <span class="size-price">$60.000</span>
+                    </div>
+                </div>
+
+                <div class="box-footer-new">
+                    <div class="box-controls-new">
+                        <div class="qty-section">
+                            <span class="qty-label">Cantidad:</span>
+                            <div class="qty-controls-new">
+                                <button class="qty-btn-new minus" onclick="updateQtyNew(this, -1)">−</button>
+                                <span class="qty-display-new">0</span>
+                                <button class="qty-btn-new plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="btn-add-new" onclick="addToCartNew(this, 'cuadraditos')" data-image="images/dulces.jpg">
+                            Agregar al carrito
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- Box Mix -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX MIX</h2>
+                
+                <div class="box-details">
+                    <ul class="product-list">
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Conitos de chocolate y DDL</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Trufas de coco / brigadeiros</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Trufas de chocolate con brownie</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Danesas</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Cookies red velvet</span>
+                        </li>
+                        <li class="product-item2" data-image="images/dulces.jpg">
+                            <span class="product-name">Lunetts</span>
+                        </li>
+                    </ul>
+                
+
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="34000" data-units="35" onclick="selectSize(this, 'mix')">
+                        <span class="size-label">Caja Chica</span>
+                        <span class="size-units">35 unidades</span>
+                        <span class="size-price">$34.000</span>
+                    </div>
+                    <div class="size-option" data-size="grande" data-price="52000" data-units="56" onclick="selectSize(this, 'mix')">
+                        <span class="size-label">Caja Grande</span>
+                        <span class="size-units">56 unidades</span>
+                        <span class="size-price">$52.000</span>
+                    </div>
+                </div>
+
+                <div class="box-footer-new">
+                    <div class="box-controls-new">
+                        <div class="qty-section">
+                            <span class="qty-label">Cantidad:</span>
+                            <div class="qty-controls-new">
+                                <button class="qty-btn-new minus" onclick="updateQtyNew(this, -1)">−</button>
+                                <span class="qty-display-new">0</span>
+                                <button class="qty-btn-new plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="btn-add-new" onclick="addToCartNew(this, 'mix')" data-image="images/dulces.jpg">
+                            Agregar al carrito
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+
+    <script src="mobile-menu.js"></script>
+    <script src="carrito.js"></script>
+    <script src="menu-script.js"></script>
+</body>
+</html>

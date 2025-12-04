@@ -1,24 +1,36 @@
 // Script para cambiar imagen del hero al hacer hover en los items del menú y productos
 document.addEventListener('DOMContentLoaded', function() {
-    const productItems = document.querySelectorAll('.product-item');
+    const productItems = document.querySelectorAll('.product-item, .product-cart-item');
+    const productItems2 = document.querySelectorAll('.product-item2');
     const boxContainers = document.querySelectorAll('.box-container');
     const heroImage = document.getElementById('menuHeroImage');
 
     // Hover para product items
     productItems.forEach(item => {
-        const productName = item.querySelector('.product-name');
-        if (productName) {
-            productName.addEventListener('mouseenter', function() {
-                const imageUrl = item.getAttribute('data-image');
-                if (imageUrl && heroImage) {
-                    heroImage.style.opacity = '0';
-                    setTimeout(() => {
-                        heroImage.src = imageUrl;
-                        heroImage.style.opacity = '1';
-                    }, 1);
-                }
-            });
-        }
+        item.addEventListener('mouseenter', function() {
+            const imageUrl = item.getAttribute('data-image');
+            if (imageUrl && heroImage) {
+                heroImage.style.opacity = '0';
+                setTimeout(() => {
+                    heroImage.src = imageUrl;
+                    heroImage.style.opacity = '1';
+                }, 1);
+            }
+        });
+    });
+
+    // Hover para product-item2
+    productItems2.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const imageUrl = item.getAttribute('data-image');
+            if (imageUrl && heroImage) {
+                heroImage.style.opacity = '0';
+                setTimeout(() => {
+                    heroImage.src = imageUrl;
+                    heroImage.style.opacity = '1';
+                }, 1);
+            }
+        });
     });
 
     // Hover para box containers
@@ -48,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Actualizar cantidad del producto
 function updateProductQty(button, change) {
-    const productItem = button.closest('.product-item');
+    const productItem = button.closest('.product-item, .product-cart-item');
     const boxContainer = button.closest('.box-container');
     
     let qtyDisplay;
@@ -135,7 +147,7 @@ function updateTotalCounter() {
 
 // Agregar todos los productos con cantidad > 0 al carrito
 function addAllToCart() {
-    const productItems = document.querySelectorAll('.product-item');
+    const productItems = document.querySelectorAll('.product-item, .product-cart-item');
     let totalAdded = 0;
     const productsToAdd = [];
     
@@ -204,4 +216,80 @@ function showCartNotification(message) {
             notification.remove();
         }, 300);
     }, 2000);
+}
+
+// ===================================
+// NUEVAS FUNCIONES PARA BOX-DULCES Y SHOTS
+// ===================================
+
+// Seleccionar tamaño de box
+function selectSize(element, productName) {
+    const section = element.closest('.menu-section');
+    const allOptions = section.querySelectorAll('.size-option');
+    
+    // Quitar selección de todos
+    allOptions.forEach(opt => opt.classList.remove('selected'));
+    
+    // Agregar selección al clickeado
+    element.classList.add('selected');
+}
+
+// Actualizar cantidad con nuevo diseño
+function updateQtyNew(button, change) {
+    const section = button.closest('.menu-section');
+    const qtyDisplay = section.querySelector('.qty-display-new');
+    
+    if (!qtyDisplay) return;
+    
+    let currentQty = parseInt(qtyDisplay.textContent);
+    currentQty = Math.max(0, currentQty + change);
+    qtyDisplay.textContent = currentQty;
+}
+
+// Agregar al carrito con nuevo diseño
+function addToCartNew(button, productName) {
+    const section = button.closest('.menu-section');
+    const selectedSize = section.querySelector('.size-option.selected');
+    const qtyDisplay = section.querySelector('.qty-display-new');
+    const quantity = parseInt(qtyDisplay.textContent);
+    
+    if (!selectedSize) {
+        alert('Por favor selecciona un tamaño');
+        return;
+    }
+    
+    if (quantity === 0) {
+        alert('Por favor selecciona la cantidad');
+        return;
+    }
+    
+    const sizeLabel = selectedSize.querySelector('.size-label').textContent;
+    const units = selectedSize.dataset.units;
+    const price = parseInt(selectedSize.dataset.price);
+    const size = selectedSize.dataset.size;
+    const image = button.dataset.image;
+    
+    const product = {
+        id: `${productName}-${size}`,
+        name: `${productName} - ${sizeLabel} (${units}u)`,
+        price: price,
+        image: image,
+        quantity: quantity
+    };
+    
+    // Agregar al carrito
+    if (typeof addToCart === 'function') {
+        for (let i = 0; i < quantity; i++) {
+            const singleProduct = {...product, quantity: 1};
+            addToCart(singleProduct);
+        }
+        
+        // Resetear cantidad
+        qtyDisplay.textContent = '0';
+        
+        // Mensaje de confirmación
+        showCartNotification(`${quantity} ${quantity === 1 ? 'producto agregado' : 'productos agregados'} al carrito`);
+    } else {
+        console.error('Función addToCart no encontrada');
+    }
 }

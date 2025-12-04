@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Cocó Catering</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Pantalla de Login -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-logo">
+                <h1>🍰 Cocó Catering</h1>
+                <p>Panel Administrativo</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                <div id="loginError" class="login-error" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel Principal -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-content">
+                <h1>🍰 Cocó Catering - Panel Administrativo</h1>
+                <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
+            </div>
+            <nav class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('inicio')">Inicio - Armador de Productos</button>
+                <button class="tab-btn" onclick="switchTab('ordenes')">Órdenes</button>
+            </nav>
+        </header>
+
+        <!-- Contenido -->
+        <div class="admin-content">
+            <!-- Tab: Inicio - Armador de Productos -->
+            <div id="tabInicio" class="tab-content active">
+                <div class="tab-header">
+                    <h2>🛠️ Armador de Productos</h2>
+                    <button class="btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
+                </div>
+
+                <div id="productsListContainer" class="products-grid">
+                    <div class="empty-state">
+                        <p>No hay productos creados aún</p>
+                        <p class="empty-subtitle">Haz clic en "Agregar Producto" para comenzar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Órdenes -->
+            <div id="tabOrdenes" class="tab-content">
+                <div class="tab-header">
+                    <h2>📦 Gestión de Órdenes</h2>
+                    <div class="filters">
+                        <select id="statusFilter" onchange="loadOrders()">
+                            <option value="all">Todas</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="processing">En proceso</option>
+                            <option value="completed">Completadas</option>
+                            <option value="cancelled">Canceladas</option>
+                        </select>
+                        <button class="btn-secondary" onclick="loadOrders()">🔄 Actualizar</button>
+                        <button class="btn-secondary" onclick="exportOrders()">📥 Exportar CSV</button>
+                    </div>
+                </div>
+
+                <div id="ordersContainer" class="orders-grid">
+                    <div class="loading">Cargando órdenes...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Agregar/Editar Producto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nuevo Producto</h2>
+                <button class="btn-close" onclick="closeProductModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Nombre del Producto *</label>
+                        <input type="text" id="productName" required placeholder="Ej: Tarta de Jamón y Queso">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescription">Descripción</label>
+                        <textarea id="productDescription" rows="3" placeholder="Descripción breve del producto"></textarea>
+                    </div>
+
+                    <div class="ingredients-section">
+                        <div class="ingredients-header">
+                            <h3>Ingredientes</h3>
+                            <button type="button" class="btn-add-ingredient" onclick="addIngredientRow()">+ Agregar Ingrediente</button>
+                        </div>
+                        <div id="ingredientsList" class="ingredients-list">
+                            <!-- Los ingredientes se agregan aquí dinámicamente -->
+                        </div>
+                    </div>
+
+                    <div class="product-summary">
+                        <div class="summary-item">
+                            <span>Costo Total:</span>
+                            <strong id="totalCost">$0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <label for="profitMargin">Margen de Ganancia (%):</label>
+                            <input type="number" id="profitMargin" value="30" min="0" max="100" onchange="calculateFinalPrice()">
+                        </div>
+                        <div class="summary-item highlight">
+                            <span>Precio Final:</span>
+                            <strong id="finalPrice">$0</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancelar</button>
+                        <button type="submit" class="btn-primary">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

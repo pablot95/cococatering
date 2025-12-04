@@ -1,24 +1,21 @@
-/* ===================================
-   Fingers Dulces Page Styles - Cocó Catering
-   =================================== */
-
-.dulces-page-container {
+.menu-page-container {
+    display: flex;
     min-height: 100vh;
-    background-color: rgba(232, 201, 173, 0.05);
 }
 
-/* Hero Section */
-.dulces-hero {
-    width: 100%;
-    height: 80vh;
+.menu-hero {
+    width: 60%;
+    height: 100vh;
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
-
-.dulces-hero::before {
+.menu-hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -29,41 +26,467 @@
     z-index: 1;
 }
 
-.dulces-hero-logo {
+.menu-hero-logo {
     position: absolute;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
     background-color: rgba(240, 248, 255, 0.227);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(1px);
     padding: 10px 10px;
     border-radius: 100px;
     box-shadow: 0 8px 30px rgba(139, 46, 58, 0.15);
     transition: all 0.4s ease;
 }
 
-.dulces-hero-logo:hover {
+.menu-hero-logo:hover {
     background: rgba(255, 255, 255, 0.9);
     cursor: pointer;
 }
 
-.dulces-hero-logo img {
-    height: 80px;
+.menu-hero-logo img {
+    height: 100px;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
-.dulces-hero img#dulcesHeroImage {
+.menu-hero img#menuHeroImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 0.5s ease;
 }
 
-/* Navigation Buttons en Dulces Hero */
-.dulces-hero .navigation-buttons {
+.menu-scroll-container {
+    width: 40%;
+    margin-left: 60%;
+    background: var(--blanco);
+
+}
+
+.menu-section {
+    margin: 0;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: #656565 0px 2px 2px;
+    text-align: center;
+    margin: 0;
+    font-weight: 400;
+    height: 50px;
+    background: #f1c2b8;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+
+
+@keyframes slideInBounce {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(5px);
+    }
+    80% {
+        transform: translateX(-50%) translateY(-3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes shine {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 150%;
+    }
+}
+
+.menu-item {
+padding-left: 40px;
+padding-top: 30px;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+
+.menu-item h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--negro);
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Notas de menú */
+.menu-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: black;
+    font-style: italic;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 30px;
+}
+
+/* Detalles de boxes */
+.box-details {
+    padding-top: 15px;
+    border-radius: 8px;
+    gap: 15px;
+    color: #000000;
+}
+
+
+.box-details p strong {
+    color: var(--bordo);
+    font-weight: 600;
+}
+
+.box-details ul {
+    list-style: none;
+    color: #000000;
+}
+
+.box-details ul li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #000000;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+
+/* Botón Consultar Precio */
+.btn-consultar-precio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #8b2e3ae8;
+    color: white;
+    text-decoration: none;
+    padding: 7px 0px;
+    border-radius: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 30px auto 40px;
+    max-width: 240px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-consultar-precio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+}
+
+.btn-consultar-precio svg {
+    flex-shrink: 0;
+}
+
+/* Nuevo diseño de Boxes */
+.box-container {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 0px 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.box-container:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.box-footer {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-description {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+}
+
+.box-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.box-price {
+    font-family: 'Cormorant Garamond', serif;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    color: var(--bordo);
+    font-weight: 700;
+}
+
+.box-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.btn-add-to-cart {
+    background: linear-gradient(135deg, var(--bordo) 0%, #8b2e3a 100%);
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.3);
+    margin-left: 15px;
+}
+
+.btn-add-to-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 46, 58, 0.4);
+    background: linear-gradient(135deg, #8b2e3a 0%, var(--bordo) 100%);
+}
+
+.btn-add-to-cart:active {
+    transform: translateY(0);
+}
+
+.item-description {
+    color: black;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 15px;
+}
+
+/* Product List */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+}
+
+/* Product List */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(139, 46, 58, 0.1);
+}
+
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    cursor: pointer;
+}
+
+.product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--negro);
+}
+
+.product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--bordo);
+    font-weight: 600;
+}
+
+.product-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.qty-btn {
+    background: rgba(139, 46, 58, 0.1);
+    border: 1px solid var(--bordo);
+    color: var(--bordo);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 200;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-btn:hover {
+    background: var(--bordo);
+    color: var(--blanco);
+    transform: scale(1.1);
+}
+
+.qty-display {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--negro);
+}
+
+/* Botón flotante para agregar todos */
+.floating-add-all-btn {
+    position: fixed;
+    bottom: -100px;
+    right: 13%;
+    background: var(--bordo);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 25px rgba(139, 46, 58, 0.5);
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 3px solid var(--nude);
+}
+
+.floating-add-all-btn.visible {
+    bottom: 10px;
+    animation: bounceIn 0.6s ease-out;
+}
+
+
+.floating-add-all-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.floating-add-all-btn .btn-text {
+    font-size: 1rem;
+}
+
+.floating-add-all-btn .btn-counter {
+    background: var(--blanco);
+    color: var(--bordo);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.floating-add-all-btn svg {
+    flex-shrink: 0;
+}
+
+@keyframes bounceIn {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+    }
+    50% {
+        bottom: 40px;
+    }
+    70% {
+        bottom: 25px;
+    }
+    100% {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* Notificación del carrito */
+.cart-notification {
+    position: fixed;
+    top: 175px;
+    right: 20px;
+    background: #f1c2b8;
+    color: var(--blanco);
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.cart-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Navigation Buttons en Menu Hero */
+.menu-hero .navigation-buttons {
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -86,7 +509,7 @@
     }
 }
 
-.dulces-hero .nav-btn {
+.menu-hero .nav-btn {
     background: rgba(254, 254, 254, 0.15);
     backdrop-filter: blur(15px);
     border: 2px solid rgba(254, 254, 254, 0.3);
@@ -104,14 +527,18 @@
     white-space: nowrap;
 }
 
-.dulces-hero .nav-btn:hover {
+.menu-hero .nav-btn:hover {
     background: rgba(255, 255, 255, 0.9);
     transform: translateY(-5px);
     color: black;
 }
 
-.dulces-hero .nav-btn:active {
+.menu-hero .nav-btn:active {
     transform: translateY(-5px) scale(0.98);
+}
+
+.imagenBoxSalado{
+    display: none;
 }
 
 /* Hamburger Menu */
@@ -197,11 +624,11 @@
 }
 
 /* ===================================
-   Cart Icon - Fingers Dulces Page
+   Cart Icon - Menu Page
    =================================== */
 .cart-icon {
     position: fixed;
-    top: 20px;
+    top: 15px;
     right: 40px;
     z-index: 999;
     background: rgba(254, 254, 254, 0.2);
@@ -224,15 +651,14 @@
 }
 
 .cart-icon svg {
-    width: 28px;
-    height: 28px;
-    stroke: var(--blanco);
+    width: 32px;
+    height: 32px;
+    stroke: var(--bordo);
     transition: stroke 0.3s ease;
+    margin-top: 3px;
+    margin-right: 4px;
 }
 
-.cart-icon:hover svg {
-    stroke: var(--bordo);
-}
 
 .cart-count {
     position: absolute;
@@ -251,186 +677,44 @@
     border: 2px solid var(--blanco);
 }
 
-/* Content Section */
-.dulces-grid-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.dulces-section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    color: var(--negro);
-    text-align: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    font-weight: 300;
-}
-
-/* Dulces Columns Container - Dos columnas centradas */
-
-
-.dulces-column:last-child {
-    border-right: none;
-}
-
-.dulces-item {
-    padding: 10px 10px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    text-align: center;
-}
-
-.dulces-item:last-child {
-    border-bottom: none;
-}
-
-.dulces-item:hover {
-    background: rgba(232, 213, 196, 0.1);
-}
-
-.dulces-item h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--negro);
-    margin-bottom: 8px;
-    font-weight: 400;
-}
-
-.dulces-item-description {
-    color: #777;
-    font-size: 1rem;
-    line-height: 1.4;
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-/* Section Description */
-.section-description {
-    padding: 30px 60px;
-    text-align: center;
-
-    margin: 0;
-}
-
-.section-description p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--negro);
-    line-height: 1.8;
-    font-style: italic;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* Shots Section - Items sobre imagen */
-.shots-section {
-    width: 100%;
-    position: relative;
-    min-height: 80vh;
-    padding: 0px 0;
-}
-
-.shots-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    color: var(--bordo);
-    text-align: center;
-    font-weight: 600;
-    z-index: 10;
-    position: relative;
-}
-
-.shots-container {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-}
-
-.shots-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.shots-bg-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #4545457e;
-    z-index: 2;
-}
-
-.shots-bg-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.5s ease;
-}
-
-.shots-grid {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 5px;
-    padding: 0;
-    max-width: 1500px;
-    margin: 0 auto;
-}
-
-
 /* Responsive */
 @media (max-width: 1024px) {
-    .dulces-hero-logo img {
-        height: 80px;
+    .menu-hero {
+        width: 50%;
     }
 
-    .dulces-column {
+    .menu-scroll-container {
+        width: 50%;
+        margin-left: 50%;
         padding: 40px 30px;
     }
 
-    .dulces-hero .navigation-buttons {
+    .menu-hero-logo img {
+        height: 60px;
+    }
+
+    .menu-hero .navigation-buttons {
         gap: 12px;
         bottom: 70px;
     }
 
-    .dulces-hero .nav-btn {
+    .menu-hero .nav-btn {
         padding: 12px 25px;
         font-size: 0.9rem;
     }
 }
 
 @media (max-width: 768px) {
-    .dulces-hero {
-        height: 50vh;
+    .menu-page-container {
+        flex-direction: column;
     }
 
-    .dulces-hero::after {
-        content: 'Fingers Dulces';
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.5rem;
-        font-weight: 600;
-        color: var(--blanco);
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    .hamburger-menu {
+        display: block;
+    }
+
+    .mobile-nav-menu {
+        display: block;
     }
 
     .cart-icon {
@@ -445,99 +729,203 @@
         height: 24px;
     }
 
-    .dulces-hero-logo img {
-        height: 60px;
+    /* Controles de producto responsive */
+    .product-info {
+        min-width: 150px;
     }
 
-    .hamburger-menu {
-        display: block;
+
+    .qty-btn {
+        width: 35px;
+        height: 35px;
     }
 
-    .mobile-nav-menu {
-        display: block;
-    }
-
-    .dulces-hero .navigation-buttons {
-        display: none !important;
-    }
-
-    .dulces-column {
-        padding: 30px 20px;
-        border-right: none;
-        border-bottom: 1px solid #eee;
-    }
-
-    .dulces-column:last-child {
-        border-bottom: none;
-    }
-
-    .dulces-section-title {
-        font-size: 1.6rem;
-    }
-
-    .dulces-item h3 {
-        font-size: 1.2rem;
-    }
-
-    .dulces-item-description {
-        font-size: 0.95rem;
-    }
-
-    .section-description {
-        padding: 20px 30px;
-    }
-
-    .section-description p {
+    .floating-add-all-btn {
+        padding: 15px 30px;
         font-size: 1rem;
     }
 
-    .shots-title {
-        font-size: 2.2rem;
+    .floating-add-all-btn .btn-counter {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
     }
 
-    .shots-grid {
-        grid-template-columns: 1fr;
+    /* Boxes responsive */
+    .box-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .box-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-add-to-cart {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cart-notification {
+        top: 80px;
+        right: 10px;
+        left: 10px;
+        text-align: center;
+        font-size: 0.9rem;
+        padding: 12px 20px;
+    }
+
+    .menu-hero .navigation-buttons {
+        display: none !important;
+    }
+
+    .menu-hero::after {
+        content: 'Menú';
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--blanco);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .menu-hero {
+        width: 100%;
+        height: 40vh;
+        position: sticky;
+        z-index: 10;
+    }
+
+    .menu-scroll-container {
+        width: 100%;
+        margin-left: 0;
         padding: 30px 20px;
-        gap: 20px;
     }
 
-    .item2-card {
-        padding: 25px 20px;
-        min-height: 150px;
+    .menu-hero-logo {
+        top: 20px;
     }
 
-    .dulces-item2 h3 {
-        font-size: 1.4rem;
+    .menu-hero-logo img {
+        height: 50px;
     }
 
-    .dulces-hero .navigation-buttons {
+    .section-title {
+        font-size: 1.6rem;
+        padding: 12px 30px;
+        border-radius: 40px;
+    }
+
+    .menu-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .item-description {
+        font-size: 0.95rem;
+    }
+
+    .menu-hero .navigation-buttons {
         gap: 8px;
         bottom: 60px;
         padding: 0 10px;
         flex-wrap: wrap;
     }
 
-    .dulces-hero .nav-btn {
+    .menu-hero .nav-btn {
         padding: 10px 20px;
         font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
-    .dulces-hero .navigation-buttons {
+    .menu-hero .navigation-buttons {
         gap: 6px;
         bottom: 50px;
         flex-wrap: wrap;
     }
 
-    .dulces-hero .nav-btn {
+
+    .menu-hero .nav-btn {
         padding: 8px 15px;
         font-size: 0.75rem;
     }
-    .dulces-grid-container{
-        flex-direction: column;
-        padding: 10px;
+
+    /* Controles de producto en móviles pequeños */
+    .product-item {
+        flex-direction: row;
+        align-items: center;
         gap: 10px;
-        max-width: 70vw;
     }
+
+    .product-info {
+        width: 100%;
+    }
+
+    .product-name {
+        font-size: 1.1rem;
+    }
+
+    .product-price {
+        font-size: 0.95rem;
+    }
+    .product-controls {
+        gap: 10px;
+    }
+    .qty-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .qty-display {
+        min-width: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    /* Boxes en móviles pequeños */
+    .box-price {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .floating-add-all-btn{
+        right: 75px;
+        padding: 8px 15px;
+    }
+
+    .floating-add-all-btn.visible {
+        bottom: 5px !important;
+    }
+
+    .floating-add-all-btn {
+        font-size: 0.95rem;
+    }
+
+    .floating-add-all-btn .btn-text {
+        font-size: 0.95rem;
+    }
+
+    .floating-add-all-btn .btn-counter {
+        width: 26px;
+        height: 26px;
+        font-size: 0.85rem;
+    }
+
+    .cart-notification {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+
+    .imagenBoxSalado{
+    display: block;
+    width: 100%;
+}
 }
