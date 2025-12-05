@@ -111,11 +111,227 @@
                 <h2 class="section-title">Tortas Clásicas</h2>
                 <div class="menu-item">
                     <ul class="product-list">
-                        <!-- Aquí irán las tortas clásicas -->
-                        <li class="product-cart-item" data-image="images/tortas.jpg" data-id="torta-clasica-1" data-name="Torta Clásica 1" data-price="0">
+                        <!-- BROWNIE -->
+                        <li class="product-cart-item torta-item" data-image="productos/brownie.jpg" data-id="brownie" data-name="BROWNIE" data-price="38000">
                             <div class="product-info">
-                                <span class="product-name">Torta Clásica 1</span>
-                                <span class="product-price">$0</span>
+                                <div class="product-header">
+                                    <span class="product-name">BROWNIE</span>
+                                    <span class="product-price">$38.000</span>
+                                </div>
+                                <p class="product-description">Base de brownie de 22 cm, dulce de leche, merengue.<br>
+                                <em>Opciones: se puede agregar crema, golosinas o frutos rojos.</em></p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- CARROT CAKE -->
+                        <li class="product-cart-item torta-item" data-image="productos/carrot cake.jpg" data-id="carrot-cake" data-name="CARROT CAKE" data-price="48000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">CARROT CAKE</span>
+                                    <span class="product-price">$48.000</span>
+                                </div>
+                                <p class="product-description">Bizcocho de zanahoria vegano, super húmedo, con nueces y almendras, son tres capas de 20 cm de diam. y dos capas de frosting de queso.<br>
+                                <em>Opciones: se puede hacer totalmente vegano.</em></p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- RED VELVET -->
+                        <li class="product-cart-item torta-item" data-image="productos/red velvet.jpg" data-id="red-velvet" data-name="RED VELVET" data-price="48000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">RED VELVET</span>
+                                    <span class="product-price">$48.000</span>
+                                </div>
+                                <p class="product-description">Bizcocho de chocolate muy húmedo, son tres capas de 20 cm y dos capas frosting de queso.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- BANOFFE -->
+                        <li class="product-cart-item torta-item" data-image="images/tortas.jpg" data-id="banoffe" data-name="BANOFFE" data-price="32000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">BANOFFE</span>
+                                    <span class="product-price">$32.000</span>
+                                </div>
+                                <p class="product-description">Base de masa sableé de 22 cm, dulce de leche, bananas caramelizadas y mucha crema.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- CHOCOTORTA -->
+                        <li class="product-cart-item torta-item" data-image="productos/chocotorta.jpg" data-id="chocotorta" data-name="CHOCOTORTA" data-price="42000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">CHOCOTORTA</span>
+                                    <span class="product-price">$42.000</span>
+                                </div>
+                                <p class="product-description">Base de trufa de 20 cm, cuatro capas de galletitas y una mezcla de quesocrema y dulce de leche.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- TORTA DE NUEZ -->
+                        <li class="product-cart-item torta-item" data-image="productos/torta de nuez ( sin tacc).jpg" data-id="torta-nuez" data-name="TORTA DE NUEZ" data-price="32000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">TORTA DE NUEZ</span>
+                                    <span class="product-price">$32.000</span>
+                                </div>
+                                <p class="product-description">Bizcocho de harina de nuez de 22 cm, dulce de leche y crema.<br>
+                                <em>Opciones: se pueden sumar frutos rojos.</em><br>
+                                <strong>APTA CELÍACOS</strong></p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- MATILDA -->
+                        <li class="product-cart-item torta-item" data-image="productos/matilda.jpg" data-id="matilda" data-name="MATILDA" data-price="48000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">MATILDA</span>
+                                    <span class="product-price">$48.000</span>
+                                </div>
+                                <p class="product-description">Bizcocho super húmedo, muy chocolatosa, son tres capas de 20 cm, con dos capas de crema bariloche. Se termina con la misma crema.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- SABLÉ DE ALMENDRAS -->
+                        <li class="product-cart-item torta-item" data-image="productos/sable de almendras.jpg" data-id="sable-almendras" data-name="SABLÉ DE ALMENDRAS" data-price="0">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">SABLÉ DE ALMENDRAS</span>
+                                    <span class="product-price">$48.000</span>
+                                </div>
+                                <p class="product-description">Dos capas de sable de almendras de 22 cm, dos capas de dulce de leche, dos capas de crema y frutos rojos.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- MARQUISE DE FRUTOS ROJOS -->
+                        <li class="product-cart-item torta-item" data-image="images/tortas.jpg" data-id="marquise-frutos-rojos" data-name="MARQUISE DE FRUTOS ROJOS" data-price="42000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">MARQUISE DE FRUTOS ROJOS</span>
+                                    <span class="product-price">$42.000</span>
+                                </div>
+                                <p class="product-description">Bizcocho de chocolate sin harina, dulce de leche y frutos rojos.<br>
+                                <strong>APTA CELÍACA</strong></p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- ROGEL -->
+                        <li class="product-cart-item torta-item" data-image="productos/rogel.jpg" data-id="rogel" data-name="ROGEL" data-price="36000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">ROGEL</span>
+                                    <span class="product-price">$36.000</span>
+                                </div>
+                                <p class="product-description">10 capas super finas de masa 20 cm, mucho dulce de leche y se termina con gran cantidad de merengue.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- OREO TENTACIÓN -->
+                        <li class="product-cart-item torta-item" data-image="productos/oreo tentacion.jpg" data-id="oreo-tentacion" data-name="OREO TENTACIÓN" data-price="42000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">OREO TENTACIÓN</span>
+                                    <span class="product-price">$42.000</span>
+                                </div>
+                                <p class="product-description">Base de galletita oreo de 20 cm, dulce de leche y crema oreo. Es una torta helada.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- CHEESECAKE -->
+                        <li class="product-cart-item torta-item" data-image="productos/cheesecake de frutillas.jpg" data-id="cheesecake" data-name="CHEESECAKE" data-price="38000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">CHEESECAKE</span>
+                                    <span class="product-price">$38.000</span>
+                                </div>
+                                <p class="product-description">Base de galletita de 22 cm, crema de queso cocida, reducción de frutos rojos y fruta fresca.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- LEMON PIE -->
+                        <li class="product-cart-item torta-item" data-image="productos/lemon pie.jpg" data-id="lemon-pie" data-name="LEMON PIE" data-price="38000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">LEMON PIE</span>
+                                    <span class="product-price">$38.000</span>
+                                </div>
+                                <p class="product-description">Base de galletita de 22 cm, curd de limón y mucho merengue.</p>
+                            </div>
+                            <div class="product-controls">
+                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
+                            </div>
+                        </li>
+
+                        <!-- KEY LIME PIE -->
+                        <li class="product-cart-item torta-item" data-image="images/tortas.jpg" data-id="key-lime-pie" data-name="KEY LIME PIE" data-price="39000">
+                            <div class="product-info">
+                                <div class="product-header">
+                                    <span class="product-name">KEY LIME PIE</span>
+                                    <span class="product-price">$39.000</span>
+                                </div>
+                                <p class="product-description">Base de galletita de 22 cm, curd de limas y crema.</p>
                             </div>
                             <div class="product-controls">
                                 <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>

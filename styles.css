@@ -337,8 +337,8 @@ a {
     color: var(--negro);
     transition: all 0.3s;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .dropdown-menu a:hover {

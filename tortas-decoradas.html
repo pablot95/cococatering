@@ -107,25 +107,80 @@
         <!-- Scroll Container -->
         <div class="menu-scroll-container">
             <!-- Tortas Decoradas -->
-            <div class="menu-section">
-                <h2 class="section-title">Tortas Decoradas</h2>
-                <div class="menu-item">
-                    <ul class="product-list">
-                        <!-- Aquí irán las tortas decoradas -->
-                        <li class="product-cart-item" data-image="images/tortas.jpg" data-id="torta-decorada-1" data-name="Torta Decorada 1" data-price="0">
-                            <div class="product-info">
-                                <span class="product-name">Torta Decorada 1</span>
-                                <span class="product-price">$0</span>
-                            </div>
-                            <div class="product-controls">
-                                <button class="qty-btn minus" onclick="updateProductQty(this, -1)">−</button>
-                                <span class="qty-display">0</span>
-                                <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
-                            </div>
-                        </li>
-                    </ul>
+            <section class="menu-section">
+                <h2 class="section-title tortas-decoradas-title">TORTAS DECORADAS</h2>
+                <p class="tortas-decoradas-intro">A TODOS TUS COMBOS LE PODEMOS SUMAR FINGER FOODS DULCES</p>
+
+                <!-- Box de Información (Sabores, Rellenos, Importante) -->
+                <div class="torta-info-box-vertical">
+                    <div class="info-section-vertical">
+                        <h3 class="info-title-vertical">SABOR DEL BIZCOCHUELO</h3>
+                        <ul class="info-list-vertical">
+                            <li>Vainilla</li>
+                            <li>Chocolate</li>
+                        </ul>
+                        <p class="info-note-vertical">Si la torta tiene dos pisos podemos hacer un sabor de cada uno.</p>
+                    </div>
+
+                    <div class="info-section-vertical">
+                        <h3 class="info-title-vertical">RELLENOS</h3>
+                        <ul class="info-list-vertical">
+                            <li>Dulce de leche</li>
+                            <li>Ganache de chocolate blanco</li>
+                            <li>Ganache de chocolate amargo</li>
+                            <li>Crema bariloche (crema, chocolate y DDL)</li>
+                            <li>Bon o bon</li>
+                            <li>Choconutella</li>
+                            <li>Crema oreo (solo en buttercream)</li>
+                            <li>Crema de limón</li>
+                            <li>Crema de café</li>
+                            <li>Mousse de DDL</li>
+                        </ul>
+                        <p class="info-note-vertical extra-options">Se pueden sumar a otro relleno:</p>
+                        <ul class="info-list-vertical extras">
+                            <li>Caramel</li>
+                            <li>Frutos rojos</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-section-vertical importante">
+                        <h3 class="info-title-vertical">IMPORTANTE</h3>
+                        <p>Los cinco cortes de la torta no significan cinco rellenos distintos.</p>
+                        <p>Se debe elegir 2 / 3 rellenos.</p>
+                        <p>Se aconseja que uno sea dulce de leche ya que es algo genérico y siempre gusta, y por otro lado genera estabilidad en la torta.</p>
+                    </div>
+
+                    <!-- Selector de Tamaños -->
+                    <div class="torta-size-selector">
+                        <div class="size-option-torta" data-size="12" onclick="selectTortaSize(this)">
+                            <span class="size-label-torta">12 Porciones</span>
+                            <span class="size-details-torta">Buttercream: 3 cortes - 15cm x 14cm</span>
+                            <span class="size-details-torta">Pasta ballina: 3 cortes - 16cm x 15cm</span>
+                        </div>
+                        <div class="size-option-torta" data-size="24" onclick="selectTortaSize(this)">
+                            <span class="size-label-torta">24 Porciones</span>
+                            <span class="size-details-torta">Buttercream: 5 cortes - 18cm x 21cm</span>
+                            <span class="size-details-torta">Pasta ballina: 5 cortes - 19cm x 22cm</span>
+                        </div>
+                        <div class="size-option-torta" data-size="36" onclick="selectTortaSize(this)">
+                            <span class="size-label-torta">36 Porciones</span>
+                            <span class="size-details-torta">Buttercream: 5 cortes - 20cm x 23cm</span>
+                            <span class="size-details-torta">Pasta ballina: 5 cortes - 21cm x 24cm</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Consulta -->
+                    <div class="box-footer-single">
+                        <a href="#" id="tortaConsultarBtn" class="btn-consultar-wsp-single disabled" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Consultar Precio
+                        </a>
+                    </div>
                 </div>
-            </div>
+
+            </section>
         </div>
     </div>
 
@@ -139,5 +194,27 @@
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
     <script src="menu-script.js"></script>
+    
+    <script>
+        // Función para seleccionar tamaño de torta
+        function selectTortaSize(element) {
+            // Remover selección previa
+            const allOptions = document.querySelectorAll('.size-option-torta');
+            allOptions.forEach(option => option.classList.remove('selected'));
+            
+            // Seleccionar nueva opción
+            element.classList.add('selected');
+            
+            // Obtener el tamaño seleccionado
+            const size = element.getAttribute('data-size');
+            
+            // Habilitar el botón y actualizar el enlace
+            const btn = document.getElementById('tortaConsultarBtn');
+            btn.classList.remove('disabled');
+            
+            const whatsappMessage = `Hola! Me gustaría consultar precio por una TORTA DE ${size} PORCIONES`;
+            btn.href = `https://wa.me/5491234567890?text=${encodeURIComponent(whatsappMessage)}`;
+        }
+    </script>
 </body>
 </html>

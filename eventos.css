@@ -8,7 +8,7 @@
 }
 
 .menu-hero {
-    width: 60%;
+    width: 55%;
     height: 100vh;
     overflow: hidden;
     position: fixed;
@@ -26,7 +26,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(57, 57, 57, 0.1);
     z-index: 1;
 }
 
@@ -61,9 +61,9 @@
 }
 
 .menu-scroll-container {
-    width: 40%;
-    margin-left: 60%;
-    background: var(--blanco);
+    width: 45%;
+        margin-left: 55%;
+        background: var(--blanco);
 
 }
 
@@ -135,7 +135,7 @@
 }
 
 .menu-item {
-padding: 10px 40px;
+padding: 10px 20px;
 
 }
 
@@ -363,7 +363,7 @@ padding: 10px 40px;
 }
 
 .product-item2 .product-name {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: black;
 }
 
@@ -467,7 +467,7 @@ padding: 10px 40px;
 
 .no-cart::after {
     content: '/';
-    margin: 0 8px;
+    margin: 0 2px;
     color: var(--bordo);
     font-weight: 400;
     font-size: 1.1rem;
@@ -483,9 +483,12 @@ padding: 10px 40px;
 }
 
 .no-cart .product-name {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: black;
     font-style: italic;
+    margin-bottom: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 /* Items con carrito (productos comprables) */
@@ -499,7 +502,7 @@ padding: 10px 40px;
     justify-content: space-between;
     gap: 15px;
     transition: all 0.3s ease;
-    width: 98%;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -518,7 +521,7 @@ padding: 10px 40px;
 
 .product-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: var(--negro);
     font-weight: 500;
 }
@@ -566,6 +569,483 @@ padding: 10px 40px;
     font-size: 1rem;
     color: var(--negro);
     font-family: 'Montserrat', sans-serif;
+}
+
+/* Estilos específicos para tortas con descripción */
+.torta-item{
+    margin-bottom: 10px;
+}
+.torta-item .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.torta-item .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.torta-item .product-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.torta-item .product-price {
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.product-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    color: #555;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.product-description em {
+    color: #777;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.product-description strong {
+    color: var(--bordo);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+/* ===================================
+   Tortas Decoradas Styles
+   =================================== */
+.combos-dulces-intro,
+.tortas-decoradas-intro {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--bordo);
+    font-weight: 600;
+    margin: 20px 0 40px;
+    letter-spacing: 0.5px;
+}
+
+.tortas-decoradas-intro {
+    margin: -10px 0 30px;
+}
+
+/* Título principal más grande */
+.tortas-decoradas-title {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 30px;
+}
+
+/* Box vertical con toda la información */
+.torta-info-box-vertical {
+    background: rgba(254, 254, 254, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(139, 46, 58, 0.1);
+}
+
+.info-section-vertical {
+    padding: 20px 10px;
+    border-bottom: 2px solid rgba(139, 46, 58, 0.1);
+}
+
+.info-section-vertical:last-child {
+    border-bottom: none;
+}
+
+.info-section-vertical.importante {
+    background: linear-gradient(135deg, rgba(139, 46, 58, 0.1), rgba(139, 46, 58, 0.05));
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.info-title-vertical {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--bordo);
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+}
+
+.info-list-vertical {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.info-list-vertical li {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    color: #555;
+    padding: 6px 0;
+}
+
+.info-list-vertical li::before {
+    content: '✓';
+    color: var(--bordo);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.info-list-vertical.extras {
+    grid-template-columns: 1fr;
+}
+
+.info-list-vertical.extras li::before {
+    content: '+';
+}
+
+.info-note-vertical {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #666;
+    font-style: italic;
+    margin: 15px 0 0;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.info-note-vertical.extra-options {
+    margin: 20px 0 10px;
+    padding-top: 0;
+    border-top: none;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--bordo);
+}
+
+.info-section-vertical.importante p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* Subtítulo de porciones */
+.torta-porciones-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--bordo);
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+}
+
+/* Selector de tamaños de tortas */
+.torta-size-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+    padding-top: 20px;
+    border-top: 2px solid rgba(139, 46, 58, 0.1);
+}
+
+.size-option-torta {
+    background: rgba(254, 254, 254, 0.95);
+    border: 3px solid rgba(139, 46, 58, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.size-option-torta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(139, 46, 58, 0.2);
+    border-color: var(--bordo);
+}
+
+.size-option-torta.selected {
+    background: linear-gradient(135deg, rgba(139, 46, 58, 0.15), rgba(139, 46, 58, 0.08));
+    border-color: var(--bordo);
+    border-width: 3px;
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.3);
+}
+
+.size-label-torta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--bordo);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.size-details-torta {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+    display: block;
+    margin: 5px 0;
+}
+
+/* Botón deshabilitado */
+.btn-consultar-wsp-single.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+
+/* Botón de consultar para single box */
+.box-footer-single {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-consultar-wsp-single {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    max-width: 350px;
+}
+
+.btn-consultar-wsp-single:hover {
+    background: #1fb855;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-consultar-wsp-single svg {
+    flex-shrink: 0;
+}
+
+.torta-decorada-card {
+    background: rgba(254, 254, 254, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(139, 46, 58, 0.1);
+}
+
+.torta-size-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--bordo);
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 25px;
+    text-transform: uppercase;
+}
+
+.torta-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.torta-option {
+    background: white;
+    border: 2px solid rgba(139, 46, 58, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.option-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--negro);
+    font-weight: 600;
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+.torta-specs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.torta-specs li {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.torta-specs li:last-child {
+    border-bottom: none;
+}
+
+.torta-specs li::before {
+    content: '•';
+    color: var(--bordo);
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.btn-consultar-wsp {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.btn-consultar-wsp:hover {
+    background: #1fb855;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-consultar-wsp svg {
+    flex-shrink: 0;
+}
+
+/* Sección de información */
+.torta-info-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.info-card {
+    background: rgba(254, 254, 254, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.info-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--bordo);
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 20px;
+    text-transform: uppercase;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list.two-columns {
+    column-count: 2;
+    column-gap: 15px;
+}
+
+.info-list li {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    padding: 6px 0;
+    break-inside: avoid;
+}
+
+.info-list li::before {
+    content: '✓';
+    color: var(--bordo);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.info-list.extras li::before {
+    content: '+';
+}
+
+.info-note {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin: 15px 0 0;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.info-note.extra-options {
+    margin: 20px 0 10px;
+    padding-top: 0;
+    border-top: none;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--bordo);
+}
+
+/* Box Importante */
+.importante-box {
+    background: linear-gradient(135deg, rgba(139, 46, 58, 0.1), rgba(139, 46, 58, 0.05));
+    border-left: 5px solid var(--bordo);
+    border-radius: 15px;
+    padding: 25px 30px;
+    margin: 30px 0;
+}
+
+.importante-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--bordo);
+    font-weight: 700;
+    margin: 0 0 15px;
+    text-transform: uppercase;
+}
+
+.importante-box p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 10px 0;
 }
 
 /* Botón flotante para agregar todos */
@@ -1326,6 +1806,49 @@ padding: 10px 40px;
     .qty-controls-new .qty-display {
         font-size: 1rem;
         min-width: 30px;
+    }
+
+    /* Tortas Decoradas Responsive */
+    .tortas-decoradas-title {
+        font-size: 2.2rem !important;
+    }
+
+    .info-list-vertical {
+        grid-template-columns: 1fr;
+    }
+
+    .torta-size-selector {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .size-option-torta {
+        padding: 15px;
+    }
+
+    .size-label-torta {
+        font-size: 1.4rem;
+    }
+
+    .size-details-torta {
+        font-size: 0.85rem;
+    }
+
+    .torta-info-box-vertical {
+        padding: 20px;
+    }
+
+    .info-title-vertical {
+        font-size: 1.4rem;
+    }
+
+    .torta-porciones-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .btn-consultar-wsp-single {
+        font-size: 1.1rem;
+        padding: 14px 25px;
     }
 }
 

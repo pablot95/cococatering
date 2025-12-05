@@ -60,4 +60,40 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileDropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', toggleMobileDropdown);
     });
+
+    // Event listeners para mobile-nav-grid dropdowns (index.html)
+    const mobileNavGridDropdowns = document.querySelectorAll('.mobile-nav-grid .nav-dropdown');
+    
+    mobileNavGridDropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        
+        if (toggle) {
+            // Click en el botón para toggle el dropdown
+            toggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                // Cerrar otros dropdowns del grid
+                mobileNavGridDropdowns.forEach(d => {
+                    if (d !== dropdown) {
+                        d.classList.remove('active');
+                    }
+                });
+                
+                // Toggle el dropdown actual
+                dropdown.classList.toggle('active');
+            });
+        }
+    });
+
+    // Cerrar dropdowns del grid al hacer click fuera
+    document.addEventListener('click', function(event) {
+        const clickedInsideGrid = event.target.closest('.mobile-nav-grid');
+        
+        if (!clickedInsideGrid) {
+            mobileNavGridDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
 });
