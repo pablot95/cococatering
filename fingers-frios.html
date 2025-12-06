@@ -63,6 +63,7 @@
     <div class="menu-page-container fingers-salados-page">
         <!-- Hero Image Fixed -->
         <div class="menu-hero">
+            <div class="menu-hero-bg-blur" id="menuHeroBgBlur"></div>
             <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
@@ -110,7 +111,7 @@
                 <h2 class="section-title">Fingers Fríos</h2>
                 <div class="menu-item">
                     <ul class="product-list">
-                        <li class="product-cart-item" data-image="productos/Masitas de queso.jpg" data-id="masitas-queso" data-name="Masitas de queso – x24" data-price="19000">
+                        <li class="product-cart-item" data-image="productos/masitas-de-queso.jpg" data-id="masitas-queso" data-name="Masitas de queso – x24" data-price="19000">
                             <div class="product-info">
                                 <span class="product-name">Masitas de queso – x24</span>
                                 <span class="product-price">$19.000</span>
@@ -121,7 +122,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Pincho de Bocconcino de muzzarella, tomate y rúcula.jpg" data-id="pinchos-bocconcinos" data-name="Pinchos bocconcinos – x12" data-price="22000">
+                        <li class="product-cart-item" data-image="productos/pinchos-boconccinos.jpg" data-id="pinchos-bocconcinos" data-name="Pinchos bocconcinos – x12" data-price="22000">
                             <div class="product-info">
                                 <span class="product-name">Pinchos bocconcinos – x12</span>
                                 <span class="product-price">$22.000</span>
@@ -132,7 +133,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Ensalada caesar.jpg" data-id="ensaladitas-cesar" data-name="Ensaladitas César – x12" data-price="48000">
+                        <li class="product-cart-item" data-image="productos/ensaladitas-cesar.jpg" data-id="ensaladitas-cesar" data-name="Ensaladitas César – x12" data-price="48000">
                             <div class="product-info">
                                 <span class="product-name">Ensaladitas César – x12</span>
                                 <span class="product-price">$48.000</span>
@@ -143,7 +144,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/figacitas de peceto lechuga y tomate.jpg" data-id="pecetitos" data-name="Pecetitos – x12" data-price="38000">
+                        <li class="product-cart-item" data-image="productos/figacitas-de-peceto-lechuga-y-tomate.jpg" data-id="pecetitos" data-name="Pecetitos – x12" data-price="38000">
                             <div class="product-info">
                                 <span class="product-name">Pecetitos – x12</span>
                                 <span class="product-price">$38.000</span>
@@ -154,7 +155,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/papitas rosty.jpg" data-id="papas-rosty" data-name="Papas rosty – x12" data-price="15000">
+                        <li class="product-cart-item" data-image="productos/Papas-Rosty.jpg" data-id="papas-rosty" data-name="Papas rosty – x12" data-price="15000">
                             <div class="product-info">
                                 <span class="product-name">Papas rosty – x12</span>
                                 <span class="product-price">$15.000</span>
@@ -165,7 +166,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Picaditas y fiambres (5).jpg" data-id="picaditas-individuales" data-name="Picaditas individuales – x12" data-price="78000">
+                        <li class="product-cart-item" data-image="productos/picadas-individuales.jpg" data-id="picaditas-individuales" data-name="Picaditas individuales – x12" data-price="78000">
                             <div class="product-info">
                                 <span class="product-name">Picaditas individuales – x12</span>
                                 <span class="product-price">$78.000</span>
@@ -198,7 +199,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Criollito capresse.jpg" data-id="criollito-capresse" data-name="Criollito capresse – x12" data-price="23000">
+                        <li class="product-cart-item" data-image="productos/criollito-capresse.jpg" data-id="criollito-capresse" data-name="Criollito capresse – x12" data-price="23000">
                             <div class="product-info">
                                 <span class="product-name">Criollito capresse – x12</span>
                                 <span class="product-price">$23.000</span>
@@ -209,7 +210,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Sconcito de Crudo Y rucula.jpg" data-id="scon-crudo-rucula" data-name="Scon crudo y rúcula – x12" data-price="45000">
+                        <li class="product-cart-item" data-image="productos/scon-de-crudo.jpg" data-id="scon-crudo-rucula" data-name="Scon crudo y rúcula – x12" data-price="45000">
                             <div class="product-info">
                                 <span class="product-name">Scon crudo y rúcula – x12</span>
                                 <span class="product-price">$45.000</span>
@@ -220,7 +221,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Tarteletas frias de Hummus y Atún 2.jpg" data-id="tartaleta-atun" data-name="Tartaleta atún – x12" data-price="15000">
+                        <li class="product-cart-item" data-image="productos/Tarteletas-frias-de-Hummus-y-Atún-2.jpg" data-id="tartaleta-atun" data-name="Tartaleta atún – x12" data-price="15000">
                             <div class="product-info">
                                 <span class="product-name">Tartaleta atún – x12</span>
                                 <span class="product-price">$15.000</span>
@@ -231,7 +232,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Degustación de quesos.jpg" data-id="degustacion-queso" data-name="Degustación de queso – x12" data-price="33000">
+                        <li class="product-cart-item" data-image="productos/Degustación-de-quesos.jpg" data-id="degustacion-queso" data-name="Degustación de queso – x12" data-price="33000">
                             <div class="product-info">
                                 <span class="product-name">Degustación de queso – x12</span>
                                 <span class="product-price">$33.000</span>
@@ -242,7 +243,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Dip de queso azul y nueces.jpg" data-id="dip-queso-azul" data-name="Dip queso azul – x12" data-price="21000">
+                        <li class="product-cart-item" data-image="productos/dip-de-queso-azul.jpg" data-id="dip-queso-azul" data-name="Dip queso azul – x12" data-price="21000">
                             <div class="product-info">
                                 <span class="product-name">Dip queso azul – x12</span>
                                 <span class="product-price">$21.000</span>
@@ -253,7 +254,7 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/figacita de Lomo y morrones asados.jpg" data-id="lomo-morron" data-name="Lomo y morrón – x12" data-price="55000">
+                        <li class="product-cart-item" data-image="productos/figacita-de-Lomo-y-morrones-asados.jpg" data-id="lomo-morron" data-name="Lomo y morrón – x12" data-price="55000">
                             <div class="product-info">
                                 <span class="product-name">Lomo y morrón – x12</span>
                                 <span class="product-price">$55.000</span>
@@ -286,9 +287,9 @@
                                 <button class="qty-btn plus" onclick="updateProductQty(this, 1)">+</button>
                             </div>
                         </li>
-                        <li class="product-cart-item" data-image="productos/Scon de queso al romero con lajas de Salmón.jpg" data-id="sconcito-salmon" data-name="Sconcito con caja de salmón – x12" data-price="60000">
+                        <li class="product-cart-item" data-image="productos/Scon-de-queso-al-romero-con-lajas-de-Salmón.jpg" data-id="sconcito-salmon" data-name="Sconcito con caja de salmón – x12" data-price="60000">
                             <div class="product-info">
-                                <span class="product-name">Sconcito con caja de salmón – x12</span>
+                                <span class="product-name">Sconcito con lajas de salmón – x12</span>
                                 <span class="product-price">$60.000</span>
                             </div>
                             <div class="product-controls">

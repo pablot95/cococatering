@@ -3,19 +3,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const productItems = document.querySelectorAll('.product-item, .product-cart-item');
     const productItems2 = document.querySelectorAll('.product-item2');
     const boxContainers = document.querySelectorAll('.box-container');
+    const boxDetails = document.querySelectorAll('.box-details');
     const heroImage = document.getElementById('menuHeroImage');
+    const heroBgBlur = document.getElementById('menuHeroBgBlur');
+
+    // Función para actualizar imagen y fondo borroso
+    function updateHeroImage(imageUrl) {
+        if (imageUrl && heroImage) {
+            heroImage.style.opacity = '0';
+            if (heroBgBlur) {
+                heroBgBlur.style.opacity = '0';
+            }
+            
+            setTimeout(() => {
+                heroImage.src = imageUrl;
+                if (heroBgBlur) {
+                    heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
+                }
+                
+                heroImage.style.opacity = '1';
+                if (heroBgBlur) {
+                    heroBgBlur.style.opacity = '1';
+                }
+            }, 150);
+        }
+    }
+
+    // Inicializar el fondo borroso con la imagen inicial
+    if (heroImage && heroBgBlur && heroImage.src) {
+        heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
+    }
 
     // Hover para product items
     productItems.forEach(item => {
         item.addEventListener('mouseenter', function() {
             const imageUrl = item.getAttribute('data-image');
-            if (imageUrl && heroImage) {
-                heroImage.style.opacity = '0';
-                setTimeout(() => {
-                    heroImage.src = imageUrl;
-                    heroImage.style.opacity = '1';
-                }, 1);
-            }
+            updateHeroImage(imageUrl);
         });
     });
 
@@ -23,13 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productItems2.forEach(item => {
         item.addEventListener('mouseenter', function() {
             const imageUrl = item.getAttribute('data-image');
-            if (imageUrl && heroImage) {
-                heroImage.style.opacity = '0';
-                setTimeout(() => {
-                    heroImage.src = imageUrl;
-                    heroImage.style.opacity = '1';
-                }, 1);
-            }
+            updateHeroImage(imageUrl);
         });
     });
 
@@ -37,12 +54,16 @@ document.addEventListener('DOMContentLoaded', function() {
     boxContainers.forEach(box => {
         box.addEventListener('mouseenter', function() {
             const imageUrl = box.getAttribute('data-image');
-            if (imageUrl && heroImage) {
-                heroImage.style.opacity = '0';
-                setTimeout(() => {
-                    heroImage.src = imageUrl;
-                    heroImage.style.opacity = '1';
-                }, 1);
+            updateHeroImage(imageUrl);
+        });
+    });
+
+    // Hover para box details (para los boxes de dulces)
+    boxDetails.forEach(box => {
+        box.addEventListener('mouseenter', function() {
+            const imageUrl = box.getAttribute('data-image');
+            if (imageUrl) {
+                updateHeroImage(imageUrl);
             }
         });
     });
