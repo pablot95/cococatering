@@ -226,7 +226,7 @@ document.head.appendChild(style);
 // ===================================
 // Protección contra inspección y copia
 // ===================================
-
+/*
 // Deshabilitar click derecho
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -285,4 +285,4 @@ document.addEventListener('dragstart', (e) => {
         e.preventDefault();
         return false;
     }
-});
+});*/

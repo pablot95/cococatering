@@ -1663,6 +1663,11 @@ padding: 10px 20px;
         display: block;
     }
 
+    /* Ocultar logo en móvil */
+    .menu-hero-logo {
+        display: none;
+    }
+
     .cart-icon {
         top: 30px;
         right: 80px;
@@ -1768,6 +1773,8 @@ padding: 10px 20px;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
     }
     .menu-note{
+        margin: 0;
+        margin-top: 20px;
         font-size: 1.2rem;
         padding-bottom: 15px;
     }
@@ -1921,7 +1928,7 @@ padding: 10px 20px;
     }
     .product-list {
         margin: 0;
-        padding: 10px 25px;
+        padding: 10px 10px;
     }
     .qty-display {
         min-width: 8px;
@@ -2088,9 +2095,10 @@ padding: 10px 20px;
 
     /* 1. EVENTOS - Productos en columna como SHOTS, sin "/" */
     .no-cart {
-        padding: 6px 15px !important;
+        padding: 8px 10px !important;
         width: 100% !important;
         display: block !important;
+        text-align: center;
     }
 
     .no-cart::after {
@@ -2098,11 +2106,12 @@ padding: 10px 20px;
     }
 
     .no-cart .product-name {
-        font-size: 1.1rem !important;
+        font-size: 1.3rem !important;
     }
 
     .menu-item h3 {
         text-align: center;
+        margin-top: 40px;
     }
 
     /* 2. FINGERS SALADOS - Más width, menos padding lateral */
@@ -2171,7 +2180,7 @@ padding: 10px 20px;
     }
 
     .box-details .product-item2 .product-name {
-        font-size: 0.85rem !important;
+        font-size: 1rem !important;
     }
 
     /* Box dulces - Controles iguales a box-salados */
@@ -2232,5 +2241,14 @@ padding: 10px 20px;
     .btn-add-new svg {
         width: 18px !important;
         height: 18px !important;
+    }
+    .box-container{
+        padding: 10px 0;
+    }
+    .box-details{
+        padding: 10px 0;
+    }
+    .box-size-selector{
+        padding: 15px 20px;
     }
 }
