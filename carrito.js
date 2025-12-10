@@ -17,6 +17,11 @@ function addToCart(product) {
     const cart = getCart();
     const existingItem = cart.find(item => item.id === product.id);
     
+    // Detectar si el producto es de una categoría sin imagen
+    const currentPage = window.location.pathname.split('/').pop().toLowerCase();
+    const imagelessPages = ['desayunos.html', 'combos-dulces.html', 'box-dulces.html', 'box-salados.html', 'shots.html'];
+    const showImage = !imagelessPages.includes(currentPage);
+    
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
@@ -25,6 +30,7 @@ function addToCart(product) {
             name: product.name,
             price: product.price || 0,
             image: product.image,
+            showImage: showImage,
             quantity: 1
         });
     }
@@ -85,8 +91,8 @@ function renderCart() {
     emptyCart.style.display = 'none';
     
     cartItemsContainer.innerHTML = cart.map(item => `
-        <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+        <div class="cart-item ${item.showImage === false ? 'no-image' : ''}">
+            ${item.showImage !== false ? `<img src="${item.image}" alt="${item.name}" class="cart-item-image">` : ''}
             <div class="cart-item-details">
                 <h3>${item.name}</h3>
                 <p class="item-price">$${item.price > 0 ? item.price.toLocaleString() : 'Consultar'}</p>

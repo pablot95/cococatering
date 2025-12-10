@@ -54,8 +54,8 @@ function loadOrderSummary() {
     
     // Renderizar items
     orderItemsContainer.innerHTML = cart.map(item => `
-        <div class="order-item">
-            <img src="${item.image}" alt="${item.name}" class="order-item-image">
+        <div class="order-item ${item.showImage === false ? 'no-image' : ''}">
+            ${item.showImage !== false ? `<img src="${item.image}" alt="${item.name}" class="order-item-image">` : ''}
             <div class="order-item-details">
                 <div class="order-item-name">${item.name}</div>
                 <div class="order-item-quantity">Cantidad: ${item.quantity}</div>

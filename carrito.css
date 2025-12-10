@@ -105,6 +105,10 @@
     align-items: center;
 }
 
+.cart-item.no-image {
+    grid-template-columns: 1fr auto;
+}
+
 .cart-item:last-child {
     border-bottom: none;
 }

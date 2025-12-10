@@ -1,0 +1,13 @@
+# robots.txt para Cocó Catering
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /checkout.js
+Disallow: /carrito.js
+Disallow: /firestore-service.js
+
+# Sitemap
+Sitemap: https://cococatering.com.ar/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

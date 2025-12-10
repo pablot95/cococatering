@@ -438,6 +438,10 @@
     border-bottom: 1px solid #eee;
 }
 
+.order-item.no-image {
+    gap: 10px;
+}
+
 .order-item:last-child {
     border-bottom: none;
 }
