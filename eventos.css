@@ -2002,11 +2002,11 @@ padding: 10px 20px;
     /* Size selector en móviles pequeños */
     .size-option {
         min-width: 110px;
-        padding: 8px 10px;
+        padding: 10px 7px;
     }
 
     .size-label {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .size-units {

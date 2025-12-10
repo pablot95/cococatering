@@ -6,27 +6,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const boxDetails = document.querySelectorAll('.box-details');
     const heroImage = document.getElementById('menuHeroImage');
     const heroBgBlur = document.getElementById('menuHeroBgBlur');
+    
+    let currentImageUrl = heroImage ? heroImage.src : '';
+    let imageTimeout = null;
 
     // Función para actualizar imagen y fondo borroso
     function updateHeroImage(imageUrl) {
-        if (imageUrl && heroImage) {
+        if (!imageUrl || !heroImage || imageUrl === currentImageUrl) return;
+        
+        // Cancelar cualquier cambio de imagen pendiente
+        if (imageTimeout) {
+            clearTimeout(imageTimeout);
+        }
+        
+        currentImageUrl = imageUrl;
+        
+        // Precargar la nueva imagen
+        const newImage = new Image();
+        newImage.src = imageUrl;
+        
+        // Cuando la imagen esté completamente cargada
+        newImage.onload = function() {
+            // Fade out
             heroImage.style.opacity = '0';
             if (heroBgBlur) {
                 heroBgBlur.style.opacity = '0';
             }
             
-            setTimeout(() => {
+            // Cambiar imagen después del fade out
+            imageTimeout = setTimeout(() => {
                 heroImage.src = imageUrl;
                 if (heroBgBlur) {
                     heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
                 }
                 
+                // Fade in
                 heroImage.style.opacity = '1';
                 if (heroBgBlur) {
                     heroBgBlur.style.opacity = '1';
                 }
+                imageTimeout = null;
             }, 150);
-        }
+        };
     }
 
     // Inicializar el fondo borroso con la imagen inicial
