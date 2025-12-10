@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Productos (Solo Imágenes) - Cocó Catering</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #8B2E3A;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        button {
+            background: #8B2E3A;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+        }
+        button:hover {
+            background: #6d2329;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .log {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 5px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .log-item {
+            margin: 5px 0;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff4444; }
+        .info { color: #4444ff; }
+        .progress {
+            width: 100%;
+            height: 30px;
+            background: #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #8B2E3A, #d4475c);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .stat-card {
+            display: inline-block;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #8B2E3A;
+            margin: 10px;
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #8B2E3A;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Subir Productos a Firebase</h1>
+        
+        <div class="section">
+            <h2>📋 Información</h2>
+            <p>Este script creará productos básicos en Firebase con:</p>
+            <ul>
+                <li>✅ ID descriptivo (ej: <code>fingers-frios-salmon-philadelphia</code>)</li>
+                <li>✅ Nombre del producto</li>
+                <li>✅ URL de imagen (desde GitHub CDN)</li>
+                <li>✅ Categoría</li>
+            </ul>
+            <p><strong>Después podrás agregar:</strong> precio, stock, descripciones, etc. desde Firebase Console o con otro script.</p>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Control</h2>
+            <button id="startBtn" onclick="uploadProducts()">Subir Productos</button>
+            
+            <div class="progress" id="progressContainer" style="display: none;">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+
+            <div id="statsContainer" style="display: none; margin-top: 20px;">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Productos Creados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="errors">0</div>
+                    <div class="stat-label">Errores</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Log</h2>
+            <div class="log" id="logContainer"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8tAHsCsRH1ZfXri3UsbDvt31gBYpoWME",
+            authDomain: "cococatering-aba04.firebaseapp.com",
+            projectId: "cococatering-aba04",
+            storageBucket: "cococatering-aba04.firebasestorage.app",
+            messagingSenderId: "632665072150",
+            appId: "1:632665072150:web:52573c2ced6bc8b2818b37"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const CDN_BASE = 'https://cdn.jsdelivr.net/gh/pablot95/cococatering@main/';
+
+        let stats = {
+            totalProducts: 0,
+            errors: 0
+        };
+
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.className = `log-item ${type}`;
+            logItem.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = stats.totalProducts;
+            document.getElementById('errors').textContent = stats.errors;
+        }
+
+        function updateProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = Math.round(percent) + '%';
+        }
+
+        function getImageURL(localPath) {
+            return CDN_BASE + localPath;
+        }
+
+        // Lista simplificada: solo ID, nombre, imagen y categoría
+        
+
+        async function uploadProducts() {
+            const startBtn = document.getElementById('startBtn');
+            startBtn.disabled = true;
+            startBtn.textContent = 'Subiendo...';
+            
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('statsContainer').style.display = 'block';
+            
+            log('🚀 Iniciando subida de productos...', 'info');
+            log(`📷 CDN: ${CDN_BASE}`, 'info');
+            log(`📦 Total productos: ${products.length}`, 'info');
+            
+            try {
+                for (let i = 0; i < products.length; i++) {
+                    const product = products[i];
+                    
+                    try {
+                        const imageURL = getImageURL(product.image);
+                        
+                        await setDoc(doc(db, 'products', product.id), {
+                            name: product.name,
+                            image: imageURL,
+                            category: product.category,
+                            createdAt: new Date()
+                        });
+                        
+                        stats.totalProducts++;
+                        updateStats();
+                        updateProgress(((i + 1) / products.length) * 100);
+                        
+                        log(`✅ ${product.name}`, 'success');
+                        
+                    } catch (error) {
+                        log(`❌ Error: ${product.name} - ${error.message}`, 'error');
+                        stats.errors++;
+                        updateStats();
+                    }
+                }
+                
+                log('🎉 ¡Subida completada!', 'success');
+                log(`📊 ${stats.totalProducts} productos creados, ${stats.errors} errores`, 'info');
+                log('💡 Ahora puedes agregar precios y stock desde Firebase Console', 'info');
+                
+                startBtn.textContent = 'Completado ✅';
+                
+            } catch (error) {
+                log(`❌ Error crítico: ${error.message}`, 'error');
+                startBtn.disabled = false;
+                startBtn.textContent = 'Reintentar';
+            }
+        }
+
+        window.uploadProducts = uploadProducts;
+    </script>
+</body>
+</html>

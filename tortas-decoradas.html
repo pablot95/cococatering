@@ -70,7 +70,7 @@
             <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
-            <img id="menuHeroImage" src="images/tortas.jpg" alt="Tortas Decoradas">
+            <img id="menuHeroImage" src="productos/TortaDecorada1.jpg" alt="Tortas Decoradas">
             
             <!-- Botones de Navegación -->
             <div class="navigation-buttons">
@@ -199,6 +199,66 @@
     <script src="menu-script.js"></script>
     
     <script>
+        // Carrusel automático de tortas decoradas
+        const tortaImages = [
+            'productos/TortaDecorada1.jpg',
+            'productos/TortaDecorada2.jpg',
+            'productos/TortaDecorada3.jpg',
+            'productos/TortaDecorada4.jpg',
+            'productos/TortaDecorada5.jpg'
+        ];
+        let currentTortaIndex = 0;
+        
+        function changeTortaImage() {
+            const heroImage = document.getElementById('menuHeroImage');
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            
+            if (!heroImage) return;
+            
+            // Siguiente imagen
+            currentTortaIndex = (currentTortaIndex + 1) % tortaImages.length;
+            const nextImage = tortaImages[currentTortaIndex];
+            
+            // Precargar imagen
+            const newImage = new Image();
+            newImage.src = nextImage;
+            
+            newImage.onload = function() {
+                // Fade out
+                heroImage.style.opacity = '0';
+                if (heroBgBlur) {
+                    heroBgBlur.style.opacity = '0';
+                }
+                
+                setTimeout(() => {
+                    heroImage.src = nextImage;
+                    if (heroBgBlur) {
+                        heroBgBlur.style.backgroundImage = `url(${nextImage})`;
+                    }
+                    
+                    // Fade in
+                    heroImage.style.opacity = '1';
+                    if (heroBgBlur) {
+                        heroBgBlur.style.opacity = '1';
+                    }
+                }, 150);
+            };
+        }
+        
+        // Inicializar carrusel cuando carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            const heroImage = document.getElementById('menuHeroImage');
+            
+            // Inicializar fondo borroso
+            if (heroImage && heroBgBlur && heroImage.src) {
+                heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
+            }
+            
+            // Cambiar imagen cada 3 segundos
+            setInterval(changeTortaImage, 3000);
+        });
+        
         // Función para seleccionar tamaño de torta
         function selectTortaSize(element) {
             // Remover selección previa

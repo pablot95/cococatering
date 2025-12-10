@@ -70,7 +70,7 @@
             <div class="menu-hero-logo">
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
-            <img id="menuHeroImage" src="images/tortas.jpg" alt="Combos Dulces">
+            <img id="menuHeroImage" src="productos/ComboDulce1.jpg" alt="Combos Dulces">
             
             <!-- Botones de Navegación -->
             <div class="navigation-buttons">
@@ -291,6 +291,69 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </button>
 
+    <script>
+        // Carrusel automático de combos dulces
+        const comboImages = [
+            'productos/ComboDulce1.jpg',
+            'productos/ComboDulce2.jpg',
+            'productos/ComboDulce3.jpg',
+            'productos/ComboDulce4.jpg',
+            'productos/ComboDulce5.jpg',
+            'productos/ComboDulce6.jpg'
+        ];
+        let currentComboIndex = 0;
+        
+        function changeComboImage() {
+            const heroImage = document.getElementById('menuHeroImage');
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            
+            if (!heroImage) return;
+            
+            // Siguiente imagen
+            currentComboIndex = (currentComboIndex + 1) % comboImages.length;
+            const nextImage = comboImages[currentComboIndex];
+            
+            // Precargar imagen
+            const newImage = new Image();
+            newImage.src = nextImage;
+            
+            newImage.onload = function() {
+                // Fade out
+                heroImage.style.opacity = '0';
+                if (heroBgBlur) {
+                    heroBgBlur.style.opacity = '0';
+                }
+                
+                setTimeout(() => {
+                    heroImage.src = nextImage;
+                    if (heroBgBlur) {
+                        heroBgBlur.style.backgroundImage = `url(${nextImage})`;
+                    }
+                    
+                    // Fade in
+                    heroImage.style.opacity = '1';
+                    if (heroBgBlur) {
+                        heroBgBlur.style.opacity = '1';
+                    }
+                }, 150);
+            };
+        }
+        
+        // Inicializar carrusel cuando carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            const heroImage = document.getElementById('menuHeroImage');
+            
+            // Inicializar fondo borroso
+            if (heroImage && heroBgBlur && heroImage.src) {
+                heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
+            }
+            
+            // Cambiar imagen cada 3 segundos
+            setInterval(changeComboImage, 3000);
+        });
+    </script>
+    
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
     <script src="menu-script.js"></script>
