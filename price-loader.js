@@ -20,6 +20,9 @@ export async function loadDynamicPrices() {
     // Tortas Clásicas
     await updateTortasClasicas();
 
+    // Tortas Decoradas
+    await updateTortasDecoradas();
+
     // Combos Dulces
     await updateCombosDulces();
 
@@ -54,6 +57,8 @@ async function updateEventos() {
             });
 
             // Encontrar la sección en el HTML
+            // Intento 1: Buscar por ID de sección si estuviera disponible (requeriría cambios en HTML)
+            // Intento 2: Buscar por título (lógica actual)
             const sections = document.querySelectorAll('.menu-section');
             let targetSection = null;
             
@@ -102,18 +107,20 @@ async function updateBoxSalados() {
                 const container = document.querySelector(`.box-container[data-id="${box.id}"]`);
                 if (container) {
                     // Actualizar atributos data
-                    container.dataset.price = data.price;
-                    container.dataset.name = data.name;
+                    if (data.price) container.dataset.price = data.price;
+                    if (data.name) container.dataset.name = data.name;
                     
                     // Actualizar visualización
                     const priceElement = container.querySelector('.size-price, .box-price');
-                    if (priceElement) priceElement.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                    if (priceElement && data.price) priceElement.textContent = `$${data.price.toLocaleString('es-AR')}`;
                     
-                    const labelElement = container.querySelector('.size-label');
-                    if (labelElement) labelElement.textContent = data.name.split(' - ')[0]; // "BOX UNO"
-                    
-                    const unitsElement = container.querySelector('.size-units');
-                    if (unitsElement) unitsElement.textContent = data.name.split(' - ')[1]; // "Todo Frío..."
+                    if (data.name) {
+                        const labelElement = container.querySelector('.size-label');
+                        if (labelElement) labelElement.textContent = data.name.split(' - ')[0]; // "BOX UNO"
+                        
+                        const unitsElement = container.querySelector('.size-units');
+                        if (unitsElement) unitsElement.textContent = data.name.split(' - ')[1]; // "Todo Frío..."
+                    }
 
                     // Actualizar lista de productos
                     if (data.items && Array.isArray(data.items)) {
@@ -140,12 +147,6 @@ async function updateBoxDulces() {
             const querySnapshot = await getDocs(collection(db, colName));
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
-                // Buscar el elemento size-option correspondiente
-                // Usamos data-units y el parentId implícito para encontrarlo
-                // O mejor, buscamos por texto del label si es posible, o agregamos IDs más específicos en el futuro
-                
-                // Estrategia: Buscar por data-units y data-size (chica/grande)
-                const size = data.name.toLowerCase().includes('chica') ? 'chica' : 'grande';
                 
                 // Mapeo de colección a parentId usado en HTML
                 let parentId = '';
@@ -154,17 +155,33 @@ async function updateBoxDulces() {
                 if (colName.includes('CUADRADITOS')) parentId = 'cuadraditos';
                 if (colName.includes('MIX')) parentId = 'mix';
 
-                const option = document.querySelector(`.size-option[onclick*="'${parentId}'"][data-size="${size}"]`);
+                let option = null;
+
+                // Intento 1: Buscar por ID (si existe en data y en HTML)
+                // Asumimos que el ID en HTML sería algo como data-id="pattiserie-chica"
+                if (data.id) {
+                    option = document.querySelector(`.size-option[data-id="${data.id}"]`);
+                }
+
+                // Intento 2: Buscar por lógica anterior (data-size y parentId)
+                if (!option) {
+                    // Estrategia: Buscar por data-units y data-size (chica/grande)
+                    const size = data.name.toLowerCase().includes('chica') ? 'chica' : 'grande';
+                    option = document.querySelector(`.size-option[onclick*="'${parentId}'"][data-size="${size}"]`);
+                }
                 
                 if (option) {
-                    option.dataset.price = data.price;
-                    option.dataset.units = data.units;
+                    if (data.price) {
+                        option.dataset.price = data.price;
+                        const priceSpan = option.querySelector('.size-price');
+                        if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                    }
                     
-                    const priceSpan = option.querySelector('.size-price');
-                    if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
-                    
-                    const unitsSpan = option.querySelector('.size-units');
-                    if (unitsSpan) unitsSpan.textContent = `${data.units} unidades`;
+                    if (data.units) {
+                        option.dataset.units = data.units;
+                        const unitsSpan = option.querySelector('.size-units');
+                        if (unitsSpan) unitsSpan.textContent = `${data.units} unidades`;
+                    }
 
                     // Actualizar lista de productos (buscando el contenedor padre .box-details)
                     if (data.items && Array.isArray(data.items)) {
@@ -186,17 +203,30 @@ async function updateShots() {
         const querySnapshot = await getDocs(collection(db, 'SHOTS'));
         if (!querySnapshot.empty) {
             const data = querySnapshot.docs[0].data();
-            const container = document.querySelector('.shots-info');
+            
+            // Intento 1: Buscar por ID (si existe en data y en HTML)
+            let container = null;
+            if (data.id) {
+                container = document.querySelector(`.shots-info[data-id="${data.id}"]`);
+            }
+
+            // Intento 2: Buscar por clase (fallback, como estaba antes)
+            if (!container) {
+                container = document.querySelector('.shots-info');
+            }
             
             if (container) {
-                container.dataset.price = data.price;
-                container.dataset.units = data.units;
+                if (data.price) {
+                    container.dataset.price = data.price;
+                    const priceSpan = container.querySelector('.shots-price');
+                    if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                }
                 
-                const priceSpan = container.querySelector('.shots-price');
-                if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
-                
-                const unitsSpan = container.querySelector('.shots-units');
-                if (unitsSpan) unitsSpan.textContent = `${data.units} unidades`;
+                if (data.units) {
+                    container.dataset.units = data.units;
+                    const unitsSpan = container.querySelector('.shots-units');
+                    if (unitsSpan) unitsSpan.textContent = `${data.units} unidades`;
+                }
             }
         }
     } catch (e) {
@@ -215,14 +245,32 @@ async function updateFingers() {
             const querySnapshot = await getDocs(collection(db, col.name));
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
-                const safeName = data.name.replace(/"/g, '\\"');
-                const item = document.querySelector(`.product-cart-item[data-name="${safeName}"]`);
+                let item = null;
+
+                // Intento 1: Buscar por ID (si existe en data y en HTML)
+                if (data.id) {
+                    item = document.querySelector(`.product-cart-item[data-id="${data.id}"]`);
+                }
+
+                // Intento 2: Buscar por nombre (fallback)
+                if (!item && data.name) {
+                    const safeName = data.name.replace(/"/g, '\\"');
+                    item = document.querySelector(`.product-cart-item[data-name="${safeName}"]`);
+                }
                 
                 if (item) {
-                    item.dataset.price = data.price;
+                    // Actualizar precio
+                    if (data.price) {
+                        item.dataset.price = data.price;
+                        const priceSpan = item.querySelector('.product-price');
+                        if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                    }
                     
-                    const priceSpan = item.querySelector('.product-price');
-                    if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                    // Actualizar nombre si difiere (solo visualmente, no el data-name para no romper futuras búsquedas por nombre)
+                    if (data.name) {
+                        const nameSpan = item.querySelector('.product-name');
+                        if (nameSpan) nameSpan.textContent = data.name;
+                    }
                 }
             });
         } catch (e) {
@@ -236,19 +284,41 @@ async function updateTortasClasicas() {
         const querySnapshot = await getDocs(collection(db, 'Tortas Clásicas'));
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            const safeName = data.name.replace(/"/g, '\\"');
-            const item = document.querySelector(`.product-cart-item[data-name="${safeName}"]`);
+            let item = null;
+
+            // Intento 1: Buscar por ID
+            if (data.id) {
+                item = document.querySelector(`.product-cart-item[data-id="${data.id}"]`);
+            }
+
+            // Intento 2: Buscar por nombre
+            if (!item && data.name) {
+                const safeName = data.name.replace(/"/g, '\\"');
+                item = document.querySelector(`.product-cart-item[data-name="${safeName}"]`);
+            }
             
             if (item) {
-                item.dataset.price = data.price;
-                
-                const priceSpan = item.querySelector('.product-price');
-                if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                if (data.price) {
+                    item.dataset.price = data.price;
+                    const priceSpan = item.querySelector('.product-price');
+                    if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                }
+
+                if (data.name) {
+                    const nameSpan = item.querySelector('.product-name');
+                    if (nameSpan) nameSpan.textContent = data.name;
+                }
             }
         });
     } catch (e) {
         console.error("Error actualizando Tortas Clásicas:", e);
     }
+}
+
+async function updateTortasDecoradas() {
+    // Implementación futura si se agregan precios dinámicos a Tortas Decoradas
+    // Por ahora solo logueamos para debug
+    console.log("Verificando actualizaciones para Tortas Decoradas...");
 }
 
 async function updateCombosDulces() {
@@ -262,20 +332,31 @@ async function updateCombosDulces() {
         const querySnapshot = await getDocs(collection(db, 'Combos Dulces'));
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            const combo = combos.find(c => c.name === data.name);
+            let container = null;
+
+            // Intento 1: Buscar por ID directo desde Firebase
+            if (data.id) {
+                container = document.querySelector(`.box-container[data-id="${data.id}"]`);
+            }
+
+            // Intento 2: Buscar por nombre mapeado (fallback)
+            if (!container && data.name) {
+                const combo = combos.find(c => c.name === data.name);
+                if (combo) {
+                    container = document.querySelector(`.box-container[data-id="${combo.id}"]`);
+                }
+            }
             
-            if (combo) {
-                const container = document.querySelector(`.box-container[data-id="${combo.id}"]`);
-                if (container) {
+            if (container) {
+                if (data.price) {
                     container.dataset.price = data.price;
-                    
                     const priceSpan = container.querySelector('.box-price');
                     if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                }
 
-                    // Actualizar lista de productos
-                    if (data.items && Array.isArray(data.items)) {
-                        updateProductList(container, data.items);
-                    }
+                // Actualizar lista de productos
+                if (data.items && Array.isArray(data.items)) {
+                    updateProductList(container, data.items);
                 }
             }
         });
@@ -289,13 +370,24 @@ async function updateDesayunos() {
         const querySnapshot = await getDocs(collection(db, 'Desayunos'));
         if (!querySnapshot.empty) {
             const data = querySnapshot.docs[0].data();
-            const container = document.querySelector('.box-container[data-id="desayuno-domicilio"]');
+            let container = null;
+
+            // Intento 1: Buscar por ID
+            if (data.id) {
+                container = document.querySelector(`.box-container[data-id="${data.id}"]`);
+            }
+
+            // Intento 2: Fallback hardcoded
+            if (!container) {
+                container = document.querySelector('.box-container[data-id="desayuno-domicilio"]');
+            }
             
             if (container) {
-                container.dataset.price = data.price;
-                
-                const priceSpan = container.querySelector('.box-price');
-                if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                if (data.price) {
+                    container.dataset.price = data.price;
+                    const priceSpan = container.querySelector('.box-price');
+                    if (priceSpan) priceSpan.textContent = `$${data.price.toLocaleString('es-AR')}`;
+                }
             }
         }
     } catch (e) {
