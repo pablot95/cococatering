@@ -102,14 +102,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Actualizar cantidad del producto
 function updateProductQty(button, change) {
-    const productItem = button.closest('.product-item, .product-cart-item');
-    const boxContainer = button.closest('.box-container');
+    // Try to find display as sibling first (new structure)
+    const parent = button.parentElement;
+    let qtyDisplay = parent.querySelector('.qty-display');
     
-    let qtyDisplay;
-    if (productItem) {
-        qtyDisplay = productItem.querySelector('.qty-display');
-    } else if (boxContainer) {
-        qtyDisplay = boxContainer.querySelector('.qty-display');
+    // Fallback to old logic if not found
+    if (!qtyDisplay) {
+        const productItem = button.closest('.product-item, .product-cart-item');
+        const boxContainer = button.closest('.box-container');
+        
+        if (productItem) {
+            qtyDisplay = productItem.querySelector('.qty-display');
+        } else if (boxContainer) {
+            qtyDisplay = boxContainer.querySelector('.qty-display');
+        }
     }
     
     if (!qtyDisplay) return;
@@ -120,6 +126,11 @@ function updateProductQty(button, change) {
     
     // Actualizar contador total
     updateTotalCounter();
+
+    // Stop propagation to prevent triggering parent click events
+    if (typeof event !== 'undefined') {
+        event.stopPropagation();
+    }
 }
 
 // Agregar box al carrito
@@ -163,7 +174,7 @@ function addBoxToCart(button) {
 
 // Actualizar contador total de items
 function updateTotalCounter() {
-    const qtyDisplays = document.querySelectorAll('.qty-display');
+    const qtyDisplays = document.querySelectorAll('.qty-display, .qty-display-new');
     let total = 0;
     
     qtyDisplays.forEach(display => {
@@ -189,25 +200,96 @@ function updateTotalCounter() {
 
 // Agregar todos los productos con cantidad > 0 al carrito
 function addAllToCart() {
-    const productItems = document.querySelectorAll('.product-item, .product-cart-item');
     let totalAdded = 0;
     const productsToAdd = [];
     
+    // 1. Standard products (Fingers, etc.)
+    const productItems = document.querySelectorAll('.product-item, .product-cart-item');
     productItems.forEach(item => {
         const qtyDisplay = item.querySelector('.qty-display');
-        const quantity = parseInt(qtyDisplay.textContent);
-        
-        if (quantity > 0) {
-            const product = {
-                id: item.dataset.id,
-                name: item.dataset.name,
-                price: parseInt(item.dataset.price),
-                image: item.dataset.image,
-                quantity: quantity
-            };
+        if (qtyDisplay) {
+            const quantity = parseInt(qtyDisplay.textContent);
             
-            productsToAdd.push(product);
-            totalAdded += quantity;
+            if (quantity > 0) {
+                const product = {
+                    id: item.dataset.id,
+                    name: item.dataset.name,
+                    price: parseInt(item.dataset.price),
+                    image: item.dataset.image,
+                    quantity: quantity
+                };
+                
+                productsToAdd.push(product);
+                totalAdded += quantity;
+            }
+        }
+    });
+
+    // 2. Box Size Options (Box Dulces)
+    const sizeOptions = document.querySelectorAll('.size-option');
+    sizeOptions.forEach(option => {
+        // Try to find either new or old class name
+        const qtyDisplay = option.querySelector('.qty-display-new') || option.querySelector('.qty-display');
+        if (qtyDisplay) {
+            const quantity = parseInt(qtyDisplay.textContent);
+            if (quantity > 0) {
+                const sizeLabel = option.querySelector('.size-label').textContent;
+                const units = option.dataset.units;
+                const price = parseInt(option.dataset.price);
+                const size = option.dataset.size;
+                
+                // Try to get product name from onclick attribute
+                const onclickAttr = option.getAttribute('onclick');
+                let productName = 'Producto';
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match) productName = match[1];
+                }
+                
+                // Capitalize product name
+                productName = productName.charAt(0).toUpperCase() + productName.slice(1);
+
+                // Get image from section
+                const section = option.closest('.menu-section');
+                const boxDetails = section ? section.querySelector('.box-details') : null;
+                const image = boxDetails ? boxDetails.dataset.image : 'images/dulces.jpg';
+
+                const unitSuffix = /^\d+$/.test(units) ? 'u' : '';
+
+                const product = {
+                    id: `${productName}-${size}`,
+                    name: `${productName} - ${sizeLabel} (${units}${unitSuffix})`,
+                    price: price,
+                    image: image,
+                    quantity: quantity
+                };
+                productsToAdd.push(product);
+                totalAdded += quantity;
+            }
+        }
+    });
+
+    // 3. Shots
+    const shotsInfos = document.querySelectorAll('.shots-info');
+    shotsInfos.forEach(info => {
+        const qtyDisplay = info.querySelector('.qty-display');
+        if (qtyDisplay) {
+            const quantity = parseInt(qtyDisplay.textContent);
+            if (quantity > 0) {
+                const label = info.querySelector('.shots-label').textContent;
+                const price = parseInt(info.dataset.price);
+                const units = info.dataset.units;
+                
+                const product = {
+                    id: 'shots-docena',
+                    name: `Shots - ${label} (${units}u)`,
+                    price: price,
+                    image: 'productos/shot-de-cheesecake.jpg', // Default image for shots
+                    quantity: quantity
+                };
+                productsToAdd.push(product);
+                totalAdded += quantity;
+            }
         }
     });
     
@@ -226,9 +308,20 @@ function addAllToCart() {
         });
         
         // Resetear todas las cantidades
+        // Standard items
         productItems.forEach(item => {
             const qtyDisplay = item.querySelector('.qty-display');
-            qtyDisplay.textContent = '0';
+            if (qtyDisplay) qtyDisplay.textContent = '0';
+        });
+        // Box options
+        sizeOptions.forEach(option => {
+            const qtyDisplay = option.querySelector('.qty-display-new') || option.querySelector('.qty-display');
+            if (qtyDisplay) qtyDisplay.textContent = '0';
+        });
+        // Shots
+        shotsInfos.forEach(info => {
+            const qtyDisplay = info.querySelector('.qty-display');
+            if (qtyDisplay) qtyDisplay.textContent = '0';
         });
         
         // Actualizar contador
@@ -278,14 +371,24 @@ function selectSize(element, productName) {
 
 // Actualizar cantidad con nuevo diseño
 function updateQtyNew(button, change) {
-    const section = button.closest('.menu-section');
-    const qtyDisplay = section.querySelector('.qty-display-new');
+    // Find sibling display relative to the button
+    const parent = button.parentElement;
+    // Try to find either new or old class name
+    const qtyDisplay = parent.querySelector('.qty-display-new') || parent.querySelector('.qty-display');
     
     if (!qtyDisplay) return;
     
     let currentQty = parseInt(qtyDisplay.textContent);
     currentQty = Math.max(0, currentQty + change);
     qtyDisplay.textContent = currentQty;
+
+    // Update total counter
+    updateTotalCounter();
+
+    // Stop propagation
+    if (typeof event !== 'undefined') {
+        event.stopPropagation();
+    }
 }
 
 // Agregar al carrito con nuevo diseño
@@ -339,7 +442,7 @@ function addToCartNew(button, productName) {
 // ===================================
 // Protección contra inspección y copia
 // ===================================
-/*
+
 // Deshabilitar click derecho
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -398,4 +501,4 @@ document.addEventListener('dragstart', (e) => {
         e.preventDefault();
         return false;
     }
-});*/
+});

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resetear Base de Datos - Cocó Catering</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            background-color: #b71c1c;
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+            border: 1px solid #eee;
+            text-align: left;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        .log-entry {
+            margin: 5px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 2px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: #0277bd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Administración de Base de Datos</h1>
+        <p>Esta acción borrará y recreará todos los productos en Firebase con la nueva estructura.</p>
+        <button id="resetBtn" onclick="runReset()">ACTUALIZAR BASE DE DATOS</button>
+        <div id="status"></div>
+    </div>
+
+    <script type="module">
+        import { resetDatabase } from './reset-db.js';
+        
+        // Sobrescribir console.log para mostrar en pantalla
+        const statusDiv = document.getElementById('status');
+        const originalLog = console.log;
+        
+        function logToScreen(msg, type = 'info') {
+            statusDiv.style.display = 'block';
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `> ${msg}`;
+            statusDiv.appendChild(entry);
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            logToScreen(args.join(' '));
+        };
+
+        window.runReset = async function() {
+            const btn = document.getElementById('resetBtn');
+            btn.disabled = true;
+            btn.textContent = "Procesando...";
+            statusDiv.innerHTML = ''; // Limpiar logs anteriores
+            
+            try {
+                await resetDatabase();
+                logToScreen("PROCESO FINALIZADO CON ÉXITO", "success");
+                btn.textContent = "¡Actualización Completa!";
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = "ACTUALIZAR BASE DE DATOS";
+                }, 3000);
+            } catch (error) {
+                console.error(error);
+                logToScreen(`ERROR: ${error.message}`, "error");
+                btn.disabled = false;
+                btn.textContent = "Reintentar";
+            }
+        };
+    </script>
+</body>
+</html>
