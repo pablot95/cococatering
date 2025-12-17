@@ -1,251 +1,173 @@
-// Cargar precios desde localStorage o productos.json
+// Cargar precios desde productos.json
 async function cargarPrecios() {
     try {
-        let productos;
-        
-        // Primero intentar cargar desde localStorage
-        const stored = localStorage.getItem('productosData');
-        if (stored) {
-            productos = JSON.parse(stored);
-            console.log('Precios cargados desde localStorage');
-        } else {
-            // Si no hay datos guardados, cargar desde JSON
-            const response = await fetch('productos.json');
-            productos = await response.json();
-            console.log('Precios cargados desde productos.json');
-        }
+        const response = await fetch('productos.json');
+        const productos = await response.json();
+        console.log('Precios cargados desde productos.json');
         
         // Box Salados
-        actualizarBoxSalados(productos.boxSalados);
+        if (productos.boxSalados) actualizarBoxSalados(productos.boxSalados);
         
         // Box Dulces
-        actualizarBoxDulces(productos.boxDulces);
+        if (productos.boxDulces) actualizarBoxDulces(productos.boxDulces);
         
         // Shots
-        actualizarShots(productos.shots);
+        if (productos.shots) actualizarShots(productos.shots);
         
         // Fingers Fríos
-        actualizarFingersFrios(productos.fingersFrios);
+        if (productos.fingersFrios) actualizarFingersFrios(productos.fingersFrios);
         
         // Fingers Calientes
-        actualizarFingersCalientes(productos.fingersCalientes);
+        if (productos.fingersCalientes) actualizarFingersCalientes(productos.fingersCalientes);
         
         // Tortas Clásicas
-        actualizarTortasClasicas(productos.tortasClasicas);
+        if (productos.tortasClasicas) actualizarTortasClasicas(productos.tortasClasicas);
         
         // Combos Dulces
-        actualizarCombosDulces(productos.combosDulces);
+        if (productos.combosDulces) actualizarCombosDulces(productos.combosDulces);
         
-        // Desayunos
-        actualizarDesayunos(productos.desayunos);
-        
-        console.log('Precios cargados correctamente');
+        console.log('Precios actualizados correctamente');
     } catch (error) {
         console.error('Error al cargar precios:', error);
     }
 }
 
 function actualizarBoxSalados(datos) {
-    // Box Uno
-    if (datos.boxUno) {
-        const boxUno = document.querySelector('.box-container[data-id="box-uno"]');
-        if (boxUno) {
-            boxUno.dataset.price = datos.boxUno.precio;
-            const precio = boxUno.querySelector('.size-price');
-            if (precio) precio.textContent = `$${datos.boxUno.precio.toLocaleString('es-AR')}`;
-        }
-    }
+    const ids = ['box-uno', 'box-dos', 'box-tres'];
     
-    // Box Dos
-    if (datos.boxDos) {
-        const boxDos = document.querySelector('.box-container[data-id="box-dos"]');
-        if (boxDos) {
-            boxDos.dataset.price = datos.boxDos.precio;
-            const precio = boxDos.querySelector('.size-price');
-            if (precio) precio.textContent = `$${datos.boxDos.precio.toLocaleString('es-AR')}`;
+    datos.forEach((box, index) => {
+        if (box.precio) {
+            const elemento = document.querySelector(`.box-container[data-id="${ids[index]}"]`);
+            if (elemento) {
+                elemento.dataset.price = box.precio;
+                elemento.dataset.name = box.nombre;
+                const precio = elemento.querySelector('.size-price, .box-price');
+                if (precio) precio.textContent = `$${box.precio.toLocaleString('es-AR')}`;
+            }
         }
-    }
-    
-    // Box Tres
-    if (datos.boxTres) {
-        const boxTres = document.querySelector('.box-container[data-id="box-tres"]');
-        if (boxTres) {
-            boxTres.dataset.price = datos.boxTres.precio;
-            const precio = boxTres.querySelector('.size-price');
-            if (precio) precio.textContent = `$${datos.boxTres.precio.toLocaleString('es-AR')}`;
-        }
-    }
+    });
 }
 
 function actualizarBoxDulces(datos) {
-    const mapeo = {
-        'pattiserieChica': { selector: '[onclick*="pattiserie"][data-size="chica"]' },
-        'pattiserieGrande': { selector: '[onclick*="pattiserie"][data-size="grande"]' },
-        'alfajorcitosChica': { selector: '[onclick*="alfajorcitos"][data-size="chica"]' },
-        'alfajorcitosGrande': { selector: '[onclick*="alfajorcitos"][data-size="grande"]' },
-        'cuadraditosChica': { selector: '[onclick*="cuadraditos"][data-size="chica"]' },
-        'cuadraditosGrande': { selector: '[onclick*="cuadraditos"][data-size="grande"]' },
-        'mixChica': { selector: '[onclick*="mix"][data-size="chica"]' },
-        'mixGrande': { selector: '[onclick*="mix"][data-size="grande"]' }
-    };
-    
-    for (const [key, config] of Object.entries(mapeo)) {
-        if (datos[key]) {
-            const elemento = document.querySelector(config.selector);
-            if (elemento) {
-                elemento.dataset.price = datos[key].precio;
-                const precio = elemento.querySelector('.size-price');
-                if (precio) precio.textContent = `$${datos[key].precio.toLocaleString('es-AR')}`;
-                
-                if (datos[key].unidades) {
-                    elemento.dataset.units = datos[key].unidades;
-                    const unidades = elemento.querySelector('.size-units');
-                    if (unidades) unidades.textContent = `${datos[key].unidades} unidades`;
-                }
+    datos.forEach(box => {
+        const categoria = box.categoria.toLowerCase().replace(/\s+/g, '-');
+        const size = box.nombre.toLowerCase().includes('chica') ? 'chica' : 'grande';
+        
+        let selector = `[data-size="${size}"]`;
+        if (categoria.includes('pattiserie')) {
+            selector = `[onclick*="pattiserie"]${selector}`;
+        } else if (categoria.includes('alfajor')) {
+            selector = `[onclick*="alfajorcitos"]${selector}`;
+        } else if (categoria.includes('cuadraditos')) {
+            selector = `[onclick*="cuadraditos"]${selector}`;
+        } else if (categoria.includes('mix')) {
+            selector = `[onclick*="mix"]${selector}`;
+        }
+        
+        const elemento = document.querySelector(selector);
+        if (elemento && box.precio) {
+            elemento.dataset.price = box.precio;
+            const precio = elemento.querySelector('.size-price');
+            if (precio) precio.textContent = `$${box.precio.toLocaleString('es-AR')}`;
+            
+            if (box.unidades) {
+                elemento.dataset.units = box.unidades;
+                const unidades = elemento.querySelector('.size-units');
+                if (unidades) unidades.textContent = `${box.unidades} unidades`;
             }
         }
-    }
+    });
 }
 
 function actualizarShots(datos) {
-    if (datos.docena) {
+    if (datos[0]) {
+        const shot = datos[0];
         const shots = document.querySelector('.shots-info');
-        if (shots) {
-            shots.dataset.price = datos.docena.precio;
+        if (shots && shot.precio) {
+            shots.dataset.price = shot.precio;
+            shots.dataset.name = shot.nombre;
             const precio = shots.querySelector('.shots-price');
-            if (precio) precio.textContent = `$${datos.docena.precio.toLocaleString('es-AR')}`;
-            
-            if (datos.docena.unidades) {
-                shots.dataset.units = datos.docena.unidades;
-                const unidades = shots.querySelector('.shots-units');
-                if (unidades) unidades.textContent = `${datos.docena.unidades} unidades`;
-            }
+            if (precio) precio.textContent = `$${shot.precio.toLocaleString('es-AR')}`;
         }
     }
 }
 
 function actualizarFingersFrios(datos) {
-    const mapeo = {
-        'masitasQueso': 'masitas-queso',
-        'pinchosBocconcinos': 'pinchos-bocconcinos',
-        'ensaladitasCesar': 'ensaladitas-cesar',
-        'pecetitos': 'pecetitos',
-        'papasRosty': 'papas-rosty',
-        'picaditasIndividuales': 'picaditas-individuales',
-        'figacitaJyQ': 'figacita-jyq',
-        'criollitoJyQ': 'criollito-jyq',
-        'criollitoCapresse': 'criollito-capresse',
-        'sconCrudoRucula': 'scon-crudo-rucula',
-        'tartaletaAtun': 'tartaleta-atun',
-        'degustacionQueso': 'degustacion-queso',
-        'dipQuesoAzul': 'dip-queso-azul',
-        'lomoMorron': 'lomo-morron',
-        'verduritasAsadasFrio': 'verduritas-asadas-frio'
-    };
-    
-    for (const [key, id] of Object.entries(mapeo)) {
-        if (datos[key]) {
-            const elemento = document.querySelector(`[data-id="${id}"]`);
-            if (elemento) {
-                elemento.dataset.price = datos[key].precio;
-                const precio = elemento.querySelector('.product-price');
-                if (precio) precio.textContent = `$${datos[key].precio.toLocaleString('es-AR')}`;
-            }
+    datos.forEach(finger => {
+        // Crear ID a partir del nombre (convertir a kebab-case)
+        const id = finger.nombre.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar acentos
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, '');
+        
+        const elemento = document.querySelector(`[data-id*="${id.substring(0, 15)}"]`);
+        if (elemento && finger.precio) {
+            elemento.dataset.price = finger.precio;
+            elemento.dataset.name = `${finger.nombre} – ${finger.unidad}`;
+            const precio = elemento.querySelector('.product-price');
+            if (precio) precio.textContent = `$${finger.precio.toLocaleString('es-AR')}`;
+            const nombre = elemento.querySelector('.product-name');
+            if (nombre) nombre.textContent = `${finger.nombre} – ${finger.unidad}`;
         }
-    }
+    });
 }
 
 function actualizarFingersCalientes(datos) {
-    const mapeo = {
-        'empanadaJyQ': 'empanada-jyq',
-        'empanadaCarne': 'empanada-carne',
-        'empanadaPollo': 'empanada-pollo',
-        'empanadaVerdura': 'empanada-verdura',
-        'canastitaChoclo': 'canastita-choclo',
-        'canastitaEspinaca': 'canastita-espinaca',
-        'canastitaJyQ': 'canastita-jyq',
-        'rollMasaPhilo': 'roll-masa-philo',
-        'triangulitoQuesoAzul': 'triangulito-queso-azul',
-        'triangulitoMasaPhilo': 'triangulito-masa-philo',
-        'quicheChampignones': 'quiche-champignones',
-        'pinchoPolloYPanceta': 'pincho-pollo-panceta',
-        'pinchoCrispy': 'pincho-crispy',
-        'pinchoTernera': 'pincho-ternera',
-        'figacitaBondiola': 'figacita-bondiola',
-        'figacitaRoastBeef': 'figacita-roast-beef',
-        'taquitoBondiola': 'taquito-bondiola',
-        'hamburguesitas': 'hamburguesitas',
-        'cazuelaRavioles': 'cazuela-ravioles',
-        'verduritasAsadasCaliente': 'verduritas-asadas-caliente'
-    };
-    
-    for (const [key, id] of Object.entries(mapeo)) {
-        if (datos[key]) {
-            const elemento = document.querySelector(`[data-id="${id}"]`);
-            if (elemento) {
-                elemento.dataset.price = datos[key].precio;
-                const precio = elemento.querySelector('.product-price');
-                if (precio) precio.textContent = `$${datos[key].precio.toLocaleString('es-AR')}`;
-            }
+    datos.forEach(finger => {
+        // Crear ID a partir del nombre (convertir a kebab-case)
+        const id = finger.nombre.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar acentos
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, '');
+        
+        const elemento = document.querySelector(`[data-id*="${id.substring(0, 15)}"]`);
+        if (elemento && finger.precio) {
+            elemento.dataset.price = finger.precio;
+            elemento.dataset.name = `${finger.nombre} – ${finger.unidad}`;
+            const precio = elemento.querySelector('.product-price');
+            if (precio) precio.textContent = `$${finger.precio.toLocaleString('es-AR')}`;
+            const nombre = elemento.querySelector('.product-name');
+            if (nombre) nombre.textContent = `${finger.nombre} – ${finger.unidad}`;
         }
-    }
+    });
 }
 
 function actualizarTortasClasicas(datos) {
-    const mapeo = {
-        'brownie': 'brownie',
-        'carrotCake': 'carrot-cake',
-        'redVelvet': 'red-velvet',
-        'chocotorta': 'chocotorta',
-        'tortaNuez': 'torta-nuez',
-        'matilda': 'matilda',
-        'sableAlmendras': 'sable-almendras',
-        'oreoTentacion': 'oreo-tentacion',
-        'cheesecake': 'cheesecake',
-        'lemonPie': 'lemon-pie',
-        'keyLimePie': 'key-lime-pie'
-    };
-    
-    for (const [key, id] of Object.entries(mapeo)) {
-        if (datos[key]) {
-            const elemento = document.querySelector(`[data-id="${id}"]`);
-            if (elemento) {
-                elemento.dataset.price = datos[key].precio;
+    datos.forEach(torta => {
+        // Crear ID a partir del nombre
+        const id = torta.nombre.toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, '');
+        
+        const elemento = document.querySelector(`[data-id*="${id.substring(0, 15)}"]`);
+        if (elemento) {
+            if (torta.precio) {
+                elemento.dataset.price = torta.precio;
                 const precio = elemento.querySelector('.product-price');
-                if (precio) precio.textContent = `$${datos[key].precio.toLocaleString('es-AR')}`;
+                if (precio) precio.textContent = `$${torta.precio.toLocaleString('es-AR')}`;
             }
+            elemento.dataset.name = torta.nombre;
+            const nombre = elemento.querySelector('.product-name');
+            if (nombre) nombre.textContent = torta.nombre;
         }
-    }
+    });
 }
 
 function actualizarCombosDulces(datos) {
-    const mapeo = {
-        'combo1': 'combo-1',
-        'combo2': 'combo-2',
-        'combo3': 'combo-3'
-    };
+    const ids = ['combo-1', 'combo-2', 'combo-3'];
     
-    for (const [key, id] of Object.entries(mapeo)) {
-        if (datos[key]) {
-            const elemento = document.querySelector(`.box-container[data-id="${id}"]`);
+    datos.forEach((combo, index) => {
+        if (combo.precio) {
+            const elemento = document.querySelector(`.box-container[data-id="${ids[index]}"]`);
             if (elemento) {
-                elemento.dataset.price = datos[key].precio;
-                const precio = elemento.querySelector('.box-price');
-                if (precio) precio.textContent = `$${datos[key].precio.toLocaleString('es-AR')}`;
+                elemento.dataset.price = combo.precio;
+                elemento.dataset.name = combo.nombre;
+                const precio = elemento.querySelector('.box-price, .size-price');
+                if (precio) precio.textContent = `$${combo.precio.toLocaleString('es-AR')}`;
             }
         }
-    }
-}
-
-function actualizarDesayunos(datos) {
-    if (datos.desayunoDomicilio) {
-        const desayuno = document.querySelector('.box-container[data-id="desayuno-domicilio"]');
-        if (desayuno) {
-            desayuno.dataset.price = datos.desayunoDomicilio.precio;
-            const precio = desayuno.querySelector('.box-price');
-            if (precio) precio.textContent = `$${datos.desayunoDomicilio.precio.toLocaleString('es-AR')}`;
-        }
-    }
+    });
 }
 
 // Cargar precios cuando el DOM esté listo
