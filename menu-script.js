@@ -569,8 +569,14 @@ document.addEventListener('dragstart', (e) => {
 // EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
 // ===================================
 // Necesario para que los eventos onclick funcionen con módulos ES6
-window.updateQty = updateQty;
-window.updateQtyNew = updateQtyNew;
-window.addAllToCart = addAllToCart;
-window.addToCartNew = addToCartNew;
-window.selectSize = selectSize;
+if (typeof updateQty !== 'undefined') window.updateQty = updateQty;
+if (typeof updateQtyNew !== 'undefined') window.updateQtyNew = updateQtyNew;
+if (typeof addAllToCart !== 'undefined') window.addAllToCart = addAllToCart;
+if (typeof addToCartNew !== 'undefined') window.addToCartNew = addToCartNew;
+if (typeof selectSize !== 'undefined') window.selectSize = selectSize;
+
+console.log('Menu script cargado. Funciones exportadas:', {
+    updateQty: typeof window.updateQty,
+    updateQtyNew: typeof window.updateQtyNew,
+    addAllToCart: typeof window.addAllToCart
+});
