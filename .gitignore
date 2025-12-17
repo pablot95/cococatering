@@ -3,6 +3,9 @@
 .env.local
 .env.production
 firebase-config.js
+.admin.html
+.admin.js
+.admin.css
 
 # Dependencias
 node_modules/

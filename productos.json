@@ -1,0 +1,275 @@
+{
+  "boxSalados": {
+    "boxUno": {
+      "nombre": "BOX UNO - Todo Frío (10-12 personas)",
+      "precio": 22000
+    },
+    "boxDos": {
+      "nombre": "BOX DOS - Frío/Caliente (12-15 personas)",
+      "precio": 25000
+    },
+    "boxTres": {
+      "nombre": "BOX TRES - Mix (12-15 personas)",
+      "precio": 28000
+    }
+  },
+  "boxDulces": {
+    "pattiserieChica": {
+      "nombre": "Caja Chica Pattiserie",
+      "unidades": 16,
+      "precio": 15000
+    },
+    "pattiserieGrande": {
+      "nombre": "Caja Grande Pattiserie",
+      "unidades": 42,
+      "precio": 35000
+    },
+    "alfajorcitosChica": {
+      "nombre": "Caja Chica Alfajorcitos",
+      "unidades": 28,
+      "precio": 12000
+    },
+    "alfajorcitosGrande": {
+      "nombre": "Caja Grande Alfajorcitos",
+      "unidades": 47,
+      "precio": 28000
+    },
+    "cuadraditosChica": {
+      "nombre": "Caja Chica Cuadraditos",
+      "unidades": 28,
+      "precio": 13000
+    },
+    "cuadraditosGrande": {
+      "nombre": "Caja Grande Cuadraditos",
+      "unidades": 47,
+      "precio": 30000
+    },
+    "mixChica": {
+      "nombre": "Caja Chica Mix",
+      "unidades": 28,
+      "precio": 14000
+    },
+    "mixGrande": {
+      "nombre": "Caja Grande Mix",
+      "unidades": 47,
+      "precio": 32000
+    }
+  },
+  "shots": {
+    "docena": {
+      "nombre": "Docena de Shots",
+      "unidades": 12,
+      "precio": 8000
+    }
+  },
+  "fingersFrios": {
+    "masitasQueso": {
+      "nombre": "Masitas de queso – x24",
+      "precio": 5000
+    },
+    "pinchosBocconcinos": {
+      "nombre": "Pinchos bocconcinos – x12",
+      "precio": 6000
+    },
+    "ensaladitasCesar": {
+      "nombre": "Ensaladitas César – x12",
+      "precio": 7000
+    },
+    "pecetitos": {
+      "nombre": "Pecetitos – x12",
+      "precio": 6500
+    },
+    "papasRosty": {
+      "nombre": "Papas rosty – x12",
+      "precio": 5500
+    },
+    "picaditasIndividuales": {
+      "nombre": "Picaditas individuales – x12",
+      "precio": 8000
+    },
+    "figacitaJyQ": {
+      "nombre": "Figacita J y Q – x12",
+      "precio": 5000
+    },
+    "criollitoJyQ": {
+      "nombre": "Criollito J y Q – x12",
+      "precio": 4500
+    },
+    "criollitoCapresse": {
+      "nombre": "Criollito capresse – x12",
+      "precio": 5500
+    },
+    "sconCrudoRucula": {
+      "nombre": "Scon crudo y rúcula – x12",
+      "precio": 6000
+    },
+    "tartaletaAtun": {
+      "nombre": "Tartaleta atún – x12",
+      "precio": 6500
+    },
+    "degustacionQueso": {
+      "nombre": "Degustación de queso – x12",
+      "precio": 7000
+    },
+    "dipQuesoAzul": {
+      "nombre": "Dip queso azul – x12",
+      "precio": 5500
+    },
+    "lomoMorron": {
+      "nombre": "Lomo y morrón – x12",
+      "precio": 8000
+    },
+    "verduritasAsadasFrio": {
+      "nombre": "Verduritas asadas – x12",
+      "precio": 5000
+    }
+  },
+  "fingersCalientes": {
+    "empanadaJyQ": {
+      "nombre": "Empanaditas de jamón y queso – x12",
+      "precio": 4000
+    },
+    "empanadaCarne": {
+      "nombre": "Empanaditas de carne – x12",
+      "precio": 4500
+    },
+    "empanadaPollo": {
+      "nombre": "Empanaditas de pollo – x12",
+      "precio": 4500
+    },
+    "empanadaVerdura": {
+      "nombre": "Empanaditas de verdura – x12",
+      "precio": 4000
+    },
+    "canastitaChoclo": {
+      "nombre": "Canastitas de choclo – x12",
+      "precio": 5000
+    },
+    "canastitaEspinaca": {
+      "nombre": "Canastitas de espinaca – x12",
+      "precio": 5000
+    },
+    "canastitaJyQ": {
+      "nombre": "Canastitas de jamón y queso – x12",
+      "precio": 4500
+    },
+    "rollMasaPhilo": {
+      "nombre": "Roll de masa philo – x12",
+      "precio": 5500
+    },
+    "triangulitoQuesoAzul": {
+      "nombre": "Triangulito de queso azul – x12",
+      "precio": 6000
+    },
+    "triangulitoMasaPhilo": {
+      "nombre": "Triangulito de masa philo – x12",
+      "precio": 6000
+    },
+    "quicheChampignones": {
+      "nombre": "Quiché de champignones – x12",
+      "precio": 6500
+    },
+    "pinchoPolloYPanceta": {
+      "nombre": "Pincho de pollo y panceta – x12",
+      "precio": 7000
+    },
+    "pinchoCrispy": {
+      "nombre": "Pincho de pollo crispy – x12",
+      "precio": 7500
+    },
+    "pinchoTernera": {
+      "nombre": "Pincho de ternera – x12",
+      "precio": 8000
+    },
+    "figacitaBondiola": {
+      "nombre": "Figacita de bondiola – x12",
+      "precio": 7500
+    },
+    "figacitaRoastBeef": {
+      "nombre": "Figacita de roast beef – x12",
+      "precio": 8500
+    },
+    "taquitoBondiola": {
+      "nombre": "Taquito de bondiola – x12",
+      "precio": 7000
+    },
+    "hamburguesitas": {
+      "nombre": "Hamburguesitas – x12",
+      "precio": 6500
+    },
+    "cazuelaRavioles": {
+      "nombre": "Cazuela de ravioles – x12",
+      "precio": 6000
+    },
+    "verduritasAsadasCaliente": {
+      "nombre": "Verduritas asadas calientes – x12",
+      "precio": 5500
+    }
+  },
+  "tortasClasicas": {
+    "brownie": {
+      "nombre": "BROWNIE",
+      "precio": 12000
+    },
+    "carrotCake": {
+      "nombre": "CARROT CAKE",
+      "precio": 13000
+    },
+    "redVelvet": {
+      "nombre": "RED VELVET",
+      "precio": 14000
+    },
+    "chocotorta": {
+      "nombre": "CHOCOTORTA",
+      "precio": 11000
+    },
+    "tortaNuez": {
+      "nombre": "TORTA DE NUEZ",
+      "precio": 13500
+    },
+    "matilda": {
+      "nombre": "MATILDA",
+      "precio": 14500
+    },
+    "sableAlmendras": {
+      "nombre": "SABLÉ DE ALMENDRAS",
+      "precio": 15000
+    },
+    "oreoTentacion": {
+      "nombre": "OREO TENTACIÓN",
+      "precio": 13000
+    },
+    "cheesecake": {
+      "nombre": "CHEESECAKE",
+      "precio": 14000
+    },
+    "lemonPie": {
+      "nombre": "LEMON PIE",
+      "precio": 13500
+    },
+    "keyLimePie": {
+      "nombre": "KEY LIME PIE",
+      "precio": 14500
+    }
+  },
+  "combosDulces": {
+    "combo1": {
+      "nombre": "COMBO 1",
+      "precio": 25000
+    },
+    "combo2": {
+      "nombre": "COMBO 2",
+      "precio": 28000
+    },
+    "combo3": {
+      "nombre": "COMBO 3",
+      "precio": 30000
+    }
+  },
+  "desayunos": {
+    "desayunoDomicilio": {
+      "nombre": "Desayuno a Domicilio",
+      "precio": 18000
+    }
+  }
+}

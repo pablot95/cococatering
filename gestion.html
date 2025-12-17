@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - Cocó Catering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ee5a52;
+        }
+
+        .category {
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-header:hover {
+            opacity: 0.9;
+        }
+
+        .category-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .category-content.active {
+            display: block;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .product-card label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .product-card input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .product-card input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .status-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #51cf66;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #ff6b6b;
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍰 Gestión de Productos</h1>
+        <p class="subtitle">Cocó Catering - Panel de Administración</p>
+
+        <div class="actions">
+            <button class="btn btn-success" onclick="guardarCambios()">💾 Guardar Cambios</button>
+            <button class="btn btn-primary" onclick="descargarJSON()">📥 Descargar JSON</button>
+            <button class="btn btn-danger" onclick="location.reload()">🔄 Recargar</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar producto..." onkeyup="filtrarProductos()">
+        </div>
+
+        <div id="productosContainer"></div>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+
+    <script>
+        let productosData = {};
+
+        // Cargar productos al iniciar
+        async function cargarProductos() {
+            try {
+                const response = await fetch('productos.json');
+                productosData = await response.json();
+                renderizarProductos();
+            } catch (error) {
+                mostrarMensaje('Error al cargar productos', 'error');
+                console.error(error);
+            }
+        }
+
+        // Renderizar todas las categorías y productos
+        function renderizarProductos() {
+            const container = document.getElementById('productosContainer');
+            container.innerHTML = '';
+
+            const categorias = {
+                'boxSalados': '📦 Box Salados',
+                'boxDulces': '🧁 Box Dulces',
+                'shots': '🥃 Shots',
+                'fingersFrios': '🧊 Fingers Fríos',
+                'fingersCalientes': '🔥 Fingers Calientes',
+                'tortasClasicas': '🎂 Tortas Clásicas',
+                'combosDulces': '🍬 Combos Dulces',
+                'desayunos': '☕ Desayunos'
+            };
+
+            for (const [catKey, catName] of Object.entries(categorias)) {
+                if (!productosData[catKey]) continue;
+
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'category-header';
+                headerDiv.innerHTML = `
+                    ${catName}
+                    <span>▼</span>
+                `;
+                headerDiv.onclick = () => toggleCategory(categoryDiv);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'category-content active';
+
+                const gridDiv = document.createElement('div');
+                gridDiv.className = 'product-grid';
+
+                for (const [prodKey, prodData] of Object.entries(productosData[catKey])) {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.setAttribute('data-category', catKey);
+                    productCard.setAttribute('data-product', prodKey);
+                    
+                    productCard.innerHTML = `
+                        <label>Nombre del Producto</label>
+                        <input type="text" 
+                               value="${prodData.nombre}" 
+                               data-field="nombre"
+                               onchange="actualizarProducto('${catKey}', '${prodKey}', 'nombre', this.value)">
+                        
+                        ${prodData.unidades ? `
+                            <label>Unidades</label>
+                            <input type="number" 
+                                   value="${prodData.unidades}" 
+                                   data-field="unidades"
+                                   onchange="actualizarProducto('${catKey}', '${prodKey}', 'unidades', this.value)">
+                        ` : ''}
+                        
+                        <label>Precio ($)</label>
+                        <input type="number" 
+                               value="${prodData.precio}" 
+                               data-field="precio"
+                               onchange="actualizarProducto('${catKey}', '${prodKey}', 'precio', this.value)">
+                    `;
+                    
+                    gridDiv.appendChild(productCard);
+                }
+
+                contentDiv.appendChild(gridDiv);
+                categoryDiv.appendChild(headerDiv);
+                categoryDiv.appendChild(contentDiv);
+                container.appendChild(categoryDiv);
+            }
+        }
+
+        // Actualizar un producto en memoria
+        function actualizarProducto(categoria, producto, campo, valor) {
+            if (campo === 'precio' || campo === 'unidades') {
+                valor = parseInt(valor);
+            }
+            productosData[categoria][producto][campo] = valor;
+        }
+
+        // Guardar cambios (descargar JSON actualizado)
+        function guardarCambios() {
+            const dataStr = JSON.stringify(productosData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'productos.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            mostrarMensaje('¡Cambios guardados! Descargando archivo...', 'success');
+        }
+
+        // Descargar JSON actual
+        function descargarJSON() {
+            const dataStr = JSON.stringify(productosData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'productos.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            mostrarMensaje('JSON descargado correctamente', 'success');
+        }
+
+        // Toggle categoría
+        function toggleCategory(categoryDiv) {
+            const content = categoryDiv.querySelector('.category-content');
+            content.classList.toggle('active');
+        }
+
+        // Filtrar productos
+        function filtrarProductos() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach(card => {
+                const nombre = card.querySelector('input[data-field="nombre"]').value.toLowerCase();
+                if (nombre.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Mostrar mensaje de estado
+        function mostrarMensaje(texto, tipo) {
+            const mensaje = document.getElementById('statusMessage');
+            mensaje.textContent = texto;
+            mensaje.className = `status-message ${tipo}`;
+            setTimeout(() => {
+                mensaje.className = 'status-message';
+            }, 3000);
+        }
+
+        // Inicializar
+        cargarProductos();
+    </script>
+</body>
+</html>
