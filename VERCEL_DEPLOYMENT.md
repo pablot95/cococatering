@@ -28,28 +28,21 @@
 2. Espera 1-2 minutos mientras Vercel construye y despliega tu backend
 3. Vercel te dará una URL como: `https://cococatering.vercel.app`
 
-## Paso 5: Actualizar checkout.js
+## Paso 5: ¡Listo! Probar en Vercel
 
-Después del deploy exitoso:
+**El frontend y backend están juntos en Vercel:**
 
-1. Abre `checkout.js`
-2. Busca la línea:
-   ```javascript
-   : 'https://CAMBIAR-POR-TU-URL-VERCEL.vercel.app';
-   ```
-3. Reemplaza con tu URL real de Vercel (la que te dio Vercel)
-4. Guarda y sube los cambios a GitHub:
-   ```
-   git add checkout.js
-   git commit -m "Update: URL del backend de Vercel en producción"
-   git push
-   ```
+1. Vercel te dará una URL como: `https://cococatering.vercel.app`
+2. Visita esa URL → Todo funciona (HTML + API)
+3. Ya está configurado para usar `window.location.origin` automáticamente
 
-## Paso 6: Subir Frontend a Hostinger
+## Paso 6 (OPCIONAL): Mover Frontend a Hostinger
 
-1. Sube todos los archivos HTML, CSS, JS a tu hosting de Hostinger
-2. **NO subas:** `node_modules/`, `.env`, `server.js`, `package.json`
-3. Solo archivos frontend: `index.html`, `checkout.html`, etc.
+Si más adelante quieres el frontend en Hostinger:
+
+1. Sube archivos HTML, CSS, JS a Hostinger
+2. **NO subas:** `node_modules/`, `.env`, `server.js`, `package.json`, `vercel.json`
+3. El `checkout.js` ya está preparado para funcionar en ambos lados
 
 ## Paso 7: Probar en Producción
 
