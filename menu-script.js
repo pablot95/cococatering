@@ -225,7 +225,7 @@ function addAllToCart() {
         }
     });
 
-    // 2. Box Size Options (Box Dulces)
+    // 2. Box Size Options (Box Dulces y Box Salados)
     const sizeOptions = document.querySelectorAll('.size-option');
     sizeOptions.forEach(option => {
         // Try to find either new or old class name
@@ -233,32 +233,43 @@ function addAllToCart() {
         if (qtyDisplay) {
             const quantity = parseInt(qtyDisplay.textContent);
             if (quantity > 0) {
-                const sizeLabel = option.querySelector('.size-label').textContent;
                 const units = option.dataset.units;
                 const price = parseInt(option.dataset.price);
                 const size = option.dataset.size;
                 
-                // Try to get product name from onclick attribute
-                const onclickAttr = option.getAttribute('onclick');
-                let productName = 'Producto';
-                if (onclickAttr) {
-                    const match = onclickAttr.match(/'([^']+)'/);
-                    if (match) productName = match[1];
+                // Obtener nombre del producto
+                let productName = '';
+                let image = 'images/dulces.jpg';
+                
+                // Primero intentar obtener del data-name del option (box-dulces)
+                if (option.dataset.name) {
+                    productName = option.dataset.name;
+                } else {
+                    // Si no, buscar en el box-container padre (box-salados)
+                    const boxContainer = option.closest('.box-container');
+                    if (boxContainer && boxContainer.dataset.name) {
+                        productName = boxContainer.dataset.name;
+                        image = boxContainer.dataset.image || 'images/salados.jpg';
+                    } else {
+                        // Fallback: usar el section title
+                        const section = option.closest('.menu-section');
+                        const title = section ? section.querySelector('.section-title') : null;
+                        productName = title ? title.textContent : 'Producto';
+                    }
                 }
                 
-                // Capitalize product name
-                productName = productName.charAt(0).toUpperCase() + productName.slice(1);
-
-                // Get image from section
-                const section = option.closest('.menu-section');
-                const boxDetails = section ? section.querySelector('.box-details') : null;
-                const image = boxDetails ? boxDetails.dataset.image : 'images/dulces.jpg';
-
-                const unitSuffix = /^\d+$/.test(units) ? 'u' : '';
+                // Get image from section if not already set
+                if (image === 'images/dulces.jpg') {
+                    const section = option.closest('.menu-section');
+                    const boxDetails = section ? section.querySelector('.box-details') : null;
+                    if (boxDetails && boxDetails.dataset.image) {
+                        image = boxDetails.dataset.image;
+                    }
+                }
 
                 const product = {
-                    id: `${productName}-${size}`,
-                    name: `${productName} - ${sizeLabel} (${units}${unitSuffix})`,
+                    id: `${size}`,
+                    name: productName,
                     price: price,
                     image: image,
                     quantity: quantity
