@@ -312,14 +312,21 @@ function addAllToCart() {
         return;
     }
     
-    // Validar stock antes de agregar
-    for (const product of productsToAdd) {
-        const productId = stockManager.generateProductIdFromName(product.name);
-        const availableStock = stockManager.getStock(productId);
-        
-        if (product.quantity > availableStock) {
-            alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
-            return;
+    // Validar stock antes de agregar (si stockManager está disponible)
+    if (typeof stockManager !== 'undefined') {
+        try {
+            for (const product of productsToAdd) {
+                const productId = stockManager.generateProductIdFromName(product.name);
+                const availableStock = stockManager.getStock(productId);
+                
+                if (product.quantity > availableStock) {
+                    alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.warn('Error al verificar stock:', error);
+            // Continuar sin validación de stock si hay error
         }
     }
     
@@ -407,25 +414,30 @@ function updateQtyNew(button, change) {
     const newQty = currentQty + change;
     
     // Si está incrementando, verificar stock
-    if (change > 0) {
-        // Obtener ID del producto para verificar stock
-        const sizeOption = parent.closest('.size-option');
-        const productItem = parent.closest('.product-item, .product-cart-item');
-        
-        let productId = '';
-        if (sizeOption && sizeOption.dataset.name) {
-            productId = stockManager.generateProductIdFromName(sizeOption.dataset.name);
-        } else if (productItem && productItem.dataset.name) {
-            productId = stockManager.generateProductIdFromName(productItem.dataset.name);
-        }
-        
-        // Verificar stock disponible
-        if (productId) {
-            const availableStock = stockManager.getStock(productId);
-            if (newQty > availableStock) {
-                alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
-                return;
+    if (change > 0 && typeof stockManager !== 'undefined') {
+        try {
+            // Obtener ID del producto para verificar stock
+            const sizeOption = parent.closest('.size-option');
+            const productItem = parent.closest('.product-item, .product-cart-item');
+            
+            let productId = '';
+            if (sizeOption && sizeOption.dataset.name) {
+                productId = stockManager.generateProductIdFromName(sizeOption.dataset.name);
+            } else if (productItem && productItem.dataset.name) {
+                productId = stockManager.generateProductIdFromName(productItem.dataset.name);
             }
+            
+            // Verificar stock disponible
+            if (productId) {
+                const availableStock = stockManager.getStock(productId);
+                if (newQty > availableStock) {
+                    alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.warn('Error al verificar stock:', error);
+            // Continuar sin validación de stock si hay error
         }
     }
     
