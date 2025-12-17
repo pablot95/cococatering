@@ -313,11 +313,11 @@ function addAllToCart() {
     }
     
     // Validar stock antes de agregar (si stockManager está disponible)
-    if (typeof stockManager !== 'undefined') {
+    if (window.stockManager) {
         try {
             for (const product of productsToAdd) {
-                const productId = stockManager.generateProductIdFromName(product.name);
-                const availableStock = stockManager.getStock(productId);
+                const productId = window.stockManager.generateProductIdFromName(product.name);
+                const availableStock = window.stockManager.getStock(productId);
                 
                 if (product.quantity > availableStock) {
                     alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
@@ -414,7 +414,7 @@ function updateQtyNew(button, change) {
     const newQty = currentQty + change;
     
     // Si está incrementando, verificar stock
-    if (change > 0 && typeof stockManager !== 'undefined') {
+    if (change > 0 && window.stockManager) {
         try {
             // Obtener ID del producto para verificar stock
             const sizeOption = parent.closest('.size-option');
@@ -422,14 +422,14 @@ function updateQtyNew(button, change) {
             
             let productId = '';
             if (sizeOption && sizeOption.dataset.name) {
-                productId = stockManager.generateProductIdFromName(sizeOption.dataset.name);
+                productId = window.stockManager.generateProductIdFromName(sizeOption.dataset.name);
             } else if (productItem && productItem.dataset.name) {
-                productId = stockManager.generateProductIdFromName(productItem.dataset.name);
+                productId = window.stockManager.generateProductIdFromName(productItem.dataset.name);
             }
             
             // Verificar stock disponible
             if (productId) {
-                const availableStock = stockManager.getStock(productId);
+                const availableStock = window.stockManager.getStock(productId);
                 if (newQty > availableStock) {
                     alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
                     return;
@@ -575,8 +575,12 @@ if (typeof addAllToCart !== 'undefined') window.addAllToCart = addAllToCart;
 if (typeof addToCartNew !== 'undefined') window.addToCartNew = addToCartNew;
 if (typeof selectSize !== 'undefined') window.selectSize = selectSize;
 
+// Exportar stockManager al scope global para que esté disponible en las funciones
+window.stockManager = stockManager;
+
 console.log('Menu script cargado. Funciones exportadas:', {
     updateQty: typeof window.updateQty,
     updateQtyNew: typeof window.updateQtyNew,
-    addAllToCart: typeof window.addAllToCart
+    addAllToCart: typeof window.addAllToCart,
+    stockManager: typeof window.stockManager
 });
