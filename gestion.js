@@ -310,35 +310,41 @@ document.getElementById('productForm')?.addEventListener('submit', function(e) {
 // ===================================
 window.loadOrders = async function() {
     const container = document.getElementById('ordersContainer');
-    const statusFilter = document.getElementById('statusFilter').value;
+    const statusFilter = document.getElementById('statusFilter')?.value || 'all';
 
     try {
         container.innerHTML = '<div class="loading">Cargando órdenes...</div>';
 
-        // Obtener órdenes según filtro
-        if (statusFilter === 'all') {
-            allOrders = await getAllOrders();
-        } else {
-            allOrders = await getOrdersByStatus(statusFilter);
+        // Obtener órdenes del backend
+        const url = `${BACKEND_URL}/api/orders${statusFilter !== 'all' ? '?status=' + statusFilter : ''}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('Error al obtener órdenes del servidor');
         }
+        
+        allOrders = await response.json();
 
         if (allOrders.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <p>No hay órdenes para mostrar</p>
+                    <p>📦 No hay órdenes ${statusFilter === 'all' ? 'disponibles' : 'con este estado'}</p>
+                    <p class="empty-subtitle">Las órdenes de los clientes aparecerán aquí</p>
                 </div>
             `;
             return;
         }
 
-        // Renderizar órdenes
-        container.innerHTML = allOrders.map(order => renderOrderCard(order)).join('');
+        const ordersHTML = allOrders.map(order => renderOrderCard(order)).join('');
+        container.innerHTML = ordersHTML;
 
     } catch (error) {
         console.error('Error al cargar órdenes:', error);
         container.innerHTML = `
-            <div class="empty-state">
-                <p>Error al cargar las órdenes. Por favor, intenta nuevamente.</p>
+            <div class="error-state">
+                <p>❌ Error al cargar las órdenes</p>
+                <p class="error-details">${error.message}</p>
+                <button onclick="loadOrders()">🔄 Reintentar</button>
             </div>
         `;
     }
