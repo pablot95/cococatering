@@ -552,3 +552,13 @@ document.addEventListener('dragstart', (e) => {
         return false;
     }
 });
+
+// ===================================
+// EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
+// ===================================
+// Necesario para que los eventos onclick funcionen con módulos ES6
+window.updateQty = updateQty;
+window.updateQtyNew = updateQtyNew;
+window.addAllToCart = addAllToCart;
+window.addToCartNew = addToCartNew;
+window.selectSize = selectSize;
