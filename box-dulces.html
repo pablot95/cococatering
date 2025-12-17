@@ -169,29 +169,29 @@
                     </ul>
                 
 
-                <div class="box-size-options" style="display: flex; gap: 20px; justify-content: center; padding: 20px; flex-wrap: wrap;">
-                    <div class="box-option" data-id="pattiserie-chica" data-name="PATTISERIE - Caja Chica (16u)" data-price="35000" data-image="productos/BOX-PATTISERIE.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Chica</div>
-                            <div style="color: #666; font-size: 0.9rem;">16 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$35.000</div>
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="35000" data-units="16" onclick="selectSize(this, 'pattiserie')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Chica</span>
+                            <span class="size-units">16 unidades</span>
+                            <span class="size-price">$35.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'pattiserie-chica')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'pattiserie-chica')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="box-option" data-id="pattiserie-grande" data-name="PATTISERIE - Caja Grande (42u)" data-price="85000" data-image="productos/BOX-PATTISERIE.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Grande</div>
-                            <div style="color: #666; font-size: 0.9rem;">42 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$85.000</div>
+                    <div class="size-option" data-size="grande" data-price="85000" data-units="42" onclick="selectSize(this, 'pattiserie')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Grande</span>
+                            <span class="size-units">42 unidades</span>
+                            <span class="size-price">$85.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'pattiserie-grande')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'pattiserie-grande')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
                 </div>
@@ -228,29 +228,29 @@
                     </ul>
                 
 
-                <div class="box-size-options" style="display: flex; gap: 20px; justify-content: center; padding: 20px; flex-wrap: wrap;">
-                    <div class="box-option" data-id="alfajorcitos-chica" data-name="BOX ALFAJORCITOS - Caja Chica (28u)" data-price="32000" data-image="productos/BOX-ALFAJORCITOS.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Chica</div>
-                            <div style="color: #666; font-size: 0.9rem;">28 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$32.000</div>
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="32000" data-units="28" onclick="selectSize(this, 'alfajorcitos')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Chica</span>
+                            <span class="size-units">28 unidades</span>
+                            <span class="size-price">$32.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'alfajorcitos-chica')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'alfajorcitos-chica')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="box-option" data-id="alfajorcitos-grande" data-name="BOX ALFAJORCITOS - Caja Grande (47u)" data-price="50000" data-image="productos/BOX-ALFAJORCITOS.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Grande</div>
-                            <div style="color: #666; font-size: 0.9rem;">47 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$50.000</div>
+                    <div class="size-option" data-size="grande" data-price="50000" data-units="47" onclick="selectSize(this, 'alfajorcitos')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Grande</span>
+                            <span class="size-units">47 unidades</span>
+                            <span class="size-price">$50.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'alfajorcitos-grande')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'alfajorcitos-grande')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
                 </div>
@@ -287,29 +287,29 @@
                     </ul>
                 
 
-                <div class="box-size-options" style="display: flex; gap: 20px; justify-content: center; padding: 20px; flex-wrap: wrap;">
-                    <div class="box-option" data-id="cuadraditos-chica" data-name="BOX CUADRADITOS - Caja Chica (28u)" data-price="34000" data-image="productos/BOX-CUADRADITOS.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Chica</div>
-                            <div style="color: #666; font-size: 0.9rem;">28 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$34.000</div>
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="34000" data-units="28" onclick="selectSize(this, 'cuadraditos')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Chica</span>
+                            <span class="size-units">28 unidades</span>
+                            <span class="size-price">$34.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'cuadraditos-chica')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'cuadraditos-chica')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="box-option" data-id="cuadraditos-grande" data-name="BOX CUADRADITOS - Caja Grande (49u)" data-price="60000" data-image="productos/BOX-CUADRADITOS.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Grande</div>
-                            <div style="color: #666; font-size: 0.9rem;">49 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$60.000</div>
+                    <div class="size-option" data-size="grande" data-price="60000" data-units="49" onclick="selectSize(this, 'cuadraditos')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Grande</span>
+                            <span class="size-units">49 unidades</span>
+                            <span class="size-price">$60.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'cuadraditos-grande')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'cuadraditos-grande')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
                 </div>
@@ -343,29 +343,29 @@
                     </ul>
                 
 
-                <div class="box-size-options" style="display: flex; gap: 20px; justify-content: center; padding: 20px; flex-wrap: wrap;">
-                    <div class="box-option" data-id="mix-chica" data-name="BOX MIX - Caja Chica (35u)" data-price="34000" data-image="productos/BOX-MIX.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Chica</div>
-                            <div style="color: #666; font-size: 0.9rem;">35 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$34.000</div>
+                <div class="box-size-selector">
+                    <div class="size-option" data-size="chica" data-price="34000" data-units="35" onclick="selectSize(this, 'mix')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Chica</span>
+                            <span class="size-units">35 unidades</span>
+                            <span class="size-price">$34.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'mix-chica')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'mix-chica')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="box-option" data-id="mix-grande" data-name="BOX MIX - Caja Grande (56u)" data-price="52000" data-image="productos/BOX-MIX.jpg" style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; min-width: 250px;">
-                        <div style="margin-bottom: 10px;">
-                            <div style="font-weight: bold; font-size: 1.1rem;">Caja Grande</div>
-                            <div style="color: #666; font-size: 0.9rem;">56 unidades</div>
-                            <div class="product-price" style="font-size: 1.2rem; font-weight: bold; color: #2d3e50; margin-top: 5px;">$52.000</div>
+                    <div class="size-option" data-size="grande" data-price="52000" data-units="56" onclick="selectSize(this, 'mix')">
+                        <div class="size-details">
+                            <span class="size-label">Caja Grande</span>
+                            <span class="size-units">56 unidades</span>
+                            <span class="size-price">$52.000</span>
                         </div>
-                        <div class="product-controls" style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                            <button class="qty-btn minus" onclick="updateBoxDulceQty(this, -1, 'mix-grande')">−</button>
+                        <div class="size-qty-controls">
+                            <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
                             <span class="qty-display">0</span>
-                            <button class="qty-btn plus" onclick="updateBoxDulceQty(this, 1, 'mix-grande')">+</button>
+                            <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
                 </div>
@@ -373,6 +373,11 @@
             </section>
         </div>
     </div>
+
+
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
         <span class="btn-counter" id="total-items-counter">0</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </button>
