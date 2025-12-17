@@ -295,25 +295,14 @@ async function initMercadoPago() {
                 email: datosComprador.email,
                 identification: {
                     type: 'DNI',
-                    number: datosComprador.dni
+                    number: String(datosComprador.dni)
                 },
                 phone: {
-                    number: datosComprador.telefono
+                    number: parseInt(datosComprador.telefono.replace(/\D/g, ''))
                 },
                 address: {
                     street_name: datosComprador.calle,
-                    street_number: datosComprador.altura,
-                    zip_code: datosComprador.codigoPostal
-                }
-            },
-            shipments: {
-                receiver_address: {
-                    street_name: datosComprador.calle,
-                    street_number: datosComprador.altura,
-                    floor: datosComprador.piso,
-                    apartment: datosComprador.depto,
-                    city_name: datosComprador.ciudad,
-                    state_name: datosComprador.provincia,
+                    street_number: parseInt(datosComprador.altura),
                     zip_code: datosComprador.codigoPostal
                 }
             },
