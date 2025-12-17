@@ -1,3 +1,6 @@
+// Importar stock manager
+import { stockManager } from './stock-manager.js';
+
 // Script para cambiar imagen del hero al hacer hover en los items del menú y productos
 document.addEventListener('DOMContentLoaded', function() {
     const productItems = document.querySelectorAll('.product-item, .product-cart-item');
@@ -309,6 +312,17 @@ function addAllToCart() {
         return;
     }
     
+    // Validar stock antes de agregar
+    for (const product of productsToAdd) {
+        const productId = stockManager.generateProductIdFromName(product.name);
+        const availableStock = stockManager.getStock(productId);
+        
+        if (product.quantity > availableStock) {
+            alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
+            return;
+        }
+    }
+    
     // Agregar todos los productos al carrito
     if (typeof addToCart === 'function') {
         productsToAdd.forEach(product => {
@@ -390,7 +404,32 @@ function updateQtyNew(button, change) {
     if (!qtyDisplay) return;
     
     let currentQty = parseInt(qtyDisplay.textContent);
-    currentQty = Math.max(0, currentQty + change);
+    const newQty = currentQty + change;
+    
+    // Si está incrementando, verificar stock
+    if (change > 0) {
+        // Obtener ID del producto para verificar stock
+        const sizeOption = parent.closest('.size-option');
+        const productItem = parent.closest('.product-item, .product-cart-item');
+        
+        let productId = '';
+        if (sizeOption && sizeOption.dataset.name) {
+            productId = stockManager.generateProductIdFromName(sizeOption.dataset.name);
+        } else if (productItem && productItem.dataset.name) {
+            productId = stockManager.generateProductIdFromName(productItem.dataset.name);
+        }
+        
+        // Verificar stock disponible
+        if (productId) {
+            const availableStock = stockManager.getStock(productId);
+            if (newQty > availableStock) {
+                alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
+                return;
+            }
+        }
+    }
+    
+    currentQty = Math.max(0, newQty);
     qtyDisplay.textContent = currentQty;
 
     // Update total counter
