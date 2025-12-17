@@ -329,6 +329,13 @@ async function initMercadoPago() {
         
         const preference = await response.json();
         
+        console.log('Respuesta del backend:', preference);
+        
+        // Verificar si hubo error en el backend
+        if (!response.ok || preference.error) {
+            throw new Error(preference.error || 'Error al crear preferencia de pago');
+        }
+        
         // Crear botón de pago
         const checkout = mercadopago.checkout({
             preference: {
@@ -340,9 +347,12 @@ async function initMercadoPago() {
             }
         });
         
+        console.log('✅ Botón de MercadoPago creado exitosamente');
+        
     } catch (error) {
-        console.error('Error al inicializar MercadoPago:', error);
-        alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
+        console.error('Error detallado:', error);
+        const errorMsg = error.message || 'Error desconocido';
+        alert(`Error al procesar el pago: ${errorMsg}\n\nRevisa la consola para más detalles.`);
     }
 }
 
