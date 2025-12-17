@@ -5,10 +5,10 @@
 // CONFIGURACIÓN DE MERCADOPAGO
 // ===================================
 const MP_PUBLIC_KEY = 'APP_USR-eb9414cf-eadb-4da9-9d16-0bf070ad753e';
-// URL del backend - actualiza esto con tu dominio de producción
+// URL del backend - SE ACTUALIZARÁ después del deploy en Vercel
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:3000' 
-    : 'https://' + window.location.hostname;
+    : 'https://CAMBIAR-POR-TU-URL-VERCEL.vercel.app';
 // El ACCESS_TOKEN se debe configurar en el backend por seguridad
 
 // Variables globales

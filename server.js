@@ -4,6 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const mercadopago = require('mercadopago');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +17,7 @@ app.use(express.json());
 // CONFIGURAR MERCADOPAGO
 // ===================================
 mercadopago.configure({
-    access_token: 'APP_USR-1994671338029929-121617-616567dcc8aed895c33977bb1eb37d82-2513559413'
+    access_token: process.env.MP_ACCESS_TOKEN || 'APP_USR-1994671338029929-121617-616567dcc8aed895c33977bb1eb37d82-2513559413'
 });
 
 // ===================================

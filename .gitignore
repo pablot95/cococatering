@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.production
+.vercel
 firebase-config.js
 .admin.html
 .admin.js
