@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Ôªø<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -143,7 +143,7 @@
             <p><strong>?? Total de productos:</strong> <span id="totalProducts">0</span></p>
             <p><strong>?? CDN:</strong> jsDelivr (GitHub)</p>
             <p><strong>?? Base de datos:</strong> Firebase Firestore</p>
-            <p><strong>?? ColecciÛn:</strong> products</p>
+            <p><strong>?? Colecci√≥n:</strong> products</p>
         </div>
 
         <div class="stats">
@@ -176,7 +176,7 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
         import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
-        // ConfiguraciÛn de Firebase
+        // Configuraci√≥n de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD8tAHsCsRH1ZfXri3UsbDvt31gBYpoWME",
             authDomain: "cococatering-aba04.firebaseapp.com",
@@ -191,18 +191,18 @@
 
         const CDN_BASE = 'https://cdn.jsdelivr.net/gh/pablot95/cococatering@main/';
 
-        // PRODUCTOS EXTRAÕDOS DE product-name CON SU data-image
+        // PRODUCTOS EXTRA√çDOS DE product-name CON SU data-image
         const products = [
-            // EVENTOS - Men˙ Gourmet
-            { id: 'tarteletas-frias-de-hummus-y-atun', name: 'Tarteletas frÌas de hummus y at˙n', image: 'productos/Tarteletas-frias-de-Hummus-y-At˙n-2.jpg', category: 'eventos' },
-            { id: 'degustacion-de-quesos', name: 'DegustaciÛn de quesos', image: 'productos/DegustaciÛn-de-quesos.jpg', category: 'eventos' },
-            { id: 'scon-de-queso-al-romero-con-lajas-de-salmon', name: 'Scon de queso al romero con l·jas de salmÛn', image: 'productos/Scon-de-queso-al-romero-con-lajas-de-SalmÛn.jpg', category: 'eventos' },
+            // EVENTOS - Men√∫ Gourmet
+            { id: 'tarteletas-frias-de-hummus-y-atun', name: 'Tarteletas fr√≠as de hummus y at√∫n', image: 'productos/Tarteletas-frias-de-Hummus-y-At√∫n-2.jpg', category: 'eventos' },
+            { id: 'degustacion-de-quesos', name: 'Degustaci√≥n de quesos', image: 'productos/Degustaci√≥n-de-quesos.jpg', category: 'eventos' },
+            { id: 'scon-de-queso-al-romero-con-lajas-de-salmon', name: 'Scon de queso al romero con l√°jas de salm√≥n', image: 'productos/Scon-de-queso-al-romero-con-lajas-de-Salm√≥n.jpg', category: 'eventos' },
             { id: 'dip-de-queso-azul-y-nueces', name: 'Dip de queso azul y nueces', image: 'productos/Dip-de-queso-azul-y-nueces.jpg', category: 'eventos' },
             { id: 'locatelli-de-pollo-y-tomate', name: 'Locatelli de pollo y tomate', image: 'productos/Locatelli-de-pollo-y-tomate.jpg', category: 'eventos' },
             { id: 'figacita-de-lomo-y-morrones-asados', name: 'Figacita de lomo y morrones asados', image: 'productos/figacita-de-Lomo-y-morrones-asados.jpg', category: 'eventos' },
             { id: 'chipacitos-de-crudo-y-brie', name: 'Chipacitos de crudo y brie', image: 'productos/chipa-de-morron.jpg', category: 'eventos' },
             { id: 'triangulito-de-masa-philo-y-bondiola-braseada', name: 'Triangulito de masa philo y bondiola braseada', image: 'productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg', category: 'eventos' },
-            { id: 'quiche-de-champignones', name: 'QuichÈ de champignones', image: 'productos/quiche-de-Champignones.jpg', category: 'eventos' },
+            { id: 'quiche-de-champignones', name: 'Quich√© de champignones', image: 'productos/quiche-de-Champignones.jpg', category: 'eventos' },
             { id: 'papas-rosti', name: 'Papas rosti', image: 'productos/Papas-Rosty.jpg', category: 'eventos' },
             { id: 'brochetitas-de-ternera', name: 'Brochetitas de ternera', image: 'productos/Brochetitas-de-Ternera-2.jpg', category: 'eventos' },
             { id: 'hamburguesitas', name: 'Hamburguesitas', image: 'productos/hamburguesitas.jpg', category: 'eventos' },
@@ -210,21 +210,21 @@
             { id: 'shot-de-lemon-pie-eventos', name: 'Shot de lemon pie', image: 'productos/shot-de-lemon-pie.jpg', category: 'eventos' },
             { id: 'shot-de-oreo-eventos', name: 'Shot de oreo', image: 'productos/shot-de-oreo.jpg', category: 'eventos' },
             
-            // EVENTOS - Men˙ Cl·sico
+            // EVENTOS - Men√∫ Cl√°sico
             { id: 'masitas-de-queso', name: 'Masitas de queso', image: 'productos/Masitas-de-queso.jpg', category: 'eventos' },
             { id: 'pinchos-bocconcinos', name: 'Pinchos bocconcinos', image: 'productos/pinchos-boconccinos.jpg', category: 'eventos' },
             { id: 'dip-de-queso-azul-con-nueces', name: 'Dip de queso azul con nueces', image: 'productos/dip-de-queso-azul-y-nueces.jpg', category: 'eventos' },
             { id: 'criollito-capresse', name: 'Criollito capresse', image: 'productos/Criollito-capresse.jpg', category: 'eventos' },
-            { id: 'sconcito-de-crudo-y-rucula', name: 'Sconcito de crudo y r˙cula', image: 'productos/scon-de-crudo.jpg', category: 'eventos' },
+            { id: 'sconcito-de-crudo-y-rucula', name: 'Sconcito de crudo y r√∫cula', image: 'productos/scon-de-crudo.jpg', category: 'eventos' },
             { id: 'locatelli-de-pavita-y-tomate', name: 'Locatelli de pavita y tomate', image: 'productos/Locatelli-de-pollo-y-tomate.jpg', category: 'eventos' },
             { id: 'figacita-de-peceto-lechuga-y-tomate', name: 'Figacita de peceto, lechuga y tomate', image: 'productos/pecetito.jpg', category: 'eventos' },
             { id: 'pinchos-de-pollo-y-panceta', name: 'Pinchos de pollo y panceta', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'eventos' },
             { id: 'figacita-de-bondiola-queso-fresco-y-salsa-malbec', name: 'Figacita de bondiola, queso fresco y salsa malbec', image: 'productos/pecetito.jpg', category: 'eventos' },
             { id: 'canastitas-de-espinaca', name: 'Canastitas de espinaca', image: 'productos/Canastitas-de-espinaca.jpg', category: 'eventos' },
-            { id: 'roll-de-masa-philo-con-jamon-y-queso', name: 'Roll de masa philo con jamÛn y queso', image: 'productos/Roll-de-Masa-philo.jpg', category: 'eventos' },
+            { id: 'roll-de-masa-philo-con-jamon-y-queso', name: 'Roll de masa philo con jam√≥n y queso', image: 'productos/Roll-de-Masa-philo.jpg', category: 'eventos' },
             { id: 'figacita-de-roast-beef-tiernizado-cheddar-y-cebolla-caramelizada', name: 'Figacita de roast beef tiernizado, cheddar y cebolla caramelizada', image: 'productos/roast-beef.jpg', category: 'eventos' },
             
-            // EVENTOS - Men˙ Picada
+            // EVENTOS - Men√∫ Picada
             { id: 'picaditas-individuales', name: 'Picaditas individuales', image: 'productos/Picadas-individuales.jpg', category: 'eventos' },
             { id: 'ensaladita-caesar', name: 'Ensaladita caesar', image: 'productos/Ensaladitas-cesar.jpg', category: 'eventos' },
             { id: 'sandwiche-de-peceto', name: 'Sandwiche de peceto', image: 'productos/pecetito.jpg', category: 'eventos' },
@@ -234,10 +234,10 @@
             { id: 'mini-tacos-de-bondiola', name: 'Mini tacos de bondiola', image: 'productos/tacos.jpg', category: 'eventos' },
             { id: 'shot-de-cheesecake', name: 'Shot de cheesecake', image: 'productos/shot-de-cheesecake.jpg', category: 'eventos' },
             
-            // EVENTOS - Men˙ Pizza
+            // EVENTOS - Men√∫ Pizza
             { id: 'pan-de-queso-con-oliva-y-provenzal', name: 'Pan de queso con oliva y provenzal', image: 'productos/empanadas.jpg', category: 'eventos' },
             { id: 'empanada-bondiola', name: 'Bondiola', image: 'productos/empanadas.jpg', category: 'eventos' },
-            { id: 'empanada-jamon-y-queso', name: 'JamÛn y queso', image: 'productos/empanadas.jpg', category: 'eventos' },
+            { id: 'empanada-jamon-y-queso', name: 'Jam√≥n y queso', image: 'productos/empanadas.jpg', category: 'eventos' },
             { id: 'empanada-pollo', name: 'Pollo', image: 'productos/empanadas.jpg', category: 'eventos' },
             { id: 'empanada-criolla', name: 'Criolla', image: 'productos/empanadas.jpg', category: 'eventos' },
             { id: 'focaccia-caprese', name: 'Caprese', image: 'productos/capresse.jpg', category: 'eventos' },
@@ -246,10 +246,10 @@
             { id: 'pizza-muzzarella', name: 'Muzzarella', image: 'productos/napolitana.jpg', category: 'eventos' },
             { id: 'pizza-tomate-oliva-y-albahaca', name: 'Tomate, oliva y albahaca', image: 'productos/napolitana.jpg', category: 'eventos' },
             { id: 'pizza-tomate-y-provenzal', name: 'Tomate y provenzal', image: 'productos/napolitana.jpg', category: 'eventos' },
-            { id: 'pizza-jamon-y-morrones', name: 'JamÛn y morrones', image: 'productos/jamon-y-morrones.jpg', category: 'eventos' },
-            { id: 'pizza-rucula-parmesano-y-jamon-crudo', name: 'R˙cula, parmesano y jamÛn crudo', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
-            { id: 'pizza-rucula-brie-y-champignones', name: 'R˙cula, brie y champignones', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
-            { id: 'pizza-rucula-cherrys-y-bocconcinos', name: 'R˙cula, cherrys y bocconcinos', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
+            { id: 'pizza-jamon-y-morrones', name: 'Jam√≥n y morrones', image: 'productos/jamon-y-morrones.jpg', category: 'eventos' },
+            { id: 'pizza-rucula-parmesano-y-jamon-crudo', name: 'R√∫cula, parmesano y jam√≥n crudo', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
+            { id: 'pizza-rucula-brie-y-champignones', name: 'R√∫cula, brie y champignones', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
+            { id: 'pizza-rucula-cherrys-y-bocconcinos', name: 'R√∫cula, cherrys y bocconcinos', image: 'productos/rucula-y-crudo.jpg', category: 'eventos' },
             { id: 'pizza-calabresa', name: 'Calabresa', image: 'productos/calabresa.jpg', category: 'eventos' },
             { id: 'pizza-fugazzeta', name: 'Fugazzeta', image: 'productos/napolitana.jpg', category: 'eventos' },
             { id: 'pizza-roquefort-y-cebolla-caramelizada', name: 'Roquefort y cebolla caramelizada', image: 'productos/queso-azul-y-cebolla-caramelizada.jpg', category: 'eventos' },
@@ -259,47 +259,47 @@
             
             // BOX SALADOS
             { id: '15-pinchos-bocconcinos', name: '15 Pinchos bocconcinos', image: 'productos/pinchos-boconccinos.jpg', category: 'box-salados' },
-            { id: '15-sconcitos-de-queso-con-crudo-y-rucula', name: '15 Sconcitos de queso con crudo y r˙cula', image: 'productos/scon-de-crudo.jpg', category: 'box-salados' },
+            { id: '15-sconcitos-de-queso-con-crudo-y-rucula', name: '15 Sconcitos de queso con crudo y r√∫cula', image: 'productos/scon-de-crudo.jpg', category: 'box-salados' },
             { id: '15-pecetitos-con-tomate', name: '15 Pecetitos con tomate', image: 'productos/pecetito.jpg', category: 'box-salados' },
             { id: '15-papitas-rosty', name: '15 Papitas rosty', image: 'productos/papas-rosty.jpg', category: 'box-salados' },
-            { id: '15-chipacitos-con-parmesano-y-morrones-asados', name: '15 Chip·citos con parmesano y morrones asados', image: 'productos/chipa-de-morron.jpg', category: 'box-salados' },
+            { id: '15-chipacitos-con-parmesano-y-morrones-asados', name: '15 Chip√°citos con parmesano y morrones asados', image: 'productos/chipa-de-morron.jpg', category: 'box-salados' },
             { id: '10-dip-de-queso-azul-y-nueces', name: '10 Dip de queso azul y nueces', image: 'productos/dip-de-queso-azul-y-nueces.jpg', category: 'box-salados' },
-            { id: '15-sconcitos-de-queso-con-jamon-crudo-y-rucula', name: '15 Sconcitos de queso con JamÛn crudo y r˙cula', image: 'productos/scon-de-crudo.jpg', category: 'box-salados' },
+            { id: '15-sconcitos-de-queso-con-jamon-crudo-y-rucula', name: '15 Sconcitos de queso con Jam√≥n crudo y r√∫cula', image: 'productos/scon-de-crudo.jpg', category: 'box-salados' },
             { id: '15-criollitos-capresse', name: '15 Criollitos capresse', image: 'productos/criollito-capresse.jpg', category: 'box-salados' },
             { id: '15-pinchos-de-pollo-y-panceta', name: '15 Pinchos de pollo y panceta', image: 'productos/pollo-y-panceta.jpg', category: 'box-salados' },
             { id: '15-figacitas-de-bondiola-con-salsa-malbec', name: '15 Figacitas de bondiola con salsa malbec', image: 'productos/bondiola.jpg', category: 'box-salados' },
             { id: '15-triangulitos-de-queso-azul-y-peras-caramelizadas', name: '15 Triangulitos de queso azul y peras caramelizadas', image: 'productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg', category: 'box-salados' },
-            { id: '15-picaditas-individuales-acompanadas-con-dip-de-hummus-mayo-de-zanahoria-y-pancitos', name: '15 Picaditas individuales acompaÒadas con dip de hummus, mayo de zanahoria y pancitos', image: 'productos/picadas-individuales.jpg', category: 'box-salados' },
-            { id: '15-empanaditas-de-jamon-y-queso', name: '15 Empanaditas de jamÛn y queso', image: 'productos/empanada-jq.jpg', category: 'box-salados' },
+            { id: '15-picaditas-individuales-acompanadas-con-dip-de-hummus-mayo-de-zanahoria-y-pancitos', name: '15 Picaditas individuales acompa√±adas con dip de hummus, mayo de zanahoria y pancitos', image: 'productos/picadas-individuales.jpg', category: 'box-salados' },
+            { id: '15-empanaditas-de-jamon-y-queso', name: '15 Empanaditas de jam√≥n y queso', image: 'productos/empanada-jq.jpg', category: 'box-salados' },
             { id: '15-pinchos-de-pollo-crispy-con-salsa-honey', name: '15 Pinchos de pollo crispy con salsa honey', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'box-salados' },
             { id: '15-taquitos-de-bondiola', name: '15 Taquitos de bondiola', image: 'productos/tacos.jpg', category: 'box-salados' },
             { id: '15-hamburguesitas', name: '15 Hamburguesitas', image: 'productos/hamburguesitas.jpg', category: 'box-salados' },
             
             // FINGERS CALIENTES
-            { id: 'empanaditas-de-bondiola-x12', name: 'Empanaditas de bondiola ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
-            { id: 'empanaditas-de-jyq-x12', name: 'Empanaditas de JyQ ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
-            { id: 'empanaditas-de-pollo-x12', name: 'Empanaditas de Pollo ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
-            { id: 'empanaditas-de-carne-x12', name: 'Empanaditas de carne ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
-            { id: 'empanaditas-de-osobuco-x12', name: 'Empanaditas de Osobuco ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
-            { id: 'empanaditas-de-lomo-x12', name: 'Empanaditas de Lomo ñ x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-bondiola-x12', name: 'Empanaditas de bondiola ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-jyq-x12', name: 'Empanaditas de JyQ ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-pollo-x12', name: 'Empanaditas de Pollo ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-carne-x12', name: 'Empanaditas de carne ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-osobuco-x12', name: 'Empanaditas de Osobuco ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
+            { id: 'empanaditas-de-lomo-x12', name: 'Empanaditas de Lomo ‚Äì x12', image: 'productos/empanadas.jpg', category: 'fingers-calientes' },
             { id: 'canastitas-de-capresse', name: 'Canastitas de capresse', image: 'productos/capresse.jpg', category: 'fingers-calientes' },
             { id: 'canastitas-queso-azul-y-cebolla-caramelizada', name: 'Canastitas Queso azul y cebolla caramelizada', image: 'productos/capresse.jpg', category: 'fingers-calientes' },
             { id: 'canastitas-panceta-y-ciruela', name: 'Canastitas Panceta y ciruela', image: 'productos/capresse.jpg', category: 'fingers-calientes' },
             { id: 'canastitas-calabaza', name: 'Canastitas Calabaza', image: 'productos/capresse.jpg', category: 'fingers-calientes' },
             { id: 'canastitas-espinaca', name: 'Canastitas Espinaca', image: 'productos/canastitas-de-espinaca.jpg', category: 'fingers-calientes' },
-            { id: 'pollitos-crispy-con-salsa-honey-x12', name: 'Pollitos crispy con salsa honey ñ x12', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'fingers-calientes' },
-            { id: 'hamburguesitas-con-cheddar-x12', name: 'Hamburguesitas con cheddar ñ x12', image: 'productos/hamburguesitas.jpg', category: 'fingers-calientes' },
-            { id: 'tacos-de-bondiola-x12', name: 'Tacos de bondiola ñ x12', image: 'productos/tacos.jpg', category: 'fingers-calientes' },
-            { id: 'pinchos-de-pollo-y-panceta-con-salsa-manzana-x12', name: 'Pinchos de pollo y panceta con salsa manzana ñ x12', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'fingers-calientes' },
-            { id: 'tarteletas-espinaca-x12', name: 'Tarteletas espinaca ñ x12', image: 'productos/canastitas-de-espinaca.jpg', category: 'fingers-calientes' },
-            { id: 'roast-beef-x12', name: 'Roast beef ñ x12', image: 'productos/roast-beef.jpg', category: 'fingers-calientes' },
-            { id: 'roll-de-masa-philo-con-jyq-x12', name: 'Roll de masa philo con JYQ ñ x12', image: 'productos/roll-de-masa-philo.jpg', category: 'fingers-calientes' },
-            { id: 'triangulito-de-bondiola-x12', name: 'Triangulito de bondiola ñ x12', image: 'productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg', category: 'fingers-calientes' },
-            { id: 'tarteleta-de-champi-x12', name: 'Tarteleta de champi ñ x12', image: 'productos/quiche-de-Champignones.jpg', category: 'fingers-calientes' },
-            { id: 'brochetitas-de-ternera-con-salsa-malbec-x12', name: 'Brochetitas de ternera con salsa malbec ñ x12', image: 'productos/Brochetitas-de-Ternera-2.jpg', category: 'fingers-calientes' },
-            { id: 'verduritas-asadas-x12', name: 'Verduritas asadas ñ x12', image: 'productos/verduritas-asadas.jpg', category: 'fingers-calientes' },
-            { id: 'medialunitas-jyq-x12', name: 'Medialunitas JYQ ñ x12', image: 'images/salados.jpg', category: 'fingers-calientes' },
-            { id: 'roll-de-masa-philo-con-queso-y-cebolla-caramelizada-x12', name: 'Roll de masa philo con queso y cebolla caramelizada ñ x12', image: 'productos/roll-de-masa-philo.jpg', category: 'fingers-calientes' },
+            { id: 'pollitos-crispy-con-salsa-honey-x12', name: 'Pollitos crispy con salsa honey ‚Äì x12', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'fingers-calientes' },
+            { id: 'hamburguesitas-con-cheddar-x12', name: 'Hamburguesitas con cheddar ‚Äì x12', image: 'productos/hamburguesitas.jpg', category: 'fingers-calientes' },
+            { id: 'tacos-de-bondiola-x12', name: 'Tacos de bondiola ‚Äì x12', image: 'productos/tacos.jpg', category: 'fingers-calientes' },
+            { id: 'pinchos-de-pollo-y-panceta-con-salsa-manzana-x12', name: 'Pinchos de pollo y panceta con salsa manzana ‚Äì x12', image: 'productos/pinchos-de-pollo-crispy.jpg', category: 'fingers-calientes' },
+            { id: 'tarteletas-espinaca-x12', name: 'Tarteletas espinaca ‚Äì x12', image: 'productos/canastitas-de-espinaca.jpg', category: 'fingers-calientes' },
+            { id: 'roast-beef-x12', name: 'Roast beef ‚Äì x12', image: 'productos/roast-beef.jpg', category: 'fingers-calientes' },
+            { id: 'roll-de-masa-philo-con-jyq-x12', name: 'Roll de masa philo con JYQ ‚Äì x12', image: 'productos/roll-de-masa-philo.jpg', category: 'fingers-calientes' },
+            { id: 'triangulito-de-bondiola-x12', name: 'Triangulito de bondiola ‚Äì x12', image: 'productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg', category: 'fingers-calientes' },
+            { id: 'tarteleta-de-champi-x12', name: 'Tarteleta de champi ‚Äì x12', image: 'productos/quiche-de-Champignones.jpg', category: 'fingers-calientes' },
+            { id: 'brochetitas-de-ternera-con-salsa-malbec-x12', name: 'Brochetitas de ternera con salsa malbec ‚Äì x12', image: 'productos/Brochetitas-de-Ternera-2.jpg', category: 'fingers-calientes' },
+            { id: 'verduritas-asadas-x12', name: 'Verduritas asadas ‚Äì x12', image: 'productos/verduritas-asadas.jpg', category: 'fingers-calientes' },
+            { id: 'medialunitas-jyq-x12', name: 'Medialunitas JYQ ‚Äì x12', image: 'images/salados.jpg', category: 'fingers-calientes' },
+            { id: 'roll-de-masa-philo-con-queso-y-cebolla-caramelizada-x12', name: 'Roll de masa philo con queso y cebolla caramelizada ‚Äì x12', image: 'productos/roll-de-masa-philo.jpg', category: 'fingers-calientes' },
             
             // BOX DULCES - Pattiserie
             { id: 'brownie-dulce-de-leche-y-merengue', name: 'Brownie, dulce de leche y merengue', image: 'productos/BROWNIE-con-merengue.jpg', category: 'box-dulces' },
@@ -309,8 +309,8 @@
             { id: 'mousse-de-chocolate-amargo', name: 'Mousse de chocolate amargo', image: 'productos/mousse-de-choc-amargo.jpg', category: 'box-dulces' },
             { id: 'mousse-de-coco', name: 'Mousse de coco', image: 'productos/mousse-de-coco.jpg', category: 'box-dulces' },
             { id: 'cheescake-de-frutos-rojos', name: 'Cheescake de frutos rojos', image: 'productos/cheesecake-de-frutillas.jpg', category: 'box-dulces' },
-            { id: 'cheescake-de-maracuya', name: 'Cheescake de maracuy·', image: 'productos/cheesecake-de-maracuya.jpg', category: 'box-dulces' },
-            { id: 'mousse-de-cafe-y-caramelo', name: 'Mousse de cafÈ y caramelo', image: 'productos/mousse-de-cafe-.jpg', category: 'box-dulces' },
+            { id: 'cheescake-de-maracuya', name: 'Cheescake de maracuy√°', image: 'productos/cheesecake-de-maracuya.jpg', category: 'box-dulces' },
+            { id: 'mousse-de-cafe-y-caramelo', name: 'Mousse de caf√© y caramelo', image: 'productos/mousse-de-cafe-.jpg', category: 'box-dulces' },
             { id: 'oreo', name: 'Oreo', image: 'productos/oreo.jpg', category: 'box-dulces' },
             { id: 'havanette', name: 'Havanette', image: 'productos/havannete.jpg', category: 'box-dulces' },
             { id: 'macarons-sin-tacc', name: 'Macarons (sin tacc)', image: 'productos/macarons.jpg', category: 'box-dulces' },
@@ -327,7 +327,7 @@
             // BOX DULCES - Mix
             { id: 'Box-dulce-MIX', name: 'Box dulce MIX', image: 'productos/BOX-MIX.jpg', category: 'box-dulces' },
             
-            // TORTAS CL¡SICAS
+            // TORTAS CL√ÅSICAS
             { id: 'brownie', name: 'BROWNIE', image: 'productos/brownie.jpg', category: 'tortas-clasicas' },
             { id: 'carrot-cake', name: 'CARROT CAKE', image: 'productos/carrot-cake.jpg', category: 'tortas-clasicas' },
             { id: 'red-velvet', name: 'RED VELVET', image: 'productos/red-velvet.jpg', category: 'tortas-clasicas' },
@@ -335,40 +335,40 @@
             { id: 'chocotorta-torta', name: 'CHOCOTORTA', image: 'productos/chocotorta.jpg', category: 'tortas-clasicas' },
             { id: 'torta-de-nuez', name: 'TORTA DE NUEZ', image: 'productos/brownie.jpg', category: 'tortas-clasicas' },
             { id: 'matilda', name: 'MATILDA', image: 'productos/matilda.jpg', category: 'tortas-clasicas' },
-            { id: 'sable-de-almendras-torta', name: 'SABL… DE ALMENDRAS', image: 'productos/sable-de-almendras.jpg', category: 'tortas-clasicas' },
+            { id: 'sable-de-almendras-torta', name: 'SABL√â DE ALMENDRAS', image: 'productos/sable-de-almendras.jpg', category: 'tortas-clasicas' },
             { id: 'marquise-de-frutos-rojos', name: 'MARQUISE DE FRUTOS ROJOS', image: 'productos/brownie.jpg', category: 'tortas-clasicas' },
             { id: 'rogel', name: 'ROGEL', image: 'productos/brownie.jpg', category: 'tortas-clasicas' },
-            { id: 'oreo-tentacion', name: 'OREO TENTACI”N', image: 'productos/oreo-tentacion.jpg', category: 'tortas-clasicas' },
+            { id: 'oreo-tentacion', name: 'OREO TENTACI√ìN', image: 'productos/oreo-tentacion.jpg', category: 'tortas-clasicas' },
             { id: 'cheesecake', name: 'CHEESECAKE', image: 'productos/cheesecake-de-frutillas.jpg', category: 'tortas-clasicas' },
             { id: 'lemon-pie-torta', name: 'LEMON PIE', image: 'productos/lemon-pie.jpg', category: 'tortas-clasicas' },
             { id: 'key-lime-pie', name: 'KEY LIME PIE', image: 'productos/key-lime.jpg', category: 'tortas-clasicas' },
             
-            // FINGERS FRÕOS
-            { id: 'masitas-de-queso-x24', name: 'Masitas de queso ñ x24', image: 'productos/masitas-de-queso.jpg', category: 'fingers-frios' },
-            { id: 'pinchos-bocconcinos-x12', name: 'Pinchos bocconcinos ñ x12', image: 'productos/pinchos-boconccinos.jpg', category: 'fingers-frios' },
-            { id: 'ensaladitas-cesar-x12', name: 'Ensaladitas CÈsar ñ x12', image: 'productos/ensaladitas-cesar.jpg', category: 'fingers-frios' },
-            { id: 'pecetitos-x12', name: 'Pecetitos ñ x12', image: 'productos/pecetito.jpg', category: 'fingers-frios' },
-            { id: 'papas-rosty-x12', name: 'Papas rosty ñ x12', image: 'productos/Papas-Rosty.jpg', category: 'fingers-frios' },
-            { id: 'picaditas-individuales-x12', name: 'Picaditas individuales ñ x12', image: 'productos/picadas-individuales.jpg', category: 'fingers-frios' },
-            { id: 'figacita-j-y-q-x12', name: 'Figacita J y Q ñ x12', image: 'productos/figacitas-jq.jpg', category: 'fingers-frios' },
-            { id: 'criollito-j-y-q-x12', name: 'Criollito J y Q ñ x12', image: 'productos/criollito-de-jamÛn-y-queso.jpg', category: 'fingers-frios' },
-            { id: 'criollito-capresse-x12', name: 'Criollito capresse ñ x12', image: 'productos/criollito-capresse.jpg', category: 'fingers-frios' },
-            { id: 'scon-crudo-y-rucula-x12', name: 'Scon crudo y r˙cula ñ x12', image: 'productos/scon-de-crudo.jpg', category: 'fingers-frios' },
-            { id: 'tartaleta-atun-x12', name: 'Tartaleta at˙n ñ x12', image: 'productos/Tarteletas-frias-de-Hummus-y-At˙n-2.jpg', category: 'fingers-frios' },
-            { id: 'degustacion-de-queso-x12', name: 'DegustaciÛn de queso ñ x12', image: 'productos/DegustaciÛn-de-quesos.jpg', category: 'fingers-frios' },
-            { id: 'dip-queso-azul-x12', name: 'Dip queso azul ñ x12', image: 'productos/dip-de-queso-azul.jpg', category: 'fingers-frios' },
-            { id: 'lomo-y-morron-x12', name: 'Lomo y morrÛn ñ x12', image: 'productos/figacita-de-Lomo-y-morrones-asados.jpg', category: 'fingers-frios' },
-            { id: 'verduritas-asadas-frio-x12', name: 'Verduritas asadas ñ x12', image: 'productos/verduritas-asadas.jpg', category: 'fingers-frios' },
-            { id: 'medialunitas-j-y-q-x12', name: 'Medialunitas J y Q ñ x12', image: 'images/salados.jpg', category: 'fingers-frios' },
-            { id: 'sconcito-con-lajas-de-salmon-x12', name: 'Sconcito con lajas de salmÛn ñ x12', image: 'productos/Scon-de-queso-al-romero-con-lajas-de-SalmÛn.jpg', category: 'fingers-frios' },
-            { id: 'chipacitos-con-morron-y-panceta', name: 'Chipacitos con morrÛn y panceta', image: 'productos/chipa-de-morron.jpg', category: 'fingers-frios' },
+            // FINGERS FR√çOS
+            { id: 'masitas-de-queso-x24', name: 'Masitas de queso ‚Äì x24', image: 'productos/masitas-de-queso.jpg', category: 'fingers-frios' },
+            { id: 'pinchos-bocconcinos-x12', name: 'Pinchos bocconcinos ‚Äì x12', image: 'productos/pinchos-boconccinos.jpg', category: 'fingers-frios' },
+            { id: 'ensaladitas-cesar-x12', name: 'Ensaladitas C√©sar ‚Äì x12', image: 'productos/ensaladitas-cesar.jpg', category: 'fingers-frios' },
+            { id: 'pecetitos-x12', name: 'Pecetitos ‚Äì x12', image: 'productos/pecetito.jpg', category: 'fingers-frios' },
+            { id: 'papas-rosty-x12', name: 'Papas rosty ‚Äì x12', image: 'productos/Papas-Rosty.jpg', category: 'fingers-frios' },
+            { id: 'picaditas-individuales-x12', name: 'Picaditas individuales ‚Äì x12', image: 'productos/picadas-individuales.jpg', category: 'fingers-frios' },
+            { id: 'figacita-j-y-q-x12', name: 'Figacita J y Q ‚Äì x12', image: 'productos/figacitas-jq.jpg', category: 'fingers-frios' },
+            { id: 'criollito-j-y-q-x12', name: 'Criollito J y Q ‚Äì x12', image: 'productos/criollito-de-jam√≥n-y-queso.jpg', category: 'fingers-frios' },
+            { id: 'criollito-capresse-x12', name: 'Criollito capresse ‚Äì x12', image: 'productos/criollito-capresse.jpg', category: 'fingers-frios' },
+            { id: 'scon-crudo-y-rucula-x12', name: 'Scon crudo y r√∫cula ‚Äì x12', image: 'productos/scon-de-crudo.jpg', category: 'fingers-frios' },
+            { id: 'tartaleta-atun-x12', name: 'Tartaleta at√∫n ‚Äì x12', image: 'productos/Tarteletas-frias-de-Hummus-y-At√∫n-2.jpg', category: 'fingers-frios' },
+            { id: 'degustacion-de-queso-x12', name: 'Degustaci√≥n de queso ‚Äì x12', image: 'productos/Degustaci√≥n-de-quesos.jpg', category: 'fingers-frios' },
+            { id: 'dip-queso-azul-x12', name: 'Dip queso azul ‚Äì x12', image: 'productos/dip-de-queso-azul.jpg', category: 'fingers-frios' },
+            { id: 'lomo-y-morron-x12', name: 'Lomo y morr√≥n ‚Äì x12', image: 'productos/figacita-de-Lomo-y-morrones-asados.jpg', category: 'fingers-frios' },
+            { id: 'verduritas-asadas-frio-x12', name: 'Verduritas asadas ‚Äì x12', image: 'productos/verduritas-asadas.jpg', category: 'fingers-frios' },
+            { id: 'medialunitas-j-y-q-x12', name: 'Medialunitas J y Q ‚Äì x12', image: 'images/salados.jpg', category: 'fingers-frios' },
+            { id: 'sconcito-con-lajas-de-salmon-x12', name: 'Sconcito con lajas de salm√≥n ‚Äì x12', image: 'productos/Scon-de-queso-al-romero-con-lajas-de-Salm√≥n.jpg', category: 'fingers-frios' },
+            { id: 'chipacitos-con-morron-y-panceta', name: 'Chipacitos con morr√≥n y panceta', image: 'productos/chipa-de-morron.jpg', category: 'fingers-frios' },
             
             // SHOTS
             { id: 'shot-lemon-pie', name: 'Lemon pie', image: 'productos/shot-de-lemon-pie.jpg', category: 'shots' },
             { id: 'shot-cheesecake-shots', name: 'Cheesecake', image: 'productos/shot-de-cheesecake.jpg', category: 'shots' },
             { id: 'shot-oreo', name: 'Oreo', image: 'productos/shot-de-oreo.jpg', category: 'shots' },
             { id: 'shot-chocotorta', name: 'Chocotorta', image: 'productos/shot-de-chocotorta.jpg', category: 'shots' },
-            { id: 'shot-mousse-de-chocolate-sin-tacc', name: 'Mousse de chocolate (opciÛn sin TACC)', image: 'productos/shot-de-mousse.jpg', category: 'shots' },
+            { id: 'shot-mousse-de-chocolate-sin-tacc', name: 'Mousse de chocolate (opci√≥n sin TACC)', image: 'productos/shot-de-mousse.jpg', category: 'shots' },
             
             // DESAYUNOS
             { id: 'desayuno', name: 'Desayuno', image: 'productos/Desayunos.jpg', category: 'desayuno' }
@@ -426,7 +426,7 @@
                 updateProgress(i + 1, products.length);
             }
 
-            log(`\n?? °PROCESO COMPLETADO!`, 'success');
+            log(`\n?? ¬°PROCESO COMPLETADO!`, 'success');
             log(`? Exitosos: ${successCount}`, 'success');
             log(`? Errores: ${errorCount}`, 'error');
 
@@ -435,7 +435,7 @@
         }
 
         window.clearFirestore = async function() {
-            if (!confirm('?? øEST¡S SEGURO? Esto eliminar· TODOS los productos de Firestore.')) {
+            if (!confirm('?? ¬øEST√ÅS SEGURO? Esto eliminar√° TODOS los productos de Firestore.')) {
                 return;
             }
 
@@ -465,7 +465,7 @@
         }
     </script>
 
-    <!-- BotÛn flotante de WhatsApp -->
+    <!-- Bot√≥n flotante de WhatsApp -->
     <a href="https://wa.me/5491169318930" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
             <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.049-13.483 13.483-13.483s13.483 6.049 13.483 13.483c0 7.435-6.049 13.483-13.483 13.483zM21.981 18.429c-0.309-0.155-1.832-0.903-2.116-1.006-0.283-0.103-0.489-0.155-0.695 0.155s-0.799 1.006-0.98 1.212c-0.18 0.206-0.36 0.232-0.669 0.077s-1.306-0.481-2.487-1.534c-0.92-0.82-1.541-1.834-1.722-2.143s-0.019-0.476 0.136-0.631c0.139-0.139 0.309-0.36 0.463-0.54s0.206-0.309 0.309-0.515 0.052-0.386-0.026-0.54c-0.077-0.155-0.695-1.673-0.951-2.291-0.246-0.6-0.499-0.52-0.695-0.528-0.18-0.009-0.386-0.009-0.592-0.009s-0.54 0.077-0.823 0.386c-0.283 0.309-1.080 1.057-1.080 2.576s1.106 2.988 1.26 3.193c0.155 0.206 2.179 3.321 5.278 4.656 0.737 0.319 1.313 0.509 1.762 0.65 0.742 0.235 1.417 0.202 1.951 0.123 0.595-0.089 1.832-0.749 2.090-1.472s0.257-1.343 0.18-1.472c-0.077-0.129-0.283-0.206-0.592-0.36z"/>

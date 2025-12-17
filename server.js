@@ -4,6 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 const mercadopago = require('mercadopago');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,102 @@ app.use(express.json());
 // ===================================
 mercadopago.configure({
     access_token: process.env.MP_ACCESS_TOKEN || 'APP_USR-1994671338029929-121617-616567dcc8aed895c33977bb1eb37d82-2513559413'
+});
+
+// ===================================
+// CONFIGURAR NODEMAILER
+// ===================================
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER || 'cococateringsanisidro@gmail.com',
+        pass: process.env.EMAIL_PASS // Contraseña de aplicación de Gmail
+    }
+});
+
+// Función para enviar email de orden
+async function enviarEmailOrden(orderData) {
+    const { customer, items, total, paymentId, orderDate } = orderData;
+    
+    // Construir HTML de items
+    const itemsHTML = items.map(item => `
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">$${item.price.toLocaleString('es-AR')}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">$${(item.price * item.quantity).toLocaleString('es-AR')}</td>
+        </tr>
+    `).join('');
+
+    const mailOptions = {
+        from: 'cococateringsanisidro@gmail.com',
+        to: 'cococateringsanisidro@gmail.com',
+        subject: `🛒 Nueva Orden #${paymentId} - Cocó Catering`,
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #d4a574;">Nueva Orden de Compra</h2>
+                
+                <h3>Datos del Cliente:</h3>
+                <p><strong>Nombre:</strong> ${customer.nombre}</p>
+                <p><strong>Email:</strong> ${customer.email}</p>
+                <p><strong>Teléfono:</strong> ${customer.telefono}</p>
+                <p><strong>DNI:</strong> ${customer.dni}</p>
+                
+                <h3>Dirección de Entrega:</h3>
+                <p>
+                    ${customer.calle} ${customer.altura}${customer.piso ? ', Piso ' + customer.piso : ''}${customer.depto ? ', Depto ' + customer.depto : ''}<br>
+                    ${customer.ciudad}, ${customer.provincia}<br>
+                    CP: ${customer.codigoPostal}
+                </p>
+                
+                <h3>Productos Ordenados:</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                    <thead>
+                        <tr style="background-color: #f5f5f5;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Producto</th>
+                            <th style="padding: 10px; text-align: center; border-bottom: 2px solid #ddd;">Cant.</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 2px solid #ddd;">Precio Unit.</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 2px solid #ddd;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${itemsHTML}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px;">TOTAL:</td>
+                            <td style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px; color: #d4a574;">$${total.toLocaleString('es-AR')}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                <p><strong>ID de Pago MercadoPago:</strong> ${paymentId}</p>
+                <p><strong>Fecha:</strong> ${orderDate}</p>
+                
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+                <p style="color: #666; font-size: 12px;">Este email fue generado automáticamente por el sistema de Cocó Catering.</p>
+            </div>
+        `
+    };
+
+    await transporter.sendMail(mailOptions);
+}
+
+// ===================================
+// ENDPOINT: Enviar email de orden
+// ===================================
+app.post('/api/send-order-email', async (req, res) => {
+    try {
+        await enviarEmailOrden(req.body);
+        res.json({ success: true, message: 'Email enviado correctamente' });
+    } catch (error) {
+        console.error('Error al enviar email:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Error al enviar email',
+            details: error.message 
+        });
+    }
 });
 
 // ===================================
@@ -125,6 +222,7 @@ app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
     console.log(`📦 Endpoints disponibles:`);
     console.log(`   POST /api/create-preference - Crear preferencia de pago`);
+    console.log(`   POST /api/send-order-email - Enviar email de orden`);
     console.log(`   POST /api/webhook - Recibir notificaciones de MercadoPago`);
     console.log(`   GET  /api/payment/:id - Obtener información de pago`);
 });
