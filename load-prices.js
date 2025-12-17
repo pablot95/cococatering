@@ -1,9 +1,15 @@
+// Importar stock manager
+import { stockManager } from './stock-manager.js';
+
 // Cargar precios desde productos.json
 async function cargarPrecios() {
     try {
         const response = await fetch('productos.json');
         const productos = await response.json();
         console.log('Precios cargados desde productos.json');
+        
+        // Inicializar stock manager
+        await stockManager.initializeStock();
         
         // Box Salados
         if (productos.boxSalados) actualizarBoxSalados(productos.boxSalados);

@@ -134,7 +134,9 @@
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        import { stockManager } from './stock-manager.js';
+        
         // Obtener parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const paymentId = urlParams.get('payment_id');
@@ -144,6 +146,20 @@
         // Mostrar número de orden
         if (paymentId) {
             document.getElementById('orderNumber').textContent = paymentId;
+        }
+        
+        // Obtener carrito antes de limpiarlo
+        const cartJson = localStorage.getItem('cocoCart');
+        const cart = cartJson ? JSON.parse(cartJson) : [];
+        
+        // Decrementar stock de los productos comprados
+        if (cart.length > 0) {
+            const result = stockManager.decrementCartStock(cart);
+            if (result.success) {
+                console.log('Stock actualizado correctamente:', result.details);
+            } else {
+                console.error('Error al actualizar stock:', result.message);
+            }
         }
         
         // Limpiar carrito después de compra exitosa
@@ -159,7 +175,8 @@
                 body: JSON.stringify({
                     paymentId: paymentId,
                     status: status,
-                    externalReference: externalReference
+                    externalReference: externalReference,
+                    products: cart
                 })
             }).catch(err => console.error('Error al confirmar orden:', err));
         }
