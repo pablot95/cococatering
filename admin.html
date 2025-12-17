@@ -1,9 +1,9 @@
-Ôªø<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Administrativo - Coc√≥ Catering</title>
+    <title>Panel Administrativo - CocÛ Catering</title>
     <link rel="stylesheet" href="admin.css">
     <link rel="icon" href="images/Logo.jpeg" type="image/jpeg">
 </head>
@@ -12,7 +12,7 @@
     <div id="loginScreen" class="login-screen">
         <div class="login-container">
             <div class="login-logo">
-                <h1>üç∞ Coc√≥ Catering</h1>
+                <h1>?? CocÛ Catering</h1>
                 <p>Panel Administrativo</p>
             </div>
             <form id="loginForm" class="login-form">
@@ -21,10 +21,10 @@
                     <input type="text" id="username" name="username" required autocomplete="username">
                 </div>
                 <div class="form-group">
-                    <label for="password">Contrase√±a</label>
+                    <label for="password">ContraseÒa</label>
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn-login">Iniciar Sesi√≥n</button>
+                <button type="submit" class="btn-login">Iniciar SesiÛn</button>
                 <div id="loginError" class="login-error" style="display: none;"></div>
             </form>
         </div>
@@ -35,12 +35,12 @@
         <!-- Header -->
         <header class="admin-header">
             <div class="header-content">
-                <h1>üç∞ Coc√≥ Catering - Panel Administrativo</h1>
-                <button class="btn-logout" onclick="logout()">Cerrar Sesi√≥n</button>
+                <h1>?? CocÛ Catering - Panel Administrativo</h1>
+                <button class="btn-logout" onclick="logout()">Cerrar SesiÛn</button>
             </div>
             <nav class="admin-tabs">
                 <button class="tab-btn active" onclick="switchTab('inicio')">Inicio - Armador de Productos</button>
-                <button class="tab-btn" onclick="switchTab('ordenes')">√ìrdenes</button>
+                <button class="tab-btn" onclick="switchTab('ordenes')">”rdenes</button>
             </nav>
         </header>
 
@@ -49,22 +49,22 @@
             <!-- Tab: Inicio - Armador de Productos -->
             <div id="tabInicio" class="tab-content active">
                 <div class="tab-header">
-                    <h2>üõ†Ô∏è Armador de Productos</h2>
+                    <h2>??? Armador de Productos</h2>
                     <button class="btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
                 </div>
 
                 <div id="productsListContainer" class="products-grid">
                     <div class="empty-state">
-                        <p>No hay productos creados a√∫n</p>
+                        <p>No hay productos creados a˙n</p>
                         <p class="empty-subtitle">Haz clic en "Agregar Producto" para comenzar</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Tab: √ìrdenes -->
+            <!-- Tab: ”rdenes -->
             <div id="tabOrdenes" class="tab-content">
                 <div class="tab-header">
-                    <h2>üì¶ Gesti√≥n de √ìrdenes</h2>
+                    <h2>?? GestiÛn de ”rdenes</h2>
                     <div class="filters">
                         <select id="statusFilter" onchange="loadOrders()">
                             <option value="all">Todas</option>
@@ -73,13 +73,13 @@
                             <option value="completed">Completadas</option>
                             <option value="cancelled">Canceladas</option>
                         </select>
-                        <button class="btn-secondary" onclick="loadOrders()">üîÑ Actualizar</button>
-                        <button class="btn-secondary" onclick="exportOrders()">üì• Exportar CSV</button>
+                        <button class="btn-secondary" onclick="loadOrders()">?? Actualizar</button>
+                        <button class="btn-secondary" onclick="exportOrders()">?? Exportar CSV</button>
                     </div>
                 </div>
 
                 <div id="ordersContainer" class="orders-grid">
-                    <div class="loading">Cargando √≥rdenes...</div>
+                    <div class="loading">Cargando Ûrdenes...</div>
                 </div>
             </div>
         </div>
@@ -96,12 +96,12 @@
                 <form id="productForm">
                     <div class="form-group">
                         <label for="productName">Nombre del Producto *</label>
-                        <input type="text" id="productName" required placeholder="Ej: Tarta de Jam√≥n y Queso">
+                        <input type="text" id="productName" required placeholder="Ej: Tarta de JamÛn y Queso">
                     </div>
 
                     <div class="form-group">
-                        <label for="productDescription">Descripci√≥n</label>
-                        <textarea id="productDescription" rows="3" placeholder="Descripci√≥n breve del producto"></textarea>
+                        <label for="productDescription">DescripciÛn</label>
+                        <textarea id="productDescription" rows="3" placeholder="DescripciÛn breve del producto"></textarea>
                     </div>
 
                     <div class="ingredients-section">
@@ -110,7 +110,7 @@
                             <button type="button" class="btn-add-ingredient" onclick="addIngredientRow()">+ Agregar Ingrediente</button>
                         </div>
                         <div id="ingredientsList" class="ingredients-list">
-                            <!-- Los ingredientes se agregan aqu√≠ din√°micamente -->
+                            <!-- Los ingredientes se agregan aquÌ din·micamente -->
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-<!-- Bot√≥n flotante de WhatsApp -->
+<!-- BotÛn flotante de WhatsApp -->
     <a href="https://wa.me/5491169318930" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
             <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.049-13.483 13.483-13.483s13.483 6.049 13.483 13.483c0 7.435-6.049 13.483-13.483 13.483zM21.981 18.429c-0.309-0.155-1.832-0.903-2.116-1.006-0.283-0.103-0.489-0.155-0.695 0.155s-0.799 1.006-0.98 1.212c-0.18 0.206-0.36 0.232-0.669 0.077s-1.306-0.481-2.487-1.534c-0.92-0.82-1.541-1.834-1.722-2.143s-0.019-0.476 0.136-0.631c0.139-0.139 0.309-0.36 0.463-0.54s0.206-0.309 0.309-0.515 0.052-0.386-0.026-0.54c-0.077-0.155-0.695-1.673-0.951-2.291-0.246-0.6-0.499-0.52-0.695-0.528-0.18-0.009-0.386-0.009-0.592-0.009s-0.54 0.077-0.823 0.386c-0.283 0.309-1.080 1.057-1.080 2.576s1.106 2.988 1.26 3.193c0.155 0.206 2.179 3.321 5.278 4.656 0.737 0.319 1.313 0.509 1.762 0.65 0.742 0.235 1.417 0.202 1.951 0.123 0.595-0.089 1.832-0.749 2.090-1.472s0.257-1.343 0.18-1.472c-0.077-0.129-0.283-0.206-0.592-0.36z"/>

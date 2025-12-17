@@ -1,9 +1,9 @@
-Ôªø<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resetear Base de Datos - Coc√≥ Catering</title>
+    <title>Resetear Base de Datos - CocÛ Catering</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -76,8 +76,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Administraci√≥n de Base de Datos</h1>
-        <p>Esta acci√≥n borrar√° y recrear√° todos los productos en Firebase con la nueva estructura.</p>
+        <h1>AdministraciÛn de Base de Datos</h1>
+        <p>Esta acciÛn borrar· y recrear· todos los productos en Firebase con la nueva estructura.</p>
         <button id="resetBtn" onclick="runReset()">ACTUALIZAR BASE DE DATOS</button>
         <div id="status"></div>
     </div>
@@ -111,8 +111,8 @@
             
             try {
                 await resetDatabase();
-                logToScreen("PROCESO FINALIZADO CON √âXITO", "success");
-                btn.textContent = "¬°Actualizaci√≥n Completa!";
+                logToScreen("PROCESO FINALIZADO CON …XITO", "success");
+                btn.textContent = "°ActualizaciÛn Completa!";
                 setTimeout(() => {
                     btn.disabled = false;
                     btn.textContent = "ACTUALIZAR BASE DE DATOS";
