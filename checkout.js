@@ -4,9 +4,9 @@
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
 // ===================================
-// TODO: Reemplazar con tus credenciales reales de MercadoPago
-const MP_PUBLIC_KEY = 'TU_PUBLIC_KEY_AQUI'; // Obtener de: https://www.mercadopago.com.ar/developers/panel/credentials
-// El ACCESS_TOKEN se debe configurar en el backend
+const MP_PUBLIC_KEY = 'APP_USR-eb9414cf-eadb-4da9-9d16-0bf070ad753e';
+const BACKEND_URL = 'http://localhost:3000'; // Cambiar a tu URL de producción cuando despliegues
+// El ACCESS_TOKEN se debe configurar en el backend por seguridad
 
 // Variables globales
 let currentStep = 1;
@@ -337,7 +337,7 @@ async function initMercadoPago() {
         };
         
         // Llamar al backend para crear la preferencia de pago
-        const response = await fetch('/api/create-preference', {
+        const response = await fetch(`${BACKEND_URL}/api/create-preference`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
