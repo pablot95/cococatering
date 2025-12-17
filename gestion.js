@@ -1,7 +1,10 @@
 // Admin Panel - Cocó Catering
 // Sistema de gestión administrativa con login y armador de productos
 
-import { getAllOrders, getOrdersByStatus, updateOrderStatus, deleteOrder } from './firestore-service.js';
+// URL del backend
+const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://localhost:3000' 
+    : window.location.origin;
 
 // ===================================
 // CREDENCIALES Y AUTENTICACIÓN
@@ -350,13 +353,13 @@ function renderOrderCard(order) {
         cancelled: 'Cancelada'
     }[order.status] || order.status;
 
-    const date = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('es-AR') : 'Fecha no disponible';
+    const date = order.createdAt ? new Date(order.createdAt).toLocaleString('es-AR') : order.orderDate || 'Fecha no disponible';
 
     return `
         <div class="order-card">
             <div class="order-header">
                 <div>
-                    <div class="order-id">ID: ${order.id}</div>
+                    <div class="order-id">Orden #${order.paymentId || order.id}</div>
                     <div class="order-date">${date}</div>
                 </div>
                 <span class="order-status ${statusClass}">${statusText}</span>
@@ -364,26 +367,28 @@ function renderOrderCard(order) {
 
             <div class="customer-info">
                 <h3>👤 Cliente</h3>
-                <p><strong>${order.cliente.nombre}</strong></p>
-                <p>📧 ${order.cliente.email}</p>
-                <p>📱 ${order.cliente.telefono}</p>
-                <p>📍 ${order.direccionEnvio.calle} ${order.direccionEnvio.altura}, ${order.direccionEnvio.ciudad}, ${order.direccionEnvio.provincia}</p>
+                <p><strong>${order.customer.nombre}</strong></p>
+                <p>📧 ${order.customer.email}</p>
+                <p>📱 ${order.customer.telefono}</p>
+                <p>🆔 DNI: ${order.customer.dni}</p>
+                <p>📍 ${order.customer.calle} ${order.customer.altura}${order.customer.piso ? ', Piso ' + order.customer.piso : ''}${order.customer.depto ? ', Depto ' + order.customer.depto : ''}</p>
+                <p>   ${order.customer.ciudad}, ${order.customer.provincia} (CP: ${order.customer.codigoPostal})</p>
             </div>
 
             <div class="products-list">
                 <h4>📋 Productos</h4>
-                ${order.productos.map(product => `
+                ${order.items.map(product => `
                     <div class="product-item">
-                        <span class="product-name">${product.nombre}</span>
-                        <span class="product-qty">x${product.cantidad}</span>
-                        <span class="product-price">$${(product.precio * product.cantidad).toLocaleString()}</span>
+                        <span class="product-name">${product.name}</span>
+                        <span class="product-qty">x${product.quantity}</span>
+                        <span class="product-price">$${(product.price * product.quantity).toLocaleString('es-AR')}</span>
                     </div>
                 `).join('')}
             </div>
 
             <div class="order-total">
                 <span class="total-label">Total:</span>
-                <span class="total-amount">$${order.total.toLocaleString()}</span>
+                <span class="total-amount">$${order.total.toLocaleString('es-AR')}</span>
             </div>
 
             <div class="order-actions">
@@ -404,7 +409,14 @@ window.updateOrderStatusHandler = async function(orderId, newStatus) {
     if (!newStatus) return;
 
     try {
-        await updateOrderStatus(orderId, newStatus);
+        const response = await fetch(`${BACKEND_URL}/api/orders/${orderId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+        });
+        
+        if (!response.ok) throw new Error('Error al actualizar');
+        
         alert('Estado actualizado exitosamente');
         loadOrders();
     } catch (error) {
@@ -419,7 +431,12 @@ window.deleteOrderHandler = async function(orderId) {
     }
 
     try {
-        await deleteOrder(orderId);
+        const response = await fetch(`${BACKEND_URL}/api/orders/${orderId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) throw new Error('Error al eliminar');
+        
         alert('Orden eliminada exitosamente');
         loadOrders();
     } catch (error) {
@@ -427,27 +444,31 @@ window.deleteOrderHandler = async function(orderId) {
         alert('Error al eliminar la orden');
     }
 };
-
-window.exportOrders = function() {
-    if (allOrders.length === 0) {
-        alert('No hay órdenes para exportar');
-        return;
-    }
-
-    const csv = convertToCSV(allOrders);
-    downloadCSV(csv, 'ordenes-coco-catering.csv');
+ Pago', 'Fecha', 'Cliente', 'Email', 'Teléfono', 'DNI', 'Dirección', 'Ciudad', 'Provincia', 'Total', 'Estado'];
+    const rows = orders.map(order => [
+        order.paymentId || order.id,
+        order.createdAt ? new Date(order.createdAt).toLocaleString('es-AR') : order.orderDate,
+        order.customer.nombre,
+        order.customer.email,
+        order.customer.telefono,
+        order.customer.dni,
+        `${order.customer.calle} ${order.customer.altura}`,
+        order.customer.ciudad,
+        order.customer.provinciacatering.csv');
 };
 
 function convertToCSV(orders) {
-    const headers = ['ID', 'Fecha', 'Cliente', 'Email', 'Teléfono', 'Dirección', 'Ciudad', 'Total', 'Estado'];
+    const headers = ['ID Pago', 'Fecha', 'Cliente', 'Email', 'Teléfono', 'DNI', 'Dirección', 'Ciudad', 'Provincia', 'Total', 'Estado'];
     const rows = orders.map(order => [
-        order.id,
-        order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('es-AR') : '',
-        order.cliente.nombre,
-        order.cliente.email,
-        order.cliente.telefono,
-        `${order.direccionEnvio.calle} ${order.direccionEnvio.altura}`,
-        order.direccionEnvio.ciudad,
+        order.paymentId || order.id,
+        order.createdAt ? new Date(order.createdAt).toLocaleString('es-AR') : order.orderDate,
+        order.customer.nombre,
+        order.customer.email,
+        order.customer.telefono,
+        order.customer.dni,
+        `${order.customer.calle} ${order.customer.altura}`,
+        order.customer.ciudad,
+        order.customer.provincia,
         order.total,
         order.status
     ]);

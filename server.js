@@ -216,6 +216,109 @@ app.get('/api/payment/:id', async (req, res) => {
 });
 
 // ===================================
+// GESTIÓN DE ÓRDENES (reemplaza Firebase)
+// ===================================
+const fs = require('fs');
+const path = require('path');
+const ORDERS_FILE = path.join(__dirname, 'orders.json');
+
+// Inicializar archivo de órdenes si no existe
+if (!fs.existsSync(ORDERS_FILE)) {
+    fs.writeFileSync(ORDERS_FILE, JSON.stringify([], null, 2));
+}
+
+// Leer órdenes
+function readOrders() {
+    try {
+        const data = fs.readFileSync(ORDERS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error leyendo órdenes:', error);
+        return [];
+    }
+}
+
+// Guardar órdenes
+function saveOrders(orders) {
+    try {
+        fs.writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2));
+        return true;
+    } catch (error) {
+        console.error('Error guardando órdenes:', error);
+        return false;
+    }
+}
+
+// ENDPOINT: Guardar nueva orden
+app.post('/api/orders', (req, res) => {
+    try {
+        const orders = readOrders();
+        const newOrder = {
+            id: Date.now().toString(),
+            ...req.body,
+            createdAt: new Date().toISOString(),
+            status: 'pending'
+        };
+        orders.push(newOrder);
+        saveOrders(orders);
+        res.json({ success: true, order: newOrder });
+    } catch (error) {
+        console.error('Error guardando orden:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// ENDPOINT: Obtener todas las órdenes
+app.get('/api/orders', (req, res) => {
+    try {
+        const orders = readOrders();
+        const status = req.query.status;
+        
+        if (status && status !== 'all') {
+            const filtered = orders.filter(order => order.status === status);
+            res.json(filtered);
+        } else {
+            res.json(orders);
+        }
+    } catch (error) {
+        console.error('Error obteniendo órdenes:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ENDPOINT: Actualizar estado de orden
+app.patch('/api/orders/:id', (req, res) => {
+    try {
+        const orders = readOrders();
+        const orderIndex = orders.findIndex(o => o.id === req.params.id);
+        
+        if (orderIndex === -1) {
+            return res.status(404).json({ error: 'Orden no encontrada' });
+        }
+        
+        orders[orderIndex] = { ...orders[orderIndex], ...req.body };
+        saveOrders(orders);
+        res.json({ success: true, order: orders[orderIndex] });
+    } catch (error) {
+        console.error('Error actualizando orden:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ENDPOINT: Eliminar orden
+app.delete('/api/orders/:id', (req, res) => {
+    try {
+        const orders = readOrders();
+        const filtered = orders.filter(o => o.id !== req.params.id);
+        saveOrders(filtered);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error eliminando orden:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ===================================
 // SERVIDOR
 // ===================================
 app.listen(PORT, () => {
@@ -223,6 +326,10 @@ app.listen(PORT, () => {
     console.log(`📦 Endpoints disponibles:`);
     console.log(`   POST /api/create-preference - Crear preferencia de pago`);
     console.log(`   POST /api/send-order-email - Enviar email de orden`);
+    console.log(`   POST /api/orders - Guardar nueva orden`);
+    console.log(`   GET  /api/orders - Obtener órdenes`);
+    console.log(`   PATCH /api/orders/:id - Actualizar orden`);
+    console.log(`   DELETE /api/orders/:id - Eliminar orden`);
     console.log(`   POST /api/webhook - Recibir notificaciones de MercadoPago`);
     console.log(`   GET  /api/payment/:id - Obtener información de pago`);
 });

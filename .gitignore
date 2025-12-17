@@ -8,6 +8,9 @@ firebase-config.js
 .admin.js
 .admin.css
 
+# Órdenes (datos sensibles)
+orders.json
+
 # Dependencias
 node_modules/
 

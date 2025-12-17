@@ -192,8 +192,8 @@
                     ? 'http://localhost:3000' 
                     : window.location.origin;
                 
-                // Enviar email
-                fetch(`${BACKEND_URL}/api/send-order-email`, {
+                // Guardar orden en el sistema
+                fetch(`${BACKEND_URL}/api/orders`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -202,10 +202,10 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('✅ Email enviado:', data);
+                    console.log('✅ Orden guardada:', data);
                 })
                 .catch(err => {
-                    console.error('❌ Error al enviar email:', err);
+                    console.error('❌ Error al guardar orden:', err);
                 });
                 
                 // Limpiar datos de orden
