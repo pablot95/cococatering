@@ -155,17 +155,12 @@
                         </ul>
                     </div>
 
-                    <div class="box-size-selector" style="justify-content: center;">
-                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-size="box-uno" data-price="165000" data-units="Todo Frío" onclick="selectSize(this, 'Salados')">
-                            <div class="size-details">
-                                <span class="size-units2">Todo Frío</span>
-                                <span class="size-price">$165.000</span>
-                            </div>
-                            <div class="size-qty-controls">
-                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
-                                <span class="qty-display">0</span>
-                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
-                            </div>
+                    <div class="product-cart-controls" style="display: flex; justify-content: center; align-items: center; padding: 20px; gap: 15px;">
+                        <span class="product-price" style="font-size: 1.3rem; font-weight: bold; color: #2d3e50;">$165.000</span>
+                        <div class="product-controls">
+                            <button class="qty-btn minus" onclick="updateBoxQty(this, -1, 'box-uno')">−</button>
+                            <span class="qty-display">0</span>
+                            <button class="qty-btn plus" onclick="updateBoxQty(this, 1, 'box-uno')">+</button>
                         </div>
                     </div>
                 </div>
@@ -211,17 +206,12 @@
                         </ul>
                     </div>
 
-                    <div class="box-size-selector" style="justify-content: center;">
-                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-size="box-dos" data-price="175000" data-units="Frío/Caliente" onclick="selectSize(this, 'Salados')">
-                            <div class="size-details">
-                                <span class="size-units2">Frío/Caliente</span>
-                                <span class="size-price">$175.000</span>
-                            </div>
-                            <div class="size-qty-controls">
-                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
-                                <span class="qty-display">0</span>
-                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
-                            </div>
+                    <div class="product-cart-controls" style="display: flex; justify-content: center; align-items: center; padding: 20px; gap: 15px;">
+                        <span class="product-price" style="font-size: 1.3rem; font-weight: bold; color: #2d3e50;">$175.000</span>
+                        <div class="product-controls">
+                            <button class="qty-btn minus" onclick="updateBoxQty(this, -1, 'box-dos')">−</button>
+                            <span class="qty-display">0</span>
+                            <button class="qty-btn plus" onclick="updateBoxQty(this, 1, 'box-dos')">+</button>
                         </div>
                     </div>
                 </div>
@@ -262,30 +252,18 @@
                         </ul>
                     </div>
 
-                    <div class="box-size-selector"style="justify-content: center;">
-                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-size="box-tres" data-price="185000" data-units="Mix" onclick="selectSize(this, 'Salados')">
-                            <div class="size-details">
-                                <span class="size-units2">Mix</span>
-                                <span class="size-price">$185.000</span>
-                            </div>
-                            <div class="size-qty-controls">
-                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">−</button>
-                                <span class="qty-display">0</span>
-                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
-                            </div>
+                    <div class="product-cart-controls" style="display: flex; justify-content: center; align-items: center; padding: 20px; gap: 15px;">
+                        <span class="product-price" style="font-size: 1.3rem; font-weight: bold; color: #2d3e50;">$185.000</span>
+                        <div class="product-controls">
+                            <button class="qty-btn minus" onclick="updateBoxQty(this, -1, 'box-tres')">−</button>
+                            <span class="qty-display">0</span>
+                            <button class="qty-btn plus" onclick="updateBoxQty(this, 1, 'box-tres')">+</button>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
-
-    <!-- Botón flotante para agregar todos los productos -->
-    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
-        <span class="btn-text">Agregar al Carrito</span>
-        <span class="btn-counter" id="total-items-counter">0</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    </button>
 
     <!-- Botón flotante de WhatsApp -->
     <a href="https://wa.me/5491169318930" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
