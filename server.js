@@ -30,16 +30,11 @@ app.post('/api/create-preference', async (req, res) => {
         const preference = {
             items: items,
             payer: payer,
-            back_urls: back_urls || {
-                success: 'https://tudominio.com/success.html',
-                failure: 'https://tudominio.com/failure.html',
-                pending: 'https://tudominio.com/pending.html'
-            },
+            back_urls: back_urls,
             auto_return: auto_return || 'approved',
             external_reference: external_reference,
-            notification_url: 'https://tudominio.com/api/webhook', // Para notificaciones de MercadoPago
+            notification_url: back_urls.success.replace('/success.html', '/api/webhook'),
             statement_descriptor: 'Cocó Catering',
-            binary_mode: false,
             payment_methods: {
                 installments: 12,
                 default_installments: 1

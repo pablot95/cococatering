@@ -5,7 +5,10 @@
 // CONFIGURACIÓN DE MERCADOPAGO
 // ===================================
 const MP_PUBLIC_KEY = 'APP_USR-eb9414cf-eadb-4da9-9d16-0bf070ad753e';
-const BACKEND_URL = 'http://localhost:3000'; // Cambiar a tu URL de producción cuando despliegues
+// URL del backend - actualiza esto con tu dominio de producción
+const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://localhost:3000' 
+    : 'https://' + window.location.hostname;
 // El ACCESS_TOKEN se debe configurar en el backend por seguridad
 
 // Variables globales
@@ -271,21 +274,11 @@ async function initMercadoPago() {
         console.error('Error al guardar orden:', error);
     }
     
-    // Verificar si tenemos las credenciales de MercadoPago configuradas
-    if (!mercadopago || MP_PUBLIC_KEY === 'TU_PUBLIC_KEY_AQUI') {
-        console.log('MercadoPago no configurado. Orden guardada localmente.');
-        // Mostrar mensaje temporal
-        const pagoContainer = document.getElementById('mercadopago-button');
-        pagoContainer.innerHTML = `
-            <div style="padding: 20px; background: #f0f0f0; border-radius: 10px; text-align: center;">
-                <p style="margin-bottom: 15px;">✅ Tu orden ha sido registrada exitosamente</p>
-                <p style="color: #777; font-size: 14px;">En breve nos pondremos en contacto contigo</p>
-                <button onclick="window.location.href='index.html'" style="margin-top: 15px; padding: 10px 20px; background: var(--bordo); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Volver al inicio
-                </button>
-            </div>
-        `;
-        return;
+    // Inicializar MercadoPago
+    if (!mercadopago) {
+        mercadopago = new MercadoPago(MP_PUBLIC_KEY, {
+            locale: 'es-AR'
+        });
     }
     
     try {
