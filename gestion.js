@@ -450,17 +450,15 @@ window.deleteOrderHandler = async function(orderId) {
         alert('Error al eliminar la orden');
     }
 };
- Pago', 'Fecha', 'Cliente', 'Email', 'Teléfono', 'DNI', 'Dirección', 'Ciudad', 'Provincia', 'Total', 'Estado'];
-    const rows = orders.map(order => [
-        order.paymentId || order.id,
-        order.createdAt ? new Date(order.createdAt).toLocaleString('es-AR') : order.orderDate,
-        order.customer.nombre,
-        order.customer.email,
-        order.customer.telefono,
-        order.customer.dni,
-        `${order.customer.calle} ${order.customer.altura}`,
-        order.customer.ciudad,
-        order.customer.provinciacatering.csv');
+
+window.exportOrders = function() {
+    if (allOrders.length === 0) {
+        alert('No hay órdenes para exportar');
+        return;
+    }
+
+    const csv = convertToCSV(allOrders);
+    downloadCSV(csv, 'ordenes-coco-catering.csv');
 };
 
 function convertToCSV(orders) {

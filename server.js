@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const mercadopago = require('mercadopago');
 const nodemailer = require('nodemailer');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,14 @@ const PORT = process.env.PORT || 3000;
 // Configurar CORS para permitir peticiones desde tu frontend
 app.use(cors());
 app.use(express.json());
+
+// Servir archivos estáticos
+app.use(express.static(__dirname));
+
+// Ruta para /gestion sin .html
+app.get('/gestion', (req, res) => {
+    res.sendFile(path.join(__dirname, 'gestion.html'));
+});
 
 // ===================================
 // CONFIGURAR MERCADOPAGO
