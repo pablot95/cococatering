@@ -1,10 +1,5 @@
 // Checkout Page - Cocó Catering
-// Integración con MercadoPago Checkout Pro y Firebase Firestore
-
-// ===================================
-// IMPORTAR FIRESTORE SERVICE
-// ===================================
-import { createOrder, saveCustomer } from './firestore-service.js';
+// Integración con MercadoPago Checkout Pro
 
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
@@ -207,17 +202,20 @@ function toggleFacturacion() {
 }
 
 // ===================================
-// INTEGRACIÓN MERCADOPAGO Y FIRESTORE
+// INTEGRACIÓN MERCADOPAGO
 // ===================================
 async function initMercadoPago() {
-    // Preparar datos de la orden para Firestore
+    // Preparar datos de la orden
     const cart = getCart();
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     const envioGratis = subtotal >= 180000;
     
-    // Guardar orden en Firestore
+    // Guardar orden en localStorage
     try {
+        const orderId = 'ORDER-' + Date.now();
         const orderData = {
+            orderId: orderId,
+            fecha: new Date().toISOString(),
             // Datos del cliente
             cliente: {
                 nombre: datosComprador.nombre,
@@ -261,39 +259,21 @@ async function initMercadoPago() {
             total: subtotal,
             // Estado
             status: 'pending',
-            paymentStatus: 'pending',
-            // Metadatos
-            origen: 'web'
+            paymentStatus: 'pending'
         };
         
-        // Guardar en Firestore
-        const orderId = await createOrder(orderData);
-        console.log('Orden guardada en Firestore con ID:', orderId);
-        
-        // Guardar cliente en Firestore si no existe
-        await saveCustomer({
-            nombre: datosComprador.nombre,
-            dni: datosComprador.dni,
-            telefono: datosComprador.telefono,
-            email: datosComprador.email,
-            direccion: {
-                calle: datosComprador.calle,
-                altura: datosComprador.altura,
-                ciudad: datosComprador.ciudad,
-                provincia: datosComprador.provincia
-            }
-        });
-        
-        // Guardar orderId en localStorage para referencia
+        // Guardar orden en localStorage
         localStorage.setItem('lastOrderId', orderId);
+        localStorage.setItem(`order_${orderId}`, JSON.stringify(orderData));
+        console.log('Orden guardada con ID:', orderId);
         
     } catch (error) {
-        console.error('Error al guardar orden en Firestore:', error);
+        console.error('Error al guardar orden:', error);
     }
     
     // Verificar si tenemos las credenciales de MercadoPago configuradas
     if (!mercadopago || MP_PUBLIC_KEY === 'TU_PUBLIC_KEY_AQUI') {
-        console.log('MercadoPago no configurado. Orden guardada en Firestore.');
+        console.log('MercadoPago no configurado. Orden guardada localmente.');
         // Mostrar mensaje temporal
         const pagoContainer = document.getElementById('mercadopago-button');
         pagoContainer.innerHTML = `
