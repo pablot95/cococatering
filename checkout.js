@@ -349,6 +349,12 @@ async function initMercadoPago() {
         
         console.log('✅ Botón de MercadoPago creado exitosamente');
         
+        // Ocultar mensaje de credenciales pendientes
+        const credencialesPendientes = document.querySelector('.credenciales-pendientes');
+        if (credencialesPendientes) {
+            credencialesPendientes.style.display = 'none';
+        }
+        
     } catch (error) {
         console.error('Error detallado:', error);
         const errorMsg = error.message || 'Error desconocido';
