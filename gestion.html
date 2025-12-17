@@ -219,8 +219,8 @@
 
         <div class="actions">
             <button class="btn btn-success" onclick="guardarCambios()">💾 Guardar Cambios</button>
-            <button class="btn btn-primary" onclick="descargarJSON()">📥 Descargar JSON</button>
-            <button class="btn btn-danger" onclick="location.reload()">🔄 Recargar</button>
+            <button class="btn btn-primary" onclick="descargarJSON()">📥 Descargar Respaldo</button>
+            <button class="btn btn-danger" onclick="restaurarDefecto()">🔄 Restaurar Original</button>
         </div>
 
         <div class="search-box">
@@ -238,8 +238,17 @@
         // Cargar productos al iniciar
         async function cargarProductos() {
             try {
-                const response = await fetch('productos.json');
-                productosData = await response.json();
+                // Primero intentar cargar desde localStorage
+                const stored = localStorage.getItem('productosData');
+                if (stored) {
+                    productosData = JSON.parse(stored);
+                    mostrarMensaje('Productos cargados desde memoria', 'success');
+                } else {
+                    // Si no hay datos guardados, cargar desde JSON
+                    const response = await fetch('productos.json');
+                    productosData = await response.json();
+                    mostrarMensaje('Productos cargados desde archivo', 'success');
+                }
                 renderizarProductos();
             } catch (error) {
                 mostrarMensaje('Error al cargar productos', 'error');
@@ -329,30 +338,44 @@
             productosData[categoria][producto][campo] = valor;
         }
 
-        // Guardar cambios (descargar JSON actualizado)
+        // Guardar cambios en localStorage
         function guardarCambios() {
-            const dataStr = JSON.stringify(productosData, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'productos.json';
-            a.click();
-            URL.revokeObjectURL(url);
-            mostrarMensaje('¡Cambios guardados! Descargando archivo...', 'success');
+            try {
+                localStorage.setItem('productosData', JSON.stringify(productosData));
+                mostrarMensaje('¡Cambios guardados! Se aplicarán en todas las páginas', 'success');
+            } catch (error) {
+                mostrarMensaje('Error al guardar cambios', 'error');
+                console.error(error);
+            }
         }
 
-        // Descargar JSON actual
+        // Descargar JSON actual como respaldo
         function descargarJSON() {
             const dataStr = JSON.stringify(productosData, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'productos.json';
+            a.download = 'productos-respaldo.json';
             a.click();
             URL.revokeObjectURL(url);
-            mostrarMensaje('JSON descargado correctamente', 'success');
+            mostrarMensaje('Respaldo descargado correctamente', 'success');
+        }
+
+        // Restaurar valores por defecto desde productos.json
+        async function restaurarDefecto() {
+            if (confirm('¿Estás seguro? Esto eliminará todos los cambios guardados y restaurará los valores originales.')) {
+                try {
+                    localStorage.removeItem('productosData');
+                    const response = await fetch('productos.json');
+                    productosData = await response.json();
+                    renderizarProductos();
+                    mostrarMensaje('Valores originales restaurados', 'success');
+                } catch (error) {
+                    mostrarMensaje('Error al restaurar valores', 'error');
+                    console.error(error);
+                }
+            }
         }
 
         // Toggle categoría

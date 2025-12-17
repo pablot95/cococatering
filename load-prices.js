@@ -1,8 +1,19 @@
-// Cargar precios desde productos.json
+// Cargar precios desde localStorage o productos.json
 async function cargarPrecios() {
     try {
-        const response = await fetch('productos.json');
-        const productos = await response.json();
+        let productos;
+        
+        // Primero intentar cargar desde localStorage
+        const stored = localStorage.getItem('productosData');
+        if (stored) {
+            productos = JSON.parse(stored);
+            console.log('Precios cargados desde localStorage');
+        } else {
+            // Si no hay datos guardados, cargar desde JSON
+            const response = await fetch('productos.json');
+            productos = await response.json();
+            console.log('Precios cargados desde productos.json');
+        }
         
         // Box Salados
         actualizarBoxSalados(productos.boxSalados);
