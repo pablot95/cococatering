@@ -113,12 +113,11 @@
         "15 Chipácitos con parmesano y morrones asados",
         "10 Dip de queso azul y nueces"
       ],
-      "stock": 1
+      "stock": 100
     },
     {
       "nombre": "BOX DOS - FRÍO/CALIENTE",
       "precio": 175000,
-      "descripcion": "Se recomienda para consumir como entrada",
       "items": [
         "15 Sconcitos de queso con crudo y rúcula",
         "15 Papitas rosty",
@@ -132,7 +131,6 @@
     {
       "nombre": "BOX TRES - MIX",
       "precio": 185000,
-      "descripcion": "Se recomienda para consumir como entrada",
       "items": [
         "15 Picaditas individuales acompañadas con dip de hummus, mayo de zanahoria y pancitos",
         "15 Empanaditas de jamón y queso",
@@ -606,7 +604,9 @@
     },
     {
       "nombre": "SABLÉ DE ALMENDRAS",
-      "descripcion": "Dos capas de sable de almendras de 22 cm, dos capas de dulce de leche, dos capas de crema y frutos rojos."
+      "precio": 45000,
+      "descripcion": "Dos capas de sable de almendras de 22 cm, dos capas de dulce de leche, dos capas de crema y frutos rojos.",
+      "stock": 100
     },
     {
       "nombre": "MARQUISE DE FRUTOS ROJOS",

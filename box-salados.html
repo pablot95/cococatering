@@ -114,12 +114,169 @@
             </div>
         </div>
 
-        <!-- Contenedor que será llenado dinámicamente por Firebase -->
         <div class="menu-scroll-container">
-            <!-- Los productos se cargarán automáticamente desde Firebase -->
-            <div style="text-align: center; padding: 50px; color: #666;">
-                <p>Cargando productos...</p>
-            </div>
+            <!-- Box Uno -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX UNO</h2>
+
+                <div class="box-container box-details" data-id="box-uno" data-name="BOX UNO - Todo Frío (10-12 personas)" data-price="165000" data-image="images/salados.jpg">
+                    <div>
+                        <ul class="product-list">
+                            <li class="product-item2" data-image="productos/pinchos-boconccinos.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos bocconcinos</span>
+                                </div>
+                            </li>
+                            <li class="product-item2" data-image="productos/scon-de-crudo.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Sconcitos de queso con crudo y rúcula</span>
+                                </div>
+                            </li>
+                            <li class="product-item2" data-image="productos/pecetito.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pecetitos con tomate</span>
+                                </div>
+                            </li>
+                            <li class="product-item2" data-image="productos/papas-rosty.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Papitas rosty</span>
+                                </div>
+                            </li>
+                            <li class="product-item2" data-image="productos/chipa-de-morron.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Chipácitos con parmesano y morrones asados</span>
+                                </div>
+                            </li>
+                            <li class="product-item2" data-image="productos/dip-de-queso-azul-y-nueces.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">10 Dip de queso azul y nueces</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="box-size-selector" style="justify-content: center;">
+                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-name="BOX UNO - Todo Frío (10-12 personas)" data-size="box-uno" data-price="165000" data-units="Todo Frío">
+                            <div class="size-details">
+                                <span class="size-units2">Todo Frío</span>
+                                <span class="size-price">$165.000</span>
+                            </div>
+                            <div class="size-qty-controls">
+                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Box Dos -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX DOS</h2>
+                
+                <div class="box-container box-details" data-id="box-dos" data-name="BOX DOS - Frío/Caliente (12-15 personas)" data-price="175000" data-image="images/salados.jpg">
+                    <div>
+                        <ul class="product-list">
+                            <li class="product-item2" data-image="productos/scon-de-crudo.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Sconcitos de queso con Jamón crudo y rúcula</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/papas-rosty.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Papitas rosty</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/criollito-capresse.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Criollitos capresse</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/pollo-y-panceta.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos de pollo y panceta</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/bondiola.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Figacitas de bondiola con salsa malbec</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Triangulitos de queso azul y peras caramelizadas</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="box-size-selector" style="justify-content: center;">
+                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-name="BOX DOS - Frío/Caliente (10-12 personas)" data-size="box-dos" data-price="175000" data-units="Frío/Caliente">
+                            <div class="size-details">
+                                <span class="size-units2">Frío/Caliente</span>
+                                <span class="size-price">$175.000</span>
+                            </div>
+                            <div class="size-qty-controls">
+                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Box Tres -->
+            <section class="menu-section">
+                <h2 class="section-title">BOX TRES</h2>
+                
+                <div class="box-container box-details"  data-id="box-tres" data-name="BOX TRES - Mix (12-15 personas)" data-price="185000" data-image="images/salados.jpg">
+                    <div >
+                        <ul class="product-list">
+                                <li class="product-item2 " data-image="productos/picadas-individuales.jpg">
+                                    <div class="product-info">
+                                    <span class="product-name">15 Picaditas individuales acompañadas con dip de hummus, mayo de zanahoria y pancitos</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/empanada-jq.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Empanaditas de jamón y queso</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/pinchos-de-pollo-crispy.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Pinchos de pollo crispy con salsa honey</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/tacos.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Taquitos de bondiola</span>
+                                </div>
+                            </li>
+                            <li class="product-item2 " data-image="productos/hamburguesitas.jpg">
+                                <div class="product-info">
+                                    <span class="product-name">15 Hamburguesitas</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="box-size-selector"style="justify-content: center;">
+                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-name="BOX TRES - Todo Caliente (10-12 personas)" data-size="box-tres" data-price="185000" data-units="Mix">
+                            <div class="size-details">
+                                <span class="size-units2">Mix</span>
+                                <span class="size-price">$185.000</span>
+                            </div>
+                            <div class="size-qty-controls">
+                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -146,6 +303,5 @@
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
     <script type="module" src="menu-script.js"></script>
-    <script type="module" src="price-loader.js"></script>
 </body>
 </html>
