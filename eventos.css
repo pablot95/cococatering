@@ -86,7 +86,7 @@
     width: 40%;
         margin-left: 60%;
         background: var(--blanco);
-
+    padding-bottom: 40px;
 }
 
 .menu-section {
@@ -1716,7 +1716,7 @@ padding: 1px 0px;
     .menu-scroll-container {
         width: 50%;
         margin-left: 50%;
-        padding: 0px 10px;
+        padding: 0px 10px 40px 10px;
     }
 
     .menu-hero-logo img {
@@ -1873,7 +1873,7 @@ padding: 1px 0px;
     .menu-scroll-container {
         width: 100%;
         margin-left: 0;
-        padding: 0px 20px;
+        padding: 0px 20px 40px 20px;
     }
 
     .menu-hero-logo {
