@@ -271,7 +271,7 @@ async function addAllToCart() {
                 }
 
                 const product = {
-                    id: `${size}`,
+                    id: option.dataset.id || `${size}`,
                     name: productName,
                     price: price,
                     image: image,
