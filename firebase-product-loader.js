@@ -337,7 +337,10 @@ const MAPEO_IDS = {
     'verduritas-asadas': 'VERDURITAS_ASADAS',
     'medialunitas-jyq': 'MEDIALUNITAS_J_Y_Q',
     'sconcito-salmon': 'SCONCITO_CON_CAJA_DE_SALMON',
-    'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRON_Y_PANCETA'
+    'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRON_Y_PANCETA',
+
+    // tortasClasicas
+    'sable-almendras': 'SABL_DE_ALMENDRAS'
 };
 
 /**
