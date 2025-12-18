@@ -340,7 +340,13 @@ const MAPEO_IDS = {
     'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRON_Y_PANCETA',
 
     // tortasClasicas
-    'sable-almendras': 'SABL_DE_ALMENDRAS'
+    'sable-almendras': 'SABL_DE_ALMENDRAS',
+
+    // menuEventos
+    'menu-gourmet': 'MEN_GOURMET',
+    'menu-clasico': 'MEN_CLSICO',
+    'menu-picada': 'MEN_PICADA',
+    'menu-pizza': 'MEN_PIZZA'
 };
 
 /**
