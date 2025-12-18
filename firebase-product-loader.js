@@ -115,6 +115,12 @@ function actualizarElementoHTML(elemento, producto) {
 
     if (shotsPrice && producto.precio) {
         shotsPrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+        
+        // Actualizar data-price en el contenedor .shots-info
+        const shotsInfo = elemento.querySelector('.shots-info');
+        if (shotsInfo) {
+            shotsInfo.setAttribute('data-price', producto.precio);
+        }
     }
 
     // Para shots - actualizar sabores si existen

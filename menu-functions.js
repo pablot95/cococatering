@@ -127,7 +127,35 @@ function addAllToCart() {
         }
     });
 
-    // 3. Shots
+    // 3. Shots y Desayunos (elementos con .box-container que tienen controles directos)
+    const boxContainers = document.querySelectorAll('.box-container');
+    boxContainers.forEach(container => {
+        // Solo procesar si tiene controles directos (no size-options)
+        const controls = container.querySelector('.box-controls');
+        if (controls) {
+            const qtyDisplay = controls.querySelector('.qty-display');
+            if (qtyDisplay) {
+                const quantity = parseInt(qtyDisplay.textContent);
+                if (quantity > 0) {
+                    const name = container.dataset.name;
+                    const price = parseInt(container.dataset.price);
+                    const id = container.dataset.id;
+                    
+                    const product = {
+                        id: id,
+                        name: name,
+                        price: price,
+                        image: 'images/dulces.jpg', // Imagen por defecto
+                        quantity: quantity
+                    };
+                    productsToAdd.push(product);
+                    totalAdded += quantity;
+                }
+            }
+        }
+    });
+
+    // 4. Shots (específico)
     const shotsInfos = document.querySelectorAll('.shots-info');
     shotsInfos.forEach(info => {
         const qtyDisplay = info.querySelector('.qty-display');
