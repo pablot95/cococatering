@@ -155,13 +155,21 @@ async function cargarTodosLosProductos(collectionName, dataIds) {
             const docId = limpiarNombre(dataId);
             let producto = productosFirebase[docId];
             
-            // Si no se encuentra directamente, buscar por coincidencia parcial
+            // Si no se encuentra directamente, buscar por coincidencia flexible
             if (!producto) {
                 const dataIdUpper = dataId.toUpperCase().replace(/-/g, '_');
+                const palabrasDataId = dataIdUpper.split('_').filter(p => p.length > 0);
+                
                 for (const [id, prod] of Object.entries(productosFirebase)) {
-                    if (id.includes(dataIdUpper) || dataIdUpper.includes(id.substring(0, 15))) {
+                    const palabrasFirebase = id.split('_').filter(p => p.length > 0);
+                    
+                    // Verificar si todas las palabras del data-id están en el Firebase ID
+                    const todasPresentes = palabrasDataId.every(palabra => 
+                        palabrasFirebase.some(fb => fb.includes(palabra) || palabra.includes(fb))
+                    );
+                    
+                    if (todasPresentes) {
                         producto = prod;
-                        console.log(`🔍 Coincidencia: ${dataId} → ${id}`);
                         break;
                     }
                 }
