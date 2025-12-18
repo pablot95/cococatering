@@ -15,26 +15,50 @@ async function cargarProducto(collectionName, dataId, docId = null) {
             return;
         }
 
-        // Si no se provee docId, usar el mapeo o convertir automáticamente
-        if (!docId) {
-            docId = obtenerFirebaseId(dataId);
+        // Si se provee docId directamente, usarlo
+        if (docId) {
+            const doc = await db.collection(collectionName).doc(docId).get();
+            if (doc.exists) {
+                const producto = doc.data();
+                console.log(`✅ ${producto.nombre} cargado`);
+                actualizarElementoHTML(elemento, producto);
+                return;
+            }
         }
 
-        console.log(`🔍 Buscando: ${collectionName}/${docId}`);
-
-        // Obtener producto de Firebase
-        const doc = await db.collection(collectionName).doc(docId).get();
-
-        if (!doc.exists) {
-            console.warn(`❌ Producto no encontrado: ${docId}`);
+        // Si no, buscar por data-name del HTML
+        const dataName = elemento.getAttribute('data-name');
+        if (!dataName || dataName === '-') {
+            console.warn(`❌ ${dataId}: No tiene data-name válido para buscar`);
             return;
         }
 
-        const producto = doc.data();
-        console.log(`✅ ${producto.nombre} cargado`);
+        // Buscar en toda la colección por nombre que contenga las palabras clave
+        console.log(`🔍 Buscando en ${collectionName} por nombre similar a: "${dataName}"`);
+        
+        const snapshot = await db.collection(collectionName).get();
+        let productoEncontrado = null;
+        
+        // Buscar producto que coincida
+        snapshot.forEach(doc => {
+            const producto = doc.data();
+            const nombreCompleto = producto.unidad ? `${producto.nombre} – ${producto.unidad}` : producto.nombre;
+            
+            // Comparar nombres (insensible a mayúsculas y espacios extras)
+            const nombreNormalizado = nombreCompleto.toLowerCase().trim();
+            const busquedaNormalizada = dataName.toLowerCase().trim();
+            
+            if (nombreNormalizado === busquedaNormalizada) {
+                productoEncontrado = producto;
+                console.log(`✅ ${producto.nombre} encontrado`);
+            }
+        });
 
-        // Actualizar el elemento HTML con los datos de Firebase
-        actualizarElementoHTML(elemento, producto);
+        if (productoEncontrado) {
+            actualizarElementoHTML(elemento, productoEncontrado);
+        } else {
+            console.warn(`❌ No se encontró producto con nombre: "${dataName}"`);
+        }
 
     } catch (error) {
         console.error(`Error cargando producto ${dataId}:`, error);
@@ -102,21 +126,60 @@ function actualizarElementoHTML(elemento, producto) {
 /**
  * Cargar todos los productos de una página
  * @param {string} collectionName - Nombre de la colección en Firebase
- * @param {Array} productos - Array de objetos {dataId, docId?}
+ * @param {Array} dataIds - Array de data-ids de los productos a cargar
  */
-async function cargarTodosLosProductos(collectionName, productos) {
-    console.log(`📦 Cargando ${productos.length} productos de ${collectionName}...`);
-    
-    const promesas = productos.map(prod => {
-        if (typeof prod === 'string') {
-            return cargarProducto(collectionName, prod);
-        } else {
-            return cargarProducto(collectionName, prod.dataId, prod.docId);
+async function cargarTodosLosProductos(collectionName, dataIds) {
+    try {
+        console.log(`📦 Cargando ${dataIds.length} productos de ${collectionName}...`);
+        
+        // Obtener TODOS los productos de la colección de una vez
+        const snapshot = await db.collection(collectionName).get();
+        const productosFirebase = {};
+        
+        snapshot.forEach(doc => {
+            productosFirebase[doc.id] = doc.data();
+        });
+        
+        console.log(`🔥 Obtenidos ${snapshot.size} productos de Firebase`);
+        
+        // Ahora actualizar cada elemento HTML
+        let actualizados = 0;
+        for (const dataId of dataIds) {
+            const elemento = document.querySelector(`[data-id="${dataId}"]`);
+            if (!elemento) {
+                console.warn(`⚠️ No se encontró elemento con data-id="${dataId}"`);
+                continue;
+            }
+            
+            // Intentar encontrar el producto correspondiente
+            const docId = limpiarNombre(dataId);
+            let producto = productosFirebase[docId];
+            
+            // Si no se encuentra directamente, buscar por coincidencia parcial
+            if (!producto) {
+                const dataIdUpper = dataId.toUpperCase().replace(/-/g, '_');
+                for (const [id, prod] of Object.entries(productosFirebase)) {
+                    if (id.includes(dataIdUpper) || dataIdUpper.includes(id.substring(0, 15))) {
+                        producto = prod;
+                        console.log(`🔍 Coincidencia: ${dataId} → ${id}`);
+                        break;
+                    }
+                }
+            }
+            
+            if (producto) {
+                actualizarElementoHTML(elemento, producto);
+                actualizados++;
+            } else {
+                console.warn(`❌ No se encontró producto para: ${dataId}`);
+            }
         }
-    });
-
-    await Promise.all(promesas);
-    console.log(`✅ Todos los productos de ${collectionName} cargados`);
+        
+        console.log(`✅ ${actualizados}/${dataIds.length} productos actualizados`);
+        
+    } catch (error) {
+        console.error(`Error cargando productos de ${collectionName}:`, error);
+    }
 }
 
 /**
@@ -153,10 +216,27 @@ const MAPEO_IDS = {
 };
 
 /**
+ * Limpiar nombre para generar ID de Firebase (misma lógica que subir-productos.html)
+ */
+function limpiarNombre(nombre) {
+    return nombre
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^A-Z0-9_-]/g, '');
+}
+
+/**
  * Obtener ID de Firebase desde data-id HTML
  */
 function obtenerFirebaseId(dataId) {
-    return MAPEO_IDS[dataId] || dataId.toUpperCase().replace(/-/g, '_');
+    // Si hay mapeo manual, usarlo
+    if (MAPEO_IDS[dataId]) {
+        return MAPEO_IDS[dataId];
+    }
+    
+    // Si no, limpiar el dataId con la misma lógica que cuando se subió
+    return limpiarNombre(dataId);
 }
 
 // Exportar funciones
