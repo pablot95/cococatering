@@ -327,7 +327,7 @@
             
             <section class="menu-section">
                 <h2 class="section-title">MENÚ PICADA</h2>
-                <div class="box-container">
+                <div class="box-container" data-id="menu-picada">
                 <div class="menu-item">
                     <h3>PARTE FRÍA</h3>
                     <ul class="product-list">
@@ -568,11 +568,11 @@
     <script src="carrito.js"></script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
-    <script type="module" src="firebase-product-loader.js?v=4"></script>
-    <script type="module" src="menu-script.js?v=4"></script>
+    <script type="module" src="firebase-product-loader.js?v=6"></script>
+    <script type="module" src="menu-script.js?v=6"></script>
     
     <script type="module">
-        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=4';
+        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=6';
         
         document.addEventListener('DOMContentLoaded', () => {
             console.log('🔥 Cargando Menú Eventos...');
