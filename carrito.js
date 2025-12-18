@@ -165,30 +165,22 @@ function continuarCompra() {
     window.location.href = 'checkout.html';
 }
 
-// Mostrar notificación
+// Mostrar notificación (usa la misma función que menu-script.js)
 function showCartNotification(message) {
-    // Crear notificación temporal
     const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background: var(--bordo);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 50px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        z-index: 10000;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.1rem;
-        animation: slideIn 0.3s ease;
-    `;
+    notification.className = 'cart-notification';
     notification.textContent = message;
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
+        notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
     }, 2000);
 }
 
