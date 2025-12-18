@@ -120,10 +120,10 @@
             <section class="menu-section">
                 <h2 class="section-title">MENÚ GOURMET</h2>
 
-            <div class="box-container">
+            <div class="box-container" data-id="menu-gourmet">
                 <div class="menu-item">
                     <h3>PARTE FRÍA</h3>
-                    <ul class="product-list">
+                    <ul class="product-list parte-fria">
                         <li class="product-item no-cart" data-image="productos/Tarteletas-frias-de-Hummus-y-Atún-2.jpg">
                             <div class="product-info">
                                 <span class="product-name">Tarteletas frías de hummus y atún</span>
@@ -164,7 +164,7 @@
 
                 <div class="menu-item">
                     <h3>PARTE CALIENTE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list parte-caliente">
                         <li class="product-item no-cart" data-image="productos/Triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg">
                             <div class="product-info">
                                 <span class="product-name">Triangulito de masa philo y bondiola braseada</span>
@@ -200,7 +200,7 @@
 
                 <div class="menu-item">
                     <h3>POSTRE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list postre">
                         <li class="product-item no-cart" data-image="productos/shot-de-lemon-pie.jpg">
                             <div class="product-info">
                                 <span class="product-name">Shot de lemon pie</span>
@@ -227,10 +227,10 @@
             <section class="menu-section">
                 <h2 class="section-title">MENÚ CLÁSICO</h2>
                 
-                <div class="box-container">
+                <div class="box-container" data-id="menu-clasico">
                 <div class="menu-item">
                     <h3>PARTE FRÍA</h3>
-                    <ul class="product-list">
+                    <ul class="product-list parte-fria">
                         <li class="product-item no-cart" data-image="productos/Masitas-de-queso.jpg">
                             <div class="product-info">
                                 <span class="product-name">Masitas de queso</span>
@@ -271,7 +271,7 @@
 
                 <div class="menu-item">
                     <h3>PARTE CALIENTE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list parte-caliente">
                         <li class="product-item no-cart" data-image="productos/pinchos-de-pollo-crispy.jpg">
                             <div class="product-info">
                                 <span class="product-name">Pinchos de pollo y panceta</span>
@@ -302,7 +302,7 @@
 
                 <div class="menu-item">
                     <h3>POSTRE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list postre">
                         <li class="product-item no-cart" data-image="productos/shot-de-lemon-pie.jpg">
                             <div class="product-info">
                                 <span class="product-name">Shot de lemon pie</span>
@@ -352,7 +352,7 @@
                 
                 <div class="menu-item">
                     <h3>PARTE CALIENTE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list parte-caliente">
                         <li class="product-item no-cart" data-image="productos/papitas-rosty.jpg">
                             <div class="product-info">
                                 <span class="product-name">Papitas rosty</span>
@@ -378,7 +378,7 @@
 
                 <div class="menu-item">
                     <h3>POSTRE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list postre">
                         <li class="product-item no-cart" data-image="productos/shot-de-cheesecake.jpg">
                             <div class="product-info">
                                 <span class="product-name">Shot de cheesecake</span>
@@ -403,10 +403,10 @@
             <section class="menu-section">
                 <h2 class="section-title">MENÚ PIZZA</h2>
                 
-                <div class="box-container">
+                <div class="box-container" data-id="menu-pizza">
                 <div class="menu-item">
                     <h3>ENTRADA</h3>
-                    <ul class="product-list">
+                    <ul class="product-list entrada">
                         <li class="product-item no-cart">
                             <div class="product-info">
                                 <span class="product-name">Pan de queso con oliva y provenzal</span>
@@ -417,7 +417,7 @@
 
                 <div class="menu-item">
                     <h3>EMPANADAS</h3>
-                    <ul class="product-list">
+                    <ul class="product-list empanadas">
                         <li class="product-item no-cart" data-image="productos/empanadas.jpg">
                             <div class="product-info">
                                 <span class="product-name">Bondiola</span>
@@ -443,7 +443,7 @@
 
                 <div class="menu-item">
                     <h3>CANASTITAS</h3>
-                    <ul class="product-list">
+                    <ul class="product-list canastitas">
                         <li class="product-item no-cart" data-image="productos/capresse.jpg">
                             <div class="product-info">
                                 <span class="product-name">Caprese</span>
@@ -464,7 +464,7 @@
 
                 <div class="menu-item">
                     <h3>PIZZAS</h3>
-                    <ul class="product-list">
+                    <ul class="product-list pizzas">
                         <li class="product-item no-cart" data-image="productos/napolitana.jpg">
                             <div class="product-info">
                                 <span class="product-name">Muzzarella</span>
@@ -530,7 +530,7 @@
 
                 <div class="menu-item">
                     <h3>POSTRE</h3>
-                    <ul class="product-list">
+                    <ul class="product-list postre">
                         <li class="product-item no-cart" data-image="productos/shot-de-lemon-pie.jpg">
                             <div class="product-info">
                                 <span class="product-name">Shot de lemon</span>
@@ -568,6 +568,17 @@
     <script src="carrito.js"></script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
+    <script type="module" src="firebase-product-loader.js"></script>
     <script type="module" src="menu-script.js"></script>
+    
+    <script type="module">
+        import { cargarTodosLosProductos } from './firebase-product-loader.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🔥 Cargando Menú Eventos...');
+            const productos = ['menu-gourmet', 'menu-clasico', 'menu-picada', 'menu-pizza'];
+            cargarTodosLosProductos('menuEventos', productos);
+        });
+    </script>
 </body>
 </html>

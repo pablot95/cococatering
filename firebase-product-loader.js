@@ -71,6 +71,12 @@ async function cargarProducto(collectionName, dataId, docId = null) {
 function actualizarElementoHTML(elemento, producto) {
     // Construir nombre completo
     let nombreCompleto = producto.nombre;
+    
+    // Si tiene categoría (ej: Box Dulces), anteponerla
+    if (producto.categoria) {
+        nombreCompleto = `${producto.categoria} - ${producto.nombre}`;
+    }
+    
     if (producto.unidad) {
         nombreCompleto += ` – ${producto.unidad}`;
     }
@@ -149,8 +155,18 @@ function actualizarElementoHTML(elemento, producto) {
 
     // Para boxes - actualizar items si existen
     if (producto.items && Array.isArray(producto.items)) {
+        let container = elemento;
+        
+        // Si el elemento es una opción de tamaño (Box Dulces), buscar el contenedor padre para actualizar la lista compartida
+        if (elemento.classList.contains('size-option')) {
+            const parentBox = elemento.closest('.box-details');
+            if (parentBox) {
+                container = parentBox;
+            }
+        }
+
         // Intentar actualizar textos existentes para preservar imágenes (Box Salados)
-        const existingNames = elemento.querySelectorAll('.product-list .product-name');
+        const existingNames = container.querySelectorAll('.product-list .product-name');
         if (existingNames.length > 0) {
             producto.items.forEach((itemText, index) => {
                 if (existingNames[index]) {
@@ -159,9 +175,36 @@ function actualizarElementoHTML(elemento, producto) {
             });
         } else {
             // Si no hay estructura existente, crear lista simple (fallback)
-            const itemsList = elemento.querySelector('.items-list');
+            const itemsList = container.querySelector('.items-list');
             if (itemsList) {
                 itemsList.innerHTML = producto.items.map(item => `<li>${item}</li>`).join('');
+            }
+        }
+    }
+
+    // Para Eventos - Mapeo de campos a clases CSS
+    const camposEventos = {
+        'parteFria': '.parte-fria',
+        'parteCaliente': '.parte-caliente',
+        'postre': '.postre',
+        'entrada': '.entrada',
+        'empanadas': '.empanadas',
+        'canastitas': '.canastitas',
+        'pizzas': '.pizzas'
+    };
+
+    for (const [campo, selector] of Object.entries(camposEventos)) {
+        if (producto[campo] && Array.isArray(producto[campo])) {
+            const list = elemento.querySelector(selector);
+            if (list) {
+                const existingNames = list.querySelectorAll('.product-name');
+                if (existingNames.length > 0) {
+                    producto[campo].forEach((itemText, index) => {
+                        if (existingNames[index]) {
+                            existingNames[index].textContent = itemText;
+                        }
+                    });
+                }
             }
         }
     }

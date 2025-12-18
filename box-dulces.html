@@ -170,7 +170,7 @@
                 
 
                 <div class="box-size-selector">
-                    <div class="size-option" data-size="chica" data-price="-" data-units="16" data-name="-">
+                    <div class="size-option" data-id="pattiserie-caja-chica" data-size="chica" data-price="-" data-units="16" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Chica</span>
                             <span class="size-units">16 unidades</span>
@@ -182,7 +182,7 @@
                             <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="size-option" data-size="grande" data-price="-" data-units="42" data-name="-">
+                    <div class="size-option" data-id="pattiserie-caja-grande" data-size="grande" data-price="-" data-units="42" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Grande</span>
                             <span class="size-units">42 unidades</span>
@@ -229,7 +229,7 @@
                 
 
                 <div class="box-size-selector">
-                    <div class="size-option" data-size="chica" data-price="-" data-units="28" data-name="-">
+                    <div class="size-option" data-id="box-alfajorcitos-caja-chica" data-size="chica" data-price="-" data-units="28" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Chica</span>
                             <span class="size-units">28 unidades</span>
@@ -241,7 +241,7 @@
                             <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="size-option" data-size="grande" data-price="-" data-units="47" data-name="-">
+                    <div class="size-option" data-id="box-alfajorcitos-caja-grande" data-size="grande" data-price="-" data-units="47" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Grande</span>
                             <span class="size-units">47 unidades</span>
@@ -288,7 +288,7 @@
                 
 
                 <div class="box-size-selector">
-                    <div class="size-option" data-size="chica" data-price="-" data-units="28" data-name="-">
+                    <div class="size-option" data-id="box-cuadraditos-caja-chica" data-size="chica" data-price="-" data-units="28" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Chica</span>
                             <span class="size-units">28 unidades</span>
@@ -300,7 +300,7 @@
                             <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="size-option" data-size="grande" data-price="-" data-units="49" data-name="-">
+                    <div class="size-option" data-id="box-cuadraditos-caja-grande" data-size="grande" data-price="-" data-units="49" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Grande</span>
                             <span class="size-units">49 unidades</span>
@@ -344,7 +344,7 @@
                 
 
                 <div class="box-size-selector">
-                    <div class="size-option" data-size="chica" data-price="-" data-units="35" data-name="-">
+                    <div class="size-option" data-id="box-mix-caja-chica" data-size="chica" data-price="-" data-units="35" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Chica</span>
                             <span class="size-units">35 unidades</span>
@@ -356,7 +356,7 @@
                             <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
                         </div>
                     </div>
-                    <div class="size-option" data-size="grande" data-price="-" data-units="56" data-name="-">
+                    <div class="size-option" data-id="box-mix-caja-grande" data-size="grande" data-price="-" data-units="56" data-name="-">
                         <div class="size-details">
                             <span class="size-label">Caja Grande</span>
                             <span class="size-units">56 unidades</span>
@@ -398,6 +398,22 @@
     <script src="menu-functions.js"></script>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
+    <script type="module" src="firebase-product-loader.js"></script>
     <script type="module" src="menu-script.js"></script>
+    
+    <script type="module">
+        import { cargarTodosLosProductos } from './firebase-product-loader.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🔥 Cargando Box Dulces...');
+            const productos = [
+                'pattiserie-caja-chica', 'pattiserie-caja-grande',
+                'box-alfajorcitos-caja-chica', 'box-alfajorcitos-caja-grande',
+                'box-cuadraditos-caja-chica', 'box-cuadraditos-caja-grande',
+                'box-mix-caja-chica', 'box-mix-caja-grande'
+            ];
+            cargarTodosLosProductos('boxDulces', productos);
+        });
+    </script>
 </body>
 </html>
