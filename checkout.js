@@ -21,6 +21,8 @@ let currentStep = 1;
 let datosComprador = {};
 let datosFacturacion = {};
 let mercadopago;
+let isProcessing = false;
+let orderSaved = false;
 
 // ===================================
 // INICIALIZACIÓN
@@ -140,6 +142,8 @@ function updateSteps(step) {
 }
 
 function continuarPago() {
+    if (isProcessing) return;
+
     // Validar formulario de datos del comprador primero
     const formDatos = document.getElementById('datosCompradorForm');
     if (!formDatos.checkValidity()) {
@@ -147,6 +151,13 @@ function continuarPago() {
         return;
     }
     
+    isProcessing = true;
+    const btnContinuar = document.querySelector('.btn-next');
+    if (btnContinuar) {
+        btnContinuar.disabled = true;
+        btnContinuar.textContent = 'Procesando...';
+    }
+
     // Guardar datos del comprador
     datosComprador = {
         nombre: document.getElementById('nombre').value,
@@ -216,6 +227,15 @@ function volverFacturacion() {
     document.getElementById('pagoSection').classList.add('hidden');
     document.getElementById('datosSection').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Resetear estados
+    isProcessing = false;
+    orderSaved = false;
+    const btnContinuar = document.querySelector('.btn-next');
+    if (btnContinuar) {
+        btnContinuar.disabled = false;
+        btnContinuar.textContent = 'Continuar al Pago';
+    }
 }
 
 // ===================================
@@ -236,83 +256,99 @@ function toggleFacturacion() {
 // INTEGRACIÓN MERCADOPAGO
 // ===================================
 async function initMercadoPago() {
+    // Mostrar mensaje de carga
+    const loadingMsg = document.getElementById('loading-message');
+    const mpButton = document.getElementById('mercadopago-button');
+    
+    if (loadingMsg) loadingMsg.style.display = 'block';
+    if (mpButton) mpButton.innerHTML = '';
+
     // Preparar datos de la orden
     const cart = getCart();
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     const envioGratis = subtotal >= 180000;
     
-    // Guardar orden en localStorage
+    // Guardar orden en localStorage y Firebase
     try {
-        const orderId = 'ORDER-' + Date.now();
-        const orderData = {
-            orderId: orderId,
-            fecha: new Date().toISOString(),
-            // Datos del cliente
-            cliente: {
-                nombre: datosComprador.nombre,
-                dni: datosComprador.dni,
-                telefono: datosComprador.telefono,
-                email: datosComprador.email
-            },
-            // Dirección de envío
-            direccionEnvio: {
-                calle: datosComprador.calle,
-                altura: datosComprador.altura,
-                piso: datosComprador.piso || '',
-                depto: datosComprador.depto || '',
-                ciudad: datosComprador.ciudad,
-                provincia: datosComprador.provincia,
-                codigoPostal: datosComprador.codigoPostal
-            },
-            // Dirección de facturación
-            direccionFacturacion: {
-                nombre: datosFacturacion.nombre,
-                dni: datosFacturacion.dni,
-                calle: datosFacturacion.calle,
-                altura: datosFacturacion.altura,
-                piso: datosFacturacion.piso || '',
-                depto: datosFacturacion.depto || '',
-                ciudad: datosFacturacion.ciudad,
-                provincia: datosFacturacion.provincia,
-                codigoPostal: datosFacturacion.codigoPostal
-            },
-            // Productos
-            productos: cart.map(item => ({
-                id: item.id,
-                nombre: item.name,
-                precio: item.price,
-                cantidad: item.quantity,
-                imagen: item.image
-            })),
-            // Totales
-            subtotal: subtotal,
-            envioGratis: envioGratis,
-            total: subtotal,
-            // Estado
-            status: 'pending',
-            paymentStatus: 'pending'
-        };
-        
-        // Guardar orden en localStorage (como backup)
-        localStorage.setItem('lastOrderId', orderId);
-        localStorage.setItem(`order_${orderId}`, JSON.stringify(orderData));
-        
-        // Guardar orden en Firebase
-        try {
-            const firebaseOrderId = await saveOrder(orderData);
-            if (firebaseOrderId) {
-                console.log('✅ Orden guardada en Firebase con ID:', firebaseOrderId);
-                localStorage.setItem('firebaseOrderId', firebaseOrderId);
+        // Solo guardar si no se ha guardado ya en esta sesión
+        if (!orderSaved) {
+            const orderId = 'ORDER-' + Date.now();
+            const orderData = {
+                orderId: orderId,
+                fecha: new Date().toISOString(),
+                // Datos del cliente
+                cliente: {
+                    nombre: datosComprador.nombre,
+                    dni: datosComprador.dni,
+                    telefono: datosComprador.telefono,
+                    email: datosComprador.email
+                },
+                // Dirección de envío
+                direccionEnvio: {
+                    calle: datosComprador.calle,
+                    altura: datosComprador.altura,
+                    piso: datosComprador.piso || '',
+                    depto: datosComprador.depto || '',
+                    ciudad: datosComprador.ciudad,
+                    provincia: datosComprador.provincia,
+                    codigoPostal: datosComprador.codigoPostal
+                },
+                // Dirección de facturación
+                direccionFacturacion: {
+                    nombre: datosFacturacion.nombre,
+                    dni: datosFacturacion.dni,
+                    calle: datosFacturacion.calle,
+                    altura: datosFacturacion.altura,
+                    piso: datosFacturacion.piso || '',
+                    depto: datosFacturacion.depto || '',
+                    ciudad: datosFacturacion.ciudad,
+                    provincia: datosFacturacion.provincia,
+                    codigoPostal: datosFacturacion.codigoPostal
+                },
+                // Productos
+                productos: cart.map(item => ({
+                    id: item.id,
+                    nombre: item.name,
+                    precio: item.price,
+                    cantidad: item.quantity,
+                    imagen: item.image
+                })),
+                // Totales
+                subtotal: subtotal,
+                envioGratis: envioGratis,
+                total: subtotal,
+                // Estado
+                status: 'pending',
+                paymentStatus: 'pending'
+            };
+            
+            // Guardar orden en localStorage (como backup)
+            localStorage.setItem('lastOrderId', orderId);
+            localStorage.setItem(`order_${orderId}`, JSON.stringify(orderData));
+            
+            // Guardar orden en Firebase
+            try {
+                const firebaseOrderId = await saveOrder(orderData);
+                if (firebaseOrderId) {
+                    console.log('✅ Orden guardada en Firebase con ID:', firebaseOrderId);
+                    localStorage.setItem('firebaseOrderId', firebaseOrderId);
+                    orderSaved = true; // Marcar como guardada para evitar duplicados
+                }
+            } catch (firebaseError) {
+                console.error('❌ Error al guardar orden en Firebase:', firebaseError);
+                // Continuar con el proceso aunque falle Firebase
             }
-        } catch (firebaseError) {
-            console.error('❌ Error al guardar orden en Firebase:', firebaseError);
-            // Continuar con el proceso aunque falle Firebase
+            
+            console.log('Orden guardada con ID:', orderId);
+        } else {
+            console.log('ℹ️ La orden ya fue guardada previamente, saltando guardado.');
         }
-        
-        console.log('Orden guardada con ID:', orderId);
         
     } catch (error) {
         console.error('Error al guardar orden:', error);
+        if (loadingMsg) loadingMsg.style.display = 'none';
+        isProcessing = false;
+        return;
     }
     
     // Inicializar MercadoPago
@@ -390,6 +426,10 @@ async function initMercadoPago() {
         
         console.log('✅ Botón de MercadoPago creado exitosamente');
         
+        // Ocultar mensaje de carga
+        const loadingMsg = document.getElementById('loading-message');
+        if (loadingMsg) loadingMsg.style.display = 'none';
+        
         // Ocultar mensaje de credenciales pendientes
         const credencialesPendientes = document.querySelector('.credenciales-pendientes');
         if (credencialesPendientes) {
@@ -400,6 +440,10 @@ async function initMercadoPago() {
         console.error('Error detallado:', error);
         const errorMsg = error.message || 'Error desconocido';
         alert(`Error al procesar el pago: ${errorMsg}\n\nRevisa la consola para más detalles.`);
+        
+        const loadingMsg = document.getElementById('loading-message');
+        if (loadingMsg) loadingMsg.style.display = 'none';
+        isProcessing = false;
     }
 }
 

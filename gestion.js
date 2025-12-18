@@ -364,13 +364,20 @@ function renderOrderCard(order) {
         cancelled: 'Cancelada'
     }[order.status] || order.status;
 
-    const date = order.createdAt ? new Date(order.createdAt).toLocaleString('es-AR') : order.orderDate || 'Fecha no disponible';
+    // Normalizar datos para soportar diferentes estructuras
+    const customer = order.cliente || order.customer || {};
+    const address = order.direccionEnvio || order.customer || {}; // En estructura vieja, dirección estaba en customer
+    const items = order.productos || order.items || [];
+    const totalAmount = order.total || 0;
+    
+    const dateStr = order.fecha || order.createdAt || order.orderDate;
+    const date = dateStr ? new Date(dateStr).toLocaleString('es-AR') : 'Fecha no disponible';
 
     return `
         <div class="order-card">
             <div class="order-header">
                 <div>
-                    <div class="order-id">Orden #${order.paymentId || order.id}</div>
+                    <div class="order-id">Orden #${order.orderId || order.paymentId || order.id}</div>
                     <div class="order-date">${date}</div>
                 </div>
                 <span class="order-status ${statusClass}">${statusText}</span>
@@ -378,28 +385,28 @@ function renderOrderCard(order) {
 
             <div class="customer-info">
                 <h3>👤 Cliente</h3>
-                <p><strong>${order.customer.nombre}</strong></p>
-                <p>📧 ${order.customer.email}</p>
-                <p>📱 ${order.customer.telefono}</p>
-                <p>🆔 DNI: ${order.customer.dni}</p>
-                <p>📍 ${order.customer.calle} ${order.customer.altura}${order.customer.piso ? ', Piso ' + order.customer.piso : ''}${order.customer.depto ? ', Depto ' + order.customer.depto : ''}</p>
-                <p>   ${order.customer.ciudad}, ${order.customer.provincia} (CP: ${order.customer.codigoPostal})</p>
+                <p><strong>${customer.nombre || 'Sin nombre'}</strong></p>
+                <p>📧 ${customer.email || 'Sin email'}</p>
+                <p>📱 ${customer.telefono || 'Sin teléfono'}</p>
+                <p>🆔 DNI: ${customer.dni || 'Sin DNI'}</p>
+                <p>📍 ${address.calle || ''} ${address.altura || ''}${address.piso ? ', Piso ' + address.piso : ''}${address.depto ? ', Depto ' + address.depto : ''}</p>
+                <p>   ${address.ciudad || ''}, ${address.provincia || ''} ${address.codigoPostal ? '(CP: ' + address.codigoPostal + ')' : ''}</p>
             </div>
 
             <div class="products-list">
                 <h4>📋 Productos</h4>
-                ${order.items.map(product => `
+                ${items.map(product => `
                     <div class="product-item">
-                        <span class="product-name">${product.name}</span>
-                        <span class="product-qty">x${product.quantity}</span>
-                        <span class="product-price">$${(product.price * product.quantity).toLocaleString('es-AR')}</span>
+                        <span class="product-name">${product.nombre || product.name || 'Producto'}</span>
+                        <span class="product-qty">x${product.cantidad || product.quantity || 0}</span>
+                        <span class="product-price">$${((product.precio || product.price || 0) * (product.cantidad || product.quantity || 0)).toLocaleString('es-AR')}</span>
                     </div>
                 `).join('')}
             </div>
 
             <div class="order-total">
                 <span class="total-label">Total:</span>
-                <span class="total-amount">$${order.total.toLocaleString('es-AR')}</span>
+                <span class="total-amount">$${totalAmount.toLocaleString('es-AR')}</span>
             </div>
 
             <div class="order-actions">
