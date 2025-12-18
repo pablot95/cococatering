@@ -51,7 +51,11 @@ function updateTotalCounter() {
     }
     
     if (button) {
-        button.style.display = total > 0 ? 'flex' : 'none';
+        if (total > 0) {
+            button.classList.add('visible');
+        } else {
+            button.classList.remove('visible');
+        }
     }
 }
 
@@ -152,14 +156,21 @@ function addAllToCart() {
         return;
     }
     
+    console.log('🛒 Productos a agregar:', productsToAdd);
+    
     // Agregar todos los productos al carrito
     if (typeof addToCart === 'function') {
         productsToAdd.forEach(product => {
+            console.log('  ➕ Agregando:', product.name, 'x', product.quantity);
             for (let i = 0; i < product.quantity; i++) {
                 const singleProduct = {...product, quantity: 1};
                 addToCart(singleProduct);
             }
         });
+        
+        // Verificar carrito después de agregar
+        const cartAfter = JSON.parse(localStorage.getItem('cocoCart')) || [];
+        console.log('✅ Carrito después de agregar:', cartAfter);
         
         // Resetear todas las cantidades
         productItems.forEach(item => {

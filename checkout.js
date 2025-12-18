@@ -48,12 +48,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===================================
 function loadOrderSummary() {
     const cart = getCart();
+    console.log('🛒 CHECKOUT - Carrito cargado desde localStorage:', cart);
     const orderItemsContainer = document.getElementById('orderItems');
     
     if (cart.length === 0) {
+        console.warn('⚠️ CHECKOUT - Carrito vacío, redirigiendo a carrito.html');
         window.location.href = 'carrito.html';
         return;
     }
+    
+    console.log('✅ CHECKOUT - Mostrando', cart.length, 'productos');
     
     // Renderizar items
     orderItemsContainer.innerHTML = cart.map(item => `

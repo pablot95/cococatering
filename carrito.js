@@ -14,7 +14,9 @@ function saveCart(cart) {
 
 // Agregar producto al carrito
 function addToCart(product) {
+    console.log('🛒 addToCart() llamado con:', product);
     const cart = getCart();
+    console.log('  📦 Carrito actual:', cart);
     const existingItem = cart.find(item => item.id === product.id);
     
     // Detectar si el producto es de una categoría sin imagen
@@ -23,8 +25,10 @@ function addToCart(product) {
     const showImage = !imagelessPages.includes(currentPage);
     
     if (existingItem) {
+        console.log('  ✏️ Producto existente, incrementando cantidad');
         existingItem.quantity += 1;
     } else {
+        console.log('  ➕ Producto nuevo, agregando al carrito');
         cart.push({
             id: product.id,
             name: product.name,
@@ -36,6 +40,7 @@ function addToCart(product) {
     }
     
     saveCart(cart);
+    console.log('  💾 Carrito guardado:', cart);
     showCartNotification('Producto agregado al carrito');
 }
 
