@@ -192,4 +192,83 @@ document.addEventListener('dragstart', (e) => {
     }
 });
 
+// ===================================
+// Función para agregar productos al carrito
+// ===================================
+function addToCart(product) {
+    console.log('Agregando producto al carrito:', product);
+    
+    // Obtener carrito actual del localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Buscar si el producto ya existe en el carrito
+    const existingIndex = cart.findIndex(item => item.id === product.id && item.name === product.name);
+    
+    if (existingIndex !== -1) {
+        // Si existe, aumentar la cantidad
+        cart[existingIndex].quantity += product.quantity;
+    } else {
+        // Si no existe, agregarlo
+        cart.push(product);
+    }
+    
+    // Guardar en localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Actualizar contador del carrito
+    updateCartCount();
+    
+    // Mostrar mensaje de confirmación
+    showCartNotification(product.quantity);
+    
+    console.log('Carrito actualizado:', cart);
+}
 
+// Actualizar contador del carrito
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCountElement = document.querySelector('.cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = totalItems;
+        if (totalItems > 0) {
+            cartCountElement.style.display = 'flex';
+        }
+    }
+}
+
+// Mostrar notificación al agregar al carrito
+function showCartNotification(quantity) {
+    const notification = document.createElement('div');
+    notification.className = 'cart-notification';
+    notification.textContent = `✓ ${quantity} producto(s) agregado(s) al carrito`;
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+        font-weight: 500;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
+}
+
+// Inicializar contador del carrito al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+});
+
+// Exportar funciones al ámbito global
+window.addToCart = addToCart;
+window.updateCartCount = updateCartCount;

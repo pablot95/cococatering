@@ -80,92 +80,68 @@ function updateMenuSection(cardElement, selector, items) {
 async function updateBoxSalados() {
     try {
         const productos = await getProducts('boxSalados');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(box => {
-            // Buscar contenedor por data-id (hardcodeado en HTML)
-            const boxId = box.nombre.toLowerCase().includes('uno') ? 'box-uno' 
-                        : box.nombre.toLowerCase().includes('dos') ? 'box-dos'
-                        : box.nombre.toLowerCase().includes('tres') ? 'box-tres'
-                        : null;
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((box, index) => {
+            // Extraer título y subtítulo del nombre
+            const [titulo, subtitulo] = box.nombre.split(' - ');
+            const boxId = `box-${index + 1}`;
             
-            if (!boxId) return;
+            // Crear section completa
+            const section = document.createElement('section');
+            section.className = 'menu-section';
             
-            const container = document.querySelector(`.box-container[data-id="${boxId}"]`);
+            section.innerHTML = `
+                <h2 class="section-title">${titulo}</h2>
+                
+                <div class="box-container box-details" data-id="${boxId}" data-name="${box.nombre}" data-price="${box.precio}" data-stock="${box.stock}" data-image="images/salados.jpg">
+                    ${box.descripcion ? `<p class="box-description" style="font-size: 1.1rem; color: #666; margin: 15px 0; text-align: center;">${box.descripcion}</p>` : ''}
+                    
+                    <div>
+                        <ul class="product-list">
+                            ${box.items.map((item, i) => `
+                                <li class="product-item2" data-image="productos/producto-${i + 1}.jpg">
+                                    <div class="product-info">
+                                        <span class="product-name">${item}</span>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="box-size-selector" style="justify-content: center;">
+                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-name="${box.nombre}" data-size="${boxId}" data-price="${box.precio}" data-units="${subtitulo || 'Standard'}">
+                            <div class="size-details">
+                                <span class="size-units2">${subtitulo || 'Standard'}</span>
+                                <span class="size-price">$${box.precio.toLocaleString('es-AR')}</span>
+                            </div>
+                            <div class="stock-indicator" style="text-align: center; margin: 10px 0; font-size: 0.9rem;">
+                                ${box.stock > 10 ? `<span style="color: #28a745;">✅ Stock disponible (${box.stock})</span>` 
+                                : box.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${box.stock}</span>` 
+                                : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                            </div>
+                            <div class="size-qty-controls">
+                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
             
-            if (container) {
-                // Actualizar nombre completo
-                container.dataset.name = box.nombre;
-                
-                // Actualizar precio
-                if (box.precio) {
-                    container.dataset.price = box.precio;
-                    
-                    // Actualizar texto del precio si existe
-                    let priceElement = container.querySelector('.box-price, .size-price');
-                    if (!priceElement) {
-                        // Crear elemento de precio si no existe
-                        const priceDiv = document.createElement('div');
-                        priceDiv.className = 'box-price';
-                        priceDiv.style.cssText = 'font-size: 1.5rem; font-weight: bold; color: #8B2E3A; margin: 20px 0;';
-                        container.insertBefore(priceDiv, container.firstChild);
-                        priceElement = priceDiv;
-                    }
-                    priceElement.textContent = `$${box.precio.toLocaleString('es-AR')}`;
-                }
-                
-                // Actualizar título de la sección (BOX UNO, BOX DOS, etc.)
-                const section = container.closest('.menu-section');
-                if (section) {
-                    const sectionTitle = section.querySelector('.section-title');
-                    if (sectionTitle) {
-                        // Extraer solo "BOX UNO" del nombre completo
-                        const boxName = box.nombre.split(' - ')[0];
-                        sectionTitle.textContent = boxName;
-                    }
-                }
-                
-                // Actualizar descripción (parte después del guión)
-                if (box.descripcion) {
-                    let descElement = container.querySelector('.box-description');
-                    if (!descElement) {
-                        descElement = document.createElement('p');
-                        descElement.className = 'box-description';
-                        descElement.style.cssText = 'font-size: 1.1rem; color: #666; margin: 10px 0;';
-                        container.insertBefore(descElement, container.querySelector('.product-list'));
-                    }
-                    descElement.textContent = box.descripcion;
-                }
-                
-                // Actualizar stock visible
-                if (box.stock !== undefined) {
-                    container.dataset.stock = box.stock;
-                    
-                    let stockElement = container.querySelector('.stock-indicator');
-                    if (!stockElement) {
-                        stockElement = document.createElement('div');
-                        stockElement.className = 'stock-indicator';
-                        stockElement.style.cssText = 'font-size: 0.9rem; color: #666; margin: 10px 0;';
-                        container.appendChild(stockElement);
-                    }
-                    
-                    if (box.stock > 10) {
-                        stockElement.textContent = `✅ Stock disponible: ${box.stock} unidades`;
-                        stockElement.style.color = '#28a745';
-                    } else if (box.stock > 0) {
-                        stockElement.textContent = `⚠️ Últimas ${box.stock} unidades`;
-                        stockElement.style.color = '#ffc107';
-                    } else {
-                        stockElement.textContent = `❌ Sin stock`;
-                        stockElement.style.color = '#dc3545';
-                    }
-                }
-                
-                // Actualizar lista de items
-                if (box.items && Array.isArray(box.items)) {
-                    updateProductList(container, box.items);
-                }
-            }
+            menuScrollContainer.appendChild(section);
         });
+        
+        console.log('✅ Box salados cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando box salados:', error);
@@ -176,51 +152,63 @@ async function updateBoxSalados() {
 async function updateBoxDulces() {
     try {
         const productos = await getProducts('boxDulces');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(box => {
-            // Buscar por nombre del producto
-            let element = document.querySelector(`[data-name="${box.nombre}"]`);
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((box, index) => {
+            const boxId = `box-dulce-${index + 1}`;
             
-            if (!element) {
-                // Fallback: buscar por ID derivado
-                const idFromName = box.nombre.toLowerCase().replace(/\s+/g, '-');
-                element = document.querySelector(`[data-id="${idFromName}"]`);
-            }
+            const section = document.createElement('section');
+            section.className = 'menu-section';
             
-            if (element) {
-                // Actualizar nombre
-                element.dataset.name = box.nombre;
-                const nameElement = element.querySelector('.size-label, .product-name');
-                if (nameElement) nameElement.textContent = box.nombre;
+            section.innerHTML = `
+                <h2 class="section-title">${box.nombre}</h2>
                 
-                // Actualizar precio
-                if (box.precio) {
-                    element.dataset.price = box.precio;
-                    const priceSpan = element.querySelector('.size-price, .box-price, .product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${box.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar unidades
-                if (box.unidades) {
-                    element.dataset.units = box.unidades;
-                    const unitsSpan = element.querySelector('.size-units');
-                    if (unitsSpan) unitsSpan.textContent = `${box.unidades} unidades`;
-                }
-                
-                // Actualizar stock visible
-                if (box.stock !== undefined) {
-                    element.dataset.stock = box.stock;
-                    addStockIndicator(element, box.stock);
-                }
-                
-                // Actualizar lista de items
-                if (box.items && Array.isArray(box.items)) {
-                    updateProductList(element, box.items);
-                }
-            }
+                <div class="box-container box-details" data-id="${boxId}" data-name="${box.nombre}" data-price="${box.precio}" data-stock="${box.stock}" data-image="images/dulces.jpg">
+                    <div>
+                        <ul class="product-list">
+                            ${box.items.map((item, i) => `
+                                <li class="product-item2">
+                                    <div class="product-info">
+                                        <span class="product-name">${item}</span>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="box-size-selector" style="justify-content: center;">
+                        <div class="size-option" style="width: 100%; max-width: 220px; margin: 0 auto;" data-name="${box.nombre}" data-size="${boxId}" data-price="${box.precio}" data-units="${box.unidades} unidades">
+                            <div class="size-details">
+                                <span class="size-units">${box.unidades} unidades</span>
+                                <span class="size-price">$${box.precio.toLocaleString('es-AR')}</span>
+                            </div>
+                            <div class="stock-indicator" style="text-align: center; margin: 10px 0; font-size: 0.9rem;">
+                                ${box.stock > 10 ? `<span style="color: #28a745;">✅ Stock disponible (${box.stock})</span>` 
+                                : box.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${box.stock}</span>` 
+                                : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                            </div>
+                            <div class="size-qty-controls">
+                                <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                <span class="qty-display">0</span>
+                                <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            menuScrollContainer.appendChild(section);
         });
+        
+        console.log('✅ Box dulces cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando box dulces:', error);
@@ -233,36 +221,40 @@ async function updateShots() {
         const productos = await getProducts('shots');
         
         if (productos.length > 0) {
-            const shot = productos[0]; // Asumimos un solo producto shots
-            const container = document.querySelector('.shots-info');
+            const shot = productos[0];
+            const menuScrollContainer = document.querySelector('.menu-scroll-container');
             
-            if (container) {
-                // Actualizar nombre
-                container.dataset.name = shot.nombre;
-                const nameElement = container.querySelector('.shots-name, h2');
-                if (nameElement) nameElement.textContent = shot.nombre;
+            if (menuScrollContainer) {
+                menuScrollContainer.innerHTML = `
+                    <div class="shots-info" data-id="shots-1" data-name="${shot.nombre}" data-price="${shot.precio}" data-stock="${shot.stock}">
+                        <h2>${shot.nombre}</h2>
+                        <p class="shots-description">${shot.descripcion || ''}</p>
+                        <div class="shots-details">
+                            <span class="shots-price">$${shot.precio.toLocaleString('es-AR')}</span>
+                            <span class="shots-unit">${shot.unidad}</span>
+                        </div>
+                        <div class="stock-indicator" style="text-align: center; margin: 15px 0; font-size: 1rem;">
+                            ${shot.stock > 10 ? `<span style="color: #28a745;">✅ Stock disponible (${shot.stock})</span>` 
+                            : shot.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${shot.stock}</span>` 
+                            : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                        </div>
+                        ${shot.sabores && Array.isArray(shot.sabores) ? `
+                            <div class="shots-sabores">
+                                <h3>Sabores disponibles:</h3>
+                                <ul>
+                                    ${shot.sabores.map(sabor => `<li>${sabor}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        <div class="product-controls" style="margin-top: 20px;">
+                            <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                            <span class="qty-display">0</span>
+                            <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                        </div>
+                    </div>
+                `;
                 
-                // Actualizar precio
-                if (shot.precio) {
-                    container.dataset.price = shot.precio;
-                    const priceSpan = container.querySelector('.shots-price, .product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${shot.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar unidad
-                if (shot.unidad) {
-                    container.dataset.units = shot.unidad;
-                    const unitsSpan = container.querySelector('.shots-units');
-                    if (unitsSpan) unitsSpan.textContent = shot.unidad;
-                }
-                
-                // Actualizar stock
-                if (shot.stock !== undefined) {
-                    container.dataset.stock = shot.stock;
-                    addStockIndicator(container, shot.stock);
-                }
+                console.log('✅ Shots cargados desde Firebase');
             }
         }
         
@@ -275,37 +267,49 @@ async function updateShots() {
 async function updateFingersFrios() {
     try {
         const productos = await getProducts('fingersFrios');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(finger => {
-            let item = document.querySelector(`.product-cart-item[data-name="${finger.nombre}"]`);
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((finger, index) => {
+            const item = document.createElement('div');
+            item.className = 'product-cart-item';
+            item.dataset.id = `finger-frio-${index + 1}`;
+            item.dataset.name = finger.nombre;
+            item.dataset.price = finger.precio;
+            item.dataset.stock = finger.stock;
+            item.dataset.image = `productos/finger-${index + 1}.jpg`;
             
-            if (item) {
-                // Actualizar nombre
-                const nameSpan = item.querySelector('.product-name');
-                if (nameSpan) nameSpan.textContent = finger.nombre;
-                
-                // Actualizar precio
-                if (finger.precio) {
-                    item.dataset.price = finger.precio;
-                    const priceSpan = item.querySelector('.product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${finger.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar unidad
-                if (finger.unidad) {
-                    const unitSpan = item.querySelector('.product-unit');
-                    if (unitSpan) unitSpan.textContent = finger.unidad;
-                }
-                
-                // Actualizar stock
-                if (finger.stock !== undefined) {
-                    item.dataset.stock = finger.stock;
-                    addStockIndicator(item, finger.stock);
-                }
-            }
+            item.innerHTML = `
+                <div class="product-info">
+                    <span class="product-name">${finger.nombre}</span>
+                    <div class="product-details">
+                        <span class="product-unit">${finger.unidad}</span>
+                        <span class="product-price">$${finger.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    <div class="stock-indicator" style="text-align: center; margin: 5px 0; font-size: 0.85rem;">
+                        ${finger.stock > 10 ? `<span style="color: #28a745;">✅ Disponible (${finger.stock})</span>` 
+                        : finger.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${finger.stock}</span>` 
+                        : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                    </div>
+                </div>
+                <div class="product-controls">
+                    <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                    <span class="qty-display">0</span>
+                    <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                </div>
+            `;
+            
+            menuScrollContainer.appendChild(item);
         });
+        
+        console.log('✅ Fingers fríos cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando fingers fríos:', error);
@@ -316,37 +320,49 @@ async function updateFingersFrios() {
 async function updateFingersCalientes() {
     try {
         const productos = await getProducts('fingersCalientes');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(finger => {
-            let item = document.querySelector(`.product-cart-item[data-name="${finger.nombre}"]`);
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((finger, index) => {
+            const item = document.createElement('div');
+            item.className = 'product-cart-item';
+            item.dataset.id = `finger-caliente-${index + 1}`;
+            item.dataset.name = finger.nombre;
+            item.dataset.price = finger.precio;
+            item.dataset.stock = finger.stock;
+            item.dataset.image = `productos/finger-${index + 1}.jpg`;
             
-            if (item) {
-                // Actualizar nombre
-                const nameSpan = item.querySelector('.product-name');
-                if (nameSpan) nameSpan.textContent = finger.nombre;
-                
-                // Actualizar precio
-                if (finger.precio) {
-                    item.dataset.price = finger.precio;
-                    const priceSpan = item.querySelector('.product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${finger.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar unidad
-                if (finger.unidad) {
-                    const unitSpan = item.querySelector('.product-unit');
-                    if (unitSpan) unitSpan.textContent = finger.unidad;
-                }
-                
-                // Actualizar stock
-                if (finger.stock !== undefined) {
-                    item.dataset.stock = finger.stock;
-                    addStockIndicator(item, finger.stock);
-                }
-            }
+            item.innerHTML = `
+                <div class="product-info">
+                    <span class="product-name">${finger.nombre}</span>
+                    <div class="product-details">
+                        <span class="product-unit">${finger.unidad}</span>
+                        <span class="product-price">$${finger.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    <div class="stock-indicator" style="text-align: center; margin: 5px 0; font-size: 0.85rem;">
+                        ${finger.stock > 10 ? `<span style="color: #28a745;">✅ Disponible (${finger.stock})</span>` 
+                        : finger.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${finger.stock}</span>` 
+                        : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                    </div>
+                </div>
+                <div class="product-controls">
+                    <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                    <span class="qty-display">0</span>
+                    <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                </div>
+            `;
+            
+            menuScrollContainer.appendChild(item);
         });
+        
+        console.log('✅ Fingers calientes cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando fingers calientes:', error);
@@ -357,31 +373,48 @@ async function updateFingersCalientes() {
 async function updateTortasClasicas() {
     try {
         const productos = await getProducts('tortasClasicas');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(torta => {
-            let item = document.querySelector(`.product-cart-item[data-name="${torta.nombre}"]`);
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((torta, index) => {
+            const item = document.createElement('div');
+            item.className = 'product-cart-item';
+            item.dataset.id = `torta-${index + 1}`;
+            item.dataset.name = torta.nombre;
+            item.dataset.price = torta.precio;
+            item.dataset.stock = torta.stock;
+            item.dataset.image = `productos/torta-${index + 1}.jpg`;
             
-            if (item) {
-                // Actualizar nombre
-                const nameSpan = item.querySelector('.product-name');
-                if (nameSpan) nameSpan.textContent = torta.nombre;
-                
-                // Actualizar precio
-                if (torta.precio) {
-                    item.dataset.price = torta.precio;
-                    const priceSpan = item.querySelector('.product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${torta.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar stock
-                if (torta.stock !== undefined) {
-                    item.dataset.stock = torta.stock;
-                    addStockIndicator(item, torta.stock);
-                }
-            }
+            item.innerHTML = `
+                <div class="product-info">
+                    <span class="product-name">${torta.nombre}</span>
+                    <div class="product-details">
+                        <span class="product-price">$${torta.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    <div class="stock-indicator" style="text-align: center; margin: 5px 0; font-size: 0.85rem;">
+                        ${torta.stock > 10 ? `<span style="color: #28a745;">✅ Disponible (${torta.stock})</span>` 
+                        : torta.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${torta.stock}</span>` 
+                        : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                    </div>
+                </div>
+                <div class="product-controls">
+                    <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                    <span class="qty-display">0</span>
+                    <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                </div>
+            `;
+            
+            menuScrollContainer.appendChild(item);
         });
+        
+        console.log('✅ Tortas clásicas cargadas desde Firebase');
         
     } catch (error) {
         console.error('Error cargando tortas clásicas:', error);
@@ -402,42 +435,51 @@ async function updateTortasDecoradas() {
 async function updateCombosDulces() {
     try {
         const productos = await getProducts('combosDulces');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        productos.forEach(combo => {
-            let container = document.querySelector(`.box-container[data-name="${combo.nombre}"]`);
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
+        }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((combo, index) => {
+            const comboElement = document.createElement('div');
+            comboElement.className = 'combo-item product-cart-item';
+            comboElement.dataset.id = `combo-${index + 1}`;
+            comboElement.dataset.name = combo.nombre;
+            comboElement.dataset.price = combo.precio;
+            comboElement.dataset.stock = combo.stock;
+            comboElement.dataset.image = `productos/combo-${index + 1}.jpg`;
             
-            if (!container) {
-                const idFromName = combo.nombre.toLowerCase().replace(/\s+/g, '-');
-                container = document.querySelector(`.box-container[data-id="${idFromName}"]`);
-            }
+            comboElement.innerHTML = `
+                <div class="product-info">
+                    <span class="product-name">${combo.nombre}</span>
+                    <div class="product-details">
+                        <span class="product-price">$${combo.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    <ul class="combo-items" style="list-style: disc; padding-left: 20px; margin: 10px 0; font-size: 0.9rem; color: #666;">
+                        ${combo.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    <div class="stock-indicator" style="text-align: center; margin: 10px 0; font-size: 0.85rem;">
+                        ${combo.stock > 10 ? `<span style="color: #28a745;">✅ Disponible (${combo.stock})</span>` 
+                        : combo.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${combo.stock}</span>` 
+                        : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                    </div>
+                </div>
+                <div class="product-controls">
+                    <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                    <span class="qty-display">0</span>
+                    <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                </div>
+            `;
             
-            if (container) {
-                // Actualizar nombre
-                container.dataset.name = combo.nombre;
-                const nameElement = container.querySelector('.box-title, h2, h3');
-                if (nameElement) nameElement.textContent = combo.nombre;
-                
-                // Actualizar precio
-                if (combo.precio) {
-                    container.dataset.price = combo.precio;
-                    const priceSpan = container.querySelector('.box-price, .product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${combo.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar stock
-                if (combo.stock !== undefined) {
-                    container.dataset.stock = combo.stock;
-                    addStockIndicator(container, combo.stock);
-                }
-                
-                // Actualizar lista de items
-                if (combo.items && Array.isArray(combo.items)) {
-                    updateProductList(container, combo.items);
-                }
-            }
+            menuScrollContainer.appendChild(comboElement);
         });
+        
+        console.log('✅ Combos dulces cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando combos dulces:', error);
@@ -448,53 +490,54 @@ async function updateCombosDulces() {
 async function updateDesayunos() {
     try {
         const productos = await getProducts('desayunos');
+        const menuScrollContainer = document.querySelector('.menu-scroll-container');
         
-        if (productos.length > 0) {
-            const desayuno = productos[0];
-            let container = document.querySelector('.box-container[data-id="desayuno-domicilio"]');
-            
-            if (!container) {
-                container = document.querySelector('.box-container');
-            }
-            
-            if (container) {
-                // Actualizar nombre
-                container.dataset.name = desayuno.nombre;
-                const nameElement = container.querySelector('.box-title, h2, h3');
-                if (nameElement) nameElement.textContent = desayuno.nombre;
-                
-                // Actualizar precio
-                if (desayuno.precio) {
-                    container.dataset.price = desayuno.precio;
-                    const priceSpan = container.querySelector('.box-price, .product-price');
-                    if (priceSpan) {
-                        priceSpan.textContent = `$${desayuno.precio.toLocaleString('es-AR')}`;
-                    }
-                }
-                
-                // Actualizar stock
-                if (desayuno.stock !== undefined) {
-                    container.dataset.stock = desayuno.stock;
-                    addStockIndicator(container, desayuno.stock);
-                }
-                
-                // Actualizar descripción
-                if (desayuno.descripcion) {
-                    let descElement = container.querySelector('.box-description');
-                    if (!descElement) {
-                        descElement = document.createElement('p');
-                        descElement.className = 'box-description';
-                        container.insertBefore(descElement, container.querySelector('.product-list'));
-                    }
-                    descElement.textContent = desayuno.descripcion;
-                }
-                
-                // Actualizar lista de items
-                if (desayuno.items && Array.isArray(desayuno.items)) {
-                    updateProductList(container, desayuno.items);
-                }
-            }
+        if (!menuScrollContainer) {
+            console.error('No se encontró .menu-scroll-container');
+            return;
         }
+        
+        // Limpiar contenido existente
+        menuScrollContainer.innerHTML = '';
+        
+        productos.forEach((desayuno, index) => {
+            const desayunoElement = document.createElement('div');
+            desayunoElement.className = 'desayuno-item product-cart-item';
+            desayunoElement.dataset.id = `desayuno-${index + 1}`;
+            desayunoElement.dataset.name = desayuno.nombre;
+            desayunoElement.dataset.price = desayuno.precio;
+            desayunoElement.dataset.stock = desayuno.stock;
+            desayunoElement.dataset.image = `productos/desayuno-${index + 1}.jpg`;
+            
+            desayunoElement.innerHTML = `
+                <div class="product-info">
+                    <span class="product-name">${desayuno.nombre}</span>
+                    <div class="product-details">
+                        <span class="product-price">$${desayuno.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    ${desayuno.descripcion ? `<p class="desayuno-description" style="color: #666; margin: 8px 0; font-size: 0.9rem;">${desayuno.descripcion}</p>` : ''}
+                    ${desayuno.sabores && Array.isArray(desayuno.sabores) ? `
+                        <ul class="desayuno-items" style="list-style: disc; padding-left: 20px; margin: 10px 0; font-size: 0.9rem; color: #666;">
+                            ${desayuno.sabores.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    <div class="stock-indicator" style="text-align: center; margin: 10px 0; font-size: 0.85rem;">
+                        ${desayuno.stock > 10 ? `<span style="color: #28a745;">✅ Disponible (${desayuno.stock})</span>` 
+                        : desayuno.stock > 0 ? `<span style="color: #ffc107;">⚠️ Quedan ${desayuno.stock}</span>` 
+                        : '<span style="color: #dc3545;">❌ Agotado</span>'}
+                    </div>
+                </div>
+                <div class="product-controls">
+                    <button class="qty-btn minus" onclick="updateQty(this, -1)">-</button>
+                    <span class="qty-display">0</span>
+                    <button class="qty-btn plus" onclick="updateQty(this, 1)">+</button>
+                </div>
+            `;
+            
+            menuScrollContainer.appendChild(desayunoElement);
+        });
+        
+        console.log('✅ Desayunos cargados desde Firebase');
         
     } catch (error) {
         console.error('Error cargando desayunos:', error);
