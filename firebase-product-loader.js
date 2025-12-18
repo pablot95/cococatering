@@ -117,8 +117,9 @@ function actualizarElementoHTML(elemento, producto) {
     
     // Actualizar data-price en size-option si existe dentro del elemento
     const sizeOption = elemento.querySelector('.size-option');
-    if (sizeOption && producto.precio) {
-        sizeOption.setAttribute('data-price', producto.precio);
+    if (sizeOption) {
+        if (producto.precio) sizeOption.setAttribute('data-price', producto.precio);
+        sizeOption.setAttribute('data-name', nombreCompleto);
     }
 
     // Para shots

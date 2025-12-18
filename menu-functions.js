@@ -100,11 +100,11 @@ function addAllToCart() {
                 let productName = '';
                 let image = 'images/dulces.jpg';
                 
-                if (option.dataset.name) {
+                if (option.dataset.name && option.dataset.name !== '-') {
                     productName = option.dataset.name;
                 } else {
                     const boxContainer = option.closest('.box-container');
-                    if (boxContainer && boxContainer.dataset.name) {
+                    if (boxContainer && boxContainer.dataset.name && boxContainer.dataset.name !== '-') {
                         productName = boxContainer.dataset.name;
                         image = boxContainer.dataset.image || 'images/salados.jpg';
                     } else {
