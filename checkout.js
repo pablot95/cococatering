@@ -25,7 +25,11 @@ let mercadopago;
 // ===================================
 // INICIALIZACIÓN
 // ===================================
+console.log('🚀 CHECKOUT.JS - Script cargado');
+console.log('📦 localStorage al cargar checkout.js:', localStorage.getItem('cocoCart'));
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 CHECKOUT - DOMContentLoaded ejecutado');
     loadOrderSummary();
     updateCartCount();
     

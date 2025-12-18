@@ -82,15 +82,19 @@ function updateCartCount() {
 // Renderizar carrito
 function renderCart() {
     const cart = getCart();
+    console.log('🛒 CARRITO - renderCart() llamado, productos:', cart);
     const cartItemsContainer = document.getElementById('cartItems');
     const emptyCart = document.getElementById('emptyCart');
     
     if (cart.length === 0) {
+        console.log('⚠️ CARRITO - Carrito vacío');
         cartItemsContainer.classList.remove('has-items');
         emptyCart.style.display = 'block';
         updateSummary(0);
         return;
     }
+    
+    console.log('✅ CARRITO - Renderizando', cart.length, 'productos');
     
     cartItemsContainer.classList.add('has-items');
     emptyCart.style.display = 'none';
@@ -163,10 +167,15 @@ function updateSummary(subtotal) {
 // Continuar a checkout
 function continuarCompra() {
     const cart = getCart();
+    console.log('🚀 continuarCompra() - Carrito actual:', cart);
+    console.log('📦 localStorage.cocoCart:', localStorage.getItem('cocoCart'));
+    
     if (cart.length === 0) {
         alert('Tu carrito está vacío');
         return;
     }
+    
+    console.log('✅ Navegando a checkout.html con', cart.length, 'productos');
     window.location.href = 'checkout.html';
 }
 
