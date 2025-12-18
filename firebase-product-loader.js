@@ -322,22 +322,22 @@ const MAPEO_IDS = {
     // fingersFrios
     'masitas-queso': 'MASITAS_DE_QUESO',
     'pinchos-bocconcinos': 'PINCHOS_BOCCONCINOS',
-    'ensaladitas-cesar': 'ENSALADITAS_CESAR',
+    'ensaladitas-cesar': 'ENSALADITAS_CSAR',
     'pecetitos': 'PECETITOS',
     'papas-rosty': 'PAPAS_ROSTY',
     'picaditas-individuales': 'PICADITAS_INDIVIDUALES',
     'figacita-jyq': 'FIGACITA_J_Y_Q',
     'criollito-jyq': 'CRIOLLITO_J_Y_Q',
     'criollito-capresse': 'CRIOLLITO_CAPRESSE',
-    'scon-crudo-rucula': 'SCON_CRUDO_RUCULA',
-    'tartaleta-atun': 'TARTALETA_ATUN',
-    'degustacion-queso': 'DEGUSTACION_QUESO',
+    'scon-crudo-rucula': 'SCON_CRUDO_Y_RCULA',
+    'tartaleta-atun': 'TARTALETA_ATN',
+    'degustacion-queso': 'DEGUSTACION_DE_QUESO',
     'dip-queso-azul': 'DIP_QUESO_AZUL',
-    'lomo-morron': 'LOMO_MORRON',
+    'lomo-morron': 'LOMO_Y_MORRON',
     'verduritas-asadas': 'VERDURITAS_ASADAS',
     'medialunitas-jyq': 'MEDIALUNITAS_J_Y_Q',
-    'sconcito-salmon': 'SCONCITO_SALMON',
-    'chipacitos-morron-panceta': 'CHIPACITOS_MORRON_PANCETA'
+    'sconcito-salmon': 'SCONCITO_CON_CAJA_DE_SALMON',
+    'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRON_Y_PANCETA'
 };
 
 /**
