@@ -27,9 +27,21 @@ let mercadopago;
 // ===================================
 console.log('🚀 CHECKOUT.JS - Script cargado');
 console.log('📦 localStorage al cargar checkout.js:', localStorage.getItem('cocoCart'));
+console.log('🔍 window.getCart disponible?', typeof window.getCart);
+console.log('🔍 window.addToCart disponible?', typeof window.addToCart);
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 CHECKOUT - DOMContentLoaded ejecutado');
+// Esperar a que tanto el DOM como carrito.js estén listos
+function initCheckout() {
+    console.log('🚀 CHECKOUT - Inicializando...');
+    
+    // Verificar que carrito.js esté cargado
+    if (typeof window.getCart !== 'function') {
+        console.warn('⚠️ carrito.js no está listo, esperando...');
+        setTimeout(initCheckout, 100);
+        return;
+    }
+    
+    console.log('✅ carrito.js está listo, cargando resumen');
     loadOrderSummary();
     updateCartCount();
     
@@ -45,7 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
             locale: 'es-AR'
         });
     }
-});
+}
+
+// Llamar a initCheckout cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', initCheckout);
 
 // ===================================
 // RESUMEN DEL PEDIDO
@@ -398,7 +413,15 @@ function toggleMobileMenu() {
     hamburger.classList.toggle('active');
 }
 
+// Usar las funciones de carrito.js en lugar de redefinirlas
 function getCart() {
+    // Si window.getCart existe (de carrito.js), usarla
+    if (typeof window.getCart === 'function') {
+        console.log('✅ Usando window.getCart de carrito.js');
+        return window.getCart();
+    }
+    // Fallback si no está cargado (no debería pasar)
+    console.warn('⚠️ window.getCart no encontrado, usando fallback');
     const cart = localStorage.getItem('cocoCart');
     return cart ? JSON.parse(cart) : [];
 }
