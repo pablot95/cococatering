@@ -227,6 +227,13 @@ app.get('/api/payment/:id', async (req, res) => {
 // ===================================
 // GESTIÓN DE ÓRDENES (reemplaza Firebase)
 // ===================================
+/* 
+   NOTA: La persistencia en sistema de archivos (fs) no funciona en entornos serverless como Vercel.
+   Se ha comentado esta sección para evitar errores 500 en producción.
+   Las órdenes ya se están guardando en Firebase desde el frontend.
+*/
+
+/*
 const fs = require('fs');
 const path = require('path');
 const ORDERS_FILE = path.join(__dirname, 'orders.json');
@@ -326,6 +333,7 @@ app.delete('/api/orders/:id', (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+*/
 
 // ===================================
 // SERVIDOR
