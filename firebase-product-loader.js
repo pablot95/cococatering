@@ -249,7 +249,7 @@ async function cargarTodosLosProductos(collectionName, dataIds) {
             }
             
             // Intentar encontrar el producto correspondiente
-            const docId = limpiarNombre(dataId);
+            const docId = obtenerFirebaseId(dataId);
             let producto = productosFirebase[docId];
             
             // Si no se encuentra directamente, buscar por coincidencia flexible
@@ -336,7 +336,7 @@ const MAPEO_IDS = {
     'lomo-morron': 'LOMO_Y_MORRN',
     'verduritas-asadas': 'VERDURITAS_ASADAS',
     'medialunitas-jyq': 'MEDIALUNITAS_J_Y_Q',
-    'sconcito-salmon': 'SCONCITO_CON_LAJAS_DE_SALMN',
+    'sconcito-salmon': 'SCONCITO_CON_CAJA_DE_SALMN',
     'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRN_Y_PANCETA',
 
     // tortasClasicas
