@@ -135,7 +135,8 @@
     </div>
     
     <script type="module">
-        import { stockManager } from './stock-manager.js';
+        import { decrementCartStock, updateOrderStatus } from './firestore-service.js';
+        import { PAGE_TO_COLLECTION } from './firestore-service.js';
         
         // Obtener parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -152,13 +153,60 @@
         const cartJson = localStorage.getItem('cocoCart');
         const cart = cartJson ? JSON.parse(cartJson) : [];
         
-        // Decrementar stock de los productos comprados
-        if (cart.length > 0) {
-            const result = stockManager.decrementCartStock(cart);
-            if (result.success) {
-                console.log('Stock actualizado correctamente:', result.details);
-            } else {
-                console.error('Error al actualizar stock:', result.message);
+        // Decrementar stock de los productos comprados en Firebase
+        if (cart.length > 0 && status === 'approved') {
+            try {
+                // Preparar items del carrito con información de colección
+                const cartItems = cart.map(item => {
+                    // Intentar derivar la colección del nombre o ID del producto
+                    let collectionName = '';
+                    
+                    // Mapeo básico según el nombre del producto
+                    if (item.name.toLowerCase().includes('box') && item.name.toLowerCase().includes('salado')) {
+                        collectionName = 'boxSalados';
+                    } else if (item.name.toLowerCase().includes('box') && item.name.toLowerCase().includes('dulce')) {
+                        collectionName = 'boxDulces';
+                    } else if (item.name.toLowerCase().includes('finger') && item.name.toLowerCase().includes('frío')) {
+                        collectionName = 'fingersFrios';
+                    } else if (item.name.toLowerCase().includes('finger') && item.name.toLowerCase().includes('caliente')) {
+                        collectionName = 'fingersCalientes';
+                    } else if (item.name.toLowerCase().includes('shot')) {
+                        collectionName = 'shots';
+                    } else if (item.name.toLowerCase().includes('torta') && item.name.toLowerCase().includes('clásica')) {
+                        collectionName = 'tortasClasicas';
+                    } else if (item.name.toLowerCase().includes('combo')) {
+                        collectionName = 'combosDulces';
+                    } else if (item.name.toLowerCase().includes('desayuno')) {
+                        collectionName = 'desayunos';
+                    } else if (item.name.toLowerCase().includes('menú') || item.name.toLowerCase().includes('gourmet') || item.name.toLowerCase().includes('clásico') || item.name.toLowerCase().includes('picada') || item.name.toLowerCase().includes('pizza')) {
+                        collectionName = 'menuEventos';
+                    }
+                    
+                    return {
+                        collectionName: collectionName,
+                        productName: item.name,
+                        quantity: item.quantity
+                    };
+                }).filter(item => item.collectionName); // Filtrar items sin colección
+                
+                // Decrementar stock en Firebase
+                const success = await decrementCartStock(cartItems);
+                
+                if (success) {
+                    console.log('✅ Stock actualizado correctamente en Firebase');
+                } else {
+                    console.error('❌ Error al actualizar stock en Firebase');
+                }
+                
+                // Actualizar estado de la orden en Firebase si existe
+                const firebaseOrderId = localStorage.getItem('firebaseOrderId');
+                if (firebaseOrderId) {
+                    await updateOrderStatus(firebaseOrderId, 'completed');
+                    console.log('✅ Estado de orden actualizado en Firebase');
+                }
+                
+            } catch (error) {
+                console.error('Error al decrementar stock:', error);
             }
         }
         
@@ -213,6 +261,11 @@
             }
         }
     </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script type="module" src="firebase-config.js"></script>
 
     <!-- Botón flotante de WhatsApp -->
     <a href="https://wa.me/5491169318930" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">

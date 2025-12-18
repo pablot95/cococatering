@@ -1,5 +1,10 @@
 // Checkout Page - Cocó Catering
-// Integración con MercadoPago Checkout Pro
+// Integración con MercadoPago Checkout Pro + Firebase
+
+// ===================================
+// IMPORTS
+// ===================================
+import { saveOrder } from './firestore-service.js';
 
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
@@ -265,9 +270,22 @@ async function initMercadoPago() {
             paymentStatus: 'pending'
         };
         
-        // Guardar orden en localStorage
+        // Guardar orden en localStorage (como backup)
         localStorage.setItem('lastOrderId', orderId);
         localStorage.setItem(`order_${orderId}`, JSON.stringify(orderData));
+        
+        // Guardar orden en Firebase
+        try {
+            const firebaseOrderId = await saveOrder(orderData);
+            if (firebaseOrderId) {
+                console.log('✅ Orden guardada en Firebase con ID:', firebaseOrderId);
+                localStorage.setItem('firebaseOrderId', firebaseOrderId);
+            }
+        } catch (firebaseError) {
+            console.error('❌ Error al guardar orden en Firebase:', firebaseError);
+            // Continuar con el proceso aunque falle Firebase
+        }
+        
         console.log('Orden guardada con ID:', orderId);
         
     } catch (error) {

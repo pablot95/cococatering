@@ -1,7 +1,10 @@
 // Admin Panel - Cocó Catering
-// Sistema de gestión administrativa con login y armador de productos
+// Sistema de gestión administrativa con login y armador de productos + Firebase
 
-// URL del backend
+// Importar servicios de Firebase
+import { getOrders, updateOrderStatus, deleteOrder } from './firestore-service.js';
+
+// URL del backend (solo para compatibilidad si se necesita)
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:3000' 
     : window.location.origin;
@@ -313,17 +316,11 @@ window.loadOrders = async function() {
     const statusFilter = document.getElementById('statusFilter')?.value || 'all';
 
     try {
-        container.innerHTML = '<div class="loading">Cargando órdenes...</div>';
+        container.innerHTML = '<div class="loading">🔥 Cargando órdenes desde Firebase...</div>';
 
-        // Obtener órdenes del backend
-        const url = `${BACKEND_URL}/api/orders${statusFilter !== 'all' ? '?status=' + statusFilter : ''}`;
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-            throw new Error('Error al obtener órdenes del servidor');
-        }
-        
-        allOrders = await response.json();
+        // Obtener órdenes desde Firebase
+        const filterStatus = statusFilter !== 'all' ? statusFilter : null;
+        allOrders = await getOrders(filterStatus);
 
         if (allOrders.length === 0) {
             container.innerHTML = `
@@ -335,11 +332,19 @@ window.loadOrders = async function() {
             return;
         }
 
+        // Convertir timestamps de Firebase a fechas
+        allOrders = allOrders.map(order => ({
+            ...order,
+            orderDate: order.createdAt?.toDate ? order.createdAt.toDate().toLocaleString('es-AR') : order.fecha || 'Fecha no disponible',
+            customer: order.cliente || order.customer || {},
+            items: order.productos || order.items || []
+        }));
+
         const ordersHTML = allOrders.map(order => renderOrderCard(order)).join('');
         container.innerHTML = ordersHTML;
 
     } catch (error) {
-        console.error('Error al cargar órdenes:', error);
+        console.error('Error al cargar órdenes desde Firebase:', error);
         container.innerHTML = `
             <div class="error-state">
                 <p>❌ Error al cargar las órdenes</p>
@@ -415,19 +420,17 @@ window.updateOrderStatusHandler = async function(orderId, newStatus) {
     if (!newStatus) return;
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/orders/${orderId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: newStatus })
-        });
+        const success = await updateOrderStatus(orderId, newStatus);
         
-        if (!response.ok) throw new Error('Error al actualizar');
-        
-        alert('Estado actualizado exitosamente');
-        loadOrders();
+        if (success) {
+            alert('✅ Estado actualizado exitosamente en Firebase');
+            loadOrders();
+        } else {
+            throw new Error('No se pudo actualizar en Firebase');
+        }
     } catch (error) {
         console.error('Error al actualizar estado:', error);
-        alert('Error al actualizar el estado');
+        alert('❌ Error al actualizar el estado');
     }
 };
 
@@ -437,17 +440,17 @@ window.deleteOrderHandler = async function(orderId) {
     }
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/orders/${orderId}`, {
-            method: 'DELETE'
-        });
+        const success = await deleteOrder(orderId);
         
-        if (!response.ok) throw new Error('Error al eliminar');
-        
-        alert('Orden eliminada exitosamente');
-        loadOrders();
+        if (success) {
+            alert('✅ Orden eliminada exitosamente de Firebase');
+            loadOrders();
+        } else {
+            throw new Error('No se pudo eliminar de Firebase');
+        }
     } catch (error) {
         console.error('Error al eliminar orden:', error);
-        alert('Error al eliminar la orden');
+        alert('❌ Error al eliminar la orden');
     }
 };
 

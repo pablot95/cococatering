@@ -1,5 +1,5 @@
-// Importar stock manager
-import { stockManager } from './stock-manager.js';
+// Importar servicios de Firebase
+import { getStock, checkStock, getCurrentCollection } from './firestore-service.js';
 
 // Script para cambiar imagen del hero al hacer hover en los items del menú y productos
 document.addEventListener('DOMContentLoaded', function() {
@@ -202,7 +202,7 @@ function updateTotalCounter() {
 }
 
 // Agregar todos los productos con cantidad > 0 al carrito
-function addAllToCart() {
+async function addAllToCart() {
     let totalAdded = 0;
     const productsToAdd = [];
     
@@ -312,22 +312,23 @@ function addAllToCart() {
         return;
     }
     
-    // Validar stock antes de agregar (si stockManager está disponible)
-    if (window.stockManager) {
-        try {
+    // Validar stock antes de agregar con Firebase
+    try {
+        const collectionName = getCurrentCollection();
+        if (collectionName) {
             for (const product of productsToAdd) {
-                const productId = window.stockManager.generateProductIdFromName(product.name);
-                const availableStock = window.stockManager.getStock(productId);
+                const hasStock = await checkStock(collectionName, product.name, product.quantity);
                 
-                if (product.quantity > availableStock) {
+                if (!hasStock) {
+                    const availableStock = await getStock(collectionName, product.name);
                     alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
                     return;
                 }
             }
-        } catch (error) {
-            console.warn('Error al verificar stock:', error);
-            // Continuar sin validación de stock si hay error
         }
+    } catch (error) {
+        console.warn('Error al verificar stock:', error);
+        // Continuar sin validación de stock si hay error
     }
     
     // Agregar todos los productos al carrito
@@ -402,7 +403,7 @@ function selectSize(element, productName) {
 }
 
 // Actualizar cantidad con nuevo diseño
-function updateQtyNew(button, change) {
+async function updateQtyNew(button, change) {
     // Find sibling display relative to the button
     const parent = button.parentElement;
     // Try to find either new or old class name
@@ -413,26 +414,28 @@ function updateQtyNew(button, change) {
     let currentQty = parseInt(qtyDisplay.textContent);
     const newQty = currentQty + change;
     
-    // Si está incrementando, verificar stock
-    if (change > 0 && window.stockManager) {
+    // Si está incrementando, verificar stock con Firebase
+    if (change > 0) {
         try {
-            // Obtener ID del producto para verificar stock
             const sizeOption = parent.closest('.size-option');
             const productItem = parent.closest('.product-item, .product-cart-item');
             
-            let productId = '';
+            let productName = '';
             if (sizeOption && sizeOption.dataset.name) {
-                productId = window.stockManager.generateProductIdFromName(sizeOption.dataset.name);
+                productName = sizeOption.dataset.name;
             } else if (productItem && productItem.dataset.name) {
-                productId = window.stockManager.generateProductIdFromName(productItem.dataset.name);
+                productName = productItem.dataset.name;
             }
             
             // Verificar stock disponible
-            if (productId) {
-                const availableStock = window.stockManager.getStock(productId);
-                if (newQty > availableStock) {
-                    alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
-                    return;
+            if (productName) {
+                const collectionName = getCurrentCollection();
+                if (collectionName) {
+                    const availableStock = await getStock(collectionName, productName);
+                    if (newQty > availableStock) {
+                        alert(`Stock insuficiente. Disponibles: ${availableStock} unidades`);
+                        return;
+                    }
                 }
             }
         } catch (error) {

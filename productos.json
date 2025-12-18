@@ -66,7 +66,7 @@
       ]
     },
     {
-      "nombre": "📌 MENÚ PIZZA",
+      "nombre": "MENÚ PIZZA",
       "entrada": [
         "Pan de queso con oliva y provenzal"
       ],
@@ -684,5 +684,19 @@
       "stock": 100
     }
   ],
-  "desayunos": []
+  "desayunos": [
+    {
+      "nombre": "Desayuno a domicilio",
+      "precio": 70000,
+      "sabores": [
+        "Taza",
+        "Box de desayunitos",
+        "4 cuadraditos dulces",
+        "4 patisserie",
+        "2 medialunitas con JYQ",
+        "Chipacitos"
+      ],
+      "stock": 100
+    }
+  ]
 }
