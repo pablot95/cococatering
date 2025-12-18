@@ -313,6 +313,9 @@ async function addAllToCart() {
     }
     
     // Validar stock antes de agregar con Firebase
+    // DESHABILITADO: Los productos en HTML no coinciden con IDs en Firebase
+    // Para habilitar: necesitas mapear data-name del HTML a IDs de Firebase
+    /*
     try {
         const collectionName = getCurrentCollection();
         if (collectionName) {
@@ -330,6 +333,7 @@ async function addAllToCart() {
         console.warn('Error al verificar stock:', error);
         // Continuar sin validación de stock si hay error
     }
+    */
     
     // Agregar todos los productos al carrito
     if (typeof addToCart === 'function') {
@@ -428,6 +432,8 @@ async function updateQtyNew(button, change) {
             }
             
             // Verificar stock disponible
+            // DESHABILITADO: Los productos en HTML no coinciden con IDs en Firebase
+            /*
             if (productName) {
                 const collectionName = getCurrentCollection();
                 if (collectionName) {
@@ -438,6 +444,7 @@ async function updateQtyNew(button, change) {
                     }
                 }
             }
+            */
         } catch (error) {
             console.warn('Error al verificar stock:', error);
             // Continuar sin validación de stock si hay error
