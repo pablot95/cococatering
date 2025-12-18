@@ -336,7 +336,7 @@ const MAPEO_IDS = {
     'lomo-morron': 'LOMO_Y_MORRON',
     'verduritas-asadas': 'VERDURITAS_ASADAS',
     'medialunitas-jyq': 'MEDIALUNITAS_J_Y_Q',
-    'sconcito-salmon': 'SCONCITO_CON_CAJA_DE_SALMON',
+    'sconcito-salmon': 'SCONCITO_CON_LAJAS_DE_SALMON',
     'chipacitos-morron-panceta': 'CHIPACITOS_CON_MORRON_Y_PANCETA',
 
     // tortasClasicas
