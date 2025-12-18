@@ -87,6 +87,8 @@ function actualizarElementoHTML(elemento, producto) {
     const spanPrecio = elemento.querySelector('.product-price');
     const boxTitle = elemento.querySelector('.box-title');
     const boxPrice = elemento.querySelector('.box-price');
+    const shotsLabel = elemento.querySelector('.shots-label');
+    const shotsPrice = elemento.querySelector('.shots-price');
 
     // Para productos normales (fingers, etc)
     if (spanNombre) {
@@ -106,11 +108,22 @@ function actualizarElementoHTML(elemento, producto) {
         boxPrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
     }
 
+    // Para shots
+    if (shotsLabel) {
+        shotsLabel.textContent = producto.nombre;
+    }
+
+    if (shotsPrice && producto.precio) {
+        shotsPrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+    }
+
     // Para shots - actualizar sabores si existen
     if (producto.sabores && Array.isArray(producto.sabores)) {
-        const shotsList = elemento.querySelector('.shots-details ul');
-        if (shotsList) {
-            shotsList.innerHTML = producto.sabores.map(sabor => `<li>${sabor}</li>`).join('');
+        const productList = elemento.querySelector('.product-list');
+        if (productList) {
+            productList.innerHTML = producto.sabores.map(sabor => 
+                `<li class="product-item2"><span class="product-name">${sabor}</span></li>`
+            ).join('');
         }
     }
 
@@ -119,6 +132,16 @@ function actualizarElementoHTML(elemento, producto) {
         const itemsList = elemento.querySelector('.items-list');
         if (itemsList) {
             itemsList.innerHTML = producto.items.map(item => `<li>${item}</li>`).join('');
+        }
+    }
+
+    // Para desayunos - los "sabores" son en realidad items
+    if (producto.sabores && Array.isArray(producto.sabores) && !elemento.querySelector('.shots-price')) {
+        const productList = elemento.querySelector('.product-list');
+        if (productList && !productList.closest('.shots-details')) {
+            productList.innerHTML = producto.sabores.map(item => 
+                `<li class="product-item2"><div class="product-info"><span class="product-name">${item}</span></div></li>`
+            ).join('');
         }
     }
 }
