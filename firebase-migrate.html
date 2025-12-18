@@ -88,8 +88,20 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
-    <script type="module">
-        import { db } from './firebase-config.js';
+    <script>
+        // Configuración Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8tAHsCsRH1ZfXri3UsbDvt31gBYpoWME",
+            authDomain: "cococatering-aba04.firebaseapp.com",
+            projectId: "cococatering-aba04",
+            storageBucket: "cococatering-aba04.firebasestorage.app",
+            messagingSenderId: "632665072150",
+            appId: "1:632665072150:web:52573c2ced6bc8b2818b37"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
         
         const logDiv = document.getElementById('log');
         const btnUpload = document.getElementById('btnUpload');
@@ -99,11 +111,11 @@
             logDiv.scrollTop = logDiv.scrollHeight;
         }
         
-        window.clearLog = function() {
+        function clearLog() {
             logDiv.textContent = '';
-        };
+        }
         
-        window.startUpload = async function() {
+        async function startUpload() {
             btnUpload.disabled = true;
             logDiv.textContent = '';
             
@@ -156,10 +168,11 @@
                 
             } catch (error) {
                 log(`\n❌ ERROR: ${error.message}`);
+                console.error('Error completo:', error);
             } finally {
                 btnUpload.disabled = false;
             }
-        };
+        }
     </script>
 </body>
 </html>

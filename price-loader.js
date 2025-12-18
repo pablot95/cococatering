@@ -82,41 +82,82 @@ async function updateBoxSalados() {
         const productos = await getProducts('boxSalados');
         
         productos.forEach(box => {
-            // Buscar contenedor por data-name o data-id
-            let container = document.querySelector(`.box-container[data-name="${box.nombre}"]`);
+            // Buscar contenedor por data-id (hardcodeado en HTML)
+            const boxId = box.nombre.toLowerCase().includes('uno') ? 'box-uno' 
+                        : box.nombre.toLowerCase().includes('dos') ? 'box-dos'
+                        : box.nombre.toLowerCase().includes('tres') ? 'box-tres'
+                        : null;
             
-            if (!container) {
-                // Fallback: buscar por ID derivado del nombre
-                const idFromName = box.nombre.toLowerCase().replace(/\s+/g, '-');
-                container = document.querySelector(`.box-container[data-id="${idFromName}"]`);
-            }
+            if (!boxId) return;
+            
+            const container = document.querySelector(`.box-container[data-id="${boxId}"]`);
             
             if (container) {
+                // Actualizar nombre completo
+                container.dataset.name = box.nombre;
+                
                 // Actualizar precio
                 if (box.precio) {
                     container.dataset.price = box.precio;
-                    const priceElement = container.querySelector('.size-price, .box-price');
-                    if (priceElement) {
-                        priceElement.textContent = `$${box.precio.toLocaleString('es-AR')}`;
+                    
+                    // Actualizar texto del precio si existe
+                    let priceElement = container.querySelector('.box-price, .size-price');
+                    if (!priceElement) {
+                        // Crear elemento de precio si no existe
+                        const priceDiv = document.createElement('div');
+                        priceDiv.className = 'box-price';
+                        priceDiv.style.cssText = 'font-size: 1.5rem; font-weight: bold; color: #8B2E3A; margin: 20px 0;';
+                        container.insertBefore(priceDiv, container.firstChild);
+                        priceElement = priceDiv;
+                    }
+                    priceElement.textContent = `$${box.precio.toLocaleString('es-AR')}`;
+                }
+                
+                // Actualizar título de la sección (BOX UNO, BOX DOS, etc.)
+                const section = container.closest('.menu-section');
+                if (section) {
+                    const sectionTitle = section.querySelector('.section-title');
+                    if (sectionTitle) {
+                        // Extraer solo "BOX UNO" del nombre completo
+                        const boxName = box.nombre.split(' - ')[0];
+                        sectionTitle.textContent = boxName;
                     }
                 }
                 
-                // Actualizar nombre
-                if (box.nombre) {
-                    container.dataset.name = box.nombre;
-                    const labelElement = container.querySelector('.size-label, .box-title');
-                    if (labelElement) labelElement.textContent = box.nombre;
-                }
-                
-                // Actualizar descripción
+                // Actualizar descripción (parte después del guión)
                 if (box.descripcion) {
-                    const descElement = container.querySelector('.size-units, .box-description');
-                    if (descElement) descElement.textContent = box.descripcion;
+                    let descElement = container.querySelector('.box-description');
+                    if (!descElement) {
+                        descElement = document.createElement('p');
+                        descElement.className = 'box-description';
+                        descElement.style.cssText = 'font-size: 1.1rem; color: #666; margin: 10px 0;';
+                        container.insertBefore(descElement, container.querySelector('.product-list'));
+                    }
+                    descElement.textContent = box.descripcion;
                 }
                 
-                // Actualizar stock
+                // Actualizar stock visible
                 if (box.stock !== undefined) {
                     container.dataset.stock = box.stock;
+                    
+                    let stockElement = container.querySelector('.stock-indicator');
+                    if (!stockElement) {
+                        stockElement = document.createElement('div');
+                        stockElement.className = 'stock-indicator';
+                        stockElement.style.cssText = 'font-size: 0.9rem; color: #666; margin: 10px 0;';
+                        container.appendChild(stockElement);
+                    }
+                    
+                    if (box.stock > 10) {
+                        stockElement.textContent = `✅ Stock disponible: ${box.stock} unidades`;
+                        stockElement.style.color = '#28a745';
+                    } else if (box.stock > 0) {
+                        stockElement.textContent = `⚠️ Últimas ${box.stock} unidades`;
+                        stockElement.style.color = '#ffc107';
+                    } else {
+                        stockElement.textContent = `❌ Sin stock`;
+                        stockElement.style.color = '#dc3545';
+                    }
                 }
                 
                 // Actualizar lista de items
@@ -147,6 +188,11 @@ async function updateBoxDulces() {
             }
             
             if (element) {
+                // Actualizar nombre
+                element.dataset.name = box.nombre;
+                const nameElement = element.querySelector('.size-label, .product-name');
+                if (nameElement) nameElement.textContent = box.nombre;
+                
                 // Actualizar precio
                 if (box.precio) {
                     element.dataset.price = box.precio;
@@ -163,9 +209,10 @@ async function updateBoxDulces() {
                     if (unitsSpan) unitsSpan.textContent = `${box.unidades} unidades`;
                 }
                 
-                // Actualizar stock
+                // Actualizar stock visible
                 if (box.stock !== undefined) {
                     element.dataset.stock = box.stock;
+                    addStockIndicator(element, box.stock);
                 }
                 
                 // Actualizar lista de items
@@ -190,6 +237,12 @@ async function updateShots() {
             const container = document.querySelector('.shots-info');
             
             if (container) {
+                // Actualizar nombre
+                container.dataset.name = shot.nombre;
+                const nameElement = container.querySelector('.shots-name, h2');
+                if (nameElement) nameElement.textContent = shot.nombre;
+                
+                // Actualizar precio
                 if (shot.precio) {
                     container.dataset.price = shot.precio;
                     const priceSpan = container.querySelector('.shots-price, .product-price');
@@ -198,14 +251,17 @@ async function updateShots() {
                     }
                 }
                 
+                // Actualizar unidad
                 if (shot.unidad) {
                     container.dataset.units = shot.unidad;
                     const unitsSpan = container.querySelector('.shots-units');
                     if (unitsSpan) unitsSpan.textContent = shot.unidad;
                 }
                 
+                // Actualizar stock
                 if (shot.stock !== undefined) {
                     container.dataset.stock = shot.stock;
+                    addStockIndicator(container, shot.stock);
                 }
             }
         }
@@ -224,6 +280,11 @@ async function updateFingersFrios() {
             let item = document.querySelector(`.product-cart-item[data-name="${finger.nombre}"]`);
             
             if (item) {
+                // Actualizar nombre
+                const nameSpan = item.querySelector('.product-name');
+                if (nameSpan) nameSpan.textContent = finger.nombre;
+                
+                // Actualizar precio
                 if (finger.precio) {
                     item.dataset.price = finger.precio;
                     const priceSpan = item.querySelector('.product-price');
@@ -232,13 +293,16 @@ async function updateFingersFrios() {
                     }
                 }
                 
+                // Actualizar unidad
                 if (finger.unidad) {
                     const unitSpan = item.querySelector('.product-unit');
                     if (unitSpan) unitSpan.textContent = finger.unidad;
                 }
                 
+                // Actualizar stock
                 if (finger.stock !== undefined) {
                     item.dataset.stock = finger.stock;
+                    addStockIndicator(item, finger.stock);
                 }
             }
         });
@@ -257,6 +321,11 @@ async function updateFingersCalientes() {
             let item = document.querySelector(`.product-cart-item[data-name="${finger.nombre}"]`);
             
             if (item) {
+                // Actualizar nombre
+                const nameSpan = item.querySelector('.product-name');
+                if (nameSpan) nameSpan.textContent = finger.nombre;
+                
+                // Actualizar precio
                 if (finger.precio) {
                     item.dataset.price = finger.precio;
                     const priceSpan = item.querySelector('.product-price');
@@ -265,13 +334,16 @@ async function updateFingersCalientes() {
                     }
                 }
                 
+                // Actualizar unidad
                 if (finger.unidad) {
                     const unitSpan = item.querySelector('.product-unit');
                     if (unitSpan) unitSpan.textContent = finger.unidad;
                 }
                 
+                // Actualizar stock
                 if (finger.stock !== undefined) {
                     item.dataset.stock = finger.stock;
+                    addStockIndicator(item, finger.stock);
                 }
             }
         });
@@ -290,6 +362,11 @@ async function updateTortasClasicas() {
             let item = document.querySelector(`.product-cart-item[data-name="${torta.nombre}"]`);
             
             if (item) {
+                // Actualizar nombre
+                const nameSpan = item.querySelector('.product-name');
+                if (nameSpan) nameSpan.textContent = torta.nombre;
+                
+                // Actualizar precio
                 if (torta.precio) {
                     item.dataset.price = torta.precio;
                     const priceSpan = item.querySelector('.product-price');
@@ -298,8 +375,10 @@ async function updateTortasClasicas() {
                     }
                 }
                 
+                // Actualizar stock
                 if (torta.stock !== undefined) {
                     item.dataset.stock = torta.stock;
+                    addStockIndicator(item, torta.stock);
                 }
             }
         });
@@ -333,6 +412,12 @@ async function updateCombosDulces() {
             }
             
             if (container) {
+                // Actualizar nombre
+                container.dataset.name = combo.nombre;
+                const nameElement = container.querySelector('.box-title, h2, h3');
+                if (nameElement) nameElement.textContent = combo.nombre;
+                
+                // Actualizar precio
                 if (combo.precio) {
                     container.dataset.price = combo.precio;
                     const priceSpan = container.querySelector('.box-price, .product-price');
@@ -341,10 +426,13 @@ async function updateCombosDulces() {
                     }
                 }
                 
+                // Actualizar stock
                 if (combo.stock !== undefined) {
                     container.dataset.stock = combo.stock;
+                    addStockIndicator(container, combo.stock);
                 }
                 
+                // Actualizar lista de items
                 if (combo.items && Array.isArray(combo.items)) {
                     updateProductList(container, combo.items);
                 }
@@ -370,6 +458,12 @@ async function updateDesayunos() {
             }
             
             if (container) {
+                // Actualizar nombre
+                container.dataset.name = desayuno.nombre;
+                const nameElement = container.querySelector('.box-title, h2, h3');
+                if (nameElement) nameElement.textContent = desayuno.nombre;
+                
+                // Actualizar precio
                 if (desayuno.precio) {
                     container.dataset.price = desayuno.precio;
                     const priceSpan = container.querySelector('.box-price, .product-price');
@@ -378,10 +472,24 @@ async function updateDesayunos() {
                     }
                 }
                 
+                // Actualizar stock
                 if (desayuno.stock !== undefined) {
                     container.dataset.stock = desayuno.stock;
+                    addStockIndicator(container, desayuno.stock);
                 }
                 
+                // Actualizar descripción
+                if (desayuno.descripcion) {
+                    let descElement = container.querySelector('.box-description');
+                    if (!descElement) {
+                        descElement = document.createElement('p');
+                        descElement.className = 'box-description';
+                        container.insertBefore(descElement, container.querySelector('.product-list'));
+                    }
+                    descElement.textContent = desayuno.descripcion;
+                }
+                
+                // Actualizar lista de items
                 if (desayuno.items && Array.isArray(desayuno.items)) {
                     updateProductList(container, desayuno.items);
                 }
@@ -407,9 +515,43 @@ function updateProductList(container, items) {
     listElement.innerHTML = '';
     items.forEach(item => {
         const li = document.createElement('li');
+        li.className = 'product-item2';
         li.textContent = item;
         listElement.appendChild(li);
     });
+}
+
+/**
+ * Agregar indicador de stock visual
+ * @param {HTMLElement} element - Elemento padre
+ * @param {number} stock - Cantidad en stock
+ */
+function addStockIndicator(element, stock) {
+    let stockElement = element.querySelector('.stock-indicator');
+    if (!stockElement) {
+        stockElement = document.createElement('div');
+        stockElement.className = 'stock-indicator';
+        stockElement.style.cssText = 'font-size: 0.85rem; margin: 5px 0; font-weight: 500;';
+        
+        // Insertar después del precio si existe
+        const priceElement = element.querySelector('.size-price, .box-price, .product-price');
+        if (priceElement) {
+            priceElement.parentNode.insertBefore(stockElement, priceElement.nextSibling);
+        } else {
+            element.appendChild(stockElement);
+        }
+    }
+    
+    if (stock > 10) {
+        stockElement.textContent = `✅ Disponible (${stock})`;
+        stockElement.style.color = '#28a745';
+    } else if (stock > 0) {
+        stockElement.textContent = `⚠️ Quedan ${stock}`;
+        stockElement.style.color = '#ffc107';
+    } else {
+        stockElement.textContent = `❌ Agotado`;
+        stockElement.style.color = '#dc3545';
+    }
 }
 
 // Inicializar automáticamente al cargar
