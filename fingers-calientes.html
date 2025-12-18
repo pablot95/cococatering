@@ -123,8 +123,8 @@
                     <ul class="product-list">
                         <li class="product-cart-item" data-image="productos/empanadas.jpg" data-id="empanaditas-bondiola" data-name="Empanaditas de bondiola – x12" data-price="22000">
                             <div class="product-info">
-                                <span class="product-name">Empanaditas de bondiola – x12</span>
-                                <span class="product-price">$22.000</span>
+                                <span class="product-name">-</span>
+                                <span class="product-price">-</span>
                             </div>
                             <div class="product-controls">
                                 <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
@@ -422,5 +422,72 @@
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
     <script type="module" src="menu-script.js"></script>
+    
+    <script type="module">
+        import { db } from './firebase-config.js';
+        
+        // Función para cargar un producto desde Firebase y actualizar el HTML
+        async function cargarProductoDesdeFirebase(dataId) {
+            try {
+                // Buscar el elemento en el DOM
+                const elemento = document.querySelector(`[data-id="${dataId}"]`);
+                if (!elemento) {
+                    console.error(`No se encontró elemento con data-id="${dataId}"`);
+                    return;
+                }
+                
+                // Convertir data-id a ID de documento de Firebase
+                // empanaditas-bondiola -> EMPANADITAS_DE_BONDIOLA
+                const docId = dataId
+                    .toUpperCase()
+                    .replace(/-/g, '_')
+                    .replace(/EMPANADITAS_BONDIOLA/, 'EMPANADITAS_DE_BONDIOLA');
+                
+                console.log(`Buscando en Firebase: fingersCalientes/${docId}`);
+                
+                // Obtener producto de Firebase
+                const doc = await db.collection('fingersCalientes').doc(docId).get();
+                
+                if (!doc.exists) {
+                    console.error(`Producto no encontrado en Firebase: ${docId}`);
+                    return;
+                }
+                
+                const producto = doc.data();
+                console.log('Producto encontrado:', producto);
+                
+                // Construir el nombre completo (con unidad si existe)
+                const nombreCompleto = producto.unidad 
+                    ? `${producto.nombre} – ${producto.unidad}`
+                    : producto.nombre;
+                
+                // Actualizar atributos data-
+                elemento.setAttribute('data-name', nombreCompleto);
+                elemento.setAttribute('data-price', producto.precio);
+                
+                // Actualizar elementos visuales
+                const spanNombre = elemento.querySelector('.product-name');
+                const spanPrecio = elemento.querySelector('.product-price');
+                
+                if (spanNombre) {
+                    spanNombre.textContent = nombreCompleto;
+                }
+                
+                if (spanPrecio) {
+                    spanPrecio.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+                }
+                
+                console.log(`✅ Producto "${nombreCompleto}" actualizado desde Firebase`);
+                
+            } catch (error) {
+                console.error(`Error cargando producto ${dataId}:`, error);
+            }
+        }
+        
+        // Cargar el producto cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarProductoDesdeFirebase('empanaditas-bondiola');
+        });
+    </script>
 </body>
 </html>
