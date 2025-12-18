@@ -572,18 +572,18 @@ document.addEventListener('dragstart', (e) => {
 // EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
 // ===================================
 // Necesario para que los eventos onclick funcionen con módulos ES6
-if (typeof updateQty !== 'undefined') window.updateQty = updateQty;
-if (typeof updateQtyNew !== 'undefined') window.updateQtyNew = updateQtyNew;
-if (typeof addAllToCart !== 'undefined') window.addAllToCart = addAllToCart;
-if (typeof addToCartNew !== 'undefined') window.addToCartNew = addToCartNew;
-if (typeof selectSize !== 'undefined') window.selectSize = selectSize;
 
-// Exportar stockManager al scope global para que esté disponible en las funciones
-window.stockManager = stockManager;
+// updateQtyNew maneja ambos casos (nuevo diseño y diseño estándar)
+window.updateQty = updateQtyNew;  // Alias para compatibilidad con código antiguo
+window.updateQtyNew = updateQtyNew;
+window.addAllToCart = addAllToCart;
+window.addToCartNew = addToCartNew;
+window.selectSize = selectSize;
 
-console.log('Menu script cargado. Funciones exportadas:', {
+console.log('✅ Menu script cargado. Funciones exportadas al window:', {
     updateQty: typeof window.updateQty,
     updateQtyNew: typeof window.updateQtyNew,
     addAllToCart: typeof window.addAllToCart,
-    stockManager: typeof window.stockManager
+    addToCartNew: typeof window.addToCartNew,
+    selectSize: typeof window.selectSize
 });

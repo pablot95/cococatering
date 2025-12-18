@@ -198,43 +198,47 @@ document.addEventListener('dragstart', (e) => {
 function addToCart(product) {
     console.log('Agregando producto al carrito:', product);
     
-    // Obtener carrito actual del localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Obtener carrito actual del localStorage - USAR 'cocoCart' para consistencia
+    let cart = JSON.parse(localStorage.getItem('cocoCart')) || [];
     
     // Buscar si el producto ya existe en el carrito
-    const existingIndex = cart.findIndex(item => item.id === product.id && item.name === product.name);
+    const existingIndex = cart.findIndex(item => item.id === product.id);
     
     if (existingIndex !== -1) {
         // Si existe, aumentar la cantidad
-        cart[existingIndex].quantity += product.quantity;
+        cart[existingIndex].quantity += (product.quantity || 1);
     } else {
         // Si no existe, agregarlo
-        cart.push(product);
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price || 0,
+            image: product.image,
+            quantity: product.quantity || 1
+        });
     }
     
-    // Guardar en localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
+    // Guardar en localStorage - USAR 'cocoCart' para consistencia
+    localStorage.setItem('cocoCart', JSON.stringify(cart));
     
     // Actualizar contador del carrito
     updateCartCount();
     
     // Mostrar mensaje de confirmación
-    showCartNotification(product.quantity);
+    showCartNotification(product.quantity || 1);
     
     console.log('Carrito actualizado:', cart);
 }
 
 // Actualizar contador del carrito
 function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem('cocoCart')) || [];
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCountElement = document.querySelector('.cart-count');
-    if (cartCountElement) {
-        cartCountElement.textContent = totalItems;
-        if (totalItems > 0) {
-            cartCountElement.style.display = 'flex';
-        }
-    }
+    const cartCountElements = document.querySelectorAll('.cart-count');
+    cartCountElements.forEach(element => {
+        element.textContent = totalItems;
+        element.style.display = totalItems > 0 ? 'flex' : 'none';
+    });
 }
 
 // Mostrar notificación al agregar al carrito

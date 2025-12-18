@@ -284,3 +284,16 @@ document.addEventListener('dragstart', (e) => {
         return false;
     }
 });
+
+// ===================================
+// EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
+// ===================================
+window.addToCart = addToCart;
+window.getCart = getCart;
+window.updateCartCount = updateCartCount;
+
+console.log('✅ Carrito.js cargado. Funciones exportadas:', {
+    addToCart: typeof window.addToCart,
+    getCart: typeof window.getCart,
+    updateCartCount: typeof window.updateCartCount
+});
