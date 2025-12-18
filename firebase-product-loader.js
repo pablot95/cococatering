@@ -317,7 +317,27 @@ const MAPEO_IDS = {
     'papas-rosti': 'PAPAS_ROSTI',
     'ravioles-rosa': 'RAVIOLES_CON_SALSA_ROSA',
     'conitos-figacita-roast': 'CONITOS_FIGACITA_ROAST',
-    'figacitas-bondiola': 'FIGACITAS_BONDIOLA'
+    'figacitas-bondiola': 'FIGACITAS_BONDIOLA',
+
+    // fingersFrios
+    'masitas-queso': 'MASITAS_DE_QUESO',
+    'pinchos-bocconcinos': 'PINCHOS_BOCCONCINOS',
+    'ensaladitas-cesar': 'ENSALADITAS_CESAR',
+    'pecetitos': 'PECETITOS',
+    'papas-rosty': 'PAPAS_ROSTY',
+    'picaditas-individuales': 'PICADITAS_INDIVIDUALES',
+    'figacita-jyq': 'FIGACITA_J_Y_Q',
+    'criollito-jyq': 'CRIOLLITO_J_Y_Q',
+    'criollito-capresse': 'CRIOLLITO_CAPRESSE',
+    'scon-crudo-rucula': 'SCON_CRUDO_RUCULA',
+    'tartaleta-atun': 'TARTALETA_ATUN',
+    'degustacion-queso': 'DEGUSTACION_QUESO',
+    'dip-queso-azul': 'DIP_QUESO_AZUL',
+    'lomo-morron': 'LOMO_MORRON',
+    'verduritas-asadas': 'VERDURITAS_ASADAS',
+    'medialunitas-jyq': 'MEDIALUNITAS_J_Y_Q',
+    'sconcito-salmon': 'SCONCITO_SALMON',
+    'chipacitos-morron-panceta': 'CHIPACITOS_MORRON_PANCETA'
 };
 
 /**

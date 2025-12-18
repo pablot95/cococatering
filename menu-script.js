@@ -201,6 +201,15 @@ function updateTotalCounter() {
     }
 }
 
+// Helper to parse price string
+function parsePrice(priceStr) {
+    if (!priceStr) return 0;
+    if (typeof priceStr === 'number') return priceStr;
+    // Remove non-digits
+    const clean = priceStr.toString().replace(/\D/g, '');
+    return parseInt(clean) || 0;
+}
+
 // Agregar todos los productos con cantidad > 0 al carrito
 async function addAllToCart() {
     let totalAdded = 0;
@@ -217,7 +226,7 @@ async function addAllToCart() {
                 const product = {
                     id: item.dataset.id,
                     name: item.dataset.name,
-                    price: parseInt(item.dataset.price),
+                    price: parsePrice(item.dataset.price),
                     image: item.dataset.image,
                     quantity: quantity
                 };
@@ -237,7 +246,7 @@ async function addAllToCart() {
             const quantity = parseInt(qtyDisplay.textContent);
             if (quantity > 0) {
                 const units = option.dataset.units;
-                const price = parseInt(option.dataset.price);
+                const price = parsePrice(option.dataset.price);
                 const size = option.dataset.size;
                 
                 // Obtener nombre del producto
@@ -291,7 +300,7 @@ async function addAllToCart() {
             const quantity = parseInt(qtyDisplay.textContent);
             if (quantity > 0) {
                 const label = info.querySelector('.shots-label').textContent;
-                const price = parseInt(info.dataset.price);
+                const price = parsePrice(info.dataset.price);
                 const units = info.dataset.units;
                 
                 const product = {
@@ -303,6 +312,32 @@ async function addAllToCart() {
                 };
                 productsToAdd.push(product);
                 totalAdded += quantity;
+            }
+        }
+    });
+
+    // 4. Box Containers (Desayunos, Combos)
+    const boxContainers = document.querySelectorAll('.box-container');
+    boxContainers.forEach(container => {
+        // Skip if it has size options (handled in section 2)
+        if (container.querySelector('.size-option')) return;
+        
+        const controls = container.querySelector('.box-controls');
+        if (controls) {
+            const qtyDisplay = controls.querySelector('.qty-display');
+            if (qtyDisplay) {
+                const quantity = parseInt(qtyDisplay.textContent);
+                if (quantity > 0) {
+                    const product = {
+                        id: container.dataset.id,
+                        name: container.dataset.name,
+                        price: parsePrice(container.dataset.price),
+                        image: container.dataset.image || 'images/dulces.jpg', // Default image
+                        quantity: quantity
+                    };
+                    productsToAdd.push(product);
+                    totalAdded += quantity;
+                }
             }
         }
     });
