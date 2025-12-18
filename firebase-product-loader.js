@@ -342,6 +342,7 @@ const MAPEO_IDS = {
     // tortasClasicas
     'sable-almendras': 'SABL_DE_ALMENDRAS',
     'oreo-tentacion': 'OREO_TENTACIN',
+    'marquise-frutos-rojos': 'MARQUISE_DE_FRUTOS_ROJOS',
 
     // menuEventos
     'menu-gourmet': 'MEN_GOURMET',
