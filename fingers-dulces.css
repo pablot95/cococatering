@@ -460,28 +460,7 @@ padding-top: 30px;
     }
 }
 
-/* Notificación del carrito */
-.cart-notification {
-    position: fixed;
-    top: 175px;
-    right: 20px;
-    background: #f1c2b8;
-    color: var(--blanco);
-    padding: 10px 15px;
-    border-radius: 50px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    z-index: 10000;
-    opacity: 0;
-    transform: translateX(400px);
-    transition: all 0.3s ease;
-}
 
-.cart-notification.show {
-    opacity: 1;
-    transform: translateX(0);
-}
 
 /* Navigation Buttons en Menu Hero */
 .menu-hero .navigation-buttons {
