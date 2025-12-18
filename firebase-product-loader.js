@@ -89,9 +89,11 @@ function actualizarElementoHTML(elemento, producto) {
     const boxPrice = elemento.querySelector('.box-price');
     const shotsLabel = elemento.querySelector('.shots-label');
     const shotsPrice = elemento.querySelector('.shots-price');
+    const sizePrice = elemento.querySelector('.size-price');
 
-    // Para productos normales (fingers, etc)
-    if (spanNombre) {
+    // Para productos normales (fingers, etc) - SOLO si no es un Box/Combo con items
+    // Si tiene items, el nombre del producto (Box X) no debe ir en .product-name (que es para los items)
+    if (spanNombre && !producto.items && !producto.sabores) {
         spanNombre.textContent = nombreCompleto;
     }
 
@@ -106,6 +108,17 @@ function actualizarElementoHTML(elemento, producto) {
 
     if (boxPrice && producto.precio) {
         boxPrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+    }
+
+    // Para precios en selectores de tamaño (Box Salados/Dulces)
+    if (sizePrice && producto.precio) {
+        sizePrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+    }
+    
+    // Actualizar data-price en size-option si existe dentro del elemento
+    const sizeOption = elemento.querySelector('.size-option');
+    if (sizeOption && producto.precio) {
+        sizeOption.setAttribute('data-price', producto.precio);
     }
 
     // Para shots
@@ -135,9 +148,20 @@ function actualizarElementoHTML(elemento, producto) {
 
     // Para boxes - actualizar items si existen
     if (producto.items && Array.isArray(producto.items)) {
-        const itemsList = elemento.querySelector('.items-list');
-        if (itemsList) {
-            itemsList.innerHTML = producto.items.map(item => `<li>${item}</li>`).join('');
+        // Intentar actualizar textos existentes para preservar imágenes (Box Salados)
+        const existingNames = elemento.querySelectorAll('.product-list .product-name');
+        if (existingNames.length > 0) {
+            producto.items.forEach((itemText, index) => {
+                if (existingNames[index]) {
+                    existingNames[index].textContent = itemText;
+                }
+            });
+        } else {
+            // Si no hay estructura existente, crear lista simple (fallback)
+            const itemsList = elemento.querySelector('.items-list');
+            if (itemsList) {
+                itemsList.innerHTML = producto.items.map(item => `<li>${item}</li>`).join('');
+            }
         }
     }
 
