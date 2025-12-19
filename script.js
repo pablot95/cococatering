@@ -94,14 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ===================================
-// Animación de entrada para botones
-// ===================================
-const navButtons = document.querySelectorAll('.nav-btn');
 
-navButtons.forEach((btn, index) => {
-    btn.style.animation = `fadeInUp 0.6s ease ${0.1 * index + 0.5}s backwards`;
-});
 
 // ===================================
 // Control de navegación con teclado

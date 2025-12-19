@@ -6,7 +6,7 @@
     <title>Carrito - Cocó Catering</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="carrito.css">
-    <link rel="stylesheet" href="eventos.css">
+
     <link rel="icon" href="images/Logo.jpeg" type="image/jpeg">
 </head>
 <body>
@@ -19,15 +19,36 @@
 
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="eventos.html">Eventos</a>
-        <a href="box-salados.html">Box Salados</a>
-        <a href="fingers-frios.html">Fingers Fríos</a>
-        <a href="fingers-calientes.html">Fingers Calientes</a>
-        <a href="box-dulces.html">Box Dulces</a>
-        <a href="shots.html">Shots</a>
-        <a href="tortas-clasicas.html">Tortas Clásicas</a>
-        <a href="tortas-decoradas.html">Tortas Decoradas</a>
-        <a href="combos-dulces.html">Combos Dulces</a>
+        <a href="index.html">Inicio</a>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
         <a href="desayunos.html">Desayunos</a>
         <a href="carrito.html">Carrito</a>
     </nav>
@@ -125,7 +146,7 @@
                     <span>11 - 6931 - 8930</span>
                 </a>
                 <a href="mailto:deby2109@hotmail.com" class="contact-item">
-                    <span class="footer-icon">??</span>
+                    <span class="footer-icon"></span>
                     <span>deby2109@hotmail.com</span>
                 </a>
                 <a href="https://www.facebook.com/cateringintegral" target="_blank" class="contact-item">

@@ -87,6 +87,71 @@
     color: #6b3410;
 }
 
+/* Mobile Dropdown Styles */
+.mobile-dropdown {
+    border-bottom: 1px solid rgba(139, 69, 19, 0.2);
+}
+
+.mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 0;
+    background: none;
+    border: none;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.mobile-dropdown-toggle:hover {
+    padding-left: 10px;
+    color: #6b3410;
+}
+
+.mobile-dropdown-toggle::after {
+    content: '▼';
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(139, 69, 19, 0.05);
+    transition: max-height 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-menu {
+    max-height: 300px;
+}
+
+.mobile-dropdown-menu a {
+    display: block;
+    padding: 12px 20px 12px 20px;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: none;
+}
+
+.mobile-dropdown-menu a:hover {
+    background: rgba(139, 69, 19, 0.1);
+    padding-left: 30px;
+}
+
+
 
 /* Desktop Navigation Menu */
 .checkout-nav-menu {
@@ -508,6 +573,36 @@
     font-style: italic;
     padding: 8px 0;
     text-align: center;
+}
+
+.floating-whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.floating-whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.floating-whatsapp-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
 }
 
 /* Responsive */

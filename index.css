@@ -695,7 +695,6 @@
         font-size: 1.2rem !important;
         font-weight: 600 !important;
         font-family: 'Cormorant Garamond', serif !important;
-        transition: all 0.4s ease !important;
         text-align: center !important;
         width: 100% !important;
         min-height: 50px !important;
@@ -706,7 +705,6 @@
     .mobile-nav-grid .nav-btn:hover,
     .mobile-nav-grid .index-cart-icon:hover {
         background: rgba(255, 255, 255, 0.9) !important;
-        transform: translateY(-3px) !important;
         color: black !important;
         text-shadow: none !important;
     }
@@ -724,7 +722,7 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
         z-index: 90001 !important;
         margin-top: 5px !important;
-        border-radius: 15px !important;
+        border-radius: 24px !important;
         overflow: visible !important;
         max-height: none !important;
     }
@@ -753,6 +751,9 @@
     .mobile-nav-grid .dropdown-menu a:hover {
         background: var(--bordo) !important;
         color: white !important;
+    }
+    .dropdown-menu{
+        border-radius: 36px;
     }
 
     .logo-section {

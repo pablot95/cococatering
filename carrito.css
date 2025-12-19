@@ -1,4 +1,4 @@
-/* ===================================
+ /* ===================================
    Carrito Page Styles - Cocó Catering
    =================================== */
 
@@ -413,6 +413,78 @@
     box-shadow: 0 4px 15px rgba(139, 46, 58, 0.1);
 }
 
+/* Mobile Dropdown Styles */
+.mobile-dropdown {
+    border-bottom: 1px solid rgba(139, 46, 58, 0.1);
+}
+
+.mobile-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 18px 25px;
+    background: none;
+    border: none;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    border-bottom: 2px solid rgba(139, 46, 58, 0.15);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.mobile-dropdown-toggle:hover {
+    background: rgba(139, 46, 58, 0.1);
+    padding-left: 35px;
+    color: var(--negro);
+    box-shadow: 0 4px 15px rgba(139, 46, 58, 0.1);
+}
+
+.mobile-dropdown-toggle::after {
+    content: '▼';
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(139, 46, 58, 0.03);
+    transition: max-height 0.3s ease;
+}
+
+.mobile-dropdown.active .mobile-dropdown-menu {
+    max-height: 300px;
+}
+
+.mobile-dropdown-menu a {
+    display: block;
+    padding: 12px 20px 12px 40px;
+    color: var(--bordo);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.mobile-dropdown-menu a:hover {
+    background: rgba(139, 46, 58, 0.08);
+    padding-left: 50px;
+    box-shadow: none;
+}
+
+
 /* Cart Icon */
 .cart-icon {
     position: fixed;
@@ -476,6 +548,36 @@
     50% {
         transform: scale(1.1);
     }
+}
+
+.floating-whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.floating-whatsapp-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.floating-whatsapp-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
 }
 
 /* Responsive */
@@ -557,6 +659,15 @@
     .carrito-page-container {
         padding-top: 0px;
     }
+    .carrito-content {
+        padding: 10px 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .carrito-summary {
+        padding: 20px;
+    }
 
     .cart-item {
         grid-template-columns: 1fr;
@@ -569,5 +680,8 @@
 
     .cart-item-actions {
         grid-column: 1;
+    }
+    .btn-checkout {
+        width: 100%;
     }
 }
