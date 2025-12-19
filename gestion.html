@@ -39,15 +39,15 @@
                 <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
             </div>
             <nav class="admin-tabs">
-                <button class="tab-btn active" onclick="switchTab('inicio')">Inicio - Armador de Productos</button>
-                <button class="tab-btn" onclick="switchTab('ordenes')">Órdenes</button>
+                <button class="tab-btn" onclick="switchTab('inicio')" style="display: none;">Inicio - Armador de Productos</button>
+                <button class="tab-btn active" onclick="switchTab('ordenes')">Órdenes</button>
             </nav>
         </header>
 
         <!-- Contenido -->
         <div class="admin-content">
             <!-- Tab: Inicio - Armador de Productos -->
-            <div id="tabInicio" class="tab-content active">
+            <div id="tabInicio" class="tab-content" style="display: none;">
                 <div class="tab-header">
                     <h2> Armador de Productos</h2>
                     <button class="btn-primary" onclick="openProductModal()">+ Agregar Producto</button>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Tab: Órdenes -->
-            <div id="tabOrdenes" class="tab-content">
+            <div id="tabOrdenes" class="tab-content active">
                 <div class="tab-header">
                     <h2> Gestión de Órdenes</h2>
                         <button class="btn-secondary" onclick="loadOrders()"> Actualizar</button>

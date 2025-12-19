@@ -62,7 +62,8 @@ function handleLogin(e) {
 function showAdminPanel() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminPanel').style.display = 'block';
-    loadProducts();
+    // Cargar órdenes por defecto ya que productos está oculto
+    loadOrders();
 }
 
 window.logout = function() {
