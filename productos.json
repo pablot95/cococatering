@@ -395,6 +395,36 @@
       "unidad": "x12",
       "precio": 30000,
       "stock": 100
+    },
+    {
+      "nombre": "Sopitas de calabaza",
+      "unidad": "x12",
+      "precio": 22000,
+      "stock": 100
+    },
+    {
+      "nombre": "Cazuela de ravioles",
+      "unidad": "x12",
+      "precio": 120000,
+      "stock": 100
+    },
+    {
+      "nombre": "Cazuela de ternera al malbec con papas noisette",
+      "unidad": "x12",
+      "precio": 180000,
+      "stock": 100
+    },
+    {
+      "nombre": "Cazuela de pollo al champiñón con arroz",
+      "unidad": "x12",
+      "precio": 180000,
+      "stock": 100
+    },
+    {
+      "nombre": "Cazuela de arroz con verduras al wok",
+      "unidad": "x12",
+      "precio": 98000,
+      "stock": 100
     }
   ],
   "boxDulces": [
