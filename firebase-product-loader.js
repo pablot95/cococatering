@@ -99,7 +99,10 @@ function actualizarElementoHTML(elemento, producto) {
 
     // Para productos normales (fingers, etc) - SOLO si no es un Box/Combo con items
     // Si tiene items, el nombre del producto (Box X) no debe ir en .product-name (que es para los items)
-    if (spanNombre && !producto.items && !producto.sabores) {
+    // Tampoco si es un menú de eventos (que tiene partes)
+    const esMenuEventos = producto.parteFria || producto.parteCaliente || producto.entrada || producto.empanadas;
+    
+    if (spanNombre && !producto.items && !producto.sabores && !esMenuEventos) {
         spanNombre.textContent = nombreCompleto;
     }
 
