@@ -3,12 +3,17 @@ function toggleMobileMenu() {
     const hamburger = document.querySelector('.hamburger-menu');
     const mobileMenu = document.getElementById('mobileNavMenu');
     
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
+    if (hamburger && mobileMenu) {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
 }
 
 // Mobile Dropdown Toggle Function
 function toggleMobileDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
     const dropdownButton = event.currentTarget;
     const dropdown = dropdownButton.parentElement;
     
@@ -24,41 +29,26 @@ function toggleMobileDropdown(event) {
     dropdown.classList.toggle('active');
 }
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const hamburger = document.querySelector('.hamburger-menu');
-    const mobileMenu = document.getElementById('mobileNavMenu');
-    
-    if (mobileMenu && mobileMenu.classList.contains('active')) {
-        if (!hamburger.contains(event.target) && !mobileMenu.contains(event.target)) {
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
+function initMobileMenu() {
+    // Inicializar event listeners para dropdowns móviles
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    mobileDropdownToggles.forEach(toggle => {
+        toggle.removeEventListener('click', toggleMobileDropdown);
+        toggle.addEventListener('click', toggleMobileDropdown);
+    });
+
+    // Close mobile menu when clicking a link
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileMenu = document.getElementById('mobileNavMenu');
+            if (hamburger) hamburger.classList.remove('active');
+            if (mobileMenu) mobileMenu.classList.remove('active');
             // Cerrar todos los dropdowns
             const allDropdowns = document.querySelectorAll('.mobile-dropdown');
             allDropdowns.forEach(d => d.classList.remove('active'));
-        }
-    }
-});
-
-// Close mobile menu when clicking a link
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
-mobileNavLinks.forEach(link => {
-    link.addEventListener('click', function() {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const mobileMenu = document.getElementById('mobileNavMenu');
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        // Cerrar todos los dropdowns
-        const allDropdowns = document.querySelectorAll('.mobile-dropdown');
-        allDropdowns.forEach(d => d.classList.remove('active'));
-    });
-});
-
-// Inicializar event listeners para dropdowns móviles
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
-    mobileDropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', toggleMobileDropdown);
+        });
     });
 
     // Event listeners para mobile-nav-grid dropdowns (index.html)
@@ -85,23 +75,46 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const mobileMenu = document.getElementById('mobileNavMenu');
+    
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+        if (hamburger && !hamburger.contains(event.target) && !mobileMenu.contains(event.target)) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            // Cerrar todos los dropdowns
+            const allDropdowns = document.querySelectorAll('.mobile-dropdown');
+            allDropdowns.forEach(d => d.classList.remove('active'));
+        }
+    }
 
     // Cerrar dropdowns del grid al hacer click fuera
-    document.addEventListener('click', function(event) {
-        const clickedInsideGrid = event.target.closest('.mobile-nav-grid');
-        
-        if (!clickedInsideGrid) {
-            mobileNavGridDropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-    });
+    const clickedInsideGrid = event.target.closest('.mobile-nav-grid');
+    const mobileNavGridDropdowns = document.querySelectorAll('.mobile-nav-grid .nav-dropdown');
+    
+    if (!clickedInsideGrid) {
+        mobileNavGridDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
 });
+
+// Inicialización robusta
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileMenu);
+} else {
+    initMobileMenu();
+}
 
 // ===================================
 // Protección contra inspección y copia
 // ===================================
 // Deshabilitar click derecho
+/*
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
@@ -130,4 +143,5 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         return false;
     }
+*/
 

@@ -239,6 +239,7 @@ document.head.appendChild(style);
 // Protección contra inspección y copia
 // ===================================
 // Deshabilitar click derecho
+/*
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
@@ -255,7 +256,7 @@ document.addEventListener('keydown', (e) => {
         return false;
     }
 });
-
+*/
 // ===================================
 // EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
 // ===================================
