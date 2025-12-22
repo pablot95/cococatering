@@ -140,6 +140,7 @@ if (document.readyState === 'loading') {
 // Protección contra inspección y copia
 // ===================================
 // Deshabilitar click derecho
+/*
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
@@ -162,4 +163,5 @@ document.addEventListener('keydown', (e) => {
         return false;
     }
 });
+*/
 
