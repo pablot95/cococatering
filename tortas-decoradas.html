@@ -15,7 +15,6 @@
         <span></span>
         <span></span>
     </div>
-
     <!-- Cart Icon -->
     <a href="carrito.html" class="cart-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -25,7 +24,6 @@
         </svg>
         <span class="cart-count">0</span>
     </a>
-
     <!-- Mobile Navigation Menu -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
         <a href="index.html">Inicio</a>
@@ -61,7 +59,6 @@
         <a href="desayunos.html">Desayunos</a>
         <a href="carrito.html">Carrito</a>
     </nav>
-
     <div class="menu-page-container">
         <!-- Hero Image Fixed -->
         <div class="menu-hero">
@@ -70,8 +67,7 @@
                 <a href="index.html"><img src="images/LogoCocoPng.png" alt="Cocó Catering"></a>
             </div>
             <img id="menuHeroImage" src="productos/TortaDecorada1.jpg" alt="Tortas Decoradas">
-            
-            <!-- Botones de Navegación -->
+            <!-- Botones de Navegaci�n -->
             <div class="navigation-buttons">
                 <div class="nav-dropdown">
                     <button class="nav-btn dropdown-toggle">Menú</button>
@@ -105,14 +101,12 @@
                 <a href="desayunos.html" class="nav-btn">Desayunos</a>
             </div>
         </div>
-
         <!-- Scroll Container -->
         <div class="menu-scroll-container">
             <!-- Tortas Decoradas -->
             <section class="menu-section">
-                <h2 class="section-title">TORTAS DECORADAS</h2>>
-
-                <!-- Box de Información (Sabores, Rellenos, Importante) -->
+                <h2 class="section-title">TORTAS DECORADAS</h2>
+                <!-- Box de Informaci�n (Sabores, Rellenos, Importante) -->
                 <div class="torta-info-box-vertical">
                     <div class="info-section-vertical">
                         <h3 class="info-title-vertical">SABOR DEL BIZCOCHUELO</h3>
@@ -122,7 +116,6 @@
                         </ul>
                         <p class="info-note-vertical">Si la torta tiene dos pisos podemos hacer un sabor de cada uno.</p>
                     </div>
-
                     <div class="info-section-vertical">
                         <h3 class="info-title-vertical">RELLENOS</h3>
                         <ul class="info-list-vertical">
@@ -143,13 +136,11 @@
                             <li>Frutos rojos</li>
                         </ul>
                     </div>
-
                     <div class="info-section-vertical importante">
                         <h3 class="info-title-vertical">IMPORTANTE</h3>
                         <p>Se debe elegir 2 / 3 rellenos.</p>
                     </div>
-
-                    <!-- Selector de Tamaños -->
+                    <!-- Selector de Tama�os -->
                     <div class="torta-size-selector">
                         <div class="size-option-torta" data-size="12" onclick="selectTortaSize(this)">
                             <span class="size-label-torta">12 Porciones</span>
@@ -167,7 +158,6 @@
                             <span class="size-details-torta">Pasta ballina: 5 cortes - 21cm x 24cm</span>
                         </div>
                     </div>
-
                     <!-- Botón de Consulta -->
                     <div class="box-footer-single">
                         <a href="#" id="tortaConsultarBtn" class="btn-consultar-wsp-single disabled" target="_blank">
@@ -178,25 +168,21 @@
                         </a>
                     </div>
                 </div>
-
             </section>
         </div>
     </div>
-
     <!-- Botón flotante para agregar todos los productos -->
     <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
         <span class="btn-text">Agregar al Carrito</span>
         <span class="btn-counter" id="total-items-counter">0</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     </button>
-
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
     <script type="module" src="menu-script.js"></script>
     <script type="module" src="load-prices.js"></script>
-    
     <script>
-        // Carrusel automático de tortas decoradas
+        // Carrusel autom�tico de tortas decoradas
         const tortaImages = [
             'productos/TortaDecorada1.jpg',
             'productos/TortaDecorada2.jpg',
@@ -205,34 +191,27 @@
             'productos/TortaDecorada5.jpg'
         ];
         let currentTortaIndex = 0;
-        
         function changeTortaImage() {
             const heroImage = document.getElementById('menuHeroImage');
             const heroBgBlur = document.getElementById('menuHeroBgBlur');
-            
             if (!heroImage) return;
-            
             // Siguiente imagen
             currentTortaIndex = (currentTortaIndex + 1) % tortaImages.length;
             const nextImage = tortaImages[currentTortaIndex];
-            
             // Precargar imagen
             const newImage = new Image();
             newImage.src = nextImage;
-            
             newImage.onload = function() {
                 // Fade out
                 heroImage.style.opacity = '0';
                 if (heroBgBlur) {
                     heroBgBlur.style.opacity = '0';
                 }
-                
                 setTimeout(() => {
                     heroImage.src = nextImage;
                     if (heroBgBlur) {
                         heroBgBlur.style.backgroundImage = `url(${nextImage})`;
                     }
-                    
                     // Fade in
                     heroImage.style.opacity = '1';
                     if (heroBgBlur) {
@@ -241,44 +220,35 @@
                 }, 150);
             };
         }
-        
-        // Inicializar carrusel cuando carga la página
+        // Inicializar carrusel cuando carga la p�gina
         document.addEventListener('DOMContentLoaded', function() {
             const heroBgBlur = document.getElementById('menuHeroBgBlur');
             const heroImage = document.getElementById('menuHeroImage');
-            
             // Inicializar fondo borroso
             if (heroImage && heroBgBlur && heroImage.src) {
                 heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
             }
-            
             // Cambiar imagen cada 3 segundos
             setInterval(changeTortaImage, 3000);
         });
-        
-        // Función para seleccionar tamaño de torta
+        // Funci�n para seleccionar tama�o de torta
         function selectTortaSize(element) {
-            // Remover selección previa
+            // Remover selecci�n previa
             const allOptions = document.querySelectorAll('.size-option-torta');
             allOptions.forEach(option => option.classList.remove('selected'));
-            
-            // Seleccionar nueva opción
+            // Seleccionar nueva opci�n
             element.classList.add('selected');
-            
-            // Obtener el tamaño seleccionado
+            // Obtener el tama�o seleccionado
             const size = element.getAttribute('data-size');
-            
-            // Habilitar el botón y actualizar el enlace
+            // Habilitar el bot�n y actualizar el enlace
             const btn = document.getElementById('tortaConsultarBtn');
             btn.classList.remove('disabled');
-            
-            const whatsappMessage = `Hola! Me gustaría consultar precio por una TORTA DE ${size} PORCIONES`;
+            const whatsappMessage = `Hola! Me gustar�a consultar precio por una TORTA DE ${size} PORCIONES`;
             btn.href = `https://wa.me/5491234567890?text=${encodeURIComponent(whatsappMessage)}`;
         }
     </script>
-
     <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.me/5491169318930" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
+    <a href="https://wa.me/5491128447772" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
             <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.049-13.483 13.483-13.483s13.483 6.049 13.483 13.483c0 7.435-6.049 13.483-13.483 13.483zM21.981 18.429c-0.309-0.155-1.832-0.903-2.116-1.006-0.283-0.103-0.489-0.155-0.695 0.155s-0.799 1.006-0.98 1.212c-0.18 0.206-0.36 0.232-0.669 0.077s-1.306-0.481-2.487-1.534c-0.92-0.82-1.541-1.834-1.722-2.143s-0.019-0.476 0.136-0.631c0.139-0.139 0.309-0.36 0.463-0.54s0.206-0.309 0.309-0.515 0.052-0.386-0.026-0.54c-0.077-0.155-0.695-1.673-0.951-2.291-0.246-0.6-0.499-0.52-0.695-0.528-0.18-0.009-0.386-0.009-0.592-0.009s-0.54 0.077-0.823 0.386c-0.283 0.309-1.080 1.057-1.080 2.576s1.106 2.988 1.26 3.193c0.155 0.206 2.179 3.321 5.278 4.656 0.737 0.319 1.313 0.509 1.762 0.65 0.742 0.235 1.417 0.202 1.951 0.123 0.595-0.089 1.832-0.749 2.090-1.472s0.257-1.343 0.18-1.472c-0.077-0.129-0.283-0.206-0.592-0.36z"/>
         </svg>

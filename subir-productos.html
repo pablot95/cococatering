@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -90,17 +90,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>📦 Subir Productos a Firebase</h1>
-        
-        <p><strong>Este script subirá todos los productos de productos.json a Firebase Firestore.</strong></p>
-        
+        <h1>ðŸ“¦ Subir Productos a Firebase</h1>
+        <p><strong>Este script subirÃ todos los productos de productos.json a Firebase Firestore.</strong></p>
         <div class="stats" id="stats" style="display: none;">
             <div class="stat-card">
                 <h3>Box Salados</h3>
                 <p id="stat-boxSalados">0</p>
             </div>
             <div class="stat-card">
-                <h3>Fingers Fríos</h3>
+                <h3>Fingers FrÃ­os</h3>
                 <p id="stat-fingersFrios">0</p>
             </div>
             <div class="stat-card">
@@ -116,7 +114,7 @@
                 <p id="stat-shots">0</p>
             </div>
             <div class="stat-card">
-                <h3>Tortas Clásicas</h3>
+                <h3>Tortas ClÃsicas</h3>
                 <p id="stat-tortasClasicas">0</p>
             </div>
             <div class="stat-card">
@@ -128,23 +126,19 @@
                 <p id="stat-desayunos">0</p>
             </div>
             <div class="stat-card">
-                <h3>Menú Eventos</h3>
-                <p id="stat-menuEventos">0</p>
+                <h3>MenúÃº Eventos</h3>
+                <p id="stat-MenúEventos">0</p>
             </div>
         </div>
-        
-        <button id="btnSubir" onclick="subirProductos()">🚀 Subir Productos</button>
-        <button id="btnVerificar" onclick="verificarProductos()" style="background: #2196f3;">🔍 Verificar Base de Datos</button>
-        
+        <button id="btnSubir" onclick="subirProductos()">ðŸš€ Subir Productos</button>
+        <button id="btnVerificar" onclick="verificarProductos()" style="background: #2196f3;">ðŸ” Verificar Base de Datos</button>
         <div id="log"></div>
     </div>
-
     <!-- Firebase App (compatibility mode) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
     <script>
-        // Configuración de Firebase
+        // ConfiguraciÃ³n de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD8tAHsCsRH1ZfXri3UsbDvt31gBYpoWME",
             authDomain: "cococatering-aba04.firebaseapp.com",
@@ -153,39 +147,30 @@
             messagingSenderId: "632665072150",
             appId: "1:632665072150:web:52573c2ced6bc8b2818b37"
         };
-
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
-        console.log('Firebase inicializado correctamente');
-        
+        console.log('Firebase inicializado correctaMenúte');
         window.log = function(message, type = 'info') {
-            const logDiv = document.getElementById('log');
+            const logDiv = document.getEleMenútById('log');
             const timestamp = new Date().toLocaleTimeString();
             const className = type;
             logDiv.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
             logDiv.scrollTop = logDiv.scrollHeight;
         }
-        
         window.subirProductos = async function() {
-            const btn = document.getElementById('btnSubir');
+            const btn = document.getEleMenútById('btnSubir');
             btn.disabled = true;
-            btn.textContent = '⏳ Subiendo...';
-            
-            document.getElementById('log').innerHTML = '';
-            document.getElementById('stats').style.display = 'grid';
-            
-            log('🚀 Iniciando carga de productos...', 'info');
-            
+            btn.textContent = 'â³ Subiendo...';
+            document.getEleMenútById('log').innerHTML = '';
+            document.getEleMenútById('stats').style.display = 'grid';
+            log('ðŸš€ Iniciando carga de productos...', 'info');
             try {
                 // Cargar productos.json
                 const response = await fetch('productos.json');
                 const data = await response.json();
-                
-                log('✅ productos.json cargado correctamente', 'success');
-                
-                // Subir cada colección
+                log('âœ… productos.json cargado correctaMenúte', 'success');
+                // Subir cada colecciÃ³n
                 await subirColeccion('boxSalados', data.boxSalados);
                 await subirColeccion('fingersFrios', data.fingersFrios);
                 await subirColeccion('fingersCalientes', data.fingersCalientes);
@@ -194,76 +179,60 @@
                 await subirColeccion('tortasClasicas', data.tortasClasicas);
                 await subirColeccion('combosDulces', data.combosDulces);
                 await subirColeccion('desayunos', data.desayunos);
-                await subirColeccion('menuEventos', data.menuEventos);
-                
-                log('✅ ¡TODOS LOS PRODUCTOS SUBIDOS EXITOSAMENTE!', 'success');
-                btn.textContent = '✅ Completado';
-                
+                await subirColeccion('MenúEventos', data.MenúEventos);
+                log('âœ… ÂTODOS LOS PRODUCTOS SUBIDOS EXITOSAMenúTE!', 'success');
+                btn.textContent = 'âœ… Completado';
             } catch (error) {
-                log(`❌ ERROR: ${error.message}`, 'error');
+                log(`âŒ ERROR: ${error.message}`, 'error');
                 console.error(error);
-                btn.textContent = '❌ Error';
+                btn.textContent = 'âŒ Error';
             } finally {
                 setTimeout(() => {
                     btn.disabled = false;
-                    btn.textContent = '🚀 Subir Productos';
+                    btn.textContent = 'ðŸš€ Subir Productos';
                 }, 3000);
             }
         }
-        
         window.subirColeccion = async function(collectionName, productos) {
             if (!productos || productos.length === 0) {
-                log(`⚠️ ${collectionName}: No hay productos para subir`, 'warning');
+                log(`âš ï¸ ${collectionName}: No hay productos para subir`, 'warning');
                 return;
             }
-            
-            log(`📦 Subiendo ${collectionName} (${productos.length} productos)...`, 'info');
-            
+            log(`ðŸ“¦ Subiendo ${collectionName} (${productos.length} productos)...`, 'info');
             const batch = db.batch();
             let count = 0;
-            
             for (const producto of productos) {
-                // Generar ID único: si tiene categoría, usar "CATEGORIA_NOMBRE", si no, solo "NOMBRE"
+                // Generar ID Ãºnico: si tiene categorÃ­a, usar "CATEGORIA_NOMBRE", si no, solo "NOMBRE"
                 let docId;
                 if (producto.categoria) {
                     // Para boxDulces: "PATTISERIE_CAJA_CHICA", "BOX_ALFAJORCITOS_CAJA_GRANDE", etc.
                     docId = limpiarNombre(producto.categoria + ' ' + producto.nombre);
                 } else {
-                    // Para otros productos sin categoría
+                    // Para otros productos sin categorÃ­a
                     docId = limpiarNombre(producto.nombre);
                 }
-                
                 const docRef = db.collection(collectionName).doc(docId);
-                
                 // Verificar que tenga todos los campos necesarios
                 const productoCompleto = { ...producto };
-                
                 // Asegurar que tenga stock (si no lo tiene, poner 100)
                 if (productoCompleto.stock === undefined || productoCompleto.stock === null) {
                     productoCompleto.stock = 100;
-                    log(`  ⚠️ ${producto.nombre}: stock no definido, usando 100`, 'warning');
+                    log(`  âš ï¸ ${producto.nombre}: stock no definido, usando 100`, 'warning');
                 }
-                
                 // Asegurar que tenga precio (si no lo tiene, advertir)
                 if (productoCompleto.precio === undefined || productoCompleto.precio === null) {
-                    log(`  ⚠️ ${producto.nombre}: ¡FALTA PRECIO!`, 'warning');
+                    log(`  âš ï¸ ${producto.nombre}: ÂFALTA PRECIO!`, 'warning');
                 }
-                
                 batch.set(docRef, productoCompleto);
                 count++;
-                
                 const displayName = producto.categoria ? `${producto.categoria} - ${producto.nombre}` : producto.nombre;
-                log(`  ✓ ${displayName}`, 'success');
+                log(`  âœ“ ${displayName}`, 'success');
             }
-            
             await batch.commit();
-            
-            // Actualizar estadística
-            document.getElementById(`stat-${collectionName}`).textContent = count;
-            
-            log(`✅ ${collectionName}: ${count} productos subidos`, 'success');
+            // Actualizar estadÃ­stica
+            document.getEleMenútById(`stat-${collectionName}`).textContent = count;
+            log(`âœ… ${collectionName}: ${count} productos subidos`, 'success');
         }
-        
         window.limpiarNombre = function(nombre) {
             return nombre
                 .trim()
@@ -271,15 +240,12 @@
                 .replace(/\s+/g, '_')
                 .replace(/[^A-Z0-9_-]/g, '');
         }
-        
         window.verificarProductos = async function() {
-            const btn = document.getElementById('btnVerificar');
+            const btn = document.getEleMenútById('btnVerificar');
             btn.disabled = true;
-            btn.textContent = '⏳ Verificando...';
-            
-            document.getElementById('log').innerHTML = '';
-            log('🔍 Verificando productos en Firebase...', 'info');
-            
+            btn.textContent = 'â³ Verificando...';
+            document.getEleMenútById('log').innerHTML = '';
+            log('ðŸ” Verificando productos en Firebase...', 'info');
             try {
                 const colecciones = [
                     'boxSalados',
@@ -290,33 +256,27 @@
                     'tortasClasicas',
                     'combosDulces',
                     'desayunos',
-                    'menuEventos'
+                    'MenúEventos'
                 ];
-                
                 let totalProductos = 0;
-                
                 for (const coleccion of colecciones) {
                     const snapshot = await db.collection(coleccion).get();
                     const count = snapshot.size;
                     totalProductos += count;
-                    
-                    log(`📦 ${coleccion}: ${count} productos`, count > 0 ? 'success' : 'warning');
-                    
+                    log(`ðŸ“¦ ${coleccion}: ${count} productos`, count > 0 ? 'success' : 'warning');
                     if (count > 0) {
                         snapshot.forEach(doc => {
                             const data = doc.data();
-                            let status = '✓';
+                            let status = 'âœ“';
                             let issues = [];
-                            
-                            if (!data.precio && coleccion !== 'menuEventos') {
+                            if (!data.precio && coleccion !== 'MenúEventos') {
                                 issues.push('sin precio');
                             }
                             if (data.stock === undefined || data.stock === null) {
                                 issues.push('sin stock');
                             }
-                            
                             if (issues.length > 0) {
-                                status = '⚠️';
+                                status = 'âš ï¸';
                                 log(`  ${status} ${data.nombre} (${issues.join(', ')})`, 'warning');
                             } else {
                                 log(`  ${status} ${data.nombre}`, 'info');
@@ -324,19 +284,16 @@
                         });
                     }
                 }
-                
-                log(`\n✅ Total de productos en Firebase: ${totalProductos}`, 'success');
-                
+                log(`\nâœ… Total de productos en Firebase: ${totalProductos}`, 'success');
             } catch (error) {
-                log(`❌ ERROR: ${error.message}`, 'error');
+                log(`âŒ ERROR: ${error.message}`, 'error');
                 console.error(error);
             } finally {
                 btn.disabled = false;
-                btn.textContent = '🔍 Verificar Base de Datos';
+                btn.textContent = 'ðŸ” Verificar Base de Datos';
             }
         }
-        
-        log('✅ Sistema listo. Presiona "Subir Productos" para comenzar.', 'success');
+        log('âœ… Sistema listo. Presiona "Subir Productos" para coMenúzar.', 'success');
     </script>
 </body>
 </html>

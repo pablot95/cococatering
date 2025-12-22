@@ -1,100 +1,15 @@
 // ===================================
-// Carrusel de Imágenes
+// Video Hero (Reemplazo de Carrusel)
 // ===================================
-let currentSlideIndex = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const indicators = document.querySelectorAll('.indicator');
-let autoSlideInterval;
-
-// Mostrar slide específico
-function showSlide(index) {
-    // Asegurar que el índice esté en rango
-    if (index >= slides.length) {
-        currentSlideIndex = 0;
-    } else if (index < 0) {
-        currentSlideIndex = slides.length - 1;
-    } else {
-        currentSlideIndex = index;
-    }
-
-    // Remover clase active de todos los slides e indicadores
-    slides.forEach(slide => slide.classList.remove('active'));
-    indicators.forEach(indicator => indicator.classList.remove('active'));
-
-    // Agregar clase active al slide e indicador actual
-    slides[currentSlideIndex].classList.add('active');
-    indicators[currentSlideIndex].classList.add('active');
-}
-
-// Cambiar slide (prev/next)
-function changeSlide(direction) {
-    showSlide(currentSlideIndex + direction);
-    resetAutoSlide();
-}
-
-// Ir a slide específico
-function currentSlide(index) {
-    showSlide(index);
-    resetAutoSlide();
-}
-
-// Auto-avance del carrusel
-function startAutoSlide() {
-    autoSlideInterval = setInterval(() => {
-        showSlide(currentSlideIndex + 1);
-    }, 5000); // Cambia cada 5 segundos
-}
-
-// Reiniciar auto-avance
-function resetAutoSlide() {
-    clearInterval(autoSlideInterval);
-    startAutoSlide();
-}
-
-// Iniciar carrusel al cargar
 document.addEventListener('DOMContentLoaded', () => {
-    showSlide(0);
-    startAutoSlide();
-
-    // Pausar auto-slide al hover sobre controles
-    const controls = document.querySelectorAll('.carousel-control, .indicator');
-    controls.forEach(control => {
-        control.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideInterval);
+    const video = document.getElementById('heroVideo');
+    if (video) {
+        // Asegurar reproducción automática
+        video.play().catch(error => {
+            console.log("Autoplay prevenido por el navegador:", error);
         });
-        control.addEventListener('mouseleave', () => {
-            resetAutoSlide();
-        });
-    });
-
-    // Soporte para swipe en móviles
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    const carousel = document.querySelector('.hero-carousel');
-
-    carousel.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    carousel.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        if (touchEndX < touchStartX - 50) {
-            // Swipe izquierda
-            changeSlide(1);
-        }
-        if (touchEndX > touchStartX + 50) {
-            // Swipe derecha
-            changeSlide(-1);
-        }
     }
 });
-
-
 
 // ===================================
 // Control de navegación con teclado
@@ -212,7 +127,6 @@ window.updateCartCount = updateCartCount;
 // Protección contra inspección y copia
 // ===================================
 // Deshabilitar click derecho
-/*
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
@@ -229,4 +143,3 @@ document.addEventListener('keydown', (e) => {
         return false;
     }
 });
-*/

@@ -60,3 +60,24 @@ window.uploadToFirebase = uploadProductsToFirebase;
 
 console.log('🔥 Script de migración cargado.');
 console.log('Para subir los productos, ejecuta: uploadToFirebase()');
+
+// ===================================
+// Protección contra inspección y copia
+// ===================================
+// Deshabilitar click derecho
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    return false;
+});
+
+// Deshabilitar teclas de desarrollo (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+document.addEventListener('keydown', (e) => {
+    if (
+        e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        (e.ctrlKey && e.key === 'U')
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});

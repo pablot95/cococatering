@@ -75,6 +75,15 @@ function initMobileMenu() {
             });
         }
     });
+
+    // Close grid dropdowns when clicking a link inside them
+    const mobileNavGridLinks = document.querySelectorAll('.mobile-nav-grid .nav-dropdown a');
+    mobileNavGridLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const mobileNavGridDropdowns = document.querySelectorAll('.mobile-nav-grid .nav-dropdown');
+            mobileNavGridDropdowns.forEach(d => d.classList.remove('active'));
+        });
+    });
 }
 
 // Close mobile menu when clicking outside
@@ -103,6 +112,23 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Resetear estado del menú al volver a la página (bfcache)
+window.addEventListener('pageshow', function(event) {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const mobileMenu = document.getElementById('mobileNavMenu');
+    
+    if (hamburger) hamburger.classList.remove('active');
+    if (mobileMenu) mobileMenu.classList.remove('active');
+    
+    // Cerrar todos los dropdowns del menú hamburguesa
+    const allDropdowns = document.querySelectorAll('.mobile-dropdown');
+    allDropdowns.forEach(d => d.classList.remove('active'));
+
+    // Cerrar dropdowns del grid (index.html)
+    const mobileNavGridDropdowns = document.querySelectorAll('.mobile-nav-grid .nav-dropdown');
+    mobileNavGridDropdowns.forEach(d => d.classList.remove('active'));
+});
+
 // Inicialización robusta
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMobileMenu);
@@ -114,7 +140,6 @@ if (document.readyState === 'loading') {
 // Protección contra inspección y copia
 // ===================================
 // Deshabilitar click derecho
-/*
 document.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     return false;
@@ -137,11 +162,4 @@ document.addEventListener('keydown', (e) => {
         return false;
     }
 });
-    
-    // Ctrl+Shift+C (Selector de elementos)
-    if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-        e.preventDefault();
-        return false;
-    }
-*/
 

@@ -267,6 +267,27 @@ console.log('✅ menu-functions.js cargado - Funciones disponibles:', {
     addAllToCart: typeof window.addAllToCart
 });
 
+// ===================================
+// Protección contra inspección y copia
+// ===================================
+// Deshabilitar click derecho
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    return false;
+});
+
+// Deshabilitar teclas de desarrollo (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+document.addEventListener('keydown', (e) => {
+    if (
+        e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+        (e.ctrlKey && e.key === 'U')
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     updateTotalCounter();
