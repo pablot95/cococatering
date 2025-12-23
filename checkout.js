@@ -10,11 +10,12 @@ import { saveOrder } from './firestore-service.js';
 // CONFIGURACIÓN DE MERCADOPAGO
 // ===================================
 const MP_PUBLIC_KEY = 'APP_USR-eb9414cf-eadb-4da9-9d16-0bf070ad753e';
-// URL del backend - Si frontend y backend están en Vercel, usa window.location.origin
+// URL del backend
+// Para Hostinger (PHP), usamos el archivo relativo 'crear-preferencia.php'
+// Para desarrollo local con Node.js, usamos localhost:3000
 const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:3000' 
-    : window.location.origin; // Usa el mismo dominio (Vercel o Hostinger)
-// El ACCESS_TOKEN se debe configurar en el backend por seguridad
+    ? 'http://localhost:3000/api/create-preference' // Desarrollo local (Node)
+    : 'crear-preferencia.php'; // Producción Hostinger (PHP)
 
 // Variables globales
 let currentStep = 1;
@@ -396,7 +397,9 @@ async function initMercadoPago() {
         };
         
         // Llamar al backend para crear la preferencia de pago
-        const response = await fetch(`${BACKEND_URL}/api/create-preference`, {
+        // Si BACKEND_URL es una ruta relativa (PHP), fetch la usará directamente
+        // Si es absoluta (Node local), también funcionará
+        const response = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

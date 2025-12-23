@@ -34,7 +34,7 @@
     filter: blur(3px) brightness(0.6);
     transform: scale(1.2);
     z-index: 0;
-    transition: opacity 0.3s ease;
+    /* transition: opacity 0.3s ease; */
 }
 
 .menu-hero::before {
@@ -79,7 +79,7 @@
     position: relative;
     z-index: 2;
     filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.6));
-    transition: opacity 0.3s ease;
+    /* transition: opacity 0.3s ease; */
 }
 
 .menu-scroll-container {

@@ -30,26 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Cuando la imagen esté completamente cargada
         newImage.onload = function() {
-            // Fade out
-            heroImage.style.opacity = '0';
+            // Cambio instantáneo sin transiciones
+            heroImage.src = imageUrl;
             if (heroBgBlur) {
-                heroBgBlur.style.opacity = '0';
+                heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
             }
-            
-            // Cambiar imagen después del fade out
-            imageTimeout = setTimeout(() => {
-                heroImage.src = imageUrl;
-                if (heroBgBlur) {
-                    heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
-                }
-                
-                // Fade in
-                heroImage.style.opacity = '1';
-                if (heroBgBlur) {
-                    heroBgBlur.style.opacity = '1';
-                }
-                imageTimeout = null;
-            }, 150);
         };
     }
 
