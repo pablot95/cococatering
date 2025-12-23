@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastImage = null;
 
     items.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            const newImage = this.getAttribute('data-image');
+        const changeImage = () => {
+            const newImage = item.getAttribute('data-image');
             if (newImage && heroImage) {
                 lastImage = newImage;
                 heroImage.style.opacity = '0';
@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     heroImage.style.opacity = '1';
                 }, 180);
             }
-        });
+        };
+
+        item.addEventListener('mouseenter', changeImage);
+        item.addEventListener('touchstart', changeImage, { passive: true });
+        item.addEventListener('click', changeImage);
     });
 });
 

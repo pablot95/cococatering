@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImage = document.getElementById('dulcesHeroImage');
 
     dulcesItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            const imageUrl = this.getAttribute('data-image');
+        const changeImage = () => {
+            const imageUrl = item.getAttribute('data-image');
             if (imageUrl && heroImage) {
                 heroImage.style.opacity = '0';
                 setTimeout(() => {
@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     heroImage.style.opacity = '1';
                 }, 0);
             }
-        });
+        };
+
+        item.addEventListener('mouseenter', changeImage);
+        item.addEventListener('touchstart', changeImage, { passive: true });
+        item.addEventListener('click', changeImage);
     });
 });
 
@@ -24,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImage2 = document.getElementById('shotsHeroImage');
 
     dulcesItems2.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            const imageUrl = this.getAttribute('data-image');
+        const changeImage = () => {
+            const imageUrl = item.getAttribute('data-image');
             if (imageUrl && heroImage2) {
                 heroImage2.style.opacity = '0';
                 setTimeout(() => {
@@ -33,7 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     heroImage2.style.opacity = '1';
                 }, 0);
             }
-        });
+        };
+
+        item.addEventListener('mouseenter', changeImage);
+        item.addEventListener('touchstart', changeImage, { passive: true });
+        item.addEventListener('click', changeImage);
     });
 });
 

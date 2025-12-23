@@ -28,14 +28,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const newImage = new Image();
         newImage.src = imageUrl;
         
-        // Cuando la imagen esté completamente cargada
-        newImage.onload = function() {
+        const applyImage = () => {
             // Cambio instantáneo sin transiciones
             heroImage.src = imageUrl;
             if (heroBgBlur) {
                 heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
             }
         };
+
+        // Verificar si la imagen ya está cargada (cache)
+        if (newImage.complete) {
+            applyImage();
+        } else {
+            newImage.onload = applyImage;
+        }
     }
 
     // Inicializar el fondo borroso con la imagen inicial
@@ -43,39 +49,27 @@ document.addEventListener('DOMContentLoaded', function() {
         heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
     }
 
-    // Hover para product items
-    productItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            const imageUrl = item.getAttribute('data-image');
-            updateHeroImage(imageUrl);
-        });
-    });
+    // Función auxiliar para manejar eventos de cambio de imagen
+    function attachImageChangeEvents(elements, checkImage = false) {
+        elements.forEach(item => {
+            const changeImage = () => {
+                const imageUrl = item.getAttribute('data-image');
+                if (!checkImage || imageUrl) {
+                    updateHeroImage(imageUrl);
+                }
+            };
 
-    // Hover para product-item2
-    productItems2.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            const imageUrl = item.getAttribute('data-image');
-            updateHeroImage(imageUrl);
+            item.addEventListener('mouseenter', changeImage);
+            item.addEventListener('touchstart', changeImage, { passive: true });
+            item.addEventListener('click', changeImage);
         });
-    });
+    }
 
-    // Hover para box containers
-    boxContainers.forEach(box => {
-        box.addEventListener('mouseenter', function() {
-            const imageUrl = box.getAttribute('data-image');
-            updateHeroImage(imageUrl);
-        });
-    });
-
-    // Hover para box details (para los boxes de dulces)
-    boxDetails.forEach(box => {
-        box.addEventListener('mouseenter', function() {
-            const imageUrl = box.getAttribute('data-image');
-            if (imageUrl) {
-                updateHeroImage(imageUrl);
-            }
-        });
-    });
+    // Aplicar listeners a todos los grupos de elementos
+    attachImageChangeEvents(productItems);
+    attachImageChangeEvents(productItems2);
+    attachImageChangeEvents(boxContainers);
+    attachImageChangeEvents(boxDetails, true);
 
     // Actualizar contador total al cargar y cuando cambian cantidades
     updateTotalCounter();
