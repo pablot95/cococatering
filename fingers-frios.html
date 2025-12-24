@@ -335,13 +335,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
-    <script src="menu-functions.js?v=3"></script>
+    <!-- menu-functions.js eliminado para evitar conflictos -->
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
-    <script type="module" src="firebase-product-loader.js?v=10"></script>
-    <script type="module" src="menu-script.js?v=9"></script>
+    <script type="module" src="firebase-product-loader.js?v=11"></script>
+    <script type="module" src="menu-script.js?v=11"></script>
     <script type="module">
-        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=10';
+        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=11';
         const productos = [
             'masitas-queso', 'pinchos-bocconcinos', 'ensaladitas-cesar', 'pecetitos',
             'papas-rosty', 'picaditas-individuales', 'figacita-jyq', 'criollito-jyq',

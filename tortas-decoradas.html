@@ -179,7 +179,7 @@
     </button>
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
-    <script type="module" src="menu-script.js"></script>
+    <script type="module" src="menu-script.js?v=11"></script>
     <script type="module" src="load-prices.js"></script>
     <script>
         // Carrusel autom�tico de tortas decoradas
@@ -201,7 +201,8 @@
             // Precargar imagen
             const newImage = new Image();
             newImage.src = nextImage;
-            newImage.onload = function() {
+            
+            const updateImage = () => {
                 // Fade out
                 heroImage.style.opacity = '0';
                 if (heroBgBlur) {
@@ -219,6 +220,18 @@
                     }
                 }, 150);
             };
+
+            if (newImage.complete) {
+                updateImage();
+            } else {
+                newImage.onload = updateImage;
+                // Fallback por si Safari no dispara onload
+                setTimeout(() => {
+                    if (heroImage.src !== nextImage && !heroImage.src.endsWith(nextImage)) {
+                        updateImage();
+                    }
+                }, 500);
+            }
         }
         // Inicializar carrusel cuando carga la p�gina
         document.addEventListener('DOMContentLoaded', function() {

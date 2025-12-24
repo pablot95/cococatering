@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para actualizar imagen y fondo borroso
     function updateHeroImage(imageUrl) {
-        if (!imageUrl || !heroImage || imageUrl === currentImageUrl) return;
+        if (!imageUrl || !heroImage) return;
         
         // Cancelar cualquier cambio de imagen pendiente
         if (imageTimeout) {
@@ -24,23 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentImageUrl = imageUrl;
         
-        // Precargar la nueva imagen
-        const newImage = new Image();
-        newImage.src = imageUrl;
+        // Force reflow to help Safari render the change
+        void heroImage.offsetWidth;
         
-        const applyImage = () => {
-            // Cambio instantáneo sin transiciones
-            heroImage.src = imageUrl;
-            if (heroBgBlur) {
-                heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
-            }
-        };
-
-        // Verificar si la imagen ya está cargada (cache)
-        if (newImage.complete) {
-            applyImage();
-        } else {
-            newImage.onload = applyImage;
+        // Cambio directo sin preloading para evitar problemas en Safari iOS
+        // Safari a veces no dispara onload si la imagen está en cache o hay condiciones de carrera
+        heroImage.src = imageUrl;
+        if (heroBgBlur) {
+            heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
         }
     }
 
@@ -52,7 +43,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Función auxiliar para manejar eventos de cambio de imagen
     function attachImageChangeEvents(elements, checkImage = false) {
         elements.forEach(item => {
-            const changeImage = () => {
+            const changeImage = (e) => {
+                // Detener propagación para evitar que contenedores padres sobrescriban la imagen
+                if (e && e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                
+                // Prevenir comportamiento por defecto en touch para evitar doble disparo (touch + click simulado)
+                if (e.type === 'touchstart') {
+                    // No usamos preventDefault() aquí porque bloquearía el scroll o clicks en enlaces/botones dentro
+                }
+
                 const imageUrl = item.getAttribute('data-image');
                 if (!checkImage || imageUrl) {
                     updateHeroImage(imageUrl);
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             item.addEventListener('mouseenter', changeImage);
+            // Usar passive: false si fuéramos a usar preventDefault, pero aquí solo queremos capturar el toque
             item.addEventListener('touchstart', changeImage, { passive: true });
             item.addEventListener('click', changeImage);
         });
@@ -326,28 +328,6 @@ async function addAllToCart() {
         return;
     }
     
-    // Validar stock antes de agregar con Firebase
-    // DESHABILITADO: Los productos en HTML no coinciden con IDs en Firebase
-    // Para habilitar: necesitas mapear data-name del HTML a IDs de Firebase
-    /*
-    try {
-        const collectionName = getCurrentCollection();
-        if (collectionName) {
-            for (const product of productsToAdd) {
-                const hasStock = await checkStock(collectionName, product.name, product.quantity);
-                
-                if (!hasStock) {
-                    const availableStock = await getStock(collectionName, product.name);
-                    alert(`Stock insuficiente para ${product.name}. Disponibles: ${availableStock} unidades`);
-                    return;
-                }
-            }
-        }
-    } catch (error) {
-        console.warn('Error al verificar stock:', error);
-        // Continuar sin validación de stock si hay error
-    }
-    */
     
     // Agregar todos los productos al carrito
     if (typeof addToCart === 'function') {
@@ -525,26 +505,7 @@ function addToCartNew(button, productName) {
     }
 }
 
-// ===================================
-// Protección contra inspección y copia
-// ===================================
-// Deshabilitar click derecho
-document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    return false;
-});
 
-// Deshabilitar teclas de desarrollo (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
-document.addEventListener('keydown', (e) => {
-    if (
-        e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
-        (e.ctrlKey && e.key === 'U')
-    ) {
-        e.preventDefault();
-        return false;
-    }
-});
 // ===================================
 // EXPORTAR FUNCIONES AL ÁMBITO GLOBAL
 // ===================================

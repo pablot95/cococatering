@@ -274,7 +274,8 @@
             // Precargar imagen
             const newImage = new Image();
             newImage.src = nextImage;
-            newImage.onload = function() {
+            
+            const updateImage = () => {
                 // Fade out
                 heroImage.style.opacity = '0';
                 if (heroBgBlur) {
@@ -292,6 +293,18 @@
                     }
                 }, 150);
             };
+
+            if (newImage.complete) {
+                updateImage();
+            } else {
+                newImage.onload = updateImage;
+                // Fallback por si Safari no dispara onload
+                setTimeout(() => {
+                    if (heroImage.src !== nextImage && !heroImage.src.endsWith(nextImage)) {
+                        updateImage();
+                    }
+                }, 500);
+            }
         }
         // Inicializar carrusel cuando carga la página
         document.addEventListener('DOMContentLoaded', function() {
@@ -310,13 +323,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="mobile-menu.js"></script>
     <script src="carrito.js"></script>
-    <script src="menu-functions.js"></script>
+    <!-- menu-functions.js eliminado para evitar conflictos -->
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="firestore-service.js"></script>
-    <script type="module" src="firebase-product-loader.js?v=6"></script>
-    <script type="module" src="menu-script.js?v=6"></script>
+    <script type="module" src="firebase-product-loader.js?v=11"></script>
+    <script type="module" src="menu-script.js?v=11"></script>
     <script type="module">
-        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=6';
+        import { cargarTodosLosProductos } from './firebase-product-loader.js?v=11';
         document.addEventListener('DOMContentLoaded', () => {
             console.log('?? Cargando Combos Dulces...');
             cargarTodosLosProductos('combosDulces', ['combo-1', 'combo-2', 'combo-3']);

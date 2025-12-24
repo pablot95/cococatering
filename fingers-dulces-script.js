@@ -4,14 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImage = document.getElementById('dulcesHeroImage');
 
     dulcesItems.forEach(item => {
-        const changeImage = () => {
+        const changeImage = (e) => {
+            if (e && e.stopPropagation) e.stopPropagation();
+            
             const imageUrl = item.getAttribute('data-image');
             if (imageUrl && heroImage) {
-                heroImage.style.opacity = '0';
-                setTimeout(() => {
-                    heroImage.src = imageUrl;
-                    heroImage.style.opacity = '1';
-                }, 0);
+                // Eliminar opacidad 0 para evitar parpadeo en móviles si la imagen ya está cargada
+                // heroImage.style.opacity = '0'; 
+                
+                // Cambio directo
+                heroImage.src = imageUrl;
+                heroImage.style.opacity = '1';
             }
         };
 
@@ -28,14 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImage2 = document.getElementById('shotsHeroImage');
 
     dulcesItems2.forEach(item => {
-        const changeImage = () => {
+        const changeImage = (e) => {
+            if (e && e.stopPropagation) e.stopPropagation();
+
             const imageUrl = item.getAttribute('data-image');
             if (imageUrl && heroImage2) {
-                heroImage2.style.opacity = '0';
-                setTimeout(() => {
-                    heroImage2.src = imageUrl;
-                    heroImage2.style.opacity = '1';
-                }, 0);
+                // Eliminar opacidad 0 para evitar parpadeo
+                // heroImage2.style.opacity = '0';
+                
+                heroImage2.src = imageUrl;
+                heroImage2.style.opacity = '1';
             }
         };
 
@@ -45,25 +50,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ===================================
-// Protección contra inspección y copia
-// ===================================
-// Deshabilitar click derecho
-/*
-document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    return false;
-});
-
-// Deshabilitar teclas de desarrollo (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
-document.addEventListener('keydown', (e) => {
-    if (
-        e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
-        (e.ctrlKey && e.key === 'U')
-    ) {
-        e.preventDefault();
-        return false;
-    }
-});
-*/
