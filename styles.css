@@ -1,6 +1,3 @@
-/* ===================================
-   Variables de Colores
-   =================================== */
 :root {
     --bordo: #8B2E3A;
     --bordo-oscuro: #6B1E2A;
@@ -13,9 +10,7 @@
     --negro: #2C2C2C;
 }
 
-/* ===================================
-   Reset
-   =================================== */
+* {
 * {
     margin: 0;
     padding: 0;
@@ -47,9 +42,6 @@ a {
     color: inherit;
 }
 
-/* ===================================
-   Páginas Internas (Compartido)
-   =================================== */
 .page-container {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--nude) 0%, var(--rosa-claro) 100%);
@@ -121,9 +113,6 @@ a {
     }
 }
 
-/* ===================================
-   Footer
-   =================================== */
 .footer {
     background-color: #f1c2b8;
     color: white;
@@ -283,9 +272,6 @@ a {
     }
 }
 
-/* ===================================
-   Dropdown Menu Styles
-   =================================== */
 .nav-dropdown {
     position: relative;
     display: inline-block;

@@ -1,77 +1,104 @@
 // Importar servicios de Firebase
-import { getStock, checkStock, getCurrentCollection } from './firestore-service.js';
+// import { getStock, checkStock, getCurrentCollection } from './firestore-service.js';
 
 // Script para cambiar imagen del hero al hacer hover en los items del menú y productos
 document.addEventListener('DOMContentLoaded', function() {
-    const productItems = document.querySelectorAll('.product-item, .product-cart-item');
-    const productItems2 = document.querySelectorAll('.product-item2');
-    const boxContainers = document.querySelectorAll('.box-container');
-    const boxDetails = document.querySelectorAll('.box-details');
-    const heroImage = document.getElementById('menuHeroImage');
+    let heroImage = document.getElementById('menuHeroImage');
     const heroBgBlur = document.getElementById('menuHeroBgBlur');
     
     let currentImageUrl = heroImage ? heroImage.src : '';
     let imageTimeout = null;
 
-    // Función para actualizar imagen y fondo borroso
+    // Función para forzar repaint en iOS (Versión corregida: Opacity hack)
+    function forceRepaint(el) {
+        if (!el) return;
+
+        el.style.opacity = '0.99';
+        el.style.transform = 'translateZ(0)';
+        requestAnimationFrame(() => {
+            el.style.opacity = '';
+            el.style.transform = '';
+        });
+    }
+
+    // Función para actualizar imagen y fondo borroso (FIX DEFINITIVO iOS: Reemplazo de nodo)
     function updateHeroImage(imageUrl) {
         if (!imageUrl || !heroImage) return;
         
-        // Cancelar cualquier cambio de imagen pendiente
-        if (imageTimeout) {
-            clearTimeout(imageTimeout);
+        const parent = heroImage.parentNode;
+
+        // Crear nueva imagen clonando la actual
+        const newImg = heroImage.cloneNode(false);
+
+        // Cache buster para iOS
+        const finalUrl = imageUrl.startsWith('data:') ? imageUrl : `${imageUrl}?v=${Date.now()}`;
+        
+        newImg.src = finalUrl;
+
+        // Fade suave
+        newImg.style.opacity = '0';
+        newImg.style.transition = 'opacity 0.25s ease';
+
+        // Reemplazar nodo en el DOM (fuerza render en WebKit)
+        parent.replaceChild(newImg, heroImage);
+
+        // Actualizar referencia global
+        heroImage = newImg;
+
+        // Trigger reflow y fade in
+        requestAnimationFrame(() => {
+            newImg.style.opacity = '1';
+        });
+
+        // Actualizar fondo blur
+        if (heroBgBlur) {
+            heroBgBlur.style.backgroundImage = `url(${finalUrl})`;
+            forceRepaint(heroBgBlur);
         }
         
         currentImageUrl = imageUrl;
-        
-        // Force reflow to help Safari render the change
-        void heroImage.offsetWidth;
-        
-        // Cambio directo sin preloading para evitar problemas en Safari iOS
-        // Safari a veces no dispara onload si la imagen está en cache o hay condiciones de carrera
-        heroImage.src = imageUrl;
-        if (heroBgBlur) {
-            heroBgBlur.style.backgroundImage = `url(${imageUrl})`;
-        }
+    }
+
+    // Preload de imágenes para evitar parpadeos
+    function preloadImages() {
+        const items = document.querySelectorAll('[data-image]');
+        items.forEach(item => {
+            const img = new Image();
+            img.src = item.dataset.image;
+        });
     }
 
     // Inicializar el fondo borroso con la imagen inicial
     if (heroImage && heroBgBlur && heroImage.src) {
         heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
     }
+    
+    // Ejecutar preload
+    preloadImages();
 
-    // Función auxiliar para manejar eventos de cambio de imagen
-    function attachImageChangeEvents(elements, checkImage = false) {
-        elements.forEach(item => {
-            const changeImage = (e) => {
-                // Detener propagación para evitar que contenedores padres sobrescriban la imagen
-                if (e && e.stopPropagation) {
-                    e.stopPropagation();
-                }
-                
-                // Prevenir comportamiento por defecto en touch para evitar doble disparo (touch + click simulado)
-                if (e.type === 'touchstart') {
-                    // No usamos preventDefault() aquí porque bloquearía el scroll o clicks en enlaces/botones dentro
-                }
+    // Función para manejar eventos de cambio de imagen (iOS-proof)
+    // Reemplazo de delegación por listeners directos según solicitud
+    function setupDirectEvents() {
+        const items = document.querySelectorAll('[data-image]');
+        
+        items.forEach(item => {
+            const change = (e) => {
+                if (e.cancelable) e.preventDefault();
 
-                const imageUrl = item.getAttribute('data-image');
-                if (!checkImage || imageUrl) {
-                    updateHeroImage(imageUrl);
-                }
+                const imageUrl = item.dataset.image;
+                if (!imageUrl) return;
+
+                updateHeroImage(imageUrl);
             };
 
-            item.addEventListener('mouseenter', changeImage);
-            // Usar passive: false si fuéramos a usar preventDefault, pero aquí solo queremos capturar el toque
-            item.addEventListener('touchstart', changeImage, { passive: true });
-            item.addEventListener('click', changeImage);
+            // Usamos pointerdown + click como recomendación moderna para iOS
+            item.addEventListener('pointerdown', change);
+            item.addEventListener('click', change);
         });
     }
 
-    // Aplicar listeners a todos los grupos de elementos
-    attachImageChangeEvents(productItems);
-    attachImageChangeEvents(productItems2);
-    attachImageChangeEvents(boxContainers);
-    attachImageChangeEvents(boxDetails, true);
+    // Aplicar listeners directos
+    setupDirectEvents();
 
     // Actualizar contador total al cargar y cuando cambian cantidades
     updateTotalCounter();

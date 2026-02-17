@@ -215,10 +215,23 @@ function actualizarElementoHTML(elemento, producto) {
     // Para desayunos - los "sabores" son en realidad items
     if (producto.sabores && Array.isArray(producto.sabores) && !elemento.querySelector('.shots-price')) {
         const productList = elemento.querySelector('.product-list');
-        if (productList && !productList.closest('.shots-details')) {
+        
+        // Verificar si la lista tiene items con imágenes (Eventos)
+        // Si tiene imágenes, NO reemplazar el HTML, solo intentar actualizar textos si coincide la cantidad
+        const hasImages = productList && productList.querySelector('[data-image]');
+        
+        if (productList && !productList.closest('.shots-details') && !hasImages) {
             productList.innerHTML = producto.sabores.map(item => 
                 `<li class="product-item2"><div class="product-info"><span class="product-name">${item}</span></div></li>`
             ).join('');
+        } else if (hasImages && productList) {
+            // Si tiene imágenes, intentar actualizar solo los textos
+            const existingNames = productList.querySelectorAll('.product-name');
+            producto.sabores.forEach((sabor, index) => {
+                if (existingNames[index]) {
+                    existingNames[index].textContent = sabor;
+                }
+            });
         }
     }
 }

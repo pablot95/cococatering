@@ -9,7 +9,8 @@
 
 .menu-hero {
     width: 60%;
-    height: 100vh;
+    height: 100vh; /* Fallback */
+    height: 100svh; /* iOS Fix */
     overflow: hidden;
     position: fixed;
     left: 0;
@@ -79,6 +80,9 @@
     position: relative;
     z-index: 2;
     filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.6));
+    /* iOS Optimization */
+    will-change: opacity;
+    backface-visibility: hidden;
     /* transition: opacity 0.3s ease; */
 }
 
@@ -102,6 +106,7 @@
 .box-details {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    cursor: pointer;
 }
 
 .section-title {
