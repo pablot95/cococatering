@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tortas Clásicas - Brownie, Red Velvet, Cheesecake | Cocó Catering</title>
+    <meta name="description" content="Tortas clásicas artesanales: brownie, red velvet, carrot cake, cheesecake, lemon pie, chocotorta y más. Perfectas para cumpleaños y eventos. Entrega en Buenos Aires.">
+    <meta name="keywords" content="tortas clasicas, brownie, red velvet, cheesecake, lemon pie, carrot cake, chocotorta, oreo tentacion, torta nuez">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cococatering.com.ar/tortas-clasicas.html">
+    <meta property="og:title" content="Tortas Clásicas Artesanales | Cocó Catering">
+    <meta property="og:description" content="Brownie, red velvet, cheesecake y más tortas clásicas para tus celebraciones.">
+    <meta property="og:url" content="https://cococatering.com.ar/tortas-clasicas.html">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/eventos.css">
+    <link rel="icon" href="../images/Logo.jpeg" type="image/jpeg">
+</head>
+<body>
+    <!-- Hamburger Menú -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+    <!-- Mobile Navigation Menú -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="../index.html">Inicio</a>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="carrito.html">Carrito</a>
+    </nav>
+    <div class="menu-page-container">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-bg-blur" id="menuHeroBgBlur"></div>
+            <div class="menu-hero-logo">
+                <a href="../index.html"><img src="../images/LogoCocoPng.png" alt="Cocó Catering"></a>
+            </div>
+            <img id="menuHeroImage" src="../productos/tortas-clasicas.jpg" alt="Tortas Clásicas">
+            <!-- Botones de Navegación -->
+            <div class="navigation-buttons">
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Menú</button>
+                    <div class="dropdown-menu">
+                        <a href="eventos.html">Eventos</a>
+                        <a href="box-salados.html">Box Salados</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Salados</button>
+                    <div class="dropdown-menu">
+                        <a href="fingers-frios.html">Fríos</a>
+                        <a href="fingers-calientes.html">Calientes</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Dulces</button>
+                    <div class="dropdown-menu">
+                        <a href="box-dulces.html">Box Dulces</a>
+                        <a href="shots.html">Shots</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Tortas</button>
+                    <div class="dropdown-menu">
+                        <a href="tortas-clasicas.html">Clásicas</a>
+                        <a href="tortas-decoradas.html">Decoradas</a>
+                        <a href="combos-dulces.html">Combos Dulces</a>
+                    </div>
+                </div>
+                <a href="desayunos.html" class="nav-btn">Desayunos</a>
+            </div>
+        </div>
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Tortas Clásicas -->
+            <div class="menu-section">
+                <h2 class="section-title">Tortas Clásicas</h2>
+                <div class="menu-item">
+                    <ul class="product-list">
+                        <!-- BROWNIE -->
+                        <li class="product-cart-item torta-item" data-id="brownie" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de brownie de 22 cm, dulce de leche, merengue.<br>
+                                <em>Opciones: se puede agregar crema, golosinas o frutos rojos.</em></p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- CARROT CAKE -->
+                        <li class="product-cart-item torta-item" data-id="carrot-cake" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Bizcocho de zanahoria vegano, super húmedo, con nueces y almendras, son tres capas de 20 cm de diam. y dos capas de Frosting de queso.<br>
+                                <em>Opciones: se puede hacer totalmente vegano.</em></p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- RED VELVET -->
+                        <li class="product-cart-item torta-item" data-id="red-velvet" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Bizcocho de chocolate muy húmedo, son tres capas de 20 cm y dos capas Frosting de queso.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- BANOFFE -->
+                        <li class="product-cart-item torta-item"  data-id="banoffe" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de masa sableé de 22 cm, dulce de leche, bananas caramelizadas y mucha crema.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- CHOCOTORTA -->
+                        <li class="product-cart-item torta-item" data-id="chocotorta" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de trufa de 20 cm, cuatro capas de galletitas y una mezcla de quesocrema y dulce de leche.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- TORTA DE NUEZ -->
+                        <li class="product-cart-item torta-item" data-id="torta-nuez" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Bizcocho de harina de nuez de 22 cm, dulce de leche y crema.<br>
+                                <em>Opciones: se pueden sumar frutos rojos.</em><br>
+                                <strong>APTA CELÍACOS</strong></p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- MATILDA -->
+                        <li class="product-cart-item torta-item" data-id="matilda" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Bizcocho super húmedo, muy chocolatosa, son tres capas de 20 cm, con dos capas de crema bariloche. Se termina con la misma crema.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- SABLÉ DE ALMENDRAS -->
+                        <li class="product-cart-item torta-item" data-id="sable-almendras" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Dos capas de sable de almendras de 22 cm, dos capas de dulce de leche, dos capas de crema y frutos rojos.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- MARQUISE DE FRUTOS ROJOS -->
+                        <li class="product-cart-item torta-item"  data-name="-" data-price="-" data-id="marquise-frutos-rojos">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Bizcocho de chocolate sin harina, dulce de leche y frutos rojos.<br>
+                                <strong>APTA CELÍACA</strong></p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- ROGEL -->
+                        <li class="product-cart-item torta-item" data-id="rogel" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">10 capas super finas de masa 20 cm, mucho dulce de leche y se termina con gran cantidad de merengue.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- OREO TENTACIÓN -->
+                        <li class="product-cart-item torta-item" data-id="oreo-tentacion" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de galletita oreo de 20 cm, dulce de leche y crema oreo. Es una torta helada.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- CHEESECAKE -->
+                        <li class="product-cart-item torta-item" data-id="cheesecake" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de galletita de 22 cm, crema de queso cocida, reducción de frutos rojos y fruta fresca.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- LEMON PIE -->
+                        <li class="product-cart-item torta-item" data-id="lemon-pie" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de galletita de 22 cm, curd de limón y mucho merengue.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- KEY LIME PIE -->
+                        <li class="product-cart-item torta-item" data-id="key-lime-pie" data-name="-" data-price="-">
+                            <div class="product-info">
+                                <span class="product-name">...</span>
+                                <p class="product-description">Base de galletita de 22 cm, curd de limas y crema.</p>
+                            </div>
+                            <div class="torta-right-col">
+                                <span class="product-price">...</span>
+                                <div class="product-controls">
+                                    <button class="qty-btn minus" onclick="updateQtyNew(this, -1)">-</button>
+                                    <span class="qty-display">0</span>
+                                    <button class="qty-btn plus" onclick="updateQtyNew(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/5491128447772" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.049-13.483 13.483-13.483s13.483 6.049 13.483 13.483c0 7.435-6.049 13.483-13.483 13.483zM21.981 18.429c-0.309-0.155-1.832-0.903-2.116-1.006-0.283-0.103-0.489-0.155-0.695 0.155s-0.799 1.006-0.98 1.212c-0.18 0.206-0.36 0.232-0.669 0.077s-1.306-0.481-2.487-1.534c-0.92-0.82-1.541-1.834-1.722-2.143s-0.019-0.476 0.136-0.631c0.139-0.139 0.309-0.36 0.463-0.54s0.206-0.309 0.309-0.515 0.052-0.386-0.026-0.54c-0.077-0.155-0.695-1.673-0.951-2.291-0.246-0.6-0.499-0.52-0.695-0.528-0.18-0.009-0.386-0.009-0.592-0.009s-0.54 0.077-0.823 0.386c-0.283 0.309-1.080 1.057-1.080 2.576s1.106 2.988 1.26 3.193c0.155 0.206 2.179 3.321 5.278 4.656 0.737 0.319 1.313 0.509 1.762 0.65 0.742 0.235 1.417 0.202 1.951 0.123 0.595-0.089 1.832-0.749 2.090-1.472s0.257-1.343 0.18-1.472c-0.077-0.129-0.283-0.206-0.592-0.36z"/>
+        </svg>
+    </a>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/firestore-service.js"></script>
+    <script type="module" src="../js/firebase-product-loader.js?v=11"></script>
+    <script type="module" src="../js/menu-script.js?v=11"></script>
+    <script type="module">
+        import { cargarTodosLosProductos } from '../js/firebase-product-loader.js';
+        const productos = [
+            'brownie', 'carrot-cake', 'red-velvet', 'banoffe', 'chocotorta',
+            'torta-nuez', 'matilda', 'sable-almendras', 'rogel', 'oreo-tentacion',
+            'cheesecake', 'lemon-pie', 'key-lime-pie', 'marquise-frutos-rojos'
+        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('?? Cargando Tortas Clásicas...');
+            cargarTodosLosProductos('tortasClasicas', productos);
+        });
+    </script>
+</body>
+</html>

@@ -1,732 +1,327 @@
 {
-  "menuEventos": [
-    {
-      "nombre": "MENÚ GOURMET",
-      "parteFria": [
-        "Tarteletas frías de hummus y atún",
-        "Degustación de quesos",
-        "Scon de queso al romero con lájas de salmón",
-        "Dip de queso azul y nueces",
-        "Locatelli de pollo y tomate",
-        "Figacita de lomo y morrones asados",
-        "Chipacitos de crudo y brie"
-      ],
-      "parteCaliente": [
-        "Triangulito de masa philo y bondiola braseada",
-        "Quiché de champignones",
-        "Papas rosti",
-        "Brochetitas de ternera",
-        "Hamburguesitas",
-        "Cazuela de ravioles con salsa rosa"
-      ],
-      "postre": [
-        "Shot de lemon pie",
-        "Shot de oreo"
-      ]
-    },
-    {
-      "nombre": "MENÚ CLÁSICO",
-      "parteFria": [
-        "Masitas de queso",
-        "Pinchos bocconcinos",
-        "Dip de queso azul con nueces",
-        "Criollito capresse",
-        "Sconcito de crudo y rúcula",
-        "Locatelli de pavita y tomate",
-        "Figacita de peceto, lechuga y tomate"
-      ],
-      "parteCaliente": [
-        "Pinchos de pollo y panceta",
-        "Figacita de bondiola, queso fresco y salsa malbec",
-        "Canastitas de espinaca",
-        "Roll de masa philo con jamón y queso",
-        "Figacita de roast beef tiernizado, cheddar y cebolla caramelizada"
-      ],
-      "postre": [
-        "Shot de lemon pie",
-        "Shot de oreo"
-      ]
-    },
-    {
-      "nombre": "MENÚ PICADA",
-      "parteFria": [
-        "Picaditas individuales",
-        "Ensaladita caesar",
-        "Sandwiche de peceto"
-      ],
-      "parteCaliente": [
-        "Papitas rosty",
-        "Pinchos de pollo crispy",
-        "Mini hamburguesitas con queso cheddar",
-        "Mini tacos de bondiola"
-      ],
-      "postre": [
-        "Shot de cheesecake",
-        "Shot de oreo"
-      ]
-    },
-    {
-      "nombre": "MENÚ PIZZA",
-      "entrada": [
-        "Pan de queso con oliva y provenzal"
-      ],
-      "empanadas": [
-        "Bondiola",
-        "Jamón y queso",
-        "Pollo",
-        "Criolla"
-      ],
-      "canastitas": [
-        "Caprese",
-        "Roquefort",
-        "Panceta"
-      ],
-      "pizzas": [
-        "Muzzarella",
-        "Tomate, oliva y albahaca",
-        "Tomate y provenzal",
-        "Jamón y morrones",
-        "Rúcula, parmesano y jamón crudo",
-        "Rúcula, brie y champignones",
-        "Rúcula, cherrys y bocconcinos",
-        "Calabresa",
-        "Fugazzeta",
-        "Roquefort y cebolla caramelizada",
-        "Panceta y huevo",
-        "Espinaca y salsa blanca"
-      ],
-      "postre": [
-        "Shot de lemon",
-        "Shot de oreo"
-      ]
-    }
-  ],
-  "boxSalados": [
-    {
-      "nombre": "BOX UNO - TODO FRÍO",
-      "precio": 165000,
-      "items": [
-        "15 Pinchos bocconcinos",
-        "15 Sconcitos de queso con crudo y rúcula",
-        "15 Pecetitos con tomate",
-        "15 Papitas rosty",
-        "15 Chipácitos con parmesano y morrones asados",
-        "10 Dip de queso azul y nueces"
-      ],
-      "stock": 100
-    },
-    {
-      "nombre": "BOX DOS - FRÍO/CALIENTE",
-      "precio": 175000,
-      "items": [
-        "15 Sconcitos de queso con crudo y rúcula",
-        "15 Papitas rosty",
-        "15 Criollitos capresse",
-        "15 Pinchos de pollo y panceta",
-        "15 Figacitas de bondiola con salsa malbec",
-        "15 Triangulitos de queso azul y peras caramelizadas"
-      ],
-      "stock": 100
-    },
-    {
-      "nombre": "BOX TRES - MIX",
-      "precio": 185000,
-      "items": [
-        "15 Picaditas individuales acompañadas con dip de hummus, mayo de zanahoria y pancitos",
-        "15 Empanaditas de jamón y queso",
-        "15 Pinchos de pollo crispy con salsa honey",
-        "15 Taquitos de bondiola",
-        "15 Hamburguesitas"
-      ],
-      "stock": 100
-    }
-  ],
   "fingersFrios": [
-    {
-      "nombre": "Masitas de queso",
-      "unidad": "x24",
-      "precio": 19000,
-      "stock": 100
-    },
-    {
-      "nombre": "Pinchos bocconcinos",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Ensaladitas César",
-      "unidad": "x12",
-      "precio": 48000,
-      "stock": 100
-    },
-    {
-      "nombre": "Pecetitos",
-      "unidad": "x12",
-      "precio": 38000,
-      "stock": 100
-    },
-    {
-      "nombre": "Papas rosty",
-      "unidad": "x12",
-      "precio": 15000,
-      "stock": 100
-    },
-    {
-      "nombre": "Picaditas individuales",
-      "unidad": "x12",
-      "precio": 78000,
-      "stock": 100
-    },
-    {
-      "nombre": "Figacita J y Q",
-      "unidad": "x12",
-      "precio": 21000,
-      "stock": 100
-    },
-    {
-      "nombre": "Criollito J y Q",
-      "unidad": "x12",
-      "precio": 25000,
-      "stock": 100
-    },
-    {
-      "nombre": "Criollito capresse",
-      "unidad": "x12",
-      "precio": 23000,
-      "stock": 100
-    },
-    {
-      "nombre": "Scon crudo y rúcula",
-      "unidad": "x12",
-      "precio": 45000,
-      "stock": 100
-    },
-    {
-      "nombre": "Tartaleta atún",
-      "unidad": "x12",
-      "precio": 15000,
-      "stock": 100
-    },
-    {
-      "nombre": "Degustación de queso",
-      "unidad": "x12",
-      "precio": 33000,
-      "stock": 100
-    },
-    {
-      "nombre": "Dip queso azul",
-      "unidad": "x12",
-      "precio": 21000,
-      "stock": 100
-    },
-    {
-      "nombre": "Lomo y morrón",
-      "unidad": "x12",
-      "precio": 55000,
-      "stock": 100
-    },
-    {
-      "nombre": "Verduritas asadas",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Medialunitas J y Q",
-      "unidad": "x12",
-      "precio": 28000,
-      "stock": 100
-    },
-    {
-      "nombre": "Sconcito con caja de salmón",
-      "unidad": "x12",
-      "precio": 60000,
-      "stock": 100
-    },
-    {
-      "nombre": "Chipacitos con morrón y panceta",
-      "unidad": "x12",
-      "precio": 42000,
-      "stock": 100
-    }
+    { "id": "masitas-queso", "nombre": "Masitas de queso", "unidad": "x24", "precio": 15000, "imagen": "masitas-de-queso.jpg" },
+    { "id": "pinchos-bocconcinos", "nombre": "Pinchos bocconcinos", "unidad": "x12", "precio": 20200, "imagen": "pinchos-boconccinos.jpg" },
+    { "id": "ensaladitas-cesar", "nombre": "Ensaladitas César", "unidad": "x12", "precio": 49500, "imagen": "ensaladitas-cesar.jpg" },
+    { "id": "pecetitos", "nombre": "Pecetitos", "unidad": "x12", "precio": 38000, "imagen": "pecetito.jpg" },
+    { "id": "papas-rosty", "nombre": "Papas rosty", "unidad": "x12", "precio": 15000, "imagen": "papas-rosty.jpg" },
+    { "id": "picaditas-individuales", "nombre": "Picaditas individuales (con pancitos y dip para untar)", "unidad": "x12", "precio": 96500, "imagen": "picadas-individuales.jpg" },
+    { "id": "figacita-jyq", "nombre": "Figacita J y Q", "unidad": "x12", "precio": 22000, "imagen": "figacitas-jq.jpg" },
+    { "id": "criollito-jyq", "nombre": "Criollito J y Q", "unidad": "x12", "precio": 26000, "imagen": "criollito-de-jamon-y-queso.jpg" },
+    { "id": "criollito-capresse", "nombre": "Criollito capresse", "unidad": "x12", "precio": 28000, "imagen": "criollito-capresse.jpg" },
+    { "id": "scon-crudo-rucula", "nombre": "Scon crudo y brie", "unidad": "x12", "precio": 44500, "imagen": "scon-de-crudo.jpg" },
+    { "id": "tartaleta-atun", "nombre": "Tartaleta atún", "unidad": "x12", "precio": 20000, "imagen": "tarteletas-frias-de-hummus-y-atun.jpg" },
+    { "id": "degustacion-queso", "nombre": "Degustación de queso", "unidad": "x12", "precio": 33000, "imagen": "degustacion-de-quesos.jpg" },
+    { "id": "dip-queso-azul", "nombre": "Dip queso azul", "unidad": "x12", "precio": 22000, "imagen": "dip-de-queso-azul.jpg" },
+    { "id": "lomo-morron", "nombre": "Lomo y morrón", "unidad": "x12", "precio": 42000, "imagen": "figacita-de-lomo-y-morrones-asado.jpg" },
+    { "id": "verduritas-asadas", "nombre": "Verduritas asadas", "unidad": "x12", "precio": 22000, "imagen": "verduritas-asadas.jpg" },
+    { "id": "medialunitas-jyq", "nombre": "Medialunitas J y Q", "unidad": "x12", "precio": 32100, "imagen": "medialunitas-jyq.jpg" },
+    { "id": "sconcito-salmon", "nombre": "Sconcito con laja de salmón", "unidad": "x12", "precio": 60000, "imagen": "scon-de-queso-al-romero-con-lajas-de-salmon.jpg" },
+    { "id": "chipacitos-morron-panceta", "nombre": "Chipacitos con morrón asado y parmesano", "unidad": "x12", "precio": 44500, "imagen": "chipa-de-morron.jpg" }
   ],
   "fingersCalientes": [
+    { "id": "empanaditas-bondiola", "nombre": "Empanaditas de bondiola", "unidad": "x12", "precio": 22000, "imagen": "empanadas.jpg" },
+    { "id": "empanaditas-jyq", "nombre": "Empanaditas de JyQ", "unidad": "x12", "precio": 22000, "imagen": "empanadas.jpg" },
+    { "id": "empanaditas-pollo", "nombre": "Empanaditas de Pollo", "unidad": "x12", "precio": 22000, "imagen": "empanadas.jpg" },
+    { "id": "empanaditas-carne", "nombre": "Empanaditas de carne", "unidad": "x12", "precio": 22000, "imagen": "empanadas.jpg" },
+    { "id": "empanaditas-osobuco", "nombre": "Empanaditas de Osobuco", "unidad": "x12", "precio": 22000, "imagen": "empanadas.jpg" },
+    { "id": "empanaditas-lomo", "nombre": "Empanaditas de Lomo", "unidad": "x12", "precio": 30000, "imagen": "empanadas.jpg" },
+    { "id": "canastitas-capresse", "nombre": "Canastitas de capresse", "unidad": "x12", "precio": 20000, "imagen": "capresse.jpg" },
+    { "id": "canastitas-queso-azul", "nombre": "Canastitas Queso azul y cebolla caramelizada", "unidad": "x12", "precio": 20000, "imagen": "capresse.jpg" },
+    { "id": "canastitas-panceta-ciruela", "nombre": "Canastitas Panceta y ciruela", "unidad": "x12", "precio": 20000, "imagen": "capresse.jpg" },
+    { "id": "canastitas-calabaza", "nombre": "Canastitas Calabaza", "unidad": "x12", "precio": 18000, "imagen": "capresse.jpg" },
+    { "id": "canastitas-espinaca", "nombre": "Canastitas Espinaca", "unidad": "x12", "precio": 20000, "imagen": "canastitas-de-espinaca.jpg" },
+    { "id": "pollitos-crispy", "nombre": "Pollitos crispy con salsa honey", "unidad": "x12", "precio": 22000, "imagen": "pinchos-de-pollo-crispy.jpg" },
+    { "id": "hamburguesitas-cheddar", "nombre": "Hamburguesitas con cheddar", "unidad": "x12", "precio": 36000, "imagen": "hamburguesitas.jpg" },
+    { "id": "tacos-bondiola", "nombre": "Tacos de bondiola", "unidad": "x12", "precio": 36000, "imagen": "tacos.jpg" },
+    { "id": "pinchos-pollo-panceta", "nombre": "Pinchos de pollo y panceta con salsa manzana", "unidad": "x12", "precio": 23000, "imagen": "pinchos-de-pollo-crispy.jpg" },
+    { "id": "tarteletas-espinaca", "nombre": "Tarteletas espinaca", "unidad": "x12", "precio": 18000, "imagen": "canastitas-de-espinaca.jpg" },
+    { "id": "roast-beef", "nombre": "Roast beef", "unidad": "x12", "precio": 30000, "imagen": "roast-beef.jpg" },
+    { "id": "roll-philo-jyq", "nombre": "Roll de masa philo con JYQ", "unidad": "x12", "precio": 28000, "imagen": "roll-de-masa-philo.jpg" },
+    { "id": "triangulito-bondiola", "nombre": "Triangulito de bondiola", "unidad": "x12", "precio": 40000, "imagen": "triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg" },
+    { "id": "tarteleta-champi", "nombre": "Tarteleta de champi", "unidad": "x12", "precio": 30000, "imagen": "quiche-de-champignone.jpg" },
+    { "id": "brochetitas-ternera", "nombre": "Brochetitas de ternera con salsa malbec", "unidad": "x12", "precio": 35000, "imagen": "brochetitas-de-ternera-2.jpg" },
+    { "id": "verduritas-asadas", "nombre": "Verduritas asadas", "unidad": "x12", "precio": 22000, "imagen": "verduritas-asadas.jpg" },
+    { "id": "medialunitas-jyq", "nombre": "Medialunitas JYQ", "unidad": "x12", "precio": 28000, "imagen": "medialunitas-jyq.jpg" },
+    { "id": "roll-philo-queso-cebolla", "nombre": "Roll de masa philo con queso y cebolla caramelizada", "unidad": "x12", "precio": 35000, "imagen": "roll-de-masa-philo.jpg" },
+    { "id": "sopitas-calabaza", "nombre": "Sopitas de calabaza", "unidad": "x12", "precio": 24000, "imagen": "cazuela-arroz-con-verduras.jpg" },
+    { "id": "cazuela-ravioles", "nombre": "Cazuela de ravioles", "unidad": "x12", "precio": 120000, "imagen": "cazuela-de-ravioles-con-salsa-ros.jpg" },
+    { "id": "cazuela-ternera", "nombre": "Cazuela de ternera al malbec con papas noisette", "unidad": "x12", "precio": 180000, "imagen": "cazuela-ternera-malbec.jpg" },
+    { "id": "cazuela-pollo", "nombre": "Cazuela de pollo al champíñon con arroz", "unidad": "x12", "precio": 209000, "imagen": "cazuela-pollo-con-champi.jpg" },
+    { "id": "cazuela-arroz", "nombre": "Cazuela de arroz con verduras al wok", "unidad": "x12", "precio": 98000, "imagen": "cazuela-arroz-con-verduras.jpg" }
+  ],
+  "tortasClasicas": [
+    { "id": "brownie", "nombre": "BROWNIE", "precio": 45000, "imagen": "brownie.jpg" },
+    { "id": "carrot-cake", "nombre": "CARROT CAKE", "precio": 60000, "imagen": "carrot-cake.jpg" },
+    { "id": "red-velvet", "nombre": "RED VELVET", "precio": 68000, "imagen": "red-velvet.jpg" },
+    { "id": "banoffe", "nombre": "BANOFFE", "precio": 42000, "imagen": "" },
+    { "id": "chocotorta", "nombre": "CHOCOTORTA", "precio": 52000, "imagen": "chocotorta.jpg" },
+    { "id": "torta-nuez", "nombre": "TORTA DE NUEZ", "precio": 52000, "imagen": "torta-de-nuez-(-sin-tacc).jpg" },
+    { "id": "matilda", "nombre": "MATILDA", "precio": 72000, "imagen": "matilda.jpg" },
+    { "id": "sable-almendras", "nombre": "SABLÉ DE ALMENDRAS", "precio": 52000, "imagen": "sable-de-almendras.jpg" },
+    { "id": "marquise-frutos-rojos", "nombre": "MARQUISE DE FRUTOS ROJOS", "precio": 62000, "imagen": "" },
+    { "id": "rogel", "nombre": "ROGEL", "precio": 48000, "imagen": "rogel.jpg" },
+    { "id": "oreo-tentacion", "nombre": "OREO TENTACIÓN", "precio": 62000, "imagen": "oreo-tentacion.jpg" },
+    { "id": "cheesecake", "nombre": "CHEESECAKE", "precio": 60000, "imagen": "cheesecake-de-frutillas.jpg" },
+    { "id": "lemon-pie", "nombre": "LEMON PIE", "precio": 52000, "imagen": "lemon-pie.jpg" },
+    { "id": "key-lime-pie", "nombre": "KEY LIME PIE", "precio": 52000, "imagen": "key-lime.jpg" }
+  ],
+  "shots": [
     {
-      "nombre": "Empanaditas de bondiola",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Empanaditas de JyQ",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Empanaditas de Pollo",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Empanaditas de carne",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Empanaditas de Osobuco",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Empanaditas de Lomo",
-      "unidad": "x12",
-      "precio": 30000,
-      "stock": 100
-    },
-    {
-      "nombre": "Canastitas de capresse",
-      "unidad": "x12",
-      "precio": 20000,
-      "stock": 100
-    },
-    {
-      "nombre": "Canastitas Queso azul y cebolla caramelizada",
-      "unidad": "x12",
-      "precio": 20000,
-      "stock": 100
-    },
-    {
-      "nombre": "Canastitas Panceta y ciruela",
-      "unidad": "x12",
-      "precio": 20000,
-      "stock": 100
-    },
-    {
-      "nombre": "Canastitas Calabaza",
-      "unidad": "x12",
-      "precio": 18000,
-      "stock": 100
-    },
-    {
-      "nombre": "Canastitas Espinaca",
-      "unidad": "x12",
-      "precio": 20000,
-      "stock": 100
-    },
-    {
-      "nombre": "Pollitos crispy con salsa honey",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Hamburguesitas con cheddar",
-      "unidad": "x12",
-      "precio": 36000,
-      "stock": 100
-    },
-    {
-      "nombre": "Tacos de bondiola",
-      "unidad": "x12",
-      "precio": 36000,
-      "stock": 100
-    },
-    {
-      "nombre": "Pinchos de pollo y panceta con salsa manzana",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Tarteletas espinaca",
-      "unidad": "x12",
-      "precio": 18000,
-      "stock": 100
-    },
-    {
-      "nombre": "Roast beef",
-      "unidad": "x12",
-      "precio": 30000,
-      "stock": 100
-    },
-    {
-      "nombre": "Roll de masa philo con JYQ",
-      "unidad": "x12",
-      "precio": 28000,
-      "stock": 100
-    },
-    {
-      "nombre": "Triangulito de bondiola",
-      "unidad": "x12",
-      "precio": 40000,
-      "stock": 100
-    },
-    {
-      "nombre": "Tarteleta de champi",
-      "unidad": "x12",
-      "precio": 30000,
-      "stock": 100
-    },
-    {
-      "nombre": "Brochetitas de ternera con salsa malbec",
-      "unidad": "x12",
-      "precio": 40000,
-      "stock": 100
-    },
-    {
-      "nombre": "Verduritas asadas",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Medialunitas JYQ",
-      "unidad": "x12",
-      "precio": 28000,
-      "stock": 100
-    },
-    {
-      "nombre": "Roll de masa philo con queso y cebolla caramelizada",
-      "unidad": "x12",
-      "precio": 30000,
-      "stock": 100
-    },
-    {
-      "nombre": "Sopitas de calabaza",
-      "unidad": "x12",
-      "precio": 22000,
-      "stock": 100
-    },
-    {
-      "nombre": "Cazuela de ravioles",
-      "unidad": "x12",
-      "precio": 120000,
-      "stock": 100
-    },
-    {
-      "nombre": "Cazuela de ternera al malbec con papas noisette",
-      "unidad": "x12",
-      "precio": 180000,
-      "stock": 100
-    },
-    {
-      "nombre": "Cazuela de pollo al champiñón con arroz",
-      "unidad": "x12",
-      "precio": 180000,
-      "stock": 100
-    },
-    {
-      "nombre": "Cazuela de arroz con verduras al wok",
-      "unidad": "x12",
-      "precio": 98000,
-      "stock": 100
+      "id": "shots",
+      "nombre": "Shots",
+      "unidad": "Docena",
+      "precio": 42000,
+      "items": [
+        { "nombre": "Lemon pie", "imagen": "shot-de-lemon-pie.jpg" },
+        { "nombre": "Cheesecake", "imagen": "shot-de-cheesecake.jpg" },
+        { "nombre": "Oreo", "imagen": "shot-de-oreo.jpg" },
+        { "nombre": "Chocotorta", "imagen": "shot-de-chocotorta.jpg" },
+        { "nombre": "Mousse de chocolate (opción sin TACC)", "imagen": "shot-de-mousse.jpg" }
+      ]
     }
   ],
   "boxDulces": [
     {
-      "categoria": "PATTISERIE",
-      "nombre": "Caja Chica",
-      "unidades": 16,
-      "precio": 35000,
-      "items": [
-        "Brownie, dulce de leche y merengue",
-        "Pavlovas (sin tacc)",
-        "Lemon pie",
-        "Rogelitos",
-        "Mousse de chocolate amargo",
-        "Mousse de coco",
-        "Cheescake de frutos rojos",
-        "Cheescake de maracuyá",
-        "Mousse de café y caramelo",
-        "Oreo",
-        "Havanette",
-        "Macarons (sin tacc)",
-        "Sable de almendras",
-        "Brownie, DDL, crema y frutilla",
-        "Chocotorta"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "PATTISERIE",
-      "nombre": "Caja Grande",
-      "unidades": 42,
-      "precio": 85000,
-      "items": [
-        "Brownie, dulce de leche y merengue",
-        "Pavlovas (sin tacc)",
-        "Lemon pie",
-        "Rogelitos",
-        "Mousse de chocolate amargo",
-        "Mousse de coco",
-        "Cheescake de frutos rojos",
-        "Cheescake de maracuyá",
-        "Mousse de café y caramelo",
-        "Oreo",
-        "Havanette",
-        "Macarons (sin tacc)",
-        "Sable de almendras",
-        "Brownie, DDL, crema y frutilla",
-        "Chocotorta"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX ALFAJORCITOS",
-      "nombre": "Caja Chica",
-      "unidades": 28,
-      "precio": 32000,
-      "items": [
-        "Alfajorcitos de maizena",
-        "Alfajorcitos de manteca",
-        "Alfajorcitos de almendras",
-        "Alfajorcitos de chocolate",
-        "Alfajorcitos de pistacho",
-        "Alfacookies de choco negro",
-        "Alfajorcitos de coco"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX ALFAJORCITOS",
-      "nombre": "Caja Grande",
-      "unidades": 47,
-      "precio": 50000,
-      "items": [
-        "Alfajorcitos de maizena",
-        "Alfajorcitos de manteca",
-        "Alfajorcitos de almendras",
-        "Alfajorcitos de chocolate",
-        "Alfajorcitos de pistacho",
-        "Alfacookies de choco negro",
-        "Alfajorcitos de coco"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX CUADRADITOS",
-      "nombre": "Caja Chica",
-      "unidades": 28,
-      "precio": 34000,
-      "items": [
-        "Crumble de manzana",
-        "Cuadradito de brownie",
-        "Lemonies",
-        "Pastafrola",
-        "Cuadradito de coco y DDL",
-        "Crumble de Frambuesas",
-        "Cuadradito de nuez"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX CUADRADITOS",
-      "nombre": "Caja Grande",
-      "unidades": 49,
-      "precio": 60000,
-      "items": [
-        "Crumble de manzana",
-        "Cuadradito de brownie",
-        "Lemonies",
-        "Pastafrola",
-        "Cuadradito de coco y DDL",
-        "Crumble de Frambuesas",
-        "Cuadradito de nuez"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX MIX",
-      "nombre": "Caja Chica",
-      "unidades": 35,
-      "precio": 34000,
-      "items": [
-        "Conitos de chocolate y DDL",
-        "Trufas de coco o brigadeiros",
-        "Trufas de chocolate y brownie",
-        "Danesas",
-        "Cookies red velvet",
-        "Lunetts"
-      ],
-      "stock": 100
-    },
-    {
-      "categoria": "BOX MIX",
-      "nombre": "Caja Grande",
-      "unidades": 56,
-      "precio": 52000,
-      "items": [
-        "Conitos de chocolate y DDL",
-        "Trufas de coco o brigadeiros",
-        "Trufas de chocolate y brownie",
-        "Danesas",
-        "Cookies red velvet",
-        "Lunetts"
-      ],
-      "stock": 100
-    }
-  ],
-  "shots": [
-    {
-      "nombre": "Docena de Shots",
-      "precio": 32000,
-      "sabores": [
-        "Lemon pie",
-        "Cheesecake",
-        "Oreo",
-        "Chocotorta",
-        "Mousse de chocolate (opción sin TACC)"
-      ],
-      "stock": 100
-    }
-  ],
-  "tortasClasicas": [
-    {
-      "nombre": "BROWNIE",
-      "precio": 38000,
-      "descripcion": "Base de brownie de 22 cm, dulce de leche, merengue.",
-      "opciones": "Se puede agregar crema, golosinas o frutos rojos.",
-      "stock": 100
-    },
-    {
-      "nombre": "CARROT CAKE",
-      "precio": 48000,
-      "descripcion": "Bizcocho de zanahoria vegano, super húmedo, con nueces y almendras, son tres capas de 20 cm de diam. y dos capas de frosting de queso.",
-      "opciones": "Se puede hacer totalmente vegano.",
-      "stock": 100
-    },
-    {
-      "nombre": "RED VELVET",
-      "precio": 48000,
-      "descripcion": "Bizcocho de chocolate muy húmedo, son tres capas de 20 cm y dos capas frosting de queso.",
-      "stock": 100
-    },
-    {
-      "nombre": "BANOFFE",
-      "precio": 32000,
-      "descripcion": "Base de masa sableé de 22 cm, dulce de leche, bananas caramelizadas y mucha crema.",
-      "stock": 100
-    },
-    {
-      "nombre": "CHOCOTORTA",
-      "precio": 42000,
-      "descripcion": "Base de trufa de 20 cm, cuatro capas de galletitas y una mezcla de quesocrema y dulce de leche.",
-      "stock": 100
-    },
-    {
-      "nombre": "TORTA DE NUEZ",
-      "precio": 32000,
-      "descripcion": "Bizcocho de harina de nuez de 22 cm, dulce de leche y crema.",
-      "opciones": "Se pueden sumar frutos rojos.",
-      "apta": "APTA CELÍACOS",
-      "stock": 100
-    },
-    {
-      "nombre": "MATILDA",
-      "precio": 48000,
-      "descripcion": "Bizcocho super húmedo, muy chocolatosa, son tres capas de 20 cm, con dos capas de crema bariloche. Se termina con la misma crema.",
-      "stock": 100
-    },
-    {
-      "nombre": "SABLÉ DE ALMENDRAS",
-      "precio": 45000,
-      "descripcion": "Dos capas de sable de almendras de 22 cm, dos capas de dulce de leche, dos capas de crema y frutos rojos.",
-      "stock": 100
-    },
-    {
-      "nombre": "MARQUISE DE FRUTOS ROJOS",
-      "precio": 42000,
-      "descripcion": "Bizcocho de chocolate sin harina, dulce de leche y frutos rojos.",
-      "apta": "APTA CELÍACA",
-      "stock": 100
-    },
-    {
-      "nombre": "ROGEL",
+      "id": "pattiserie-caja-chica",
+      "nombre": "Pattiserie",
+      "unidad": "Caja Chica - 16 unidades",
       "precio": 36000,
-      "descripcion": "10 capas super finas de masa 20 cm, mucho dulce de leche y se termina con gran cantidad de merengue.",
-      "stock": 100
+      "items": [
+        { "nombre": "Brownie con dulce de leche y merengue", "imagen": "brownie-con-merengue.jpg" },
+        { "nombre": "Pavlovas (sin TACC)", "imagen": "pavlova-petit.jpg" },
+        { "nombre": "Lemon pie", "imagen": "pavlovas.jpg" },
+        { "nombre": "Rogelitos", "imagen": "rogelitos.jpg" },
+        { "nombre": "Mousse de chocolate amargo", "imagen": "mousse-de-choc-amargo.jpg" },
+        { "nombre": "Mousse de coco", "imagen": "mousse-de-coco.jpg" },
+        { "nombre": "Cheesecake de maracuyá", "imagen": "cheesecake-de-maracuya.jpg" },
+        { "nombre": "Mousse de café y caramelo", "imagen": "mousse-de-cafe-.jpg" },
+        { "nombre": "Oreo", "imagen": "oreo.jpg" },
+        { "nombre": "Havanette", "imagen": "havannete.jpg" },
+        { "nombre": "Macarons (sin TACC)", "imagen": "macarons.jpg" },
+        { "nombre": "Sablé de almendras", "imagen": "sable-de-almendras.jpg" },
+        { "nombre": "Brownie, DDL, crema y frutillas", "imagen": "BROWNIE-CON-DDL-Y-FRUTILLAS.jpg" },
+        { "nombre": "Chocotorta", "imagen": "frutos-rojos.jpg" }
+      ]
     },
     {
-      "nombre": "OREO TENTACIÓN",
-      "precio": 42000,
-      "descripcion": "Base de galletita oreo de 20 cm, dulce de leche y crema oreo. Es una torta helada.",
-      "stock": 100
+      "id": "pattiserie-caja-grande",
+      "nombre": "Pattiserie",
+      "unidad": "Caja Grande - 42 unidades",
+      "precio": 88000,
+      "items": [
+        { "nombre": "Brownie con dulce de leche y merengue", "imagen": "brownie-con-merengue.jpg" },
+        { "nombre": "Pavlovas (sin TACC)", "imagen": "pavlova-petit.jpg" },
+        { "nombre": "Lemon pie", "imagen": "pavlovas.jpg" },
+        { "nombre": "Rogelitos", "imagen": "rogelitos.jpg" },
+        { "nombre": "Mousse de chocolate amargo", "imagen": "mousse-de-choc-amargo.jpg" },
+        { "nombre": "Mousse de coco", "imagen": "mousse-de-coco.jpg" },
+        { "nombre": "Cheesecake de maracuyá", "imagen": "cheesecake-de-maracuya.jpg" },
+        { "nombre": "Mousse de café y caramelo", "imagen": "mousse-de-cafe-.jpg" },
+        { "nombre": "Oreo", "imagen": "oreo.jpg" },
+        { "nombre": "Havanette", "imagen": "havannete.jpg" },
+        { "nombre": "Macarons (sin TACC)", "imagen": "macarons.jpg" },
+        { "nombre": "Sablé de almendras", "imagen": "sable-de-almendras.jpg" },
+        { "nombre": "Brownie, DDL, crema y frutillas", "imagen": "BROWNIE-CON-DDL-Y-FRUTILLAS.jpg" },
+        { "nombre": "Chocotorta", "imagen": "frutos-rojos.jpg" }
+      ]
     },
     {
-      "nombre": "CHEESECAKE",
-      "precio": 38000,
-      "descripcion": "Base de galletita de 22 cm, crema de queso cocida, reducción de frutos rojos y fruta fresca.",
-      "stock": 100
+      "id": "box-alfajorcitos-caja-chica",
+      "nombre": "Box Alfajorcitos",
+      "unidad": "Caja Chica - 28 unidades",
+      "precio": 35000,
+      "items": [{ "nombre": "Box Alfajorcitos", "imagen": "BOX-ALFAJORCITOS.jpg" }]
     },
     {
-      "nombre": "LEMON PIE",
-      "precio": 38000,
-      "descripcion": "Base de galletita de 22 cm, curd de limón y mucho merengue.",
-      "stock": 100
+      "id": "box-alfajorcitos-caja-grande",
+      "nombre": "Box Alfajorcitos",
+      "unidad": "Caja Grande - 47 unidades",
+      "precio": 55500,
+      "items": [{ "nombre": "Box Alfajorcitos", "imagen": "BOX-ALFAJORCITOS.jpg" }]
     },
     {
-      "nombre": "KEY LIME PIE",
-      "precio": 39000,
-      "descripcion": "Base de galletita de 22 cm, curd de limas y crema.",
-      "stock": 100
+      "id": "box-cuadraditos-caja-chica",
+      "nombre": "Box Cuadraditos",
+      "unidad": "Caja Chica - 28 unidades",
+      "precio": 44000,
+      "items": [{ "nombre": "Box Cuadraditos", "imagen": "BOX-CUADRADITOS.jpg" }]
+    },
+    {
+      "id": "box-cuadraditos-caja-grande",
+      "nombre": "Box Cuadraditos",
+      "unidad": "Caja Grande - 49 unidades",
+      "precio": 70000,
+      "items": [{ "nombre": "Box Cuadraditos", "imagen": "BOX-CUADRADITOS.jpg" }]
+    },
+    {
+      "id": "box-mix-caja-chica",
+      "nombre": "Box Mix",
+      "unidad": "Caja Chica - 35 unidades",
+      "precio": 40000,
+      "items": [{ "nombre": "Box Mix", "imagen": "BOX-MIX.jpg" }]
+    },
+    {
+      "id": "box-mix-caja-grande",
+      "nombre": "Box Mix",
+      "unidad": "Caja Grande - 56 unidades",
+      "precio": 55000,
+      "items": [{ "nombre": "Box Mix", "imagen": "BOX-MIX.jpg" }]
+    }
+  ],
+  "boxSalados": [
+    {
+      "id": "box-uno",
+      "nombre": "Box Uno",
+      "unidad": "Todo Frío",
+      "precio": 190000,
+      "items": [
+        { "nombre": "Pinchos bocconcinos", "imagen": "pinchos-boconccinos.jpg" },
+        { "nombre": "Sconcito de crudo", "imagen": "scon-de-crudo.jpg" },
+        { "nombre": "Pecetitos", "imagen": "pecetito.jpg" },
+        { "nombre": "Papas rosty", "imagen": "papas-rosty.jpg" },
+        { "nombre": "Chipacitos con morrón asado", "imagen": "chipa-de-morron.jpg" },
+        { "nombre": "Dip de queso azul y nueces", "imagen": "dip-de-queso-azul-y-nueces.jpg" }
+      ]
+    },
+    {
+      "id": "box-dos",
+      "nombre": "Box Dos",
+      "unidad": "Frío/Caliente",
+      "precio": 195000,
+      "items": [
+        { "nombre": "Sconcito de crudo", "imagen": "scon-de-crudo.jpg" },
+        { "nombre": "Papas rosty", "imagen": "papas-rosty.jpg" },
+        { "nombre": "Criollito capresse", "imagen": "criollito-capresse.jpg" },
+        { "nombre": "Pollo y panceta", "imagen": "pollo-y-panceta.jpg" },
+        { "nombre": "Empanaditas de bondiola", "imagen": "bondiola.jpg" },
+        { "nombre": "Triangulito de bondiola braseada", "imagen": "triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg" }
+      ]
+    },
+    {
+      "id": "box-tres",
+      "nombre": "Box Tres",
+      "unidad": "Mix",
+      "precio": 205000,
+      "items": [
+        { "nombre": "Picaditas individuales", "imagen": "picadas-individuales.jpg" },
+        { "nombre": "Empanadita JyQ", "imagen": "empanada-jq.jpg" },
+        { "nombre": "Pinchos de pollo crispy", "imagen": "pinchos-de-pollo-crispy.jpg" },
+        { "nombre": "Tacos de bondiola", "imagen": "tacos.jpg" },
+        { "nombre": "Hamburguesitas", "imagen": "hamburguesitas.jpg" }
+      ]
     }
   ],
   "combosDulces": [
-    {
-      "nombre": "COMBO 1",
-      "precio": 74000,
-      "items": [
-        "6 Cookies decoradas",
-        "6 Cakepops",
-        "6 Oreos decoradas",
-        "4 Paletas"
-      ],
-      "stock": 100
-    },
-    {
-      "nombre": "COMBO 2",
-      "precio": 102000,
-      "items": [
-        "6 Cookies decoradas",
-        "6 Cakepops",
-        "6 Oreos decoradas",
-        "6 Paletas",
-        "6 Cupcakes"
-      ],
-      "stock": 100
-    },
-    {
-      "nombre": "COMBO 3",
-      "precio": 230000,
-      "items": [
-        "12 Cookies decoradas",
-        "12 Cakepops",
-        "12 Oreos decoradas",
-        "6 Paletas",
-        "12 Cupcakes",
-        "12 Chocolates"
-      ],
-      "stock": 100
-    }
+    { "id": "combo-1", "nombre": "Combo 1", "precio": 74000, "imagen": "tortas.jpg" },
+    { "id": "combo-2", "nombre": "Combo 2", "precio": 102000, "imagen": "tortas.jpg" },
+    { "id": "combo-3", "nombre": "Combo 3", "precio": 230000, "imagen": "tortas.jpg" }
   ],
   "desayunos": [
+    { "id": "desayuno-domicilio", "nombre": "Desayuno a Domicilio", "precio": 70000, "imagen": "" }
+  ],
+  "menuEventos": [
     {
-      "nombre": "Desayuno a domicilio",
-      "precio": 70000,
-      "sabores": [
-        "Taza",
-        "Box de desayunitos",
-        "4 cuadraditos dulces",
-        "4 patisserie",
-        "2 medialunitas con JYQ",
-        "Chipacitos"
-      ],
-      "stock": 100
+      "id": "menu-gourmet",
+      "nombre": "Menú Gourmet",
+      "sections": [
+        { "titulo": "Parte Fría", "items": [
+          { "nombre": "Tarteletas de atún y huevo", "imagen": "tarteletas-frias-de-hummus-y-atun.jpg" },
+          { "nombre": "Degustación de quesos", "imagen": "degustacion-de-quesos.jpg" },
+          { "nombre": "Scon al romero con lajas de salmón", "imagen": "scon-de-queso-al-romero-con-lajas-de-salmon.jpg" },
+          { "nombre": "Dip de queso azul y nueces", "imagen": "dip-de-queso-azul-y-nueces.jpg" },
+          { "nombre": "Locatelli de pollo y tomate", "imagen": "locatelli-de-pollo-y-tomate.jpg" },
+          { "nombre": "Figacita de lomo y morrones asados", "imagen": "figacita-de-lomo-y-morrones-asado.jpg" },
+          { "nombre": "Chipacitos de crudo y brie", "imagen": "chipa-de-morron.jpg" }
+        ]},
+        { "titulo": "Parte Caliente", "items": [
+          { "nombre": "Triangulito de bondiola braseada", "imagen": "triangulito-de-mas-fhilo-y-y-bondiola-braseada-1.jpg" },
+          { "nombre": "Quiché de champignones", "imagen": "quiche-de-champignone.jpg" },
+          { "nombre": "Papas rosty", "imagen": "papas-rosty.jpg" },
+          { "nombre": "Brochetitas de ternera al malbec", "imagen": "brochetitas-de-ternera-2.jpg" },
+          { "nombre": "Hamburguesitas", "imagen": "hamburguesitas.jpg" },
+          { "nombre": "Cazuela de ravioles con salsa rosa", "imagen": "cazuela-de-ravioles-con-salsa-ros.jpg" }
+        ]},
+        { "titulo": "Postre", "items": [
+          { "nombre": "Shot de cheesecake", "imagen": "shot-de-cheesecake.jpg" },
+          { "nombre": "Shot de mousse de chocolate", "imagen": "shot-de-mousse.jpg" }
+        ]}
+      ]
+    },
+    {
+      "id": "menu-clasico",
+      "nombre": "Menú Clásico",
+      "sections": [
+        { "titulo": "Parte Fría", "items": [
+          { "nombre": "Masitas de queso", "imagen": "masitas-de-queso.jpg" },
+          { "nombre": "Pinchos bocconcinos", "imagen": "pinchos-boconccinos.jpg" },
+          { "nombre": "Dip de queso azul con nueces", "imagen": "dip-de-queso-azul-y-nueces.jpg" },
+          { "nombre": "Criollito capresse", "imagen": "criollito-capresse.jpg" },
+          { "nombre": "Sconcito de crudo", "imagen": "scon-de-crudo.jpg" },
+          { "nombre": "Locatelli de pollo y tomate", "imagen": "locatelli-de-pollo-y-tomate.jpg" },
+          { "nombre": "Pecetitos", "imagen": "pecetito.jpg" }
+        ]},
+        { "titulo": "Parte Caliente", "items": [
+          { "nombre": "Pinchos de pollo crispy con honey", "imagen": "pinchos-de-pollo-crispy.jpg" },
+          { "nombre": "Empanaditas de bondiola", "imagen": "empanadas.jpg" },
+          { "nombre": "Canastitas de espinaca", "imagen": "canastitas-de-espinaca.jpg" },
+          { "nombre": "Roll de masa philo JYQ", "imagen": "roll-de-masa-philo.jpg" },
+          { "nombre": "Roast beef tiernizado", "imagen": "roast-beef.jpg" }
+        ]},
+        { "titulo": "Postre", "items": [
+          { "nombre": "Shot de lemon pie", "imagen": "shot-de-lemon-pie.jpg" },
+          { "nombre": "Shot de oreo", "imagen": "shot-de-oreo.jpg" }
+        ]}
+      ]
+    },
+    {
+      "id": "menu-picada",
+      "nombre": "Menú Picada",
+      "sections": [
+        { "titulo": "Parte Fría", "items": [
+          { "nombre": "Picaditas individuales", "imagen": "picadas-individuales.jpg" },
+          { "nombre": "Ensaladitas César", "imagen": "ensaladitas-cesar.jpg" },
+          { "nombre": "Pecetitos", "imagen": "pecetito.jpg" }
+        ]},
+        { "titulo": "Parte Caliente", "items": [
+          { "nombre": "Papas rosty", "imagen": "papas-rosty.jpg" },
+          { "nombre": "Pinchos de pollo crispy", "imagen": "pinchos-de-pollo-crispy.jpg" },
+          { "nombre": "Hamburguesitas con cheddar", "imagen": "hamburguesitas.jpg" },
+          { "nombre": "Tacos de bondiola", "imagen": "tacos.jpg" }
+        ]},
+        { "titulo": "Postre", "items": [
+          { "nombre": "Shot de cheesecake", "imagen": "shot-de-cheesecake.jpg" },
+          { "nombre": "Shot de oreo", "imagen": "shot-de-oreo.jpg" }
+        ]}
+      ]
+    },
+    {
+      "id": "menu-pizza",
+      "nombre": "Menú Pizza",
+      "sections": [
+        { "titulo": "Entrada", "items": [
+          { "nombre": "Pan de queso con oliva y provenzal", "imagen": "" }
+        ]},
+        { "titulo": "Empanadas", "items": [
+          { "nombre": "Surtidas (bondiola, JyQ, pollo, criolla)", "imagen": "empanadas.jpg" }
+        ]},
+        { "titulo": "Canastitas", "items": [
+          { "nombre": "Capresse", "imagen": "capresse.jpg" }
+        ]},
+        { "titulo": "Pizzas", "items": [
+          { "nombre": "Napolitana", "imagen": "napolitana.jpg" },
+          { "nombre": "Jamón y morrones", "imagen": "jamon-y-morrones.jpg" },
+          { "nombre": "Rúcula y crudo", "imagen": "rucula-y-crudo.jpg" },
+          { "nombre": "Calabresa", "imagen": "calabresa.jpg" },
+          { "nombre": "Queso azul y cebolla caramelizada", "imagen": "queso-azul-y-cebolla-caramelizada.jpg" },
+          { "nombre": "Panceta y huevo", "imagen": "panceta-y-huevo.jpg" },
+          { "nombre": "Espinaca", "imagen": "espinaca.jpg" }
+        ]},
+        { "titulo": "Postre", "items": [
+          { "nombre": "Shot de cheesecake", "imagen": "shot-de-cheesecake.jpg" },
+          { "nombre": "Shot de oreo", "imagen": "shot-de-oreo.jpg" }
+        ]}
+      ]
     }
   ]
 }

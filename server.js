@@ -6,7 +6,33 @@ const cors = require('cors');
 const mercadopago = require('mercadopago');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
 require('dotenv').config();
+
+// Configurar multer para guardar imágenes en /productos/
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = path.join(__dirname, 'productos');
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        // Mantener el nombre original del archivo (sin path traversal)
+        const safeName = path.basename(file.originalname).replace(/[^a-zA-Z0-9.\-_]/g, '-');
+        cb(null, safeName);
+    }
+});
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // máximo 5 MB
+    fileFilter: function (req, file, cb) {
+        const allowed = /jpeg|jpg|png|webp|gif/;
+        const ext = path.extname(file.originalname).toLowerCase().replace('.', '');
+        if (allowed.test(ext)) return cb(null, true);
+        cb(new Error('Solo se permiten imágenes (jpg, png, webp, gif)'));
+    }
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -334,6 +360,16 @@ app.delete('/api/orders/:id', (req, res) => {
     }
 });
 */
+
+// ===================================
+// ENDPOINT: Subir imagen de producto
+// ===================================
+app.post('/api/upload-image', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ success: false, error: 'No se recibió ningún archivo' });
+    }
+    res.json({ success: true, filename: req.file.filename });
+});
 
 // ===================================
 // SERVIDOR

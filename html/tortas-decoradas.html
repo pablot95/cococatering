@@ -1,0 +1,536 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tortas Decoradas - Cocó Catering</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/eventos.css">
+    <link rel="icon" href="../images/Logo.jpeg" type="image/jpeg">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <div class="hamburger-menu" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Cart Icon -->
+    <a href="carrito.html" class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count">0</span>
+    </a>
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav-menu" id="mobileNavMenu">
+        <a href="../index.html">Inicio</a>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Menú</button>
+            <div class="mobile-dropdown-menu">
+                <a href="eventos.html">Eventos</a>
+                <a href="box-salados.html">Box Salados</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Salados</button>
+            <div class="mobile-dropdown-menu">
+                <a href="fingers-frios.html">Fríos</a>
+                <a href="fingers-calientes.html">Calientes</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Fingers Dulces</button>
+            <div class="mobile-dropdown-menu">
+                <a href="box-dulces.html">Box Dulces</a>
+                <a href="shots.html">Shots</a>
+            </div>
+        </div>
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">Tortas</button>
+            <div class="mobile-dropdown-menu">
+                <a href="tortas-clasicas.html">Clásicas</a>
+                <a href="tortas-decoradas.html">Decoradas</a>
+                <a href="combos-dulces.html">Combos Dulces</a>
+            </div>
+        </div>
+        <a href="desayunos.html">Desayunos</a>
+        <a href="carrito.html">Carrito</a>
+    </nav>
+    <div class="menu-page-container">
+        <!-- Hero Image Fixed -->
+        <div class="menu-hero">
+            <div class="menu-hero-bg-blur" id="menuHeroBgBlur"></div>
+            <div class="menu-hero-logo">
+                <a href="../index.html"><img src="../images/LogoCocoPng.png" alt="Cocó Catering"></a>
+            </div>
+            <img id="menuHeroImage" src="../productos/TortaDecorada1.jpg" alt="Tortas Decoradas">
+
+            <div class="navigation-buttons">
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Menú</button>
+                    <div class="dropdown-menu">
+                        <a href="eventos.html">Eventos</a>
+                        <a href="box-salados.html">Box Salados</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Salados</button>
+                    <div class="dropdown-menu">
+                        <a href="fingers-frios.html">Fríos</a>
+                        <a href="fingers-calientes.html">Calientes</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Fingers Dulces</button>
+                    <div class="dropdown-menu">
+                        <a href="box-dulces.html">Box Dulces</a>
+                        <a href="shots.html">Shots</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-btn dropdown-toggle">Tortas</button>
+                    <div class="dropdown-menu">
+                        <a href="tortas-clasicas.html">Clásicas</a>
+                        <a href="tortas-decoradas.html">Decoradas</a>
+                        <a href="combos-dulces.html">Combos Dulces</a>
+                    </div>
+                </div>
+                <a href="desayunos.html" class="nav-btn">Desayunos</a>
+            </div>
+        </div>
+        <!-- Scroll Container -->
+        <div class="menu-scroll-container">
+            <!-- Tortas Decoradas -->
+            <section class="menu-section">
+                <h2 class="section-title">TORTAS DECORADAS</h2>
+                <div class="torta-configurador">
+
+                    <!-- Indicador de pasos -->
+                    <div class="config-steps-bar">
+                        <div class="config-step-dot active" id="sdot-1"><span>1</span><small>Tamaño</small></div>
+                        <div class="config-step-dot" id="sdot-2"><span>2</span><small>Altura</small></div>
+                        <div class="config-step-dot" id="sdot-3"><span>3</span><small>Bizcochuelo</small></div>
+                        <div class="config-step-dot" id="sdot-4"><span>4</span><small>Rellenos</small></div>
+                        <div class="config-step-dot" id="sdot-5"><span>5</span><small>Cobertura</small></div>
+                        <div class="config-step-dot" id="sdot-6"><span>6</span><small>Deco</small></div>
+                    </div>
+
+                    <!-- Panel 1: Tamaño -->
+                    <div class="config-panel" id="panel-1">
+                        <h3 class="config-panel-title">¿Cuántas porciones?</h3>
+                        <div class="config-options-grid three-col">
+                            <div class="config-option" data-value="12" onclick="selectPorciones(this)">
+                                <span class="option-label">12</span>
+                                <span class="option-sub">Porciones</span>
+                                <span class="option-detail">2 cortes de relleno</span>
+                            </div>
+                            <div class="config-option" data-value="24" onclick="selectPorciones(this)">
+                                <span class="option-label">24</span>
+                                <span class="option-sub">Porciones</span>
+                                <span class="option-detail">Alta o Baja</span>
+                            </div>
+                            <div class="config-option" data-value="36" onclick="selectPorciones(this)">
+                                <span class="option-label">36</span>
+                                <span class="option-sub">Porciones</span>
+                                <span class="option-detail">Alta o Baja</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: Altura -->
+                    <div class="config-panel hidden" id="panel-2">
+                        <h3 class="config-panel-title">¿Alta o Baja?</h3>
+                        <div class="config-options-grid two-col">
+                            <div class="config-option" data-value="alta" onclick="selectAltura(this)">
+                                <span class="option-label">Alta</span>
+                                <span class="option-detail">5 cortes de relleno</span>
+                            </div>
+                            <div class="config-option" data-value="baja" onclick="selectAltura(this)">
+                                <span class="option-label">Baja</span>
+                                <span class="option-detail">3 cortes de relleno</span>
+                            </div>
+                        </div>
+                        <button class="config-back-btn" onclick="showPanel(1)">← Volver</button>
+                    </div>
+
+                    <!-- Panel 3: Bizcochuelo -->
+                    <div class="config-panel hidden" id="panel-3">
+                        <h3 class="config-panel-title">Sabor del Bizcochuelo</h3>
+                        <p class="config-note">En tortas de dos pisos podés elegir un sabor diferente por piso.</p>
+                        <div class="config-options-grid two-col">
+                            <div class="config-option" data-value="Vainilla" onclick="selectBizcochuelo(this)">
+                                <span class="option-label">Vainilla</span>
+                            </div>
+                            <div class="config-option" data-value="Chocolate" onclick="selectBizcochuelo(this)">
+                                <span class="option-label">Chocolate</span>
+                            </div>
+                        </div>
+                        <button class="config-back-btn" onclick="goBackBizcochuelo()">← Volver</button>
+                    </div>
+
+                    <!-- Panel 4: Rellenos -->
+                    <div class="config-panel hidden" id="panel-4">
+                        <h3 class="config-panel-title">Rellenos</h3>
+                        <p class="config-note">Elegí <strong id="rellenos-count-label">hasta 2</strong> rellenos.</p>
+                        <div class="rellenos-grid" id="rellenos-grid"></div>
+                        <p class="config-extras-title">+ Como complemento de otro relleno:</p>
+                        <div class="rellenos-grid extras-grid" id="rellenos-extras-grid"></div>
+                        <div class="config-panel-footer">
+                            <button class="config-back-btn" onclick="showPanel(3)">← Volver</button>
+                            <button class="config-next-btn" id="rellenos-next-btn" onclick="confirmarRellenos()" disabled>Confirmar →</button>
+                        </div>
+                    </div>
+
+                    <!-- Panel 5: Cobertura -->
+                    <div class="config-panel hidden" id="panel-5">
+                        <h3 class="config-panel-title">Cobertura</h3>
+                        <div class="config-options-grid two-col">
+                            <div class="config-option cobertura-option" data-value="buttercream" onclick="selectCobertura(this)">
+                                <span class="option-label">Buttercream</span>
+                                <span class="option-price" id="price-butter"></span>
+                            </div>
+                            <div class="config-option cobertura-option" data-value="ballina" onclick="selectCobertura(this)">
+                                <span class="option-label">Pasta Ballina</span>
+                                <span class="option-price" id="price-ballina"></span>
+                            </div>
+                        </div>
+                        <button class="config-back-btn" onclick="showPanel(4)">← Volver</button>
+                    </div>
+
+                    <!-- Panel 6: Deco -->
+                    <div class="config-panel hidden" id="panel-6">
+                        <h3 class="config-panel-title">Decoración <span class="optional-tag">Opcional</span></h3>
+                        <div class="deco-options">
+                            <label class="deco-option-row">
+                                <input type="checkbox" id="deco-topper">
+                                <div class="deco-info">
+                                    <span class="deco-label">Topper impreso</span>
+                                    <span class="deco-price-tag">Sin costo</span>
+                                </div>
+                            </label>
+                            <label class="deco-option-row">
+                                <input type="checkbox" id="deco-flores">
+                                <div class="deco-info">
+                                    <span class="deco-label">Flores naturales</span>
+                                    <span class="deco-price-tag">+ $8.000</span>
+                                </div>
+                            </label>
+                            <div class="deco-option-row deco-figura-row">
+                                <div class="deco-info">
+                                    <span class="deco-label">Figura 3D</span>
+                                    <span class="deco-price-tag">$15.000 c/u</span>
+                                </div>
+                                <div class="figura-qty-controls">
+                                    <button onclick="changeFigura(-1)">−</button>
+                                    <span id="figura-qty">0</span>
+                                    <button onclick="changeFigura(1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config-panel-footer">
+                            <button class="config-back-btn" onclick="showPanel(5)">← Volver</button>
+                            <button class="config-next-btn" onclick="confirmarDeco()">Ver resumen →</button>
+                        </div>
+                    </div>
+
+                    <!-- Panel: Resumen -->
+                    <div class="config-panel hidden" id="panel-resumen">
+                        <h3 class="config-panel-title">Tu Torta Decorada</h3>
+                        <div class="torta-resumen" id="torta-resumen-content"></div>
+                        <div class="torta-precio-total">
+                            <span>Total estimado</span>
+                            <strong id="torta-precio-final">$0</strong>
+                        </div>
+                        <div class="resumen-actions">
+                            <button class="btn-agregar-torta" onclick="agregarTortaAlCarrito()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                                Agregar al Carrito
+                            </button>
+                            <button class="btn-reiniciar" onclick="reiniciarConfigurador()">Empezar de nuevo</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- Botón flotante para agregar todos los productos -->
+    <button id="add-all-to-cart-btn" class="floating-add-all-btn" onclick="addAllToCart()" style="display:none">
+        <span class="btn-text">Agregar al Carrito</span>
+        <span class="btn-counter" id="total-items-counter">0</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+    <script src="../js/mobile-menu.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script type="module" src="../js/menu-script.js?v=11"></script>
+    <script>
+        // Rotación de imágenes del hero
+        const tortaImages = [
+            '../productos/tortadecorada1.jpg',
+            '../productos/tortadecorada2.jpg',
+            '../productos/tortadecorada3.jpg',
+            '../productos/tortadecorada4.jpg',
+            '../productos/tortadecorada5.jpg'
+        ];
+        let currentTortaIndex = 0;
+        function changeTortaImage() {
+            const heroImage = document.getElementById('menuHeroImage');
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            if (!heroImage) return;
+            const nextIndex = (currentTortaIndex + 1) % tortaImages.length;
+            const nextSrc = tortaImages[nextIndex];
+
+            const preload = new Image();
+            preload.src = nextSrc;
+
+            const doSwap = () => {
+                currentTortaIndex = nextIndex;
+                heroImage.style.opacity = '0';
+                if (heroBgBlur) heroBgBlur.style.opacity = '0';
+                setTimeout(() => {
+                    heroImage.src = nextSrc;
+                    if (heroBgBlur) heroBgBlur.style.backgroundImage = `url(${nextSrc})`;
+                    heroImage.style.opacity = '1';
+                    if (heroBgBlur) heroBgBlur.style.opacity = '1';
+                }, 600);
+            };
+
+            if (preload.complete) { doSwap(); }
+            else { preload.onload = doSwap; preload.onerror = doSwap; }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroBgBlur = document.getElementById('menuHeroBgBlur');
+            const heroImage = document.getElementById('menuHeroImage');
+            if (heroImage && heroBgBlur && heroImage.src) {
+                heroBgBlur.style.backgroundImage = `url(${heroImage.src})`;
+            }
+            // Pre-cargar todas las imágenes al inicio
+            tortaImages.forEach(src => { const img = new Image(); img.src = src; });
+            setInterval(changeTortaImage, 4000);
+        });
+
+        // ==========================================
+        // CONFIGURADOR DE TORTAS DECORADAS
+        // ==========================================
+
+        const PRECIOS_TORTA = {
+            12: { buttercream: 65000, ballina: 70000 },
+            24: { buttercream: 105000, ballina: 115000 },
+            36: { buttercream: 118000, ballina: 125000 }
+        };
+
+        const RELLENOS_BASE = [
+            'Dulce de leche',
+            'Ganache de chocolate blanco',
+            'Ganache de chocolate amargo',
+            'Crema bariloche',
+            'Bon o bon',
+            'Choconutella',
+            'Crema oreo',
+            'Crema de limón',
+            'Crema de café',
+            'Mousse de DDL'
+        ];
+        const RELLENOS_EXTRA = ['Caramel', 'Frutos rojos'];
+
+        let figuraQty = 0;
+        const tortaConfig = {
+            porciones: null, altura: null, bizcochuelo: null,
+            rellenos: [], rellenosExtras: [], cobertura: null,
+            deco: { topper: false, flores: false, figuras: 0 },
+            maxRellenos: 2, _precioFinal: 0
+        };
+
+        function showPanel(id) {
+            document.querySelectorAll('.config-panel').forEach(p => p.classList.add('hidden'));
+            const panel = document.getElementById('panel-' + id);
+            if (panel) {
+                panel.classList.remove('hidden');
+                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            const stepNum = id === 'resumen' ? 7 : parseInt(id);
+            document.querySelectorAll('.config-step-dot').forEach((dot, i) => {
+                const n = i + 1;
+                dot.classList.toggle('done', n < stepNum);
+                dot.classList.toggle('active', n === stepNum);
+            });
+        }
+
+        function selectPorciones(el) {
+            document.querySelectorAll('#panel-1 .config-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            tortaConfig.porciones = parseInt(el.dataset.value);
+            if (tortaConfig.porciones === 12) {
+                tortaConfig.altura = null;
+                tortaConfig.maxRellenos = 2;
+                setTimeout(() => showPanel(3), 250);
+            } else {
+                setTimeout(() => showPanel(2), 250);
+            }
+        }
+
+        function selectAltura(el) {
+            document.querySelectorAll('#panel-2 .config-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            tortaConfig.altura = el.dataset.value;
+            tortaConfig.maxRellenos = 3;
+            setTimeout(() => showPanel(3), 250);
+        }
+
+        function goBackBizcochuelo() {
+            tortaConfig.porciones === 12 ? showPanel(1) : showPanel(2);
+        }
+
+        function selectBizcochuelo(el) {
+            document.querySelectorAll('#panel-3 .config-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            tortaConfig.bizcochuelo = el.dataset.value;
+            buildRellenosPanel();
+            setTimeout(() => showPanel(4), 250);
+        }
+
+        function buildRellenosPanel() {
+            tortaConfig.rellenos = [];
+            document.getElementById('rellenos-count-label').textContent = 'hasta ' + tortaConfig.maxRellenos;
+            const grid = document.getElementById('rellenos-grid');
+            grid.innerHTML = RELLENOS_BASE.map(r => {
+                const isOreo = r === 'Crema oreo';
+                return `<div class="relleno-chip${isOreo ? ' oreo-chip' : ''}" data-value="${r}" onclick="toggleRelleno(this)">${r}${isOreo ? '<span class="oreo-note"> (solo buttercream)</span>' : ''}</div>`;
+            }).join('');
+            document.getElementById('rellenos-extras-grid').innerHTML = RELLENOS_EXTRA.map(r =>
+                `<div class="relleno-chip extra-chip" data-value="${r}" onclick="toggleRellenoExtra(this)">${r}</div>`
+            ).join('');
+            updateRellenosBtn();
+        }
+
+        function toggleRelleno(el) {
+            const val = el.dataset.value;
+            if (el.classList.contains('selected')) {
+                el.classList.remove('selected');
+                tortaConfig.rellenos = tortaConfig.rellenos.filter(r => r !== val);
+            } else {
+                if (tortaConfig.rellenos.length >= tortaConfig.maxRellenos) return;
+                el.classList.add('selected');
+                tortaConfig.rellenos.push(val);
+            }
+            updateRellenosBtn();
+        }
+
+        function toggleRellenoExtra(el) {
+            el.classList.toggle('selected');
+        }
+
+        function updateRellenosBtn() {
+            const btn = document.getElementById('rellenos-next-btn');
+            const ok = tortaConfig.rellenos.length >= 1;
+            btn.disabled = !ok;
+            btn.textContent = `Confirmar (${tortaConfig.rellenos.length}/${tortaConfig.maxRellenos}) →`;
+        }
+
+        function confirmarRellenos() {
+            tortaConfig.rellenosExtras = [...document.querySelectorAll('#rellenos-extras-grid .relleno-chip.selected')].map(e => e.dataset.value);
+            const precios = PRECIOS_TORTA[tortaConfig.porciones];
+            document.getElementById('price-butter').textContent = `$${precios.buttercream.toLocaleString()}`;
+            document.getElementById('price-ballina').textContent = `$${precios.ballina.toLocaleString()}`;
+            showPanel(5);
+        }
+
+        function selectCobertura(el) {
+            const val = el.dataset.value;
+            if (val === 'ballina' && tortaConfig.rellenos.includes('Crema oreo')) {
+                alert('La Crema oreo solo está disponible con Buttercream. Por favor volvé al paso anterior y cambiá ese relleno.');
+                return;
+            }
+            document.querySelectorAll('#panel-5 .config-option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            tortaConfig.cobertura = val;
+            setTimeout(() => showPanel(6), 250);
+        }
+
+        function changeFigura(change) {
+            figuraQty = Math.max(0, figuraQty + change);
+            document.getElementById('figura-qty').textContent = figuraQty;
+        }
+
+        function confirmarDeco() {
+            tortaConfig.deco.topper = document.getElementById('deco-topper').checked;
+            tortaConfig.deco.flores = document.getElementById('deco-flores').checked;
+            tortaConfig.deco.figuras = figuraQty;
+            mostrarResumen();
+        }
+
+        function mostrarResumen() {
+            const precios = PRECIOS_TORTA[tortaConfig.porciones];
+            const precioBase = tortaConfig.cobertura === 'buttercream' ? precios.buttercream : precios.ballina;
+            const coberturaLabel = tortaConfig.cobertura === 'buttercream' ? 'Buttercream' : 'Pasta Ballina';
+
+            let decoTotal = 0;
+            const decoItems = [];
+            if (tortaConfig.deco.topper) decoItems.push('Topper impreso');
+            if (tortaConfig.deco.flores) { decoTotal += 8000; decoItems.push('Flores naturales'); }
+            if (tortaConfig.deco.figuras > 0) {
+                const fig = tortaConfig.deco.figuras * 15000;
+                decoTotal += fig;
+                decoItems.push(`Figura 3D ×${tortaConfig.deco.figuras}`);
+            }
+
+            const total = precioBase + decoTotal;
+            tortaConfig._precioFinal = total;
+
+            const tortaLabel = tortaConfig.porciones === 12
+                ? '12 porciones'
+                : `${tortaConfig.porciones} porciones ${tortaConfig.altura}`;
+            const todosRellenos = [...tortaConfig.rellenos, ...tortaConfig.rellenosExtras];
+
+            document.getElementById('torta-resumen-content').innerHTML = `
+                <div class="resumen-row"><span>Tamaño</span><strong>${tortaLabel}</strong></div>
+                <div class="resumen-row"><span>Bizcochuelo</span><strong>${tortaConfig.bizcochuelo}</strong></div>
+                <div class="resumen-row"><span>Rellenos</span><strong>${todosRellenos.join(', ')}</strong></div>
+                <div class="resumen-row"><span>Cobertura</span><strong>${coberturaLabel}</strong></div>
+                ${decoItems.length ? `<div class="resumen-row"><span>Decoración</span><strong>${decoItems.join(', ')}</strong></div>` : ''}
+                <div class="resumen-row"><span>Precio base</span><strong>$${precioBase.toLocaleString()}</strong></div>
+                ${decoTotal ? `<div class="resumen-row"><span>Extras</span><strong>+ $${decoTotal.toLocaleString()}</strong></div>` : ''}
+            `;
+            document.getElementById('torta-precio-final').textContent = `$${total.toLocaleString()}`;
+            showPanel('resumen');
+        }
+
+        function agregarTortaAlCarrito() {
+            const tortaLabel = tortaConfig.porciones === 12
+                ? '12 porciones'
+                : `${tortaConfig.porciones} porciones ${tortaConfig.altura}`;
+            const coberturaLabel = tortaConfig.cobertura === 'buttercream' ? 'Buttercream' : 'Pasta Ballina';
+            const product = {
+                id: 'torta-decorada-' + Date.now(),
+                name: `Torta decorada ${tortaLabel} – ${coberturaLabel}`,
+                price: tortaConfig._precioFinal,
+                image: '../productos/TortaDecorada1.jpg',
+                quantity: 1, min: 1, step: 1
+            };
+            if (typeof addToCart === 'function') addToCart(product);
+            window.location.href = 'carrito.html';
+        }
+
+        function reiniciarConfigurador() {
+            Object.assign(tortaConfig, {
+                porciones: null, altura: null, bizcochuelo: null,
+                rellenos: [], rellenosExtras: [], cobertura: null,
+                deco: { topper: false, flores: false, figuras: 0 },
+                maxRellenos: 2, _precioFinal: 0
+            });
+            figuraQty = 0;
+            document.querySelectorAll('.config-option').forEach(o => o.classList.remove('selected'));
+            showPanel(1);
+        }
+    </script>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/5491128447772" target="_blank" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.049-13.483 13.483-13.483s13.483 6.049 13.483 13.483c0 7.435-6.049 13.483-13.483 13.483zM21.981 18.429c-0.309-0.155-1.832-0.903-2.116-1.006-0.283-0.103-0.489-0.155-0.695 0.155s-0.799 1.006-0.98 1.212c-0.18 0.206-0.36 0.232-0.669 0.077s-1.306-0.481-2.487-1.534c-0.92-0.82-1.541-1.834-1.722-2.143s-0.019-0.476 0.136-0.631c0.139-0.139 0.309-0.36 0.463-0.54s0.206-0.309 0.309-0.515 0.052-0.386-0.026-0.54c-0.077-0.155-0.695-1.673-0.951-2.291-0.246-0.6-0.499-0.52-0.695-0.528-0.18-0.009-0.386-0.009-0.592-0.009s-0.54 0.077-0.823 0.386c-0.283 0.309-1.080 1.057-1.080 2.576s1.106 2.988 1.26 3.193c0.155 0.206 2.179 3.321 5.278 4.656 0.737 0.319 1.313 0.509 1.762 0.65 0.742 0.235 1.417 0.202 1.951 0.123 0.595-0.089 1.832-0.749 2.090-1.472s0.257-1.343 0.18-1.472c-0.077-0.129-0.283-0.206-0.592-0.36z"/>
+        </svg>
+    </a>
+</body>
+</html>
