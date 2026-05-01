@@ -1234,18 +1234,25 @@ async function aprobarSolicitud(id, email, nombre) {
     try {
         await db.collection('solicitudes').doc(id).update({ status: 'approved', updatedAt: new Date() });
 
-        // EmailJS notificación (si está configurado)
-        if (typeof emailjs !== 'undefined') {
-            const EMAILJS_SERVICE_ID    = 'TU_SERVICE_ID';
-            const EMAILJS_PUBLIC_KEY    = 'TU_PUBLIC_KEY';
-            const EMAILJS_TEMPLATE_APROBACION = 'TU_TEMPLATE_APROBACION';
-            if (EMAILJS_PUBLIC_KEY !== 'TU_PUBLIC_KEY') {
-                emailjs.init(EMAILJS_PUBLIC_KEY);
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_APROBACION, { to_email: email, nombre, solicitud_id: id.slice(0,8).toUpperCase() });
-            }
+        // Notificar al cliente por WhatsApp
+        const solicitud = todasLasSolicitudes.find(s => s.id === id);
+        const tel = (solicitud?.telefono || '').replace(/\D/g, '');
+        if (tel) {
+            const msg = [
+                `🟢 *PEDIDO APROBADO — Cocó Catering*`,
+                ``,
+                `¡Hola ${nombre}! Tu solicitud *#${id.slice(0,8).toUpperCase()}* fue *aprobada*.`,
+                ``,
+                `Ya podés ingresar a tu carrito y proceder al pago.`,
+                `👉 ${window.location.origin.replace('/gestion','')}/html/carrito.html`,
+                ``,
+                `¡Gracias por elegirnos! 🍽️`,
+            ].join('\n');
+            const waUrl = `https://wa.me/54${tel}?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
         }
 
-        alert(`Solicitud de ${nombre} aprobada. Se actualizó el estado.`);
+        alert(`Solicitud de ${nombre} aprobada.`);
         loadSolicitudes();
     } catch (err) {
         alert('Error: ' + err.message);
@@ -1258,15 +1265,21 @@ async function rechazarSolicitud(id, email, nombre) {
     try {
         await db.collection('solicitudes').doc(id).update({ status: 'rejected', updatedAt: new Date() });
 
-        // EmailJS notificación (si está configurado)
-        if (typeof emailjs !== 'undefined') {
-            const EMAILJS_SERVICE_ID    = 'TU_SERVICE_ID';
-            const EMAILJS_PUBLIC_KEY    = 'TU_PUBLIC_KEY';
-            const EMAILJS_TEMPLATE_RECHAZO = 'TU_TEMPLATE_RECHAZO';
-            if (EMAILJS_PUBLIC_KEY !== 'TU_PUBLIC_KEY') {
-                emailjs.init(EMAILJS_PUBLIC_KEY);
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_RECHAZO, { to_email: email, nombre, solicitud_id: id.slice(0,8).toUpperCase() });
-            }
+        // Notificar al cliente por WhatsApp
+        const solicitud = todasLasSolicitudes.find(s => s.id === id);
+        const tel = (solicitud?.telefono || '').replace(/\D/g, '');
+        if (tel) {
+            const msg = [
+                `🔴 *PEDIDO NO DISPONIBLE — Cocó Catering*`,
+                ``,
+                `¡Hola ${nombre}! Lamentablemente no podemos confirmar tu solicitud *#${id.slice(0,8).toUpperCase()}* en esta oportunidad.`,
+                ``,
+                `Comunicate con nosotros por este medio para más información o para coordinar una alternativa.`,
+                ``,
+                `¡Muchas gracias por contactarte! 🍽️`,
+            ].join('\n');
+            const waUrl = `https://wa.me/54${tel}?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
         }
 
         alert(`Solicitud de ${nombre} rechazada.`);

@@ -4,7 +4,7 @@
 // ===================================
 // IMPORTS
 // ===================================
-import { saveOrder } from './firestore-service.js';
+import { saveOrder, getSolicitud } from './firestore-service.js';
 
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
@@ -24,6 +24,7 @@ let datosFacturacion = {};
 let mercadopago;
 let isProcessing = false;
 let orderSaved = false;
+let solicitudActiva = null; // Solicitud aprobada cargada desde Firestore
 
 // ===================================
 // INICIALIZACIÓN
@@ -34,32 +35,154 @@ console.log('🔍 window.getCart disponible?', typeof window.getCart);
 console.log('🔍 window.addToCart disponible?', typeof window.addToCart);
 
 // Esperar a que tanto el DOM como carrito.js estén listos
-function initCheckout() {
+async function initCheckout() {
     console.log('🚀 CHECKOUT - Inicializando...');
-    
-    // Verificar que carrito.js esté cargado
+
+    // Verificar si viene de una solicitud aprobada
+    const urlParams = new URLSearchParams(window.location.search);
+    const solicitudId = urlParams.get('solicitudId');
+
+    if (solicitudId) {
+        await cargarSolicitudAprobada(solicitudId);
+        return; // loadOrderSummary se llama desde cargarSolicitudAprobada
+    }
+
+    // Flujo normal: verificar que carrito.js esté cargado
     if (typeof window.getCart !== 'function') {
         console.warn('⚠️ carrito.js no está listo, esperando...');
         setTimeout(initCheckout, 100);
         return;
     }
-    
+
     console.log('✅ carrito.js está listo, cargando resumen');
     loadOrderSummary();
     updateCartCount();
-    
-    // Ocultar formulario de facturación por defecto (checkbox está marcado)
+
     const facturacionFields = document.querySelector('.facturacion-fields');
     if (facturacionFields) {
         facturacionFields.style.display = 'none';
     }
-    
-    // Inicializar MercadoPago SDK (cuando tengas las credenciales)
+
     if (MP_PUBLIC_KEY !== 'TU_PUBLIC_KEY_AQUI') {
-        mercadopago = new MercadoPago(MP_PUBLIC_KEY, {
-            locale: 'es-AR'
-        });
+        mercadopago = new MercadoPago(MP_PUBLIC_KEY, { locale: 'es-AR' });
     }
+}
+
+async function cargarSolicitudAprobada(solicitudId) {
+    try {
+        const solicitud = await getSolicitud(solicitudId);
+
+        if (!solicitud) {
+            mostrarErrorSolicitud('No se encontró la solicitud. Volvé al carrito.');
+            return;
+        }
+        if (solicitud.status !== 'approved') {
+            mostrarErrorSolicitud('Esta solicitud aún no fue aprobada o ya fue procesada. Revisá la sección "Mis pedidos" en el carrito.');
+            return;
+        }
+
+        solicitudActiva = solicitud;
+
+        // Mostrar banner de aprobación
+        mostrarBannerAprobado(solicitud);
+
+        // Pre-rellenar formulario con datos de la solicitud
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if (el && val) el.value = val;
+        };
+        setVal('nombre', solicitud.nombre);
+        setVal('email', solicitud.email);
+        setVal('telefono', solicitud.telefono);
+        setVal('ciudad', solicitud.localidad);
+        setVal('provincia', 'Buenos Aires');
+
+        // Intentar separar calle y altura de la dirección (ej: "Av. Corrientes 1234")
+        if (solicitud.direccion) {
+            const match = solicitud.direccion.match(/^(.+?)\s+(\d+[\w-]*)(.*)$/);
+            if (match) {
+                setVal('calle', match[1].trim());
+                setVal('altura', match[2].trim());
+                const resto = match[3].trim();
+                if (resto) setVal('piso', resto);
+            } else {
+                setVal('calle', solicitud.direccion);
+            }
+        }
+
+        // Cargar resumen con productos de la solicitud
+        loadOrderSummaryFromSolicitud(solicitud);
+        updateCartCount();
+
+        const facturacionFields = document.querySelector('.facturacion-fields');
+        if (facturacionFields) facturacionFields.style.display = 'none';
+
+        if (MP_PUBLIC_KEY !== 'TU_PUBLIC_KEY_AQUI') {
+            mercadopago = new MercadoPago(MP_PUBLIC_KEY, { locale: 'es-AR' });
+        }
+
+    } catch (err) {
+        console.error('Error cargando solicitud:', err);
+        mostrarErrorSolicitud('Error al cargar la solicitud. Intentá nuevamente.');
+    }
+}
+
+function mostrarBannerAprobado(solicitud) {
+    const header = document.querySelector('.checkout-header');
+    if (!header) return;
+    const banner = document.createElement('div');
+    banner.className = 'solicitud-aprobada-banner';
+    banner.innerHTML = `🟢 Pedido <strong>#${solicitud.id.slice(0, 8).toUpperCase()}</strong> aprobado — completá tus datos y procedé al pago`;
+    header.insertAdjacentElement('afterend', banner);
+}
+
+function mostrarErrorSolicitud(msg) {
+    document.querySelector('.checkout-content').innerHTML = `
+        <div class="solicitud-error-box">
+            <p>${msg}</p>
+            <a href="carrito.html" class="btn-volver-carrito">← Volver al carrito</a>
+        </div>`;
+}
+
+function loadOrderSummaryFromSolicitud(solicitud) {
+    const orderItemsContainer = document.getElementById('orderItems');
+    if (!orderItemsContainer) return;
+
+    const items = solicitud.productos || [];
+
+    orderItemsContainer.innerHTML = items.map(item => {
+        const min = item.min || 1;
+        const itemTotal = Math.round((item.quantity / min) * item.price);
+        const displayName = (item.name || '').replace(/\s*–\s*x\d+\s*$/, '').trim();
+        return `
+        <div class="order-item no-image">
+            <div class="order-item-details">
+                <div class="order-item-name">${displayName}</div>
+                <div class="order-item-quantity">Cantidad: ${item.quantity}</div>
+            </div>
+            <div class="order-item-price">${item.price > 0 ? '$' + itemTotal.toLocaleString() : 'Consultar'}</div>
+        </div>`;
+    }).join('');
+
+    const costoEnvio = typeof solicitud.costoEnvio === 'number' ? solicitud.costoEnvio : 0;
+    const subtotal = solicitud.subtotal || 0;
+    const total = solicitud.total || subtotal;
+
+    document.getElementById('orderSubtotal').textContent = `$${subtotal.toLocaleString()}`;
+    const envioEl = document.getElementById('orderEnvio');
+    const envioMsgEl = document.getElementById('orderEnvioMessage');
+    if (envioEl) {
+        if (solicitud.costoEnvio === 'consultar') {
+            envioEl.textContent = 'A consultar';
+        } else if (costoEnvio === 0) {
+            envioEl.textContent = '¡Gratis! 🎉';
+            if (envioEl) envioEl.style.color = 'green';
+        } else {
+            envioEl.textContent = `$${costoEnvio.toLocaleString()}`;
+        }
+    }
+    if (envioMsgEl) envioMsgEl.textContent = '';
+    document.getElementById('orderTotal').textContent = `$${total.toLocaleString()}`;
 }
 
 // Llamar a initCheckout cuando el DOM esté listo
@@ -265,9 +388,12 @@ async function initMercadoPago() {
     if (mpButton) mpButton.innerHTML = '';
 
     // Preparar datos de la orden
-    const cart = getCart();
-    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const envioGratis = subtotal >= 180000;
+    const cart = solicitudActiva ? solicitudActiva.productos : getCart();
+    const subtotal = solicitudActiva
+        ? (solicitudActiva.subtotal || 0)
+        : cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const total = solicitudActiva ? (solicitudActiva.total || subtotal) : subtotal;
+    const envioGratis = !solicitudActiva && subtotal >= 180000;
     
     // Guardar orden en localStorage y Firebase
     try {
@@ -317,7 +443,9 @@ async function initMercadoPago() {
                 // Totales
                 subtotal: subtotal,
                 envioGratis: envioGratis,
-                total: subtotal,
+                total: total,
+                // Referencia a la solicitud aprobada (si aplica)
+                ...(solicitudActiva ? { solicitudId: solicitudActiva.id } : {}),
                 // Estado
                 status: 'pending',
                 paymentStatus: 'pending'
@@ -361,14 +489,20 @@ async function initMercadoPago() {
     }
     
     try {
-        const orderData = {
-            items: cart.map(item => ({
+        const mpItems = cart.map(item => {
+            const min = item.min || 1;
+            const unitPrice = item.price > 0 ? Math.round(item.price / min) : 1;
+            return {
                 id: item.id,
-                title: item.name,
+                title: (item.name || '').replace(/\s*–\s*x\d+\s*$/, '').trim() || 'Producto',
                 quantity: item.quantity,
-                unit_price: item.price,
+                unit_price: unitPrice,
                 currency_id: 'ARS'
-            })),
+            };
+        });
+
+        const orderData = {
+            items: mpItems,
             payer: {
                 name: datosComprador.nombre,
                 email: datosComprador.email,

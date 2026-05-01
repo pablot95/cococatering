@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Cocó Catering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" href="../images/Logo.jpeg" type="image/jpeg">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <img src="../images/Logo.jpeg" alt="Cocó Catering" class="login-logo-img" onerror="this.style.display='none'">
+      <h1>Cocó Catering</h1>
+      <p>Panel de Administración</p>
+    </div>
+    <form id="loginForm" autocomplete="on" novalidate>
+      <div class="field-group">
+        <label for="loginEmail">Correo electrónico</label>
+        <input type="email" id="loginEmail" placeholder="admin@ejemplo.com" required autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label for="loginPass">Contraseña</label>
+        <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      <div id="loginError" class="login-error hidden"></div>
+      <button type="submit" class="btn-login" id="btnLogin">
+        <span id="btnLoginText">Ingresar</span>
+      </button>
+    </form>
+    <p class="login-note">Acceso restringido · Solo personal autorizado</p>
+  </div>
+</div>
+
+<!-- ============ ADMIN APP ============ -->
+<div id="adminApp" class="admin-app hidden">
+
+  <!-- HEADER CON NAV HORIZONTAL -->
+  <header class="admin-header" id="adminHeader">
+    <!-- Fila superior: brand + acciones -->
+    <div class="admin-header-top">
+      <div class="admin-header-brand">
+        <img src="../images/Logo.jpeg" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
+        <div class="admin-header-brand-text">
+          <span class="sb-name">Cocó</span>
+          <span class="sb-sub">Admin</span>
+        </div>
+      </div>
+      <div class="admin-header-actions">
+        <span id="topbarUser" class="topbar-user"></span>
+        <button id="btnLogout" class="btn-logout-sidebar">Salir</button>
+        <button class="hamburger-btn" id="hamburger" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <!-- Fila inferior: nav -->
+    <nav class="admin-header-nav" id="adminNav">
+      <a href="#" class="nav-item active" data-section="dashboard">📅 Inicio</a>
+      <a href="#" class="nav-item" data-section="productos">🛍️ Productos</a>
+      <a href="#" class="nav-item" data-section="menus">📋 Menús</a>
+      <a href="#" class="nav-item" data-section="presupuesto">💰 Presupuesto</a>
+      <a href="#" class="nav-item" data-section="servicios">📆 Servicios</a>
+      <a href="#" class="nav-item" data-section="pagos">💳 Pagos</a>
+      <a href="#" class="nav-item" data-section="estadisticas">📊 Estadísticas</a>
+      <a href="#" class="nav-item" data-section="gastos">📉 Gastos</a>
+      <a href="#" class="nav-item" data-section="usuarios">👥 Usuarios</a>
+      <a href="#" class="nav-item" data-section="gestion">⚙️ Gestión</a>
+    </nav>
+  </header>
+
+  <!-- Menú móvil desplegable -->
+  <nav class="mobile-nav hidden" id="mobileNav">
+    <a href="#" class="nav-item active" data-section="dashboard">📅 Inicio</a>
+    <a href="#" class="nav-item" data-section="productos">🛍️ Productos</a>
+    <a href="#" class="nav-item" data-section="menus">📋 Menús</a>
+    <a href="#" class="nav-item" data-section="presupuesto">💰 Presupuesto</a>
+    <a href="#" class="nav-item" data-section="servicios">📆 Servicios</a>
+    <a href="#" class="nav-item" data-section="pagos">💳 Pagos</a>
+    <a href="#" class="nav-item" data-section="estadisticas">📊 Estadísticas</a>
+    <a href="#" class="nav-item" data-section="gastos">📉 Gastos</a>
+    <a href="#" class="nav-item" data-section="usuarios">👥 Usuarios</a>
+    <a href="#" class="nav-item" data-section="gestion">⚙️ Gestión</a>
+    <div class="mobile-nav-user">
+      <span id="userEmail" class="sidebar-user-email"></span>
+    </div>
+  </nav>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="main-content" id="mainContent">
+      <!-- Cargado dinámicamente -->
+    </div>
+  </main>
+
+</div>
+
+<!-- ============ MODAL ============ -->
+<div id="modalOverlay" class="modal-overlay hidden" role="dialog" aria-modal="true">
+  <div id="modalBox" class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle"></h3>
+      <button class="modal-close-btn" id="modalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="modalBody" class="modal-body"></div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- Firebase SDKs (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- App modules -->
+<script src="js/firebase-init.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/menus.js"></script>
+<script src="js/servicios.js"></script>
+<script src="js/presupuestos.js"></script>
+<script src="js/pagos.js"></script>
+<script src="js/gastos.js"></script>
+<script src="js/estadisticas.js"></script>
+<script src="js/usuarios.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+
+</body>
+</html>

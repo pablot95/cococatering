@@ -149,6 +149,15 @@
         </div>
     </div>
 
+    <!-- Sección: Mis Pedidos -->
+    <div id="misPedidosSeccion" class="mis-pedidos-seccion" style="display:none;">
+        <div class="mis-pedidos-inner">
+            <h2>Mis pedidos</h2>
+            <p class="mis-pedidos-desc">Aquí aparecen las solicitudes que enviaste. Cuando el pedido sea aprobado, podrás proceder al pago.</p>
+            <div id="misPedidosContainer"></div>
+        </div>
+    </div>
+
     <!-- Modal de Solicitud de Aprobación -->
     <div id="aprobacionModal" class="aprobacion-modal" style="display:none;">
         <div class="aprobacion-overlay" onclick="cerrarFormularioAprobacion()"></div>
@@ -232,8 +241,6 @@
         }
         window.carritoDb = firebase.firestore();
     </script>
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="../js/mobile-menu.js"></script>
     <script src="../js/carrito.js"></script>
 </body>

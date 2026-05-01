@@ -294,6 +294,26 @@ export async function deleteOrder(orderId) {
     }
 }
 
+// ==================== SOLICITUDES ====================
+
+/**
+ * Obtener una solicitud de pedido por ID
+ * @param {string} solicitudId
+ * @returns {Promise<Object|null>}
+ */
+export async function getSolicitud(solicitudId) {
+    try {
+        const doc = await db.collection('solicitudes').doc(solicitudId).get();
+        if (doc.exists) {
+            return { id: doc.id, ...doc.data() };
+        }
+        return null;
+    } catch (error) {
+        console.error(`Error obteniendo solicitud ${solicitudId}:`, error);
+        return null;
+    }
+}
+
 // ==================== PRECIOS ====================
 
 /**

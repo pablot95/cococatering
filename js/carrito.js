@@ -220,10 +220,7 @@ function updateSummary(subtotal) {
 }
 
 
-const EMAILJS_PUBLIC_KEY    = 'TU_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID    = 'TU_SERVICE_ID';
-const EMAILJS_TEMPLATE_ADMIN   = 'TU_TEMPLATE_ADMIN';  
-const EMAILJS_TEMPLATE_CLIENTE = 'TU_TEMPLATE_CLIENTE'; 
+const WHATSAPP_NUMBER = '5491128447772';
 
 function abrirFormularioAprobacion() {
     const cart = getCart();
@@ -252,7 +249,10 @@ async function enviarSolicitudAprobacion(event) {
     const nota      = document.getElementById('apNota').value.trim() || '';
     const localidad = document.getElementById('localidadEnvio')?.value || '';
 
-    const subtotal   = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+    const subtotal   = cart.reduce((t, i) => {
+        const min = i.min || 1;
+        return t + Math.round((i.quantity / min) * i.price);
+    }, 0);
     const shipping   = calculateShipping(localidad, subtotal);
     const costoEnvio = (shipping.costo !== 'consultar' && shipping.costo !== null) ? shipping.costo : 0;
     const total      = subtotal + costoEnvio;
@@ -279,62 +279,169 @@ async function enviarSolicitudAprobacion(event) {
         btnSubmit.textContent = 'Enviando...';
 
         // 1. Guardar en Firestore
-        let solicitudId = 'PENDIENTE';
+        let solicitudId = 'local-' + Date.now();
         if (window.carritoDb) {
             const docRef = await window.carritoDb.collection('solicitudes').add(solicitud);
             solicitudId = docRef.id;
         }
 
-        // 2. Enviar emails con EmailJS (si está configurado)
-        if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'TU_PUBLIC_KEY') {
-            emailjs.init(EMAILJS_PUBLIC_KEY);
-            const productosTexto = cart.map(i =>
-                `${i.name} x${i.quantity} = $${(i.price * i.quantity).toLocaleString()}`
-            ).join('\n');
+        // 2. Guardar ID en localStorage para «Mis Pedidos»
+        const pedidosGuardados = JSON.parse(localStorage.getItem('cocoPedidos') || '[]');
+        pedidosGuardados.push({ id: solicitudId, createdAt: new Date().toISOString() });
+        localStorage.setItem('cocoPedidos', JSON.stringify(pedidosGuardados));
 
-            const fechaFormateada = fecha
-                ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-                : 'No especificada';
-            const params = {
-                solicitud_id: solicitudId.slice(0, 8).toUpperCase(),
-                nombre, email, telefono, direccion,
-                localidad: localidad || 'No especificada',
-                fecha: fechaFormateada,
-                nota: nota || 'Sin notas',
-                productos: productosTexto,
-                subtotal: `$${subtotal.toLocaleString()}`,
-                costo_envio: shipping.costo === 'consultar' ? 'A consultar' : `$${costoEnvio.toLocaleString()}`,
-                total: `$${total.toLocaleString()}`
-            };
+        // 3. Armar mensaje de WhatsApp
+        const fechaFormateada = fecha
+            ? new Date(fecha + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            : 'No especificada';
 
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ADMIN,   { ...params, to_email: 'cococateringsanisidro@gmail.com' });
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CLIENTE, { ...params, to_email: email });
-        }
+        const productosTexto = cart.map(i => {
+            const min = i.min || 1;
+            const itemTotal = Math.round((i.quantity / min) * i.price);
+            const displayName = i.name.replace(/\s*–\s*x\d+\s*$/, '').trim();
+            return `• ${displayName} ×${i.quantity}${itemTotal > 0 ? ' = $' + itemTotal.toLocaleString() : ''}`;
+        }).join('\n');
 
-        // 3. Vaciar carrito y mostrar éxito
+        const envioTexto = shipping.costo === 'consultar'
+            ? 'A consultar'
+            : shipping.costo === 0
+                ? '¡Gratis! 🎉'
+                : `$${shipping.costo.toLocaleString()}`;
+
+        const mensaje = [
+            '🍽️ *NUEVA SOLICITUD DE PEDIDO — Cocó Catering*',
+            '',
+            `*N°:* #${solicitudId.slice(0, 8).toUpperCase()}`,
+            `*Nombre:* ${nombre}`,
+            `*Teléfono:* ${telefono}`,
+            `*Email:* ${email}`,
+            `*Dirección:* ${direccion}`,
+            `*Localidad:* ${localidad || 'No especificada'}`,
+            `*Fecha deseada:* ${fechaFormateada}`,
+            nota ? `*Nota:* ${nota}` : null,
+            '',
+            '*PRODUCTOS:*',
+            productosTexto,
+            '',
+            `*Subtotal:* $${subtotal.toLocaleString()}`,
+            `*Envío (${localidad || '?'}):* ${envioTexto}`,
+            `*TOTAL:* $${total.toLocaleString()}`,
+        ].filter(l => l !== null).join('\n');
+
+        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+        // 4. Vaciar carrito
         localStorage.removeItem('cocoCart');
         updateCartCount();
         cerrarFormularioAprobacion();
 
+        // 5. Abrir WhatsApp
+        window.open(waUrl, '_blank');
+
+        // 6. Mostrar confirmación
         document.getElementById('emptyCart').style.display = 'none';
         const cartItemsEl = document.getElementById('cartItems');
         cartItemsEl.classList.add('has-items');
         cartItemsEl.innerHTML = `
-            <div style="text-align:center;padding:40px 20px;">
-                <h2 style="color:var(--bordo);font-family:'Cormorant Garamond',serif;font-size:2rem;margin-bottom:15px;">¡Solicitud enviada! ✓</h2>
-                <p style="color:#555;margin-bottom:10px;">Nº de solicitud: <strong>${solicitudId.slice(0, 8).toUpperCase()}</strong></p>
-                <p style="color:#555;margin-bottom:20px;">Nos contactaremos a <strong>${telefono}</strong> para confirmar disponibilidad y coordinar el pago.</p>
-                <a href="../index.html" style="display:inline-block;background:var(--bordo);color:white;padding:10px 25px;border-radius:25px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.2rem;">Volver al inicio</a>
+            <div class="solicitud-enviada">
+                <div class="solicitud-check">✓</div>
+                <h2>¡Solicitud enviada!</h2>
+                <p>N° de solicitud: <strong>#${solicitudId.slice(0, 8).toUpperCase()}</strong></p>
+                <p>Se abrió WhatsApp con los detalles de tu pedido.<br>
+                   Si no se abrió automáticamente, <a href="${waUrl}" target="_blank" rel="noopener">hacé clic aquí</a>.</p>
+                <p class="solicitud-next">Te contactaremos a <strong>${telefono}</strong> para confirmar disponibilidad.</p>
+                <a href="../index.html" class="btn-volver-inicio">Volver al inicio</a>
             </div>`;
         document.querySelector('.carrito-summary').style.display = 'none';
 
+        // 7. Actualizar sección Mis Pedidos
+        await cargarMisPedidos();
+
     } catch (err) {
         console.error('Error enviando solicitud:', err);
-        errorEl.textContent = 'Ocurrió un error. Contactanos por WhatsApp.';
+        errorEl.textContent = 'Ocurrió un error. Contactanos por WhatsApp directamente.';
         errorEl.style.display = 'block';
         btnSubmit.disabled = false;
         btnSubmit.textContent = 'Enviar Solicitud';
     }
+}
+
+// ===================================
+// MIS PEDIDOS
+// ===================================
+async function cargarMisPedidos() {
+    const pedidosGuardados = JSON.parse(localStorage.getItem('cocoPedidos') || '[]');
+    const seccion = document.getElementById('misPedidosSeccion');
+    if (!seccion) return;
+
+    if (pedidosGuardados.length === 0) {
+        seccion.style.display = 'none';
+        return;
+    }
+
+    seccion.style.display = 'block';
+    const container = document.getElementById('misPedidosContainer');
+    container.innerHTML = '<div class="pedidos-loading">Cargando pedidos...</div>';
+
+    try {
+        const pedidos = [];
+        for (const p of pedidosGuardados) {
+            if (!window.carritoDb || !p.id || p.id.startsWith('local-')) continue;
+            try {
+                const docSnap = await window.carritoDb.collection('solicitudes').doc(p.id).get();
+                if (docSnap.exists) {
+                    pedidos.push({ id: docSnap.id, ...docSnap.data() });
+                }
+            } catch (_) { /* skip */ }
+        }
+
+        if (pedidos.length === 0) {
+            container.innerHTML = '<p class="pedidos-empty">No se encontraron pedidos.</p>';
+            return;
+        }
+
+        renderMisPedidos(pedidos, container);
+    } catch (err) {
+        container.innerHTML = '<p class="pedidos-empty">Error al cargar pedidos.</p>';
+    }
+}
+
+function renderMisPedidos(pedidos, container) {
+    const STATUS = {
+        pending:  { label: 'Pendiente de aprobación', icon: '🟡', cls: 'status-pending' },
+        approved: { label: 'Aprobado',                icon: '🟢', cls: 'status-approved' },
+        rejected: { label: 'Rechazado',               icon: '🔴', cls: 'status-rejected' }
+    };
+
+    container.innerHTML = pedidos.map(p => {
+        const st    = STATUS[p.status] || STATUS.pending;
+        const fecha = p.createdAt?.toDate
+            ? p.createdAt.toDate().toLocaleDateString('es-AR')
+            : (p.createdAt ? new Date(p.createdAt).toLocaleDateString('es-AR') : 'Hoy');
+        const prods = (p.productos || []).map(pr => {
+            const n = pr.name.replace(/\s*–\s*x\d+\s*$/, '').trim();
+            return `<span class="pedido-prod-tag">${n} ×${pr.quantity}</span>`;
+        }).join('');
+
+        return `
+        <div class="pedido-card ${st.cls}">
+            <div class="pedido-card-header">
+                <span class="pedido-id">#${p.id.slice(0, 8).toUpperCase()}</span>
+                <span class="pedido-badge ${st.cls}">${st.icon} ${st.label}</span>
+                <span class="pedido-fecha">${fecha}</span>
+            </div>
+            <div class="pedido-prods">${prods}</div>
+            <div class="pedido-total">Total: <strong>$${(p.total || p.subtotal || 0).toLocaleString()}</strong></div>
+            ${p.status === 'approved' ? `
+                <div class="pedido-msg aprobado">¡Tu pedido fue aprobado! Ya podés proceder al pago.</div>
+                <a href="checkout.html?solicitudId=${p.id}" class="btn-pagar-pedido">💳 Ir al pago</a>` : ''}
+            ${p.status === 'rejected' ? `
+                <div class="pedido-msg rechazado">Este pedido fue rechazado. Si tenés dudas, contactanos por WhatsApp.</div>
+                <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" rel="noopener" class="btn-consultar-wa">💬 Consultar por WhatsApp</a>` : ''}
+            ${p.status === 'pending' ? `
+                <div class="pedido-msg pendiente">Estamos revisando tu solicitud. Te avisaremos cuando esté aprobada.</div>` : ''}
+        </div>`;
+    }).join('');
 }
 
 // Mostrar notificación (usa la misma función que menu-script.js)
@@ -361,6 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Si estamos en la página del carrito
     if (window.location.pathname.includes('carrito.html')) {
         renderCart();
+        cargarMisPedidos();
     }
     
     updateCartCount();
