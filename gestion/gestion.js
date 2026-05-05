@@ -370,66 +370,135 @@ window.loadOrders = async function() {
 function renderOrderCard(order) {
     const statusClass = `status-${order.status}`;
     const statusText = {
-        pending: 'Pendiente',
+        pending:    'Pendiente',
         processing: 'En proceso',
-        completed: 'Completada',
-        cancelled: 'Cancelada'
+        completed:  'Completada',
+        cancelled:  'Cancelada'
     }[order.status] || order.status;
 
-    // Normalizar datos para soportar diferentes estructuras
-    const customer = order.cliente || order.customer || {};
-    const address = order.direccionEnvio || order.customer || {}; // En estructura vieja, dirección estaba en customer
-    const items = order.productos || order.items || [];
+    // Soportar órdenes desde solicitudes (campo 'cliente') y desde MercadoPago (campo 'customer')
+    const customer    = order.cliente || order.customer || {};
+    const items       = order.productos || order.items || [];
     const totalAmount = order.total || 0;
-    
-    const dateStr = order.fecha || order.createdAt || order.orderDate;
+
+    const dateStr = order.createdAt?.toDate ? order.createdAt.toDate() : order.createdAt || order.orderDate;
     const date = dateStr ? new Date(dateStr).toLocaleString('es-AR') : 'Fecha no disponible';
+
+    // Dirección: solicitudes usan string directo, MercadoPago usa campos separados
+    const direccion = customer.direccion
+        || [customer.calle, customer.altura].filter(Boolean).join(' ')
+        + (customer.piso   ? `, Piso ${customer.piso}`   : '')
+        + (customer.depto  ? `, Depto ${customer.depto}` : '');
+    const localidad = customer.localidad || customer.ciudad || '';
+    const provincia = customer.provincia
+        ? `${customer.provincia}${customer.codigoPostal ? ` (CP: ${customer.codigoPostal})` : ''}`
+        : '';
+    const domicilioCompleto = [direccion, localidad, provincia].filter(Boolean).join(' — ');
+
+    // Fecha del evento (de solicitudes)
+    const fechaEvento = order.fechaPedido
+        ? new Date(order.fechaPedido + 'T12:00:00').toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+        : null;
+
+    // Horario (si viene de solicitud)
+    const horario = order.horario || null;
+
+    // Migrar ítems viejos guardados en unidades físicas (sin campo unit, min >= 6)
+    const migratedItems = items.map(p => {
+        const storedUnit = p.unit || '';
+        const storedMin  = p.min  || 1;
+        if (storedUnit !== 'doc.' && storedMin >= 6) {
+            const rawQty = p.quantity || p.cantidad || 0;
+            const docenas = rawQty / storedMin;
+            if (docenas > 0 && Number.isInteger(docenas)) {
+                return { ...p, quantity: docenas, unit: 'doc.', min: 1, step: 1 };
+            }
+        }
+        return p;
+    });
+
+    // Productos
+    const productosHTML = migratedItems.map(p => {
+        const pName   = (p.name || p.nombre || 'Producto').replace(/\s*[–-]\s*x\d+\s*$/i, '').trim();
+        const qty     = p.quantity || p.cantidad || 0;
+        const price   = p.price   || p.precio   || 0;
+        const subtot  = qty * price;
+        const qtyLabel   = p.unit === 'doc.' ? `×${qty} doc.` : `×${qty} unid.`;
+        const priceLabel = p.unit === 'doc.' ? `$${price.toLocaleString('es-AR')} x doc.` : `$${price.toLocaleString('es-AR')} c/u`;
+        return `
+        <div class="product-item">
+            <span class="product-name">${pName}</span>
+            <span class="product-qty">${qtyLabel}</span>
+            <span class="product-price">${price > 0 ? '$' + subtot.toLocaleString('es-AR') : '—'}</span>
+        </div>`;
+    }).join('');
+
+    // Recalcular totales desde ítems migrados
+    const recalcSubtotal = migratedItems.reduce((sum, p) => {
+        return sum + (p.quantity || 0) * (p.price || p.precio || 0);
+    }, 0);
+    const envioNum = (!order.costoEnvio || order.costoEnvio === 0) ? 0
+        : order.costoEnvio === 'consultar' ? 0
+        : Number(order.costoEnvio);
+    const recalcTotal = recalcSubtotal + envioNum;
+
+    const envioText = order.costoEnvio === 'consultar' ? 'A consultar'
+        : (!order.costoEnvio) ? 'Gratis'
+        : `$${Number(order.costoEnvio).toLocaleString('es-AR')}`;
+
+    const origenTag = order.solicitudId
+        ? `<span style="font-size:.72rem;background:#e8f4e8;color:#2d6a2d;padding:2px 7px;border-radius:10px;margin-left:8px;">📝 Sol. #${order.solicitudId.slice(0,8).toUpperCase()}</span>`
+        : '';
 
     return `
         <div class="order-card">
             <div class="order-header">
-                <div>
-                    <div class="order-id">Orden #${order.orderId || order.paymentId || order.id}</div>
-                    <div class="order-date">${date}</div>
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                    <div class="order-id">Orden #${(order.orderId || order.paymentId || order.id || '').slice(0,8).toUpperCase()}</div>
+                    ${origenTag}
                 </div>
                 <span class="order-status ${statusClass}">${statusText}</span>
+                <span class="order-date">${date}</span>
             </div>
 
             <div class="customer-info">
                 <h3>👤 Cliente</h3>
                 <p><strong>${customer.nombre || 'Sin nombre'}</strong></p>
-                <p>📧 ${customer.email || 'Sin email'}</p>
-                <p>📱 ${customer.telefono || 'Sin teléfono'}</p>
-                <p>🆔 DNI: ${customer.dni || 'Sin DNI'}</p>
-                <p>📍 ${address.calle || ''} ${address.altura || ''}${address.piso ? ', Piso ' + address.piso : ''}${address.depto ? ', Depto ' + address.depto : ''}</p>
-                <p>   ${address.ciudad || ''}, ${address.provincia || ''} ${address.codigoPostal ? '(CP: ' + address.codigoPostal + ')' : ''}</p>
+                ${customer.email    ? `<p>📧 ${customer.email}</p>`    : ''}
+                ${customer.telefono ? `<p>📱 ${customer.telefono}</p>` : ''}
+                ${customer.dni      ? `<p>🆔 DNI: ${customer.dni}</p>` : ''}
+                ${domicilioCompleto ? `<p>📍 ${domicilioCompleto}</p>` : ''}
+                ${fechaEvento       ? `<p style="background:#fdf3e7;border-left:3px solid #e8962a;padding:5px 10px;border-radius:4px;margin-top:8px;">📅 <strong>Fecha del evento:</strong> ${fechaEvento}</p>` : ''}
+                ${horario           ? `<p>🕐 <strong>Horario:</strong> ${horario}</p>` : ''}
+                ${order.nota        ? `<p>📝 <strong>Nota:</strong> ${order.nota}</p>` : ''}
             </div>
 
             <div class="products-list">
                 <h4>📋 Productos</h4>
-                ${items.map(product => `
-                    <div class="product-item">
-                        <span class="product-name">${product.nombre || product.name || 'Producto'}</span>
-                        <span class="product-qty">x${product.cantidad || product.quantity || 0}</span>
-                        <span class="product-price">$${((product.precio || product.price || 0) * (product.cantidad || product.quantity || 0)).toLocaleString('es-AR')}</span>
-                    </div>
-                `).join('')}
+                ${productosHTML}
             </div>
 
             <div class="order-total">
-                <span class="total-label">Total:</span>
-                <span class="total-amount">$${totalAmount.toLocaleString('es-AR')}</span>
+                <div style="display:flex;flex-direction:column;gap:4px;font-size:.9rem;">
+                    <span>Subtotal: <strong>$${recalcSubtotal.toLocaleString('es-AR')}</strong></span>
+                    <span>Envío: <strong>${envioText}</strong></span>
+                </div>
+                <div>
+                    <span class="total-label">Total:</span>
+                    <span class="total-amount">$${recalcTotal.toLocaleString('es-AR')}</span>
+                </div>
             </div>
 
             <div class="order-actions">
                 <select onchange="updateOrderStatusHandler('${order.id}', this.value)">
-                    <option value="">Cambiar estado...</option>
-                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pendiente</option>
+                    <option value="">Cambiar estado…</option>
+                    <option value="pending"    ${order.status === 'pending'    ? 'selected' : ''}>Pendiente</option>
                     <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>En proceso</option>
-                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completada</option>
-                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelada</option>
+                    <option value="completed"  ${order.status === 'completed'  ? 'selected' : ''}>Completada</option>
+                    <option value="cancelled"  ${order.status === 'cancelled'  ? 'selected' : ''}>Cancelada</option>
                 </select>
-                <button onclick="deleteOrderHandler('${order.id}')">🗑️ Eliminar</button>
+                ${customer.telefono ? `<a href="https://wa.me/54${customer.telefono.replace(/\D/g,'')}" target="_blank" class="btn-secondary">💬 WhatsApp</a>` : ''}
+                <button onclick="deleteOrderHandler('${order.id}')" class="btn-danger">🗑️ Eliminar</button>
             </div>
         </div>
     `;
@@ -691,18 +760,16 @@ const EVENTO_SECTIONS = {
         { titulo: 'Parte Fría', items: [
             { nombre: 'Masitas de queso', imagen: 'masitas-de-queso.jpg' },
             { nombre: 'Pinchos bocconcinos', imagen: 'pinchos-boconccinos.jpg' },
-            { nombre: 'Dip de queso azul con nueces', imagen: 'dip-de-queso-azul-y-nueces.jpg' },
             { nombre: 'Criollito capresse', imagen: 'criollito-capresse.jpg' },
-            { nombre: 'Sconcito de crudo', imagen: 'scon-de-crudo.jpg' },
-            { nombre: 'Locatelli de pollo y tomate', imagen: 'locatelli-de-pollo-y-tomate.jpg' },
-            { nombre: 'Pecetitos', imagen: 'pecetito.jpg' },
+            { nombre: 'Sconcito de crudo y rúcula', imagen: 'scon-de-crudo.jpg' },
+            { nombre: 'Figacita de peceto, lechuga y tomate', imagen: 'pecetito.jpg' },
         ]},
         { titulo: 'Parte Caliente', items: [
-            { nombre: 'Pinchos de pollo crispy con honey', imagen: 'pinchos-de-pollo-crispy.jpg' },
-            { nombre: 'Empanaditas de bondiola', imagen: 'empanadas.jpg' },
+            { nombre: 'Pinchos de pollo y panceta', imagen: 'pinchos-de-pollo-crispy.jpg' },
+            { nombre: 'Figacita de bondiola, queso fresco y salsa malbec', imagen: 'empanadas.jpg' },
             { nombre: 'Canastitas de espinaca', imagen: 'canastitas-de-espinaca.jpg' },
-            { nombre: 'Roll de masa philo JYQ', imagen: 'roll-de-masa-philo.jpg' },
-            { nombre: 'Roast beef tiernizado', imagen: 'roast-beef.jpg' },
+            { nombre: 'Roll de masa philo con jamón y queso', imagen: 'roll-de-masa-philo.jpg' },
+            { nombre: 'Figacita de roast beef tiernizado, cheddar y cebolla caramelizada', imagen: 'roast-beef.jpg' },
         ]},
         { titulo: 'Postre', items: [
             { nombre: 'Shot de lemon pie', imagen: 'shot-de-lemon-pie.jpg' },
@@ -754,8 +821,9 @@ const EVENTO_SECTIONS = {
 
 function getImageSrc(filename) {
     if (!filename) return '';
-    if (filename.startsWith('/') || filename.startsWith('http')) return filename;
-    return `/productos/${filename}`;
+    if (filename.startsWith('http')) return filename;
+    if (filename.startsWith('/')) return filename;
+    return `../productos/${filename}`;
 }
 
 let currentProductCollection = 'fingersFrios';
@@ -858,8 +926,10 @@ function renderGroupedCard(product, collectionId, items) {
                 }
                 <div class="fb-img-overlay fb-img-overlay--sm">✏️</div>
             </div>
-            <input class="fb-input fb-item-nombre" type="text" value="${itemNombre}">
-            <input class="fb-input fb-item-imagen" type="text" value="${itemImagen}" placeholder="imagen.jpg" oninput="gestionPreviewSubImg(this)">
+            <div class="fb-subitem__fields">
+                <input class="fb-input fb-item-nombre" type="text" value="${itemNombre}" placeholder="Nombre del ítem">
+                <input class="fb-input fb-item-imagen" type="text" value="${itemImagen}" placeholder="imagen.jpg" oninput="gestionPreviewSubImg(this)">
+            </div>
         </div>`;
     }).join('');
 
@@ -911,8 +981,10 @@ function renderEventoCard(product, collectionId, sections) {
                     }
                     <div class="fb-img-overlay fb-img-overlay--sm">✏️</div>
                 </div>
-                <input class="fb-input fb-item-nombre" type="text" value="${itemNombre}">
-                <input class="fb-input fb-item-imagen" type="text" value="${itemImagen}" placeholder="imagen.jpg" oninput="gestionPreviewSubImg(this)">
+                <div class="fb-subitem__fields">
+                    <input class="fb-input fb-item-nombre" type="text" value="${itemNombre}" placeholder="Nombre del ítem">
+                    <input class="fb-input fb-item-imagen" type="text" value="${itemImagen}" placeholder="imagen.jpg" oninput="gestionPreviewSubImg(this)">
+                </div>
             </div>`;
         }).join('');
 
@@ -1186,7 +1258,19 @@ function renderSolicitudes() {
 
     container.innerHTML = lista.map(s => {
         const fecha = s.createdAt?.toDate ? s.createdAt.toDate().toLocaleDateString('es-AR') : 'N/D';
-        const productos = (s.productos || []).map(p => `${p.name} x${p.quantity}`).join(', ');
+        const productosHTML = (s.productos || []).map(p => {
+            const displayName = (p.name || '').replace(/\s*[–-]\s*x\d+\s*$/i, '').trim();
+            const unitPrice = p.price || 0;
+            const itemTotal = p.quantity * unitPrice;
+            const qtyLabel = p.unit === 'doc.' ? `×${p.quantity} doc.` : `×${p.quantity} unid.`;
+            const priceLabel = p.unit === 'doc.' ? '$' + unitPrice.toLocaleString() + ' x doc.' : '$' + unitPrice.toLocaleString() + ' c/u';
+            return `<tr>
+                <td style="padding:5px 8px;">${displayName}</td>
+                <td style="padding:5px 8px;text-align:center;white-space:nowrap;">${qtyLabel}</td>
+                <td style="padding:5px 8px;text-align:right;white-space:nowrap;">${priceLabel}</td>
+                <td style="padding:5px 8px;text-align:right;font-weight:600;white-space:nowrap;">$${itemTotal.toLocaleString()}</td>
+            </tr>`;
+        }).join('');
         const envioText = s.costoEnvio === 'consultar' ? 'A consultar' : s.costoEnvio === 0 ? 'Gratis' : `$${(s.costoEnvio||0).toLocaleString()}`;
         const statusLabels = { pending: '🟡 Pendiente', approved: '🟢 Aprobada', rejected: '🔴 Rechazada' };
         const statusLabel = statusLabels[s.status] || s.status;
@@ -1207,10 +1291,22 @@ function renderSolicitudes() {
                 <div style="grid-column:1/-1;background:#fdf3e7;border-left:3px solid #e8962a;padding:6px 10px;border-radius:4px;">
                     <strong>📅 Fecha pedido:</strong> ${s.fecha ? new Date(s.fecha+'T12:00:00').toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) : '⚠️ No especificada'}
                 </div>
+                ${s.horario ? `<div style="grid-column:1/-1;"><strong>🕐 Horario preferencial:</strong> ${s.horario}</div>` : ''}
                 ${s.nota ? `<div style="grid-column:1/-1;"><strong>Nota:</strong> ${s.nota}</div>` : ''}
             </div>
             <div style="background:#f9f5f4;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:0.9rem;">
-                <strong>Productos:</strong> ${productos}
+                <strong>Productos:</strong>
+                <table style="width:100%;border-collapse:collapse;margin-top:6px;">
+                    <thead>
+                        <tr style="font-size:0.78rem;color:#888;border-bottom:1px solid #e0d8d4;">
+                            <th style="padding:4px 8px;text-align:left;font-weight:600;">Producto</th>
+                            <th style="padding:4px 8px;text-align:center;font-weight:600;">Cantidad</th>
+                            <th style="padding:4px 8px;text-align:right;font-weight:600;">Precio unit.</th>
+                            <th style="padding:4px 8px;text-align:right;font-weight:600;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>${productosHTML}</tbody>
+                </table>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
                 <div>
@@ -1232,19 +1328,45 @@ function renderSolicitudes() {
 async function aprobarSolicitud(id, email, nombre) {
     if (!confirm(`¿Aprobar solicitud de ${nombre}?`)) return;
     try {
+        const solicitud = todasLasSolicitudes.find(s => s.id === id);
+        if (!solicitud) throw new Error('Solicitud no encontrada localmente');
+
+        // 1. Marcar solicitud como aprobada
         await db.collection('solicitudes').doc(id).update({ status: 'approved', updatedAt: new Date() });
 
-        // Notificar al cliente por WhatsApp
-        const solicitud = todasLasSolicitudes.find(s => s.id === id);
-        const tel = (solicitud?.telefono || '').replace(/\D/g, '');
+        // 2. Crear orden en la colección 'orders'
+        const orden = {
+            solicitudId: id,
+            cliente: {
+                nombre:    solicitud.nombre    || '',
+                email:     solicitud.email     || '',
+                telefono:  solicitud.telefono  || '',
+                direccion: solicitud.direccion || '',
+                localidad: solicitud.localidad || ''
+            },
+            fechaPedido:  solicitud.fecha      || null,
+            horario:      solicitud.horario    || null,
+            nota:         solicitud.nota       || null,
+            productos:    solicitud.productos  || [],
+            subtotal:     solicitud.subtotal   || 0,
+            costoEnvio:   solicitud.costoEnvio ?? 0,
+            total:        solicitud.total      || solicitud.subtotal || 0,
+            status:       'pending',
+            createdAt:    new Date()
+        };
+        const ordenRef = await db.collection('orders').add(orden);
+
+        // 3. Notificar al cliente por WhatsApp
+        const tel = (solicitud.telefono || '').replace(/\D/g, '');
         if (tel) {
             const msg = [
                 `🟢 *PEDIDO APROBADO — Cocó Catering*`,
                 ``,
                 `¡Hola ${nombre}! Tu solicitud *#${id.slice(0,8).toUpperCase()}* fue *aprobada*.`,
                 ``,
-                `Ya podés ingresar a tu carrito y proceder al pago.`,
-                `👉 ${window.location.origin.replace('/gestion','')}/html/carrito.html`,
+                `Orden generada: *#${ordenRef.id.slice(0,8).toUpperCase()}*`,
+                ``,
+                `Ya podés coordinar los detalles finales por este medio.`,
                 ``,
                 `¡Gracias por elegirnos! 🍽️`,
             ].join('\n');
@@ -1252,7 +1374,7 @@ async function aprobarSolicitud(id, email, nombre) {
             window.open(waUrl, '_blank');
         }
 
-        alert(`Solicitud de ${nombre} aprobada.`);
+        alert(`Solicitud de ${nombre} aprobada y orden #${ordenRef.id.slice(0,8).toUpperCase()} creada.`);
         loadSolicitudes();
     } catch (err) {
         alert('Error: ' + err.message);

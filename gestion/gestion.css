@@ -1006,6 +1006,21 @@ body {
     display: block;
 }
 
+.fb-subitem__fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.fb-subitem__fields .fb-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 7px;
+    font-size: 12px;
+}
+
 .fb-subitem .fb-input {
     flex: 1;
     padding: 5px 7px;
@@ -1098,9 +1113,15 @@ body {
     box-shadow: 0 0 0 2px rgba(139, 46, 58, 0.1);
 }
 
-.fb-nombre { width: 100%; min-width: 180px; }
+.fb-nombre { width: 100%; min-width: 200px; flex: 1 1 100%; }
 .fb-unidad { width: 80px; }
 .fb-precio { width: 110px; }
+
+/* Asegura que el campo nombre ocupe su propia fila en el header de la card */
+.fb-card__header-fields .fb-field:first-child {
+    flex: 1 1 100%;
+    width: 100%;
+}
 
 .fb-btn-save {
     padding: 7px 16px;

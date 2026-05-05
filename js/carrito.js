@@ -2,8 +2,27 @@
 
 // Obtener carrito del localStorage
 function getCart() {
-    const cart = localStorage.getItem('cocoCart');
-    return cart ? JSON.parse(cart) : [];
+    const raw = localStorage.getItem('cocoCart');
+    if (!raw) return [];
+    const items = JSON.parse(raw);
+    // Migrar items viejos sin campo unit
+    let migrated = false;
+    items.forEach(item => {
+        if (!item.unit) {
+            if ((item.min || 1) >= 6) {
+                // Item guardado en unidades físicas (ej. quantity=24, min=12) → convertir a docenas
+                item.quantity = Math.max(1, Math.ceil(item.quantity / item.min));
+                item.unit = 'doc.';
+                item.min  = 1;
+                item.step = 1;
+            } else {
+                item.unit = 'u.';
+            }
+            migrated = true;
+        }
+    });
+    if (migrated) localStorage.setItem('cocoCart', JSON.stringify(items));
+    return items;
 }
 
 // Guardar carrito en localStorage
@@ -27,6 +46,8 @@ function addToCart(product) {
     if (existingItem) {
         console.log('  ✏️ Producto existente, incrementando cantidad');
         existingItem.quantity += (product.quantity || 1);
+        // Actualizar unit si el item viejo no lo tenía
+        if (!existingItem.unit && product.unit) existingItem.unit = product.unit;
     } else {
         console.log('  ➕ Producto nuevo, agregando al carrito');
         cart.push({
@@ -36,6 +57,7 @@ function addToCart(product) {
             image: product.image,
             showImage: showImage,
             quantity: product.quantity || 1,
+            unit: product.unit || 'u.',
             min: product.min || 1,
             step: product.step || 1
         });
@@ -111,11 +133,14 @@ function renderCart() {
     cartItemsContainer.innerHTML = cart.map(item => {
         // Quitar " – x12" / " – x6" etc. del nombre para mostrar limpio
         const displayName = item.name.replace(/\s*–\s*x\d+\s*$/, '').trim();
-        const min = item.min || 1;
-        const unitPrice = Math.round(item.price / min);
-        const itemTotal = Math.round((item.quantity / min) * item.price);
-        const priceDisplay = item.price > 0 ? `$${unitPrice.toLocaleString()}` : 'Consultar';
+        const esPorDocena = item.unit === 'doc.';
+        const unitPrice = item.price;
+        const itemTotal = item.quantity * item.price;
+        const priceDisplay = item.price > 0
+            ? `$${unitPrice.toLocaleString()} x ${esPorDocena ? 'doc.' : 'u.'}`
+            : 'Consultar';
         const totalDisplay = item.price > 0 ? `$${itemTotal.toLocaleString()}` : '';
+        const qtyLabel = esPorDocena ? `×${item.quantity} doc.` : `×${item.quantity}`;
         const imgHtml = item.showImage !== false
             ? `<img src="${item.image}" alt="${displayName}" class="cart-item-image">`
             : '';
@@ -126,10 +151,10 @@ function renderCart() {
                 <div class="cart-item-name-row">
                     <span class="cart-item-name">${displayName}</span>
                     <button class="cart-qty-btn" onclick="updateQuantity('${item.id}', -1)">−</button>
-                    <span class="cart-item-qty">×${item.quantity}</span>
+                    <span class="cart-item-qty">${qtyLabel}</span>
                     <button class="cart-qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
                 </div>
-                <p class="item-price">${priceDisplay} c/u</p>
+                <p class="item-price">${priceDisplay}</p>
             </div>
             <div class="cart-item-right">
                 ${totalDisplay ? `<span class="cart-item-total">${totalDisplay}</span>` : ''}
@@ -138,10 +163,7 @@ function renderCart() {
         </div>`;
     }).join('');
     
-    const subtotal = cart.reduce((total, item) => {
-        const min = item.min || 1;
-        return total + Math.round((item.quantity / min) * item.price);
-    }, 0);
+    const subtotal = cart.reduce((total, item) => total + item.quantity * item.price, 0);
     updateSummary(subtotal);
 }
 // ===================================
@@ -172,10 +194,7 @@ function calculateShipping(localidad, subtotal) {
 // Actualizar envío cuando cambia la localidad
 function actualizarEnvio() {
     const cart = getCart();
-    const subtotal = cart.reduce((total, item) => {
-        const min = item.min || 1;
-        return total + Math.round((item.quantity / min) * item.price);
-    }, 0);
+    const subtotal = cart.reduce((total, item) => total + item.quantity * item.price, 0);
     updateSummary(subtotal);
 }
 
@@ -246,13 +265,11 @@ async function enviarSolicitudAprobacion(event) {
     const telefono  = document.getElementById('apTelefono').value.trim();
     const direccion = document.getElementById('apDireccion').value.trim();
     const fecha     = document.getElementById('apFecha').value || '';
+    const horario   = document.getElementById('apHorario')?.value || '';
     const nota      = document.getElementById('apNota').value.trim() || '';
     const localidad = document.getElementById('localidadEnvio')?.value || '';
 
-    const subtotal   = cart.reduce((t, i) => {
-        const min = i.min || 1;
-        return t + Math.round((i.quantity / min) * i.price);
-    }, 0);
+    const subtotal   = cart.reduce((t, i) => t + i.quantity * i.price, 0);
     const shipping   = calculateShipping(localidad, subtotal);
     const costoEnvio = (shipping.costo !== 'consultar' && shipping.costo !== null) ? shipping.costo : 0;
     const total      = subtotal + costoEnvio;
@@ -261,6 +278,7 @@ async function enviarSolicitudAprobacion(event) {
         nombre, email, telefono, direccion,
         localidad: localidad || 'No especificada',
         fecha: fecha || null,
+        horario: horario || null,
         nota: nota || null,
         productos: cart,
         subtotal,
@@ -296,10 +314,10 @@ async function enviarSolicitudAprobacion(event) {
             : 'No especificada';
 
         const productosTexto = cart.map(i => {
-            const min = i.min || 1;
-            const itemTotal = Math.round((i.quantity / min) * i.price);
+            const itemTotal = i.quantity * i.price;
             const displayName = i.name.replace(/\s*–\s*x\d+\s*$/, '').trim();
-            return `• ${displayName} ×${i.quantity}${itemTotal > 0 ? ' = $' + itemTotal.toLocaleString() : ''}`;
+            const qtyLabel = i.unit === 'doc.' ? `×${i.quantity} doc.` : `×${i.quantity}`;
+            return `• ${displayName} ${qtyLabel}${itemTotal > 0 ? ' = $' + itemTotal.toLocaleString() : ''}`;
         }).join('\n');
 
         const envioTexto = shipping.costo === 'consultar'
@@ -318,6 +336,7 @@ async function enviarSolicitudAprobacion(event) {
             `*Dirección:* ${direccion}`,
             `*Localidad:* ${localidad || 'No especificada'}`,
             `*Fecha deseada:* ${fechaFormateada}`,
+            horario ? `*Horario preferencial:* ${horario}` : null,
             nota ? `*Nota:* ${nota}` : null,
             '',
             '*PRODUCTOS:*',
@@ -420,7 +439,8 @@ function renderMisPedidos(pedidos, container) {
             : (p.createdAt ? new Date(p.createdAt).toLocaleDateString('es-AR') : 'Hoy');
         const prods = (p.productos || []).map(pr => {
             const n = pr.name.replace(/\s*–\s*x\d+\s*$/, '').trim();
-            return `<span class="pedido-prod-tag">${n} ×${pr.quantity}</span>`;
+            const qtyLabel = pr.unit === 'doc.' ? `×${pr.quantity} doc.` : `×${pr.quantity}`;
+            return `<span class="pedido-prod-tag">${n} ${qtyLabel}</span>`;
         }).join('');
 
         return `

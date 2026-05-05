@@ -224,23 +224,24 @@ async function addAllToCart() {
             const quantity = parseInt(qtyDisplay.textContent);
             
             if (quantity > 0) {
-                // Si tiene compra mínima (ej. fingers/shots: min=12, step=6),
-                // guardar precio por unidad y cantidad real seleccionada
                 const minQty = parseInt(item.dataset.min || '0');
-                const batchPrice = parsePrice(item.dataset.price);
-                const pricePerUnit = (minQty > 0) ? Math.round(batchPrice / minQty) : batchPrice;
-                const realQty = (minQty > 0) ? quantity : quantity;
-
                 const stepQty = parseInt(item.dataset.step || '1');
+                const batchPrice = parsePrice(item.dataset.price);
+                // Si min >= 6, el qty-display muestra unidades reales (12, 18, 24...)
+                // Se convierte a docenas dividiendo por minQty para guardar en el carrito
+                const esPorDocena = minQty >= 6;
+                const docenas = esPorDocena ? quantity / minQty : quantity;
+
                 const product = {
                     id: item.dataset.id,
                     name: item.dataset.name,
                     price: batchPrice,
                     image: item.dataset.image,
-                    quantity: realQty,
-                    min: minQty > 0 ? minQty : 1,
-                    step: stepQty,
-                    _batch: minQty > 0
+                    quantity: docenas,           // docenas (si esPorDocena) o unidades
+                    unit: esPorDocena ? 'doc.' : 'u.',
+                    min: esPorDocena ? 1 : (minQty || 1),
+                    step: esPorDocena ? 1 : stepQty,
+                    _batch: esPorDocena
                 };
                 
                 productsToAdd.push(product);
@@ -444,6 +445,9 @@ async function updateQtyNew(button, change) {
     
     let currentQty = parseInt(qtyDisplay.textContent);
     let newQty;
+    
+    // Productos "por docena" (min >= 6): el selector muestra unidades reales (12, 18, 24...)
+    const esPorDocena = minQty >= 6;
     
     if (change > 0) {
         // Subir: si estaba en 0 y hay mínimo, saltar al mínimo directamente
