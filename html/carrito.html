@@ -17,38 +17,39 @@
     </div>
     <!-- Mobile Navigation Menú -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="../index.html">Inicio</a>
+        <a href="../">Inicio</a>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Menú</button>
             <div class="mobile-dropdown-menu">
-                <a href="eventos.html">Eventos</a>
-                <a href="box-salados.html">Box Salados</a>
+                <a href="eventos">Eventos</a>
+                <a href="box-salados">Box Salados</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Fingers Salados</button>
             <div class="mobile-dropdown-menu">
-                <a href="fingers-frios.html">Fríos</a>
-                <a href="fingers-calientes.html">Calientes</a>
+                <a href="fingers-frios">Fríos</a>
+                <a href="fingers-calientes">Calientes</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Fingers Dulces</button>
             <div class="mobile-dropdown-menu">
-                <a href="box-dulces.html">Box Dulces</a>
-                <a href="shots.html">Shots</a>
+                <a href="box-dulces">Box Dulces</a>
+                <a href="shots">Shots</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Tortas</button>
             <div class="mobile-dropdown-menu">
-                <a href="tortas-clasicas.html">Clásicas</a>
-                <a href="tortas-decoradas.html">Decoradas</a>
-                <a href="combos-dulces.html">Combos Dulces</a>
+                <a href="tortas-clasicas">Clásicas</a>
+                <a href="tortas-decoradas">Decoradas</a>
+                <a href="combos-dulces">Combos Dulces</a>
             </div>
         </div>
-        <a href="desayunos.html">Desayunos</a>
-        <a href="carrito.html">Carrito</a>
+        <a href="desayunos">Desayunos</a>
+        <a href="carrito">Carrito</a>
+        <button class="mobile-dropdown-toggle" onclick="toggleMobileMenu();abrirMisPedidos()">Ver mis pedidos</button>
     </nav>
     <div class="carrito-page-container">
         <!-- Header -->
@@ -56,38 +57,39 @@
             <h1>Mi Carrito</h1>
             <!-- Desktop Navigation Menú -->
             <nav class="carrito-nav-menu">
-                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="../" class="nav-link">Inicio</a>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Menú</button>
                     <div class="dropdown-menu">
-                        <a href="eventos.html">Eventos</a>
-                        <a href="box-salados.html">Box Salados</a>
+                        <a href="eventos">Eventos</a>
+                        <a href="box-salados">Box Salados</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Salados</button>
                     <div class="dropdown-menu">
-                        <a href="fingers-frios.html">Fríos</a>
-                        <a href="fingers-calientes.html">Calientes</a>
+                        <a href="fingers-frios">Fríos</a>
+                        <a href="fingers-calientes">Calientes</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Dulces</button>
                     <div class="dropdown-menu">
-                        <a href="box-dulces.html">Box Dulces</a>
-                        <a href="shots.html">Shots</a>
+                        <a href="box-dulces">Box Dulces</a>
+                        <a href="shots">Shots</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Tortas</button>
                     <div class="dropdown-menu">
-                        <a href="tortas-clasicas.html">Clásicas</a>
-                        <a href="tortas-decoradas.html">Decoradas</a>
-                        <a href="combos-dulces.html">Combos Dulces</a>
+                        <a href="tortas-clasicas">Clásicas</a>
+                        <a href="tortas-decoradas">Decoradas</a>
+                        <a href="combos-dulces">Combos Dulces</a>
                     </div>
                 </div>
-                <a href="desayunos.html" class="nav-link">Desayunos</a>
-                <a href="carrito.html" class="nav-link active">Carrito</a>
+                <a href="desayunos" class="nav-link">Desayunos</a>
+                <a href="carrito" class="nav-link active">Carrito</a>
+                <button class=" btn-mis-pedidos" onclick="abrirMisPedidos()">Ver mis pedidos</button>
             </nav>
         </div>
         <!-- Cart Content -->
@@ -104,7 +106,7 @@
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                     </svg>
                     <h2>Tu carrito está vacío</h2>
-                    <a href="../index.html" class="btn-primary">Volver al inicio</a>
+                    <a href="../" class="btn-primary" style="padding: 10px 10px;">Volver al inicio</a>
                 </div>
             </div>
             <!-- Cart Summary -->
@@ -114,46 +116,68 @@
                     <span>Subtotal:</span>
                     <span id="subtotal">$0</span>
                 </div>
-                <!-- Localidad dropdown para calcular envío -->
-                <div class="summary-line summary-localidad">
-                    <label for="localidadEnvio">Localidad:</label>
-                    <select id="localidadEnvio" onchange="actualizarEnvio()">
-                        <option value="">Seleccioná tu localidad</option>
-                            <option value="san-isidro">San Isidro</option>
-                            <option value="acasusso">Acasusso</option>
-                            <option value="martinez">Martínez</option>
-                            <option value="beccar">Beccar</option>
-                            <option value="villa-adelina">Villa Adelina</option>
-                            <option value="boulogne">Boulogne</option>
-                            <option value="san-fernando">San Fernando</option>
-                            <option value="olivos">Olivos</option>
-                            <option value="vicente-lopez">Vicente López</option>
-                            <option value="tigre">Tigre</option>
-                            <option value="nordelta">Nordelta</option>
-                        <option value="otra">Otra zona (consultar)</option>
-                    </select>
+                <!-- Toggle envío / retiro -->
+                <div class="summary-line summary-entrega-toggle">
+                    <span>Entrega:</span>
+                    <div class="entrega-opciones">
+                        <label class="entrega-opt">
+                            <input type="radio" name="tipoEntregaResumen" value="envio" checked onchange="actualizarTipoEntrega()"> Envío
+                        </label>
+                        <label class="entrega-opt">
+                            <input type="radio" name="tipoEntregaResumen" value="retiro" onchange="actualizarTipoEntrega()"> Retiro en local
+                        </label>
+                    </div>
                 </div>
-                <div class="summary-line">
-                    <span>Envío:</span>
-                    <span id="envio">Seleccioná localidad</span>
+                <!-- Localidad dropdown (solo envío) -->
+                <div id="envioDetails">
+                    <div class="summary-line summary-localidad">
+                        <label for="localidadEnvio">Localidad:</label>
+                        <select id="localidadEnvio" onchange="actualizarEnvio()">
+                            <option value="">Seleccioná tu localidad</option>
+                        </select>
+                        <input type="text" id="localidadEnvioOtra" placeholder="Escribí tu localidad" style="display:none;margin-top:8px;" oninput="actualizarEnvio()">
+                    </div>
+                    <div class="summary-line">
+                        <span>Envío:</span>
+                        <span id="envio">Selecioná localidad</span>
+                    </div>
+                    <div class="summary-line envio-info">
+                        <span id="envioMessage"></span>
+                    </div>
                 </div>
-                <div class="summary-line envio-info">
-                    <span id="envioMessage"></span>
+                <div id="retiroDetails" style="display:none">
+                    <div class="summary-line">
+                        <span>Envío:</span>
+                        <span style="color:green;font-weight:600"> Gratis (retiro en local)</span>
+                    </div>
                 </div>
                 <div class="summary-line total">
                     <span>Total:</span>
                     <span id="total">$0</span>
                 </div>
                 <button id="continuarCompraBtn" class="btn-checkout" onclick="abrirFormularioAprobacion()">Solicitar Pedido</button>
+                <button class="btn-mis-pedidos-mobile" onclick="abrirMisPedidos()">Ver mis pedidos</button>
             </div>
         </div>
     </div>
 
-    <!-- Sección: Mis Pedidos -->
-    <div id="misPedidosSeccion" class="mis-pedidos-seccion" style="display:none;">
-        <div class="mis-pedidos-inner">
+    <!-- Modal: Mis Pedidos -->
+    <div id="misPedidosModal" class="mis-pedidos-modal" style="display:none;" onclick="_cerrarMisPedidosOutside(event)">
+        <div class="mis-pedidos-modal-inner">
+            <button class="mis-pedidos-close" onclick="cerrarMisPedidos()">&times;</button>
             <h2>Mis pedidos</h2>
-            <p class="mis-pedidos-desc">Aquí aparecen las solicitudes que enviaste. Cuando el pedido sea aprobado, podrás proceder al pago.</p>
+            <p class="mis-pedidos-desc">Ingresá tu email y el código de pedido para ver el estado de tu solicitud.</p>
+            <div class="mis-pedidos-form">
+                <div class="mis-pedidos-field">
+                    <label>Email</label>
+                    <input type="email" id="inputBuscarEmail" placeholder="tu@email.com" autocomplete="email">
+                </div>
+                <div class="mis-pedidos-field">
+                    <label>Código de pedido</label>
+                    <input type="text" id="inputBuscarCodigo" placeholder="Ej: COCO-AB3X7Y" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+                </div>
+                <button class="btn-buscar-pedidos" onclick="buscarPedidosPorEmailCodigo()">Buscar pedido</button>
+            </div>
             <div id="misPedidosContainer"></div>
         </div>
     </div>
@@ -178,12 +202,33 @@
                     <label for="apTelefono">Teléfono / WhatsApp *</label>
                     <input type="tel" id="apTelefono" required placeholder="Ej: 1128447772">
                 </div>
+                <div id="apEntregaDomicilio">
                 <div class="form-group">
                     <label for="apDireccion">Dirección de entrega *</label>
                     <input type="text" id="apDireccion" required placeholder="Calle, número, piso/depto">
                 </div>
                 <div class="form-group">
-                    <label for="apFecha">¿Para cuándo necesitás el pedido? *</label>
+                    <label for="apLocalidad">Localidad *</label>
+                    <select id="apLocalidad" required>
+                        <option value="">Selección tu localidad</option>
+                        <option value="san-isidro">San Isidro</option>
+                        <option value="acasusso">Acassuso</option>
+                        <option value="martinez">Martínez</option>
+                        <option value="beccar">Beccar</option>
+                        <option value="villa-adelina">Villa Adelina</option>
+                        <option value="boulogne">Boulogne</option>
+                        <option value="san-fernando">San Fernando</option>
+                        <option value="olivos">Olivos</option>
+                        <option value="vicente-lopez">Vicente López</option>
+                        <option value="tigre">Tigre</option>
+                        <option value="nordelta">Nordelta</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                    <input type="text" id="apLocalidadOtra" placeholder="Escribí tu localidad" style="display:none;margin-top:8px;">
+                </div>
+                </div><!-- fin apEntregaDomicilio -->
+                <div class="form-group">
+                    <label for="apFecha">¿Para cuándo necesitás la entrega? *</label>
                     <input type="date" id="apFecha" required>
                 </div>
                 <div class="form-group">
@@ -195,7 +240,6 @@
                         <option value="12:00–14:00">12:00 – 14:00</option>
                         <option value="14:00–16:00">14:00 – 16:00</option>
                         <option value="16:00–18:00">16:00 – 18:00</option>
-                        <option value="18:00–20:00">18:00 – 20:00</option>
                         <option value="A confirmar">A confirmar</option>
                     </select>
                 </div>
@@ -256,5 +300,22 @@
     </script>
     <script src="../js/mobile-menu.js"></script>
     <script src="../js/carrito.js"></script>
+    <script>
+        function abrirMisPedidos() {
+            document.getElementById('misPedidosModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            document.getElementById('misPedidosContainer').innerHTML = '';
+        }
+        function cerrarMisPedidos() {
+            document.getElementById('misPedidosModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        function _cerrarMisPedidosOutside(e) {
+            if (e.target === document.getElementById('misPedidosModal')) cerrarMisPedidos();
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') cerrarMisPedidos();
+        });
+    </script>
 </body>
 </html>

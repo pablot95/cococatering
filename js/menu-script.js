@@ -46,12 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Cache de imágenes precargadas (mantener referencias para evitar GC)
+    const _preloadCache = [];
+
     // Preload de imágenes para evitar parpadeos
     function preloadImages() {
         const items = document.querySelectorAll('[data-image]');
         items.forEach(item => {
+            const url = item.dataset.image;
+            if (!url || _preloadCache.some(i => i.src.endsWith(url.replace('../', '')))) return;
             const img = new Image();
-            img.src = item.dataset.image;
+            img.src = url;
+            _preloadCache.push(img);
         });
     }
 
@@ -240,7 +246,8 @@ async function addAllToCart() {
                     quantity: docenas,           // docenas (si esPorDocena) o unidades
                     unit: esPorDocena ? 'doc.' : 'u.',
                     min: esPorDocena ? 1 : (minQty || 1),
-                    step: esPorDocena ? 1 : stepQty,
+                    step: esPorDocena ? stepQty / minQty : stepQty,  // 6/12 = 0.5 → suma de 6 en 6 u.
+                    batchSize: esPorDocena ? minQty : 1,  // unidades reales por docena
                     _batch: esPorDocena
                 };
                 

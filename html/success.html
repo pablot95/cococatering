@@ -108,7 +108,7 @@
                 </svg>
             </div>
             <h1>Pago Exitoso!</h1>
-            <p>Tu Pedido ha sido confirmado correctamente.</p>
+            <p>Recibimos la confirmación de MercadoPago. Estamos actualizando tu pedido.</p>
             <div class="order-details">
                 <h3>Detalles del Pedido</h3>
                 <p><strong>Número de orden:</strong> <span id="orderNumber"></span></p>
@@ -116,11 +116,10 @@
                 <p>Recibirás un email de confirmación con los detalles de tu Pedido.</p>
                 <p>Te contactaremos pronto para coordinar la entrega.</p>
             </div>
-            <a href="../index.html" class="btn-home">Volver al Inicio</a>
+            <a href="../" class="btn-home">Volver al Inicio</a>
         </div>
     </div>
-    <script type="module">
-        import { decrementCartStock, updateOrderStatus } from '../js/firestore-service.js';
+    <script>
         // Obtener parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const paymentId = urlParams.get('payment_id');
@@ -130,105 +129,11 @@
         if (paymentId) {
             document.getElementById('orderNumber').textContent = paymentId;
         }
-        // Obtener carrito antes de limpiarlo
-        const cartJson = localStorage.getItem('cocoCart');
-        const cart = cartJson ? JSON.parse(cartJson) : [];
-        // Decrementar stock de los productos comprados en Firebase
-        if (cart.length > 0 && status === 'approved') {
-            try {
-                // Preparar items del carrito con información de colección
-                const cartItems = cart.map(item => {
-                    // Intentar derivar la colección del nombre o ID del producto
-                    let collectionName = '';
-                    // Mapeo básico según el nombre del producto
-                    if (item.name.toLowerCase().includes('box') && item.name.toLowerCase().includes('salado')) {
-                        collectionName = 'boxSalados';
-                    } else if (item.name.toLowerCase().includes('box') && item.name.toLowerCase().includes('dulce')) {
-                        collectionName = 'boxDulces';
-                    } else if (item.name.toLowerCase().includes('finger') && item.name.toLowerCase().includes('frío')) {
-                        collectionName = 'fingersFrios';
-                    } else if (item.name.toLowerCase().includes('finger') && item.name.toLowerCase().includes('caliente')) {
-                        collectionName = 'fingersCalientes';
-                    } else if (item.name.toLowerCase().includes('shot')) {
-                        collectionName = 'shots';
-                    } else if (item.name.toLowerCase().includes('torta') && item.name.toLowerCase().includes('clásica')) {
-                        collectionName = 'tortasClasicas';
-                    } else if (item.name.toLowerCase().includes('combo')) {
-                        collectionName = 'combosDulces';
-                    } else if (item.name.toLowerCase().includes('desayuno')) {
-                        collectionName = 'desayunos';
-                    } else if (item.name.toLowerCase().includes('menú') || item.name.toLowerCase().includes('gourmet') || item.name.toLowerCase().includes('clásico') || item.name.toLowerCase().includes('picada') || item.name.toLowerCase().includes('pizza')) {
-                        collectionName = 'menuEventos';
-                    }
-                    return {
-                        collectionName: collectionName,
-                        productName: item.name,
-                        quantity: item.quantity
-                    };
-                }).filter(item => item.collectionName); // Filtrar items sin colección
-                // Decrementar stock en Firebase
-                const success = await decrementCartStock(cartItems);
-                if (success) {
-                    console.log('? Stock actualizado correctamente en Firebase');
-                } else {
-                    console.error('? Error al actualizar stock en Firebase');
-                }
-                // Actualizar estado de la orden en Firebase si existe
-                const firebaseOrderId = localStorage.getItem('firebaseOrderId');
-                if (firebaseOrderId) {
-                    await updateOrderStatus(firebaseOrderId, 'completed');
-                    console.log('? Estado de orden actualizado en Firebase');
-                }
-            } catch (error) {
-                console.error('Error al decrementar stock:', error);
-            }
-        }
-        // Limpiar carrito después de compra exitosa
-        localStorage.removeItem('cocoCart');
-        // Enviar email con los detalles de la orden
-        if (paymentId && status === 'approved') {
-            // Obtener datos del comprador de localStorage
-            const orderDataJson = localStorage.getItem('cocoOrder');
-            const orderData = orderDataJson ? JSON.parse(orderDataJson) : null;
-            if (orderData && cart.length > 0) {
-                // Calcular total
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                // Preparar datos para email
-                const emailData = {
-                    customer: orderData.customer,
-                    items: cart,
-                    total: total,
-                    paymentId: paymentId,
-                    orderDate: new Date().toLocaleString('es-AR', { 
-                        dateStyle: 'full', 
-                        timeStyle: 'short' 
-                    })
-                };
-                // Detectar URL del backend
-                const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                    ? 'http://localhost:3000' 
-                    : window.location.origin;
-                // Guardar orden en el sistema
-                fetch(`${BACKEND_URL}/api/orders`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(emailData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('? Orden guardada:', data);
-                })
-                .catch(err => {
-                    console.error('? Error al guardar orden:', err);
-                });
-                // Limpiar datos de orden
-                localStorage.removeItem('cocoOrder');
-            }
+        if (status === 'approved') {
+            localStorage.removeItem('cocoCart');
+            localStorage.removeItem('firebaseOrderId');
+            localStorage.removeItem('cocoOrder');
         }
     </script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script type="module" src="../js/firebase-config.js"></script>
+</body>
+</html>

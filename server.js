@@ -18,8 +18,8 @@ const storage = multer.diskStorage({
         cb(null, dir);
     },
     filename: function (req, file, cb) {
-        // Mantener el nombre original del archivo (sin path traversal)
-        const safeName = path.basename(file.originalname).replace(/[^a-zA-Z0-9.\-_]/g, '-');
+        const ext = path.extname(file.originalname).toLowerCase();
+        const safeName = Date.now() + '_' + Math.random().toString(36).slice(2, 9) + ext;
         cb(null, safeName);
     }
 });
@@ -44,16 +44,20 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use(express.static(__dirname));
 
-// Ruta para /gestion sin .html
-app.get('/gestion', (req, res) => {
-    res.sendFile(path.join(__dirname, 'gestion.html'));
+// Ruta para /admin/gestion sin .html
+app.get('/admin/gestion', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'gestion.html'));
 });
 
 // ===================================
 // CONFIGURAR MERCADOPAGO
 // ===================================
+if (!process.env.MP_ACCESS_TOKEN) {
+    console.error('❌ ERROR: MP_ACCESS_TOKEN no está configurado. Definilo en .env o en las variables de entorno del servidor.');
+    process.exit(1);
+}
 mercadopago.configure({
-    access_token: process.env.MP_ACCESS_TOKEN || 'APP_USR-1994671338029929-121617-616567dcc8aed895c33977bb1eb37d82-2513559413'
+    access_token: process.env.MP_ACCESS_TOKEN
 });
 
 // ===================================
@@ -166,7 +170,7 @@ app.post('/api/create-preference', async (req, res) => {
             back_urls: back_urls,
             auto_return: auto_return || 'approved',
             external_reference: external_reference,
-            notification_url: back_urls.success.replace('/success.html', '/api/webhook'),
+            notification_url: back_urls.success.replace('/success', '/api/webhook'),
             statement_descriptor: 'Cocó Catering',
             payment_methods: {
                 installments: 12,

@@ -200,6 +200,61 @@ export async function saveOrder(orderData) {
     }
 }
 
+export async function updateOrder(orderId, data) {
+    try {
+        await db.collection('orders').doc(orderId).update({
+            ...data,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        return true;
+    } catch (error) {
+        console.error('Error actualizando orden:', error);
+        return false;
+    }
+}
+
+export async function upsertOrder(orderId, data) {
+    try {
+        await db.collection('orders').doc(orderId).set({
+            ...data,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        return true;
+    } catch (error) {
+        console.error('Error guardando/actualizando orden:', error);
+        return false;
+    }
+}
+
+export async function loadEnvioConfig() {
+    const DEFAULT_ZONES = {
+        'san-isidro':    { costo: 6000,  freeMin: 500000 },
+        'acasusso':      { costo: 6000,  freeMin: 500000 },
+        'martinez':      { costo: 6000,  freeMin: 500000 },
+        'beccar':        { costo: 6000,  freeMin: 500000 },
+        'villa-adelina': { costo: 12000, freeMin: 900000 },
+        'boulogne':      { costo: 12000, freeMin: 900000 },
+        'san-fernando':  { costo: 12000, freeMin: 900000 },
+        'olivos':        { costo: 12000, freeMin: 900000 },
+        'vicente-lopez': { costo: 12000, freeMin: 900000 },
+        'tigre':         { costo: 12000, freeMin: 900000 },
+        'nordelta':      { costo: 20000, freeMin: 1000000 },
+        'otra':          { costo: 'consultar', freeMin: null }
+    };
+    try {
+        const doc = await db.collection('admin_config').doc('envio').get();
+        if (doc.exists && doc.data().zonas) {
+            const zonas = doc.data().zonas;
+            const result = {};
+            Object.entries(zonas).forEach(([key, z]) => {
+                result[key] = { costo: z.costo, freeMin: z.freeMin ?? null };
+            });
+            return result;
+        }
+    } catch(e) { /* fallback */ }
+    return DEFAULT_ZONES;
+}
+
 /**
  * Obtener todas las órdenes
  * @param {string} status - Filtrar por estado (opcional)
@@ -344,15 +399,15 @@ export async function updatePrice(collectionName, productName, newPrice) {
  * Mapeo de páginas HTML a colecciones de Firebase
  */
 export const PAGE_TO_COLLECTION = {
-    'eventos.html': 'menuEventos',
-    'box-salados.html': 'boxSalados',
-    'fingers-frios.html': 'fingersFrios',
-    'fingers-calientes.html': 'fingersCalientes',
-    'box-dulces.html': 'boxDulces',
-    'shots.html': 'shots',
-    'tortas-clasicas.html': 'tortasClasicas',
-    'combos-dulces.html': 'combosDulces',
-    'desayunos.html': 'desayunos'
+    'eventos': 'menuEventos',
+    'box-salados': 'boxSalados',
+    'fingers-frios': 'fingersFrios',
+    'fingers-calientes': 'fingersCalientes',
+    'box-dulces': 'boxDulces',
+    'shots': 'shots',
+    'tortas-clasicas': 'tortasClasicas',
+    'combos-dulces': 'combosDulces',
+    'desayunos': 'desayunos'
 };
 
 /**
@@ -362,6 +417,119 @@ export const PAGE_TO_COLLECTION = {
 export function getCurrentCollection() {
     const currentPage = window.location.pathname.split('/').pop();
     return PAGE_TO_COLLECTION[currentPage] || null;
+}
+
+/**
+ * Registrar pago aprobado: actualiza la orden y la solicitud en Firestore,
+ * dejando todo listo para que el calendario del admin lo muestre.
+ *
+ * @param {string} firebaseOrderId - ID del doc en colección 'orders'
+ * @param {string} solicitudId     - ID del doc en colección 'solicitudes'
+ * @param {string} paymentId       - ID de pago de MercadoPago
+ */
+export async function registrarPagoAprobado(firebaseOrderId, solicitudId, paymentId, extra = {}) {
+    try {
+        const now = firebase.firestore.FieldValue.serverTimestamp();
+        const orderData = extra.orderData || null;
+
+        // Leer datos de la solicitud para trasladarlos a la orden
+        let solicitudData = null;
+        if (solicitudId) {
+            const solDoc = await db.collection('solicitudes').doc(solicitudId).get();
+            if (solDoc.exists) solicitudData = solDoc.data();
+        }
+
+        // Si no tenemos firebaseOrderId, intentar encontrar la orden por solicitudId
+        if (!firebaseOrderId && solicitudId) {
+            const orderSnap = await db.collection('orders')
+                .where('solicitudId', '==', solicitudId)
+                .limit(1)
+                .get();
+            if (!orderSnap.empty) {
+                firebaseOrderId = orderSnap.docs[0].id;
+                console.log('✅ Orden encontrada por solicitudId:', firebaseOrderId);
+            }
+        }
+
+        // Actualizar la orden con status 'paid' y datos de entrega
+        if (firebaseOrderId) {
+            const updatePayload = {
+                status: 'paid',
+                paymentStatus: 'approved',
+                paymentId: paymentId || null,
+                updatedAt: now
+            };
+            if (solicitudData) {
+                // fechaEntrega para el calendario — usa la fecha elegida o la fecha de hoy
+                const fechaEntrega = solicitudData.fecha || new Date().toISOString().slice(0, 10);
+                updatePayload.fechaEntrega = fechaEntrega;
+                if (solicitudData.horario)  updatePayload.horario       = solicitudData.horario;
+                if (solicitudData.localidad) updatePayload.localidad    = solicitudData.localidad;
+                if (solicitudData.direccion) updatePayload.direccion    = solicitudData.direccion;
+                if (solicitudData.codigo)    updatePayload.codigoPedido  = solicitudData.codigo;
+                if (solicitudData.serviceId) updatePayload.serviceId = solicitudData.serviceId;
+                // Completar datos del cliente con lo de la solicitud por si falta algo
+                if (solicitudData.nombre && solicitudData.email) {
+                    updatePayload.cliente = {
+                        nombre:   solicitudData.nombre,
+                        email:    solicitudData.email,
+                        telefono: solicitudData.telefono || ''
+                    };
+                }
+            }
+            if (extra.serviceId || orderData?.serviceId) updatePayload.serviceId = extra.serviceId || orderData.serviceId;
+            await db.collection('orders').doc(firebaseOrderId).update(updatePayload);
+        }
+
+        const serviceId = extra.serviceId || orderData?.serviceId || solicitudData?.serviceId || null;
+        const monto = Math.round(
+            Number(extra.monto || orderData?.total || solicitudData?.total || solicitudData?.subtotal || 0)
+        );
+
+        if (serviceId && monto > 0) {
+            const pagoId = paymentId ? `mp_${String(paymentId).replace(/[^a-zA-Z0-9_-]/g, '_')}` : `mp_${firebaseOrderId || Date.now()}`;
+            await db.collection('admin_pagos').doc(pagoId).set({
+                servicioId: serviceId,
+                servicioNumero: extra.servicioNumero || null,
+                orderId: firebaseOrderId || null,
+                solicitudId: solicitudId || null,
+                paymentId: paymentId || null,
+                fecha: new Date().toISOString().slice(0, 10),
+                monto,
+                medioPago: 'MercadoPago',
+                notas: 'Pago registrado automáticamente desde checkout',
+                origen: 'mercadopago',
+                creadoEn: now
+            }, { merge: true });
+
+            await db.collection('admin_servicios').doc(serviceId).update({
+                estadoPago: 'completo',
+                montoPagado: monto,
+                paymentStatus: 'approved',
+                paymentId: paymentId || null,
+                orderId: firebaseOrderId || null,
+                solicitudId: solicitudId || null,
+                actualizadoEn: now
+            });
+        }
+
+        // Marcar la solicitud como pagada
+        if (solicitudId) {
+            await db.collection('solicitudes').doc(solicitudId).update({
+                status: 'paid',
+                paymentId: paymentId || null,
+                serviceId: serviceId || solicitudData?.serviceId || null,
+                paymentDate: now,
+                updatedAt: now
+            });
+        }
+
+        console.log('✅ Pago registrado: order', firebaseOrderId, '| solicitud', solicitudId);
+        return true;
+    } catch (error) {
+        console.error('Error registrando pago aprobado:', error);
+        return false;
+    }
 }
 
 console.log('🔥 Firestore Service cargado');

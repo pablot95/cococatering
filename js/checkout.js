@@ -4,7 +4,7 @@
 // ===================================
 // IMPORTS
 // ===================================
-import { saveOrder, getSolicitud } from './firestore-service.js';
+import { saveOrder, updateOrder, upsertOrder, getSolicitud, loadEnvioConfig } from './firestore-service.js';
 
 // ===================================
 // CONFIGURACIÓN DE MERCADOPAGO
@@ -25,6 +25,9 @@ let mercadopago;
 let isProcessing = false;
 let orderSaved = false;
 let solicitudActiva = null; // Solicitud aprobada cargada desde Firestore
+let _envioZonas = null; // Config de envío cargada desde Firebase
+let currentFirebaseOrderId = null;
+const safeDocId = id => String(id || '').replace(/[^a-zA-Z0-9_-]/g, '_');
 
 // ===================================
 // INICIALIZACIÓN
@@ -55,6 +58,7 @@ async function initCheckout() {
     }
 
     console.log('✅ carrito.js está listo, cargando resumen');
+    if (!_envioZonas) _envioZonas = await loadEnvioConfig();
     loadOrderSummary();
     updateCartCount();
 
@@ -94,21 +98,35 @@ async function cargarSolicitudAprobada(solicitudId) {
         setVal('nombre', solicitud.nombre);
         setVal('email', solicitud.email);
         setVal('telefono', solicitud.telefono);
-        setVal('ciudad', solicitud.localidad);
         setVal('provincia', 'Buenos Aires');
 
-        // Intentar separar calle y altura de la dirección (ej: "Av. Corrientes 1234")
-        if (solicitud.direccion) {
-            const match = solicitud.direccion.match(/^(.+?)\s+(\d+[\w-]*)(.*)$/);
-            if (match) {
-                setVal('calle', match[1].trim());
-                setVal('altura', match[2].trim());
-                const resto = match[3].trim();
-                if (resto) setVal('piso', resto);
-            } else {
-                setVal('calle', solicitud.direccion);
+        // Aplicar tipo de entrega guardado en la solicitud
+        const esRetiroSolicitud = solicitud.tipoEntrega === 'retiro';
+        const radioEntrega = document.querySelector(
+            `input[name="tipoEntregaCheckout"][value="${esRetiroSolicitud ? 'retiro' : 'envio'}"]`
+        );
+        if (radioEntrega) radioEntrega.checked = true;
+
+        if (!esRetiroSolicitud) {
+            // Pre-rellenar ciudad con la localidad guardada
+            setVal('ciudad', solicitud.localidad);
+
+            // Intentar separar calle y altura de la dirección (ej: "Av. Corrientes 1234")
+            if (solicitud.direccion) {
+                const match = solicitud.direccion.match(/^(.+?)\s+(\d+[\w-]*)(.*)$/);
+                if (match) {
+                    setVal('calle', match[1].trim());
+                    setVal('altura', match[2].trim());
+                    const resto = match[3].trim();
+                    if (resto) setVal('piso', resto);
+                } else {
+                    setVal('calle', solicitud.direccion);
+                }
             }
         }
+
+        // Aplicar visibilidad del bloque de dirección y resumen de envío
+        toggleEntregaCheckout();
 
         // Cargar resumen con productos de la solicitud
         loadOrderSummaryFromSolicitud(solicitud);
@@ -132,7 +150,7 @@ function mostrarBannerAprobado(solicitud) {
     if (!header) return;
     const banner = document.createElement('div');
     banner.className = 'solicitud-aprobada-banner';
-    banner.innerHTML = `🟢 Pedido <strong>#${solicitud.id.slice(0, 8).toUpperCase()}</strong> aprobado — completá tus datos y procedé al pago`;
+    banner.innerHTML = `🟢 Pedido aprobado — completá tus datos y procedé al pago`;
     header.insertAdjacentElement('afterend', banner);
 }
 
@@ -140,7 +158,7 @@ function mostrarErrorSolicitud(msg) {
     document.querySelector('.checkout-content').innerHTML = `
         <div class="solicitud-error-box">
             <p>${msg}</p>
-            <a href="carrito.html" class="btn-volver-carrito">← Volver al carrito</a>
+            <a href="carrito" class="btn-volver-carrito">← Volver al carrito</a>
         </div>`;
 }
 
@@ -151,14 +169,15 @@ function loadOrderSummaryFromSolicitud(solicitud) {
     const items = solicitud.productos || [];
 
     orderItemsContainer.innerHTML = items.map(item => {
-        const min = item.min || 1;
-        const itemTotal = Math.round((item.quantity / min) * item.price);
+        const esPorDocena = item.unit === 'doc.';
+        const displayQty = esPorDocena ? item.quantity * (item.batchSize || 12) : item.quantity;
+        const itemTotal = Math.round(item.quantity * item.price);
         const displayName = (item.name || '').replace(/\s*–\s*x\d+\s*$/, '').trim();
         return `
         <div class="order-item no-image">
             <div class="order-item-details">
                 <div class="order-item-name">${displayName}</div>
-                <div class="order-item-quantity">Cantidad: ${item.quantity}</div>
+                <div class="order-item-quantity">Cantidad: ${displayQty} u.</div>
             </div>
             <div class="order-item-price">${item.price > 0 ? '$' + itemTotal.toLocaleString() : 'Consultar'}</div>
         </div>`;
@@ -175,7 +194,7 @@ function loadOrderSummaryFromSolicitud(solicitud) {
         if (solicitud.costoEnvio === 'consultar') {
             envioEl.textContent = 'A consultar';
         } else if (costoEnvio === 0) {
-            envioEl.textContent = '¡Gratis! 🎉';
+            envioEl.textContent = '¡Gratis! ';
             if (envioEl) envioEl.style.color = 'green';
         } else {
             envioEl.textContent = `$${costoEnvio.toLocaleString()}`;
@@ -197,32 +216,60 @@ function loadOrderSummary() {
     const orderItemsContainer = document.getElementById('orderItems');
     
     if (cart.length === 0) {
-        console.warn('⚠️ CHECKOUT - Carrito vacío, redirigiendo a carrito.html');
-        window.location.href = 'carrito.html';
+        // Solo redirigir si no viene de una solicitud aprobada
+        const params = new URLSearchParams(window.location.search);
+        if (!params.get('solicitudId')) {
+            console.warn('⚠️ CHECKOUT - Carrito vacío, redirigiendo a carrito');
+            window.location.href = 'carrito';
+        }
         return;
     }
     
     console.log('✅ CHECKOUT - Mostrando', cart.length, 'productos');
     
     // Renderizar items
-    orderItemsContainer.innerHTML = cart.map(item => `
+    orderItemsContainer.innerHTML = cart.map(item => {
+        const esPorDocena = item.unit === 'doc.';
+        const displayQty = esPorDocena ? item.quantity * (item.batchSize || 12) : item.quantity;
+        const itemTotal = item.price * item.quantity;
+        const displayName = (item.name || '').replace(/\s*–\s*x\d+\s*$/, '').trim();
+        return `
         <div class="order-item ${item.showImage === false ? 'no-image' : ''}">
-            ${item.showImage !== false ? `<img src="${item.image}" alt="${item.name}" class="order-item-image">` : ''}
+            ${item.showImage !== false ? `<img src="${item.image}" alt="${displayName}" class="order-item-image">` : ''}
             <div class="order-item-details">
-                <div class="order-item-name">${item.name}</div>
-                <div class="order-item-quantity">Cantidad: ${item.quantity}</div>
+                <div class="order-item-name">${displayName}</div>
+                <div class="order-item-quantity">Cantidad: ${displayQty} u.</div>
             </div>
-            <div class="order-item-price">$${(item.price * item.quantity).toLocaleString()}</div>
-        </div>
-    `).join('');
+            <div class="order-item-price">${item.price > 0 ? '$' + itemTotal.toLocaleString() : 'Consultar'}</div>
+        </div>`;
+    }).join('');
     
     // Calcular totales
     const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     updateOrderSummary(subtotal);
 }
 
-function updateOrderSummary(subtotal) {
-    const ENVIO_GRATIS_MIN = 180000;
+function updateOrderSummary(subtotal, forceRetiro) {
+    const esRetiro = forceRetiro ?? (document.querySelector('input[name="tipoEntregaCheckout"]:checked')?.value === 'retiro');
+
+    if (esRetiro) {
+        document.getElementById('orderSubtotal').textContent = `$${subtotal.toLocaleString()}`;
+        const envioElement = document.getElementById('orderEnvio');
+        if (envioElement) { envioElement.textContent = ' Gratis (retiro)'; envioElement.style.color = 'green'; }
+        const envioMsgEl = document.getElementById('orderEnvioMessage');
+        if (envioMsgEl) { envioMsgEl.textContent = 'Retirar en local, sin costo de envío.'; envioMsgEl.style.color = 'green'; }
+        document.getElementById('orderTotal').textContent = `$${subtotal.toLocaleString()}`;
+        return;
+    }
+
+    // Calcular mínimo para envío gratis según config Firebase (menor freeMin entre zonas numéricas)
+    let ENVIO_GRATIS_MIN = 180000;
+    if (_envioZonas) {
+        const freeValues = Object.values(_envioZonas)
+            .map(z => z.freeMin)
+            .filter(v => typeof v === 'number' && v > 0);
+        if (freeValues.length) ENVIO_GRATIS_MIN = Math.min(...freeValues);
+    }
     const envioGratis = subtotal >= ENVIO_GRATIS_MIN;
     
     document.getElementById('orderSubtotal').textContent = `$${subtotal.toLocaleString()}`;
@@ -242,7 +289,7 @@ function updateOrderSummary(subtotal) {
         envioMessageElement.textContent = `¡Agregá $${falta.toLocaleString()} más para envío gratis!`;
         envioMessageElement.style.color = 'var(--bordo)';
     } else if (envioGratis) {
-        envioMessageElement.textContent = '¡Envío gratis! 🎉';
+        envioMessageElement.textContent = '¡Envío gratis! ';
         envioMessageElement.style.color = 'green';
     } else {
         envioMessageElement.textContent = 'Envío gratis para compras mayores a $180.000';
@@ -283,18 +330,20 @@ function continuarPago() {
     }
 
     // Guardar datos del comprador
+    const esRetiro = document.querySelector('input[name="tipoEntregaCheckout"]:checked')?.value === 'retiro';
     datosComprador = {
         nombre: document.getElementById('nombre').value,
         dni: document.getElementById('dni').value,
         telefono: document.getElementById('telefono').value,
         email: document.getElementById('email').value,
-        calle: document.getElementById('calle').value,
-        altura: document.getElementById('altura').value,
-        piso: document.getElementById('piso').value,
-        depto: document.getElementById('depto').value,
-        ciudad: document.getElementById('ciudad').value,
-        provincia: document.getElementById('provincia').value,
-        codigoPostal: document.getElementById('codigoPostal').value
+        tipoEntrega: esRetiro ? 'retiro' : 'envio',
+        calle: esRetiro ? '' : document.getElementById('calle').value,
+        altura: esRetiro ? '' : document.getElementById('altura').value,
+        piso: esRetiro ? '' : document.getElementById('piso').value,
+        depto: esRetiro ? '' : document.getElementById('depto').value,
+        ciudad: esRetiro ? '' : document.getElementById('ciudad').value,
+        provincia: esRetiro ? '' : document.getElementById('provincia').value,
+        codigoPostal: esRetiro ? '' : document.getElementById('codigoPostal').value
     };
     
     const mismosDatos = document.getElementById('mismosDatos').checked;
@@ -376,6 +425,27 @@ function toggleFacturacion() {
     }
 }
 
+// Toggle campos de dirección cuando se elige retiro en el checkout
+function toggleEntregaCheckout() {
+    const esRetiro = document.querySelector('input[name="tipoEntregaCheckout"]:checked')?.value === 'retiro';
+    const domicilioDiv = document.getElementById('checkoutEntregaDomicilio');
+    if (!domicilioDiv) return;
+    domicilioDiv.style.display = esRetiro ? 'none' : '';
+    ['calle','altura','ciudad','provincia','codigoPostal'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.required = !esRetiro;
+    });
+    // Actualizar resumen de envío
+    let subtotal = 0;
+    if (solicitudActiva) {
+        subtotal = solicitudActiva.subtotal || 0;
+    } else {
+        const cart = typeof window.getCart === 'function' ? window.getCart() : [];
+        subtotal = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+    }
+    updateOrderSummary(subtotal, esRetiro);
+}
+
 // ===================================
 // INTEGRACIÓN MERCADOPAGO
 // ===================================
@@ -392,7 +462,15 @@ async function initMercadoPago() {
     const subtotal = solicitudActiva
         ? (solicitudActiva.subtotal || 0)
         : cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const total = solicitudActiva ? (solicitudActiva.total || subtotal) : subtotal;
+
+    // Si el usuario eligió retiro en el checkout, el envío es $0 independientemente de la solicitud
+    const esRetiroCheckout = document.querySelector('input[name="tipoEntregaCheckout"]:checked')?.value === 'retiro';
+    const costoEnvio = esRetiroCheckout ? 0
+        : (solicitudActiva && typeof solicitudActiva.costoEnvio === 'number'
+            ? solicitudActiva.costoEnvio
+            : 0);
+    const total = esRetiroCheckout ? subtotal
+        : (solicitudActiva ? (solicitudActiva.total || subtotal) : subtotal);
     const envioGratis = !solicitudActiva && subtotal >= 180000;
     
     // Guardar orden en localStorage y Firebase
@@ -442,10 +520,16 @@ async function initMercadoPago() {
                 })),
                 // Totales
                 subtotal: subtotal,
+                costoEnvio: costoEnvio,
                 envioGratis: envioGratis,
                 total: total,
+                // Tipo de entrega y fecha (copiados de la solicitud si existe)
+                tipoEntrega: esRetiroCheckout ? 'retiro' : 'envio',
+                fechaEntrega: solicitudActiva?.fecha || solicitudActiva?.fechaPedido || null,
+                horario:      solicitudActiva?.horario || null,
                 // Referencia a la solicitud aprobada (si aplica)
                 ...(solicitudActiva ? { solicitudId: solicitudActiva.id } : {}),
+                ...(solicitudActiva?.serviceId ? { serviceId: solicitudActiva.serviceId } : {}),
                 // Estado
                 status: 'pending',
                 paymentStatus: 'pending'
@@ -458,11 +542,41 @@ async function initMercadoPago() {
             
             // Guardar orden en Firebase
             try {
-                const firebaseOrderId = await saveOrder(orderData);
+                let firebaseOrderId;
+                if (solicitudActiva) {
+                    // Reusar siempre una orden estable por solicitud para evitar duplicados al reintentar checkout.
+                    firebaseOrderId = solicitudActiva.orderId || `solicitud_${safeDocId(solicitudActiva.id)}`;
+                    const updatePayload = {
+                        cliente: orderData.cliente,
+                        direccionEnvio: orderData.direccionEnvio,
+                        direccionFacturacion: orderData.direccionFacturacion,
+                        serviceId: orderData.serviceId || null,
+                        status: 'pending',
+                        paymentStatus: 'pending',
+                        fechaEntrega: orderData.fechaEntrega || null,
+                        horario: orderData.horario || null
+                    };
+                    const updated = await updateOrder(firebaseOrderId, updatePayload);
+                    if (!updated) {
+                        await upsertOrder(firebaseOrderId, {
+                            ...orderData,
+                            ...updatePayload
+                        });
+                    }
+                    if (!solicitudActiva.orderId) {
+                        solicitudActiva.orderId = firebaseOrderId;
+                    }
+                    console.log('✅ Orden existente actualizada:', firebaseOrderId);
+                } else {
+                    firebaseOrderId = await saveOrder(orderData);
+                    console.log('✅ Orden nueva guardada en Firebase:', firebaseOrderId);
+                }
                 if (firebaseOrderId) {
-                    console.log('✅ Orden guardada en Firebase con ID:', firebaseOrderId);
+                    currentFirebaseOrderId = firebaseOrderId;
                     localStorage.setItem('firebaseOrderId', firebaseOrderId);
-                    orderSaved = true; // Marcar como guardada para evitar duplicados
+                    orderData.firestoreOrderId = firebaseOrderId;
+                    localStorage.setItem('cocoOrder', JSON.stringify(orderData));
+                    orderSaved = true;
                 }
             } catch (firebaseError) {
                 console.error('❌ Error al guardar orden en Firebase:', firebaseError);
@@ -490,16 +604,27 @@ async function initMercadoPago() {
     
     try {
         const mpItems = cart.map(item => {
-            const min = item.min || 1;
-            const unitPrice = item.price > 0 ? Math.round(item.price / min) : 1;
+            // MercadoPago requiere quantity entero; enviamos el total por item con quantity=1
+            const itemTotal = item.price > 0 ? Math.round(item.quantity * item.price) : 0;
             return {
                 id: item.id,
                 title: (item.name || '').replace(/\s*–\s*x\d+\s*$/, '').trim() || 'Producto',
-                quantity: item.quantity,
-                unit_price: unitPrice,
+                quantity: 1,
+                unit_price: itemTotal > 0 ? itemTotal : 1,
                 currency_id: 'ARS'
             };
         });
+
+        // Agregar envío como ítem separado si tiene costo
+        if (costoEnvio > 0) {
+            mpItems.push({
+                id: 'envio',
+                title: 'Envío',
+                quantity: 1,
+                unit_price: costoEnvio,
+                currency_id: 'ARS'
+            });
+        }
 
         const orderData = {
             items: mpItems,
@@ -519,15 +644,25 @@ async function initMercadoPago() {
                     zip_code: datosComprador.codigoPostal
                 }
             },
-            back_urls: {
-                success: window.location.origin + '/html/success.html',
-                failure: window.location.origin + '/html/failure.html',
-                pending: window.location.origin + '/html/pending.html'
-            },
+            back_urls: (() => {
+                // Construir URLs relativas a la ubicación actual del checkout
+                // para que funcione tanto en /html/ como en /web/html/
+                const base = window.location.href.replace(/checkout(\.html)?(\?.*)?$/, '');
+                return {
+                    success: base + 'success',
+                    failure: base + 'failure',
+                    pending: base + 'pending'
+                };
+            })(),
             auto_return: 'approved',
             metadata: {
                 datosFacturacion: datosFacturacion,
-                firestoreOrderId: localStorage.getItem('lastOrderId')
+                firestoreOrderId: currentFirebaseOrderId || localStorage.getItem('firebaseOrderId') || '',
+                firestore_order_id: currentFirebaseOrderId || localStorage.getItem('firebaseOrderId') || '',
+                solicitudId: solicitudActiva?.id || '',
+                solicitud_id: solicitudActiva?.id || '',
+                serviceId: solicitudActiva?.serviceId || '',
+                service_id: solicitudActiva?.serviceId || ''
             }
         };
         
@@ -550,16 +685,17 @@ async function initMercadoPago() {
         if (!response.ok || preference.error) {
             throw new Error(preference.error || 'Error al crear preferencia de pago');
         }
-        
-        // Crear botón de pago
-        const checkout = mercadopago.checkout({
-            preference: {
-                id: preference.id
+
+        // SDK v2: usar Wallet Brick para renderizar el botón de pago
+        // (mercadopago.checkout() es v1 y no existe en v2)
+        const bricksBuilder = mercadopago.bricks();
+        await bricksBuilder.create('wallet', 'mercadopago-button', {
+            initialization: {
+                preferenceId: preference.id,
             },
-            render: {
-                container: '#mercadopago-button',
-                label: 'Pagar con MercadoPago'
-            }
+            customization: {
+                texts: { valueProp: 'smart_option' },
+            },
         });
         
         console.log('✅ Botón de MercadoPago creado exitosamente');
@@ -622,5 +758,6 @@ window.toggleMobileMenu = toggleMobileMenu;
 window.continuarPago = continuarPago;
 window.volverFacturacion = volverFacturacion;
 window.toggleFacturacion = toggleFacturacion;
+window.toggleEntregaCheckout = toggleEntregaCheckout;
 
 

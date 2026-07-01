@@ -1,6 +1,6 @@
-# .htaccess para Cocó Catering - Optimización SEO y Performance
+# .htaccess para Coco Catering - Optimizacion SEO y Performance
 
-# Habilitar compresión GZIP
+# Habilitar compresion GZIP
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
@@ -31,8 +31,21 @@
 # RewriteCond %{HTTP_HOST} ^www\.cococatering\.com\.ar [NC]
 # RewriteRule ^(.*)$ https://cococatering.com.ar/$1 [L,R=301]
 
-# Prevenir hotlinking de imágenes
-RewriteEngine on
+# URLs limpias (sin extension .html)
+RewriteEngine On
+
+# 1. Redirigir cualquier peticion *.html a URL sin extension (301 permanente)
+#    Excepto index.html para no romper la raiz
+RewriteCond %{THE_REQUEST} \s/+(?:web/)?(.*?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,NE,L]
+
+# 2. Servir internamente el .html cuando se accede a la URL limpia
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Prevenir hotlinking de imagenes
 RewriteCond %{HTTP_REFERER} !^$
 RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?cococatering.com.ar [NC]
 RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [NC,F,L]
@@ -40,7 +53,7 @@ RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [NC,F,L]
 # Deshabilitar listado de directorios
 Options -Indexes
 
-# Página de error 404 personalizada
+# Pagina de error 404 personalizada
 ErrorDocument 404 /index.html
 
 # Seguridad - Prevenir acceso a archivos sensibles

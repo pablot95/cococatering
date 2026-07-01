@@ -2,6 +2,8 @@
 .env
 .env.local
 .env.production
+mp-config.php
+firebase-service-account.json
 .vercel
 firebase-config.js
 .admin.html

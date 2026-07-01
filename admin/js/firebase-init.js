@@ -15,8 +15,8 @@ if (!firebase.apps.length) {
 }
 
 window.db      = firebase.firestore();
-window.auth    = firebase.auth();
-window.storage = firebase.storage();
+window.auth    = typeof firebase.auth    === 'function' ? firebase.auth()    : null;
+window.storage = typeof firebase.storage === 'function' ? firebase.storage() : null;
 
 // NOTA: Para usar este panel necesitás:
 // 1. Habilitar "Email/Password" en Firebase Console → Authentication → Sign-in methods

@@ -25,12 +25,66 @@ const Pagos = {
     if (estadoFilter !== undefined) this.filtroEstado = estadoFilter;
     try {
       const [pSnap, sSnap] = await Promise.all([
-        db.collection('admin_pagos').orderBy('fecha', 'desc').get().catch(() => ({ docs: [] })),
+        db.collection('admin_pagos').get().catch(() => ({ docs: [] })),
         db.collection('admin_servicios').get().catch(() => ({ docs: [] }))
       ]);
+      const totalUpdates = [];
       this.pagos     = pSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-      this.servicios = sSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+      this.pagos.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+      this.servicios = sSnap.docs.map(d => {
+        const servicio = this._normalizarServicio({ id: d.id, ...d.data() });
+        if (servicio.subtotalBruto > 0 && servicio.descuento > 0 && Math.round(Number(d.data().total || 0)) !== servicio.total) {
+          totalUpdates.push(d.ref.update({ total: servicio.total }).catch(e => console.warn('No se pudo normalizar total de servicio', d.id, e)));
+        }
+        return servicio;
+      });
+      this.servicios = this._dedupePedidosWeb(this.servicios);
+      if (totalUpdates.length) await Promise.all(totalUpdates);
     } catch (e) { this.pagos = []; this.servicios = []; }
+  },
+
+  _totalServicioFinal(s = {}) {
+    const subtotal = Number(s.subtotalBruto || 0);
+    const descuento = Number(s.descuento || 0);
+    if (subtotal > 0 && descuento > 0) return Math.round(subtotal * (1 - descuento / 100));
+    return Math.round(Number(s.total || 0));
+  },
+
+  _normalizarServicio(s = {}) {
+    return { ...s, total: this._totalServicioFinal(s) };
+  },
+
+  _servicioPedidoKey(s = {}) {
+    if (s.tipoServicio !== 'pedido' && !s.solicitudId && !s.orderId && !s.codigoPedido) {
+      return `servicio:${s.id}`;
+    }
+    if (s.solicitudId) return `pedido:sol:${s.solicitudId}`;
+    if (s.orderId) return `pedido:order:${s.orderId}`;
+    if (s.codigoPedido) return `pedido:codigo:${s.codigoPedido}`;
+    return `servicio:${s.id}`;
+  },
+
+  _servicioDedupeScore(s = {}) {
+    let score = 0;
+    if (s.estadoPago === 'completo') score += 30;
+    else if (s.estadoPago === 'parcial') score += 20;
+    else if (Number(s.montoPagado || 0) > 0) score += 10;
+    if (String(s.id || '').startsWith('solicitud_')) score += 5;
+    if (s.orderId) score += 3;
+    if (s.solicitudId) score += 3;
+    return score;
+  },
+
+  _dedupePedidosWeb(servicios = []) {
+    const byKey = new Map();
+    servicios.forEach(s => {
+      const key = this._servicioPedidoKey(s);
+      const prev = byKey.get(key);
+      if (!prev || this._servicioDedupeScore(s) > this._servicioDedupeScore(prev)) {
+        byKey.set(key, s);
+      }
+    });
+    return Array.from(byKey.values());
   },
 
   _renderList() {
@@ -67,14 +121,14 @@ const Pagos = {
     document.getElementById('mainContent').innerHTML = `
       <div class="section-wrapper">
         <div class="tab-header">
-          <h3>Pagos</h3>
-          <button class="btn-primary" id="btnAddPagoSvc">+ Registrar pago</button>
+          <h3>PAGOS</h3>
+          <button class="btn-primary" id="btnAddPagoSvc">Registrar pago</button>
         </div>
 
         <div class="filter-bar">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <label style="font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">Período</label>
-            <input type="month" id="pagosMes" value="${this.mes}" class="filter-input-inline">
+            ${App.monthSelectHTML('pagosMes', this.mes)}
             <label style="font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">Estado</label>
             <select id="pagosEstado" class="filter-input-inline">
               <option value="todos"    ${this.filtroEstado === 'todos'    ? 'selected' : ''}>Todos</option>
@@ -100,7 +154,7 @@ const Pagos = {
                 const epMap     = { sin_pago: 'badge-error', parcial: 'badge-warning', completo: 'badge-success' };
                 const epLabel   = { sin_pago: 'Sin pago', parcial: 'Parcial', completo: 'Completo' };
                 return `
-                  <div class="svc-pago-block">
+                  <div class="svc-pago-block ep-${ep.replace('_', '-')}">
                     <div class="svc-pago-header">
                       <div>
                         <strong>#${String(svc?.numero || '').padStart(3,'0')}</strong>
@@ -156,10 +210,12 @@ const Pagos = {
       </div>`;
 
     // Filtros
-    document.getElementById('pagosMes').addEventListener('change', async (e) => {
-      this.mes = e.target.value;
-      this._renderList();
-    });
+    const onMesChange = async () => {
+      const val = App.monthSelectValue('pagosMes');
+      if (val) { this.mes = val; this._renderList(); }
+    };
+    document.getElementById('pagosMes-mes').addEventListener('change', onMesChange);
+    document.getElementById('pagosMes-anio').addEventListener('change', onMesChange);
     document.getElementById('pagosEstado').addEventListener('change', async (e) => {
       this.filtroEstado = e.target.value;
       this._renderList();
@@ -212,7 +268,7 @@ const Pagos = {
 
     document.querySelectorAll('.svc-select-row').forEach(row => {
       row.addEventListener('click', () => {
-        App.closeModal();
+        App.closeModalForce();
         this._openAddPagoModal(row.dataset.svcid, parseFloat(row.dataset.svctotal) || 0, parseInt(row.dataset.svcnum) || 0, async () => {
           await this._load();
           this._renderList();
@@ -270,7 +326,7 @@ const Pagos = {
         });
         await this._updateServicePaymentStatus(servicioId, totalServicio);
         App.toast('Pago registrado', 'success');
-        App.closeModal();
+        App.closeModalForce();
         if (onSaved) onSaved();
       } catch (err) { App.toast('Error al registrar', 'error'); }
     });
@@ -293,7 +349,7 @@ const Pagos = {
       let estadoPago = 'sin_pago';
       if (totalCobrado >= totalServicio && totalServicio > 0) estadoPago = 'completo';
       else if (totalCobrado > 0) estadoPago = 'parcial';
-      await db.collection('admin_servicios').doc(servicioId).update({ estadoPago });
+      await db.collection('admin_servicios').doc(servicioId).update({ estadoPago, montoPagado: totalCobrado });
       // Actualizar cache local
       const svc = this.servicios.find(s => s.id === servicioId);
       if (svc) svc.estadoPago = estadoPago;

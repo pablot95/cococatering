@@ -19,38 +19,38 @@
     </div>
     <!-- Mobile Navigation Menú -->
     <nav class="mobile-nav-menu" id="mobileNavMenu">
-        <a href="../index.html">Inicio</a>
+        <a href="../">Inicio</a>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Menú</button>
             <div class="mobile-dropdown-menu">
-                <a href="eventos.html">Eventos</a>
-                <a href="box-salados.html">Box Salados</a>
+                <a href="eventos">Eventos</a>
+                <a href="box-salados">Box Salados</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Fingers Salados</button>
             <div class="mobile-dropdown-menu">
-                <a href="fingers-frios.html">Fríos</a>
-                <a href="fingers-calientes.html">Calientes</a>
+                <a href="fingers-frios">Fríos</a>
+                <a href="fingers-calientes">Calientes</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Fingers Dulces</button>
             <div class="mobile-dropdown-menu">
-                <a href="box-dulces.html">Box Dulces</a>
-                <a href="shots.html">Shots</a>
+                <a href="box-dulces">Box Dulces</a>
+                <a href="shots">Shots</a>
             </div>
         </div>
         <div class="mobile-dropdown">
             <button class="mobile-dropdown-toggle">Tortas</button>
             <div class="mobile-dropdown-menu">
-                <a href="tortas-clasicas.html">Clásicas</a>
-                <a href="tortas-decoradas.html">Decoradas</a>
-                <a href="combos-dulces.html">Combos Dulces</a>
+                <a href="tortas-clasicas">Clásicas</a>
+                <a href="tortas-decoradas">Decoradas</a>
+                <a href="combos-dulces">Combos Dulces</a>
             </div>
         </div>
-        <a href="desayunos.html">Desayunos</a>
-        <a href="carrito.html">Carrito</a>
+        <a href="desayunos">Desayunos</a>
+        <a href="carrito">Carrito</a>
     </nav>
     <div class="checkout-page-container">
         <!-- Header -->
@@ -58,37 +58,37 @@
             <h1>Finalizar Compra</h1>
             <!-- Desktop Navigation Menú -->
             <nav class="checkout-nav-menu">
-                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="../" class="nav-link">Inicio</a>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Menú</button>
                     <div class="dropdown-menu">
-                        <a href="eventos.html">Eventos</a>
-                        <a href="box-salados.html">Box Salados</a>
+                        <a href="eventos">Eventos</a>
+                        <a href="box-salados">Box Salados</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Salados</button>
                     <div class="dropdown-menu">
-                        <a href="fingers-frios.html">Fríos</a>
-                        <a href="fingers-calientes.html">Calientes</a>
+                        <a href="fingers-frios">Fríos</a>
+                        <a href="fingers-calientes">Calientes</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Fingers Dulces</button>
                     <div class="dropdown-menu">
-                        <a href="box-dulces.html">Box Dulces</a>
-                        <a href="shots.html">Shots</a>
+                        <a href="box-dulces">Box Dulces</a>
+                        <a href="shots">Shots</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
                     <button class="nav-link dropdown-toggle" style="background:transparent;border:none;cursor:pointer;color:inherit;font-size:inherit;font-family:inherit;">Tortas</button>
                     <div class="dropdown-menu">
-                        <a href="tortas-clasicas.html">Clásicas</a>
-                        <a href="tortas-decoradas.html">Decoradas</a>
-                        <a href="combos-dulces.html">Combos Dulces</a>
+                        <a href="tortas-clasicas">Clásicas</a>
+                        <a href="tortas-decoradas">Decoradas</a>
+                        <a href="combos-dulces">Combos Dulces</a>
                     </div>
                 </div>
-                <a href="desayunos.html" class="nav-link">Desayunos</a>
+                <a href="desayunos" class="nav-link">Desayunos</a>
             </nav>
             <div class="checkout-steps">
                 <div class="step active">
@@ -132,6 +132,19 @@
                         </div>
                         <div class="form-row">
                         </div>
+                        <!-- Toggle envío / retiro -->
+                        <h3>Tipo de entrega</h3>
+                        <div class="form-group">
+                            <div class="entrega-opciones">
+                                <label class="entrega-opt">
+                                    <input type="radio" name="tipoEntregaCheckout" value="envio" checked onchange="toggleEntregaCheckout()"> Envío a domicilio
+                                </label>
+                                <label class="entrega-opt">
+                                    <input type="radio" name="tipoEntregaCheckout" value="retiro" onchange="toggleEntregaCheckout()"> Retiro en local
+                                </label>
+                            </div>
+                        </div>
+                        <div id="checkoutEntregaDomicilio">
                         <h3>Dirección de Entrega</h3>
                         <div class="form-row">
                             <div class="form-group flex-2">
@@ -169,6 +182,7 @@
                                 <input type="text" id="codigoPostal" name="codigoPostal" required>
                             </div>
                         </div>
+                        </div><!-- fin checkoutEntregaDomicilio -->
                     </form>
                     <!-- Datos de Facturación -->
                     <h2 style="margin-top: 40px;">Datos de Facturación</h2>
@@ -229,7 +243,7 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="button" class="btn-back" onclick="window.location.href='carrito.html'">Volver</button>
+                            <button type="button" class="btn-back" onclick="window.location.href='carrito'">Volver</button>
                             <button type="button" class="btn-next" onclick="continuarPago()">Continuar al Pago</button>
                         </div>
                     </form>

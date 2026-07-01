@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function pendingOrderClientFields() {
+      return [
+        'cliente', 'direccionEnvio', 'direccionFacturacion', 'serviceId',
+        'status', 'paymentStatus', 'fechaEntrega', 'horario',
+        'updatedAt', 'actualizadoEn'
+      ];
+    }
+
+    // Catalogo publico: lectura publica, escritura solo admin autenticado.
+    match /tortasClasicas/{id}    { allow read: if true; allow write: if signedIn(); }
+    match /tortasDecoradas/{id}   { allow read: if true; allow write: if signedIn(); }
+    match /fingersFrios/{id}      { allow read: if true; allow write: if signedIn(); }
+    match /fingersCalientes/{id}  { allow read: if true; allow write: if signedIn(); }
+    match /boxSalados/{id}        { allow read: if true; allow write: if signedIn(); }
+    match /boxDulces/{id}         { allow read: if true; allow write: if signedIn(); }
+    match /shots/{id}             { allow read: if true; allow write: if signedIn(); }
+    match /combosDulces/{id}      { allow read: if true; allow write: if signedIn(); }
+    match /desayunos/{id}         { allow read: if true; allow write: if signedIn(); }
+    match /menuEventos/{id}       { allow read: if true; allow write: if signedIn(); }
+
+    // Solicitudes: el cliente crea y consulta su estado; solo admin/backend cambia estados.
+    match /solicitudes/{id} {
+      allow create: if true;
+      allow get: if true;
+      allow list: if signedIn();
+      allow update, delete: if signedIn();
+    }
+
+    // Ordenes: el cliente puede crear y completar datos pendientes, nunca marcar pagado.
+    match /orders/{id} {
+      allow create: if request.resource.data.status == 'pending'
+        && request.resource.data.paymentStatus == 'pending';
+      allow update: if !signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(pendingOrderClientFields())
+        && request.resource.data.status == 'pending'
+        && request.resource.data.paymentStatus == 'pending';
+      allow read, write: if signedIn();
+    }
+
+    // Configuracion publica de lectura.
+    match /admin_config/{id} {
+      allow read: if true;
+      allow write: if signedIn();
+    }
+
+    match /admin_clientes_vip/{id} {
+      allow read: if signedIn();
+      allow write: if signedIn();
+    }
+
+    // Colecciones internas: solo admin autenticado. El webhook usa service account y no depende de reglas.
+    match /admin_categorias/{id}   { allow read, write: if signedIn(); }
+    match /admin_ingredientes/{id} { allow read, write: if signedIn(); }
+    match /admin_materiales/{id}   { allow read, write: if signedIn(); }
+    match /admin_subproductos/{id} { allow read, write: if signedIn(); }
+    match /admin_productos/{id}    { allow read, write: if signedIn(); }
+    match /admin_menus/{id}        { allow read, write: if signedIn(); }
+    match /admin_presupuestos/{id} { allow read, write: if signedIn(); }
+    match /admin_servicios/{id}    { allow read, write: if signedIn(); }
+    match /admin_pagos/{id}        { allow read, write: if signedIn(); }
+    match /admin_gastos/{id}       { allow read, write: if signedIn(); }
+    match /admin_usuarios/{id}     { allow read, write: if signedIn(); }
+  }
+}

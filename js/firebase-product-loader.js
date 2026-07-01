@@ -1,6 +1,18 @@
 // Firebase Product Loader - Carga dinámica de productos desde Firebase
 import { db } from './firebase-config.js';
 
+// Normaliza paths de imagen: quita prefijo legacy web/ y resuelve relativos
+function _normImg(path, base) {
+    if (!path) return '';
+    if (path.startsWith('http') || path.startsWith('//')) return path;
+    // Quitar prefijo /web/ o web/ (legacy — el sitio ya no está dentro de /web/)
+    path = path.replace(/^\/web\//, '/').replace(/^web\//, '');
+    if (path.startsWith('/')) return path;
+    // Si ya tiene la carpeta productos/ en el path, no duplicar
+    if (path.startsWith('productos/')) return '../' + path;
+    return base + path;
+}
+
 /**
  * Cargar un producto individual desde Firebase
  * @param {string} collectionName - Nombre de la colección en Firebase
@@ -90,7 +102,9 @@ function actualizarElementoHTML(elemento, producto) {
 
     // Si el producto tiene imagen definida en Firebase, usarla para data-image
     if (producto.imagen) {
-        elemento.setAttribute('data-image', `../productos/${producto.imagen}`);
+        elemento.setAttribute('data-image', _normImg(producto.imagen, '../productos/'));
+    } else if (producto.fotoUrl) {
+        elemento.setAttribute('data-image', _normImg(producto.fotoUrl, '../productos/'));
     }
 
     // ── Mapa de título de sección → clase CSS (para eventos) ─────────
@@ -112,6 +126,7 @@ function actualizarElementoHTML(elemento, producto) {
     const shotsLabel = elemento.querySelector('.shots-label');
     const shotsPrice = elemento.querySelector('.shots-price');
     const sizePrice = elemento.querySelector('.size-price');
+    const sizeUnits = elemento.querySelector('.size-units');
 
     // Para productos normales (fingers, etc) - SOLO si no es un Box/Combo con items
     // Si tiene items, el nombre del producto (Box X) no debe ir en .product-name (que es para los items)
@@ -138,6 +153,15 @@ function actualizarElementoHTML(elemento, producto) {
     // Para precios en selectores de tamaño (Box Salados/Dulces)
     if (sizePrice && producto.precio) {
         sizePrice.textContent = `$${producto.precio.toLocaleString('es-AR')}`;
+    }
+
+    // Actualizar unidades desde el campo "unidad" de Firebase (ej: "Caja Chica - 23 U")
+    if (sizeUnits && producto.unidad) {
+        const matchUnits = /(\d+)/.exec(producto.unidad);
+        if (matchUnits) {
+            sizeUnits.textContent = `${matchUnits[1]} unidades`;
+            elemento.setAttribute('data-units', matchUnits[1]);
+        }
     }
     
     // Actualizar data-price en size-option si existe dentro del elemento
@@ -178,14 +202,10 @@ function actualizarElementoHTML(elemento, producto) {
                 const el = existingItems[index];
                 if (!el) return;
                 const nameEl = el.querySelector('.product-name');
-                // Solo sobreescribir si muestra "..." o está vacío (no pisar texto hardcodeado)
                 if (nameEl && item.nombre) {
-                    const current = nameEl.textContent.trim();
-                    if (current === '...' || current === '' || current === '-') {
-                        nameEl.textContent = item.nombre;
-                    }
+                    nameEl.textContent = item.nombre;
                 }
-                if (item.imagen) el.setAttribute('data-image', `../productos/${item.imagen}`);
+                if (item.imagen) el.setAttribute('data-image', _normImg(item.imagen, '../productos/'));
             });
         } else {
             const itemsList = container.querySelector('.items-list');
@@ -210,7 +230,7 @@ function actualizarElementoHTML(elemento, producto) {
                 if (!el) return;
                 const nameEl = el.querySelector('.product-name');
                 if (nameEl && item.nombre) nameEl.textContent = item.nombre;
-                if (item.imagen) el.setAttribute('data-image', `../productos/${item.imagen}`);
+                if (item.imagen) el.setAttribute('data-image', _normImg(item.imagen, '../productos/'));
             });
         });
     }

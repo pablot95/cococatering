@@ -19,6 +19,8 @@ const App = {
   },
 
   init() {
+    // Aplicar clase al body si el usuario es Limitado
+    document.body.classList.toggle('rol-limitado', this.isLimitado);
     this.bindNav();
     this.bindHamburger();
     this.navigate('dashboard');
@@ -73,17 +75,7 @@ const App = {
       case 'estadisticas': Estadisticas.render();  break;
       case 'gastos':       Gastos.render();        break;
       case 'usuarios':     Usuarios.render();      break;
-      case 'gestion':
-        content.innerHTML = `
-          <div class="coming-soon">
-            <div class="cs-icon">⚙️</div>
-            <h3>Panel de Gestión</h3>
-            <p>El panel de gestión existente se abre en una pestaña separada.</p>
-            <a href="../gestion/gestion.html" target="_blank" class="btn-primary" style="margin-top:20px">
-              Abrir Gestión →
-            </a>
-          </div>`;
-        break;
+      case 'gestion':       Gestion.render();      break;
       default:
         content.innerHTML = `
           <div class="coming-soon">
@@ -94,18 +86,80 @@ const App = {
     }
   },
 
+  // ── Selector de mes en castellano ────────────────
+  // Devuelve el HTML de dos selects (mes + año) para reemplazar input[type="month"]
+  // id: prefijo, val: "2026-05"
+  monthSelectHTML(id, val) {
+    const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                   'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const [y, m] = (val || '').split('-');
+    const anioAct = new Date().getFullYear();
+    const years = [anioAct - 1, anioAct, anioAct + 1];
+    const mOpts = MESES.map((n, i) => {
+      const v = String(i + 1).padStart(2, '0');
+      return `<option value="${v}" ${m === v ? 'selected' : ''}>${n}</option>`;
+    }).join('');
+    const yOpts = years.map(yr =>
+      `<option value="${yr}" ${String(yr) === y ? 'selected' : ''}>${yr}</option>`
+    ).join('');
+    return `<select id="${id}-mes" class="filter-input-inline" style="min-width:110px">${mOpts}</select>` +
+           `<select id="${id}-anio" class="filter-input-inline" style="min-width:70px">${yOpts}</select>`;
+  },
+
+  // Lee el valor "YYYY-MM" combinado de los dos selects
+  monthSelectValue(id) {
+    const m = document.getElementById(`${id}-mes`)?.value;
+    const y = document.getElementById(`${id}-anio`)?.value;
+    return (y && m) ? `${y}-${m}` : null;
+  },
+
   // ── Modal ──────────────────────────────────────
 
+  _modalDirty: false,
+
   openModal(title, bodyHtml, size = 'md') {
+    this._modalDirty = false;
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalBody').innerHTML = bodyHtml;
     const box = document.getElementById('modalBox');
     box.className = `modal-box modal-${size}`;
     const overlay = document.getElementById('modalOverlay');
     overlay.classList.remove('hidden');
+    // Marcar dirty ante cualquier cambio del usuario en el formulario
+    document.getElementById('modalBody').addEventListener('input',  () => { this._modalDirty = true; }, { capture: true });
+    document.getElementById('modalBody').addEventListener('change', () => { this._modalDirty = true; }, { capture: true });
   },
 
   closeModal() {
+    if (this._modalDirty) {
+      this._showConfirm('¿Desea salir sin guardar?', () => this._doCloseModal());
+      return;
+    }
+    this._doCloseModal();
+  },
+
+  _showConfirm(message, onConfirm) {
+    const overlay = document.getElementById('confirmOverlay');
+    document.getElementById('confirmMsg').textContent = message;
+    overlay.classList.remove('hidden');
+    const ok     = document.getElementById('confirmOk');
+    const cancel = document.getElementById('confirmCancel');
+    const cleanup = () => {
+      overlay.classList.add('hidden');
+      ok.replaceWith(ok.cloneNode(true));
+      cancel.replaceWith(cancel.cloneNode(true));
+    };
+    document.getElementById('confirmOk').addEventListener('click', () => { cleanup(); onConfirm(); }, { once: true });
+    document.getElementById('confirmCancel').addEventListener('click', () => cleanup(), { once: true });
+  },
+
+  closeModalForce() {
+    this._modalDirty = false;
+    this._doCloseModal();
+  },
+
+  _doCloseModal() {
+    this._modalDirty = false;
     document.getElementById('modalOverlay').classList.add('hidden');
     document.getElementById('modalBody').innerHTML = '';
   },
@@ -129,8 +183,14 @@ const App = {
 
   // ── User info ─────────────────────────────────
   currentUser: null,
-  setUser(user) {
+  userDoc: null,
+  get isLimitado() {
+    if (this.currentUser?.email === 'cococateringsanisidro@gmail.com') return false;
+    return this.userDoc?.rol === 'limitado';
+  },
+  setUser(user, doc = null) {
     this.currentUser = user;
+    this.userDoc = doc;
   }
 };
 

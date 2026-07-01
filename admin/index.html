@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
-  <link rel="icon" href="../images/Logo.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="css/gestion.css">
+  <link rel="icon" href="Logo.jpeg" type="image/jpeg">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <div class="login-brand">
-      <img src="../images/Logo.jpeg" alt="Cocó Catering" class="login-logo-img" onerror="this.style.display='none'">
+      <img src="Logo.jpeg" alt="Cocó Catering" class="login-logo-img" onerror="this.style.display='none'">
       <h1>Cocó Catering</h1>
       <p>Panel de Administración</p>
     </div>
@@ -32,6 +33,9 @@
       <button type="submit" class="btn-login" id="btnLogin">
         <span id="btnLoginText">Ingresar</span>
       </button>
+      <div style="text-align:center;margin-top:12px">
+        <button type="button" id="btnForgotPass" style="background:none;border:none;color:var(--bordo);font-size:.8rem;cursor:pointer;text-decoration:underline;font-family:inherit">¿Olvidaste tu contraseña?</button>
+      </div>
     </form>
     <p class="login-note">Acceso restringido · Solo personal autorizado</p>
   </div>
@@ -42,15 +46,24 @@
 
   <!-- HEADER CON NAV HORIZONTAL -->
   <header class="admin-header" id="adminHeader">
-    <!-- Fila superior: brand + acciones -->
+    <!-- Fila superior: brand + nav + acciones -->
     <div class="admin-header-top">
       <div class="admin-header-brand">
-        <img src="../images/Logo.jpeg" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
-        <div class="admin-header-brand-text">
-          <span class="sb-name">Cocó</span>
-          <span class="sb-sub">Admin</span>
-        </div>
+        <a href="#" class="nav-item" data-section="dashboard">
+          <img src="Logo.jpeg" alt="Logo" class="topbar-logo" onerror="this.style.display='none'">
+        </a>
       </div>
+      <nav class="admin-header-nav" id="adminNav">
+        <a href="#" class="nav-item" data-section="productos">Productos</a>
+        <a href="#" class="nav-item" data-section="menus">Menús</a>
+        <a href="#" class="nav-item" data-section="presupuesto">Presupuesto</a>
+        <a href="#" class="nav-item" data-section="servicios">Servicios</a>
+        <a href="#" class="nav-item" data-section="pagos">Pagos</a>
+        <a href="#" class="nav-item" data-section="estadisticas">Estadísticas</a>
+        <a href="#" class="nav-item" data-section="gastos">Gastos</a>
+        <a href="#" class="nav-item" data-section="usuarios">Usuarios</a>
+        <a href="#" class="nav-item" data-section="gestion">Gestión</a>
+      </nav>
       <div class="admin-header-actions">
         <span id="topbarUser" class="topbar-user"></span>
         <button id="btnLogout" class="btn-logout-sidebar">Salir</button>
@@ -59,35 +72,22 @@
         </button>
       </div>
     </div>
-    <!-- Fila inferior: nav -->
-    <nav class="admin-header-nav" id="adminNav">
-      <a href="#" class="nav-item active" data-section="dashboard">📅 Inicio</a>
-      <a href="#" class="nav-item" data-section="productos">🛍️ Productos</a>
-      <a href="#" class="nav-item" data-section="menus">📋 Menús</a>
-      <a href="#" class="nav-item" data-section="presupuesto">💰 Presupuesto</a>
-      <a href="#" class="nav-item" data-section="servicios">📆 Servicios</a>
-      <a href="#" class="nav-item" data-section="pagos">💳 Pagos</a>
-      <a href="#" class="nav-item" data-section="estadisticas">📊 Estadísticas</a>
-      <a href="#" class="nav-item" data-section="gastos">📉 Gastos</a>
-      <a href="#" class="nav-item" data-section="usuarios">👥 Usuarios</a>
-      <a href="#" class="nav-item" data-section="gestion">⚙️ Gestión</a>
-    </nav>
   </header>
 
   <!-- Menú móvil desplegable -->
   <nav class="mobile-nav hidden" id="mobileNav">
-    <a href="#" class="nav-item active" data-section="dashboard">📅 Inicio</a>
-    <a href="#" class="nav-item" data-section="productos">🛍️ Productos</a>
-    <a href="#" class="nav-item" data-section="menus">📋 Menús</a>
-    <a href="#" class="nav-item" data-section="presupuesto">💰 Presupuesto</a>
-    <a href="#" class="nav-item" data-section="servicios">📆 Servicios</a>
-    <a href="#" class="nav-item" data-section="pagos">💳 Pagos</a>
-    <a href="#" class="nav-item" data-section="estadisticas">📊 Estadísticas</a>
-    <a href="#" class="nav-item" data-section="gastos">📉 Gastos</a>
-    <a href="#" class="nav-item" data-section="usuarios">👥 Usuarios</a>
-    <a href="#" class="nav-item" data-section="gestion">⚙️ Gestión</a>
+    <a href="#" class="nav-item" data-section="productos">Productos</a>
+    <a href="#" class="nav-item" data-section="menus">Menús</a>
+    <a href="#" class="nav-item" data-section="presupuesto">Presupuesto</a>
+    <a href="#" class="nav-item" data-section="servicios">Servicios</a>
+    <a href="#" class="nav-item" data-section="pagos">Pagos</a>
+    <a href="#" class="nav-item" data-section="estadisticas">Estadísticas</a>
+    <a href="#" class="nav-item" data-section="gastos">Gastos</a>
+    <a href="#" class="nav-item" data-section="usuarios">Usuarios</a>
+    <a href="#" class="nav-item" data-section="gestion">Gestión</a>
     <div class="mobile-nav-user">
       <span id="userEmail" class="sidebar-user-email"></span>
+      <button id="btnLogoutMobile" onclick="document.getElementById('btnLogout').click()" class="btn-logout-mobile">Cerrar sesión</button>
     </div>
   </nav>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -99,6 +99,17 @@
     </div>
   </main>
 
+</div>
+
+<!-- ============ CONFIRM DIALOG ============ -->
+<div id="confirmOverlay" class="confirm-overlay hidden" role="dialog" aria-modal="true">
+  <div class="confirm-box">
+    <p class="confirm-msg" id="confirmMsg"></p>
+    <div class="confirm-actions">
+      <button class="btn-secondary" id="confirmCancel">Cancelar</button>
+      <button class="btn-danger"    id="confirmOk">Salir sin guardar</button>
+    </div>
+  </div>
 </div>
 
 <!-- ============ MODAL ============ -->
@@ -121,22 +132,57 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-<!-- Chart.js -->
+<!-- Flatpickr (datepicker en español) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+  <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <!-- App modules -->
 <script src="js/firebase-init.js"></script>
-<script src="js/calendar.js"></script>
+<script src="js/gestion.js?v=20260618-servicios-web-map"></script>
+<script src="js/calendar.js?v=20260624-total-final"></script>
 <script src="js/productos.js"></script>
 <script src="js/menus.js"></script>
-<script src="js/servicios.js"></script>
-<script src="js/presupuestos.js"></script>
-<script src="js/pagos.js"></script>
+<script src="js/servicios.js?v=20260624-descuento-dietas"></script>
+<script src="js/presupuestos.js?v=20260624-descuento-dietas"></script>
+<script src="js/pagos.js?v=20260624-total-final"></script>
 <script src="js/gastos.js"></script>
-<script src="js/estadisticas.js"></script>
+<script src="js/estadisticas.js?v=20260624-total-final"></script>
 <script src="js/usuarios.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
+
+<!-- Auto-init flatpickr en español en todos los input[type=date] del DOM -->
+<script>
+(function () {
+  function initFlatpickr(el) {
+    if (el._flatpickr) return;
+    flatpickr(el, {
+      locale: 'es',
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'd/m/Y',
+      allowInput: true,
+      defaultDate: el.value || null
+    });
+  }
+  function scanDateInputs(root) {
+    (root.querySelectorAll ? root : document).querySelectorAll('input[type="date"]').forEach(initFlatpickr);
+  }
+  scanDateInputs(document);
+  const obs = new MutationObserver(muts => {
+    muts.forEach(m => m.addedNodes.forEach(n => {
+      if (n.nodeType !== 1) return;
+      if (n.matches && n.matches('input[type="date"]')) initFlatpickr(n);
+      else scanDateInputs(n);
+    }));
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 
 </body>
 </html>

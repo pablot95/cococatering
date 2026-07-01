@@ -142,6 +142,19 @@
     text-overflow: ellipsis;
 }
 
+/* En móvil: nombre ocupa fila entera, botones bajan */
+@media (max-width: 600px) {
+    .cart-item-name-row {
+        flex-wrap: wrap;
+    }
+    .cart-item-name {
+        flex: 1 1 100%;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+}
+
 .cart-item-qty {
     font-weight: 700;
     color: var(--bordo);
@@ -221,15 +234,15 @@
 }
 
 .empty-cart svg {
-    width: 100px;
-    height: 100px;
+    width: 74px;
+    height: 74px;
     stroke: #ddd;
     margin-bottom: 20px;
 }
 
 .empty-cart h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--negro);
     margin-bottom: 10px;
 }
@@ -262,10 +275,11 @@
 .summary-line {
     display: flex;
     justify-content: space-between;
-    padding: 12px 10px;
+    align-items: center;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
 }
 
 .summary-line.envio-info {
@@ -289,6 +303,47 @@
     border-top: 2px solid var(--bordo);
     margin-top: 10px;
     padding-top: 15px;
+}
+
+/* Entrega toggle (envío / retiro) */
+.summary-entrega-toggle {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+.entrega-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.entrega-opt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--bordo);
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.entrega-opt:has(input:checked) {
+    background: var(--bordo);
+    color: #fff;
+}
+
+.entrega-opt input[type="radio"] {
+    accent-color: var(--bordo);
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin: 0;
 }
 
 /* Checkout Section */
@@ -319,7 +374,7 @@
     display: inline-block;
     text-decoration: none;
     text-align: center;
-    width: 350px;
+    width: min(350px, 100%);
 }
 
 .btn-primary:hover,
@@ -657,20 +712,17 @@
     }
 
     .cart-item {
-        grid-template-columns: 80px 1fr;
-        gap: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .cart-item-image {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
 
-    .cart-item-actions {
-        grid-column: 2;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+    .cart-item-right {
+        margin-left: auto;
     }
 }
 
@@ -679,29 +731,87 @@
         padding-top: 0px;
     }
     .carrito-content {
-        padding: 10px 20px;
+        padding: 10px 12px;
         width: 100%;
         display: flex;
         flex-direction: column;
     }
     .carrito-summary {
-        padding: 20px;
+        padding: 16px;
     }
 
     .cart-item {
-        grid-template-columns: 1fr;
+        flex-wrap: wrap;
+        padding: 12px;
     }
 
     .cart-item-image {
-        width: 100%;
-        height: 200px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .cart-item-name {
+        font-size: 1rem;
+        white-space: normal;
     }
 
     .cart-item-actions {
         grid-column: 1;
     }
-    .btn-checkout {
+    .btn-checkout,
+    .btn-primary {
         width: 100%;
+    }
+
+    /* Resumen: toggle de entrega en mobile */
+    .summary-entrega-toggle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .entrega-opciones {
+        flex-direction: row;
+        gap: 8px;
+    }
+    .entrega-opt {
+        font-size: 0.82rem;
+        padding: 5px 10px;
+    }
+    .entrega-opt input[type="radio"] {
+        width: 12px;
+        height: 12px;
+    }
+    .summary-line {
+        font-size: 0.95rem;
+        padding: 8px 0;
+    }
+    .summary-line.total {
+        font-size: 1.2rem;
+    }
+
+    /* Modal solicitud en mobile */
+    .aprobacion-form-container {
+        width: 96%;
+        padding: 20px 16px 20px;
+        border-radius: 14px;
+        max-height: 95vh;
+    }
+    .aprobacion-form-container h2 {
+        font-size: 1.5rem;
+    }
+    .aprobacion-form-container .form-group input,
+    .aprobacion-form-container .form-group select,
+    .aprobacion-form-container .form-group textarea {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+    .aprobacion-form-container .entrega-opt {
+        font-size: 0.82rem;
+        padding: 5px 10px;
+    }
+    .aprobacion-form-container .entrega-opt input[type="radio"] {
+        width: 12px;
+        height: 12px;
     }
 }
 
@@ -739,6 +849,28 @@
     border-color: var(--bordo);
 }
 
+.summary-localidad input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid rgba(139, 46, 58, 0.3);
+    border-radius: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--negro);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.summary-localidad input[type="text"]::placeholder {
+    color: #999;
+}
+
+.summary-localidad input[type="text"]:focus {
+    border-color: var(--bordo);
+}
+
 /* Modal */
 .aprobacion-modal {
     position: fixed;
@@ -759,12 +891,13 @@
     position: relative;
     background: white;
     border-radius: 16px;
-    padding: 32px;
-    width: 90%;
+    padding: 28px 24px 24px;
+    width: 92%;
     max-width: 480px;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-sizing: border-box;
 }
 
 .aprobacion-close {
@@ -809,7 +942,8 @@
 }
 
 .aprobacion-form-container .form-group input,
-.aprobacion-form-container .form-group textarea {
+.aprobacion-form-container .form-group textarea,
+.aprobacion-form-container .form-group select {
     width: 100%;
     padding: 9px 12px;
     border: 1.5px solid rgba(139, 46, 58, 0.25);
@@ -824,7 +958,8 @@
 }
 
 .aprobacion-form-container .form-group input:focus,
-.aprobacion-form-container .form-group textarea:focus {
+.aprobacion-form-container .form-group textarea:focus,
+.aprobacion-form-container .form-group select:focus {
     border-color: var(--bordo);
 }
 
@@ -886,6 +1021,38 @@
     margin-top: 8px !important;
 }
 
+.solicitud-codigo-box {
+    background: #FEF9EC;
+    border: 2px solid #e8a800;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px auto;
+    max-width: 380px;
+}
+
+.solicitud-codigo-label {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0 0 6px;
+}
+
+.solicitud-codigo {
+    display: block;
+    font-family: 'Courier New', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--bordo);
+    letter-spacing: .12em;
+    margin-bottom: 10px;
+}
+
+.solicitud-codigo-aviso {
+    font-size: 0.82rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+}
+
 .btn-volver-inicio {
     display: inline-block;
     margin-top: 24px;
@@ -904,29 +1071,153 @@
 /* ===================================
    MIS PEDIDOS
    =================================== */
-.mis-pedidos-seccion {
-    background: var(--bg, #F4EDE8);
-    padding: 40px 20px;
-    border-top: 2px solid #e8c9b5;
-}
-
-.mis-pedidos-inner {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.mis-pedidos-inner h2 {
+/* ===================================
+   BOTÓN NAV: VER MIS PEDIDOS
+   =================================== */
+.btn-mis-pedidos {
+    background: var(--bordo);
+    color: white !important;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 20px;
+    cursor: pointer;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    color: var(--bordo);
-    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    transition: opacity .2s;
+    margin-left: 8px;
 }
+.btn-mis-pedidos:hover { opacity: .82; }
+
+/* Versión mobile: botón debajo de "Solicitar Pedido" en el resumen */
+.btn-mis-pedidos-mobile {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+    background: transparent;
+    color: var(--bordo);
+    border: 1.5px solid var(--bordo);
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    transition: background .2s, color .2s;
+}
+.btn-mis-pedidos-mobile:hover {
+    background: var(--bordo);
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .btn-mis-pedidos-mobile { display: block; }
+}
+
+/* ===================================
+   MODAL: MIS PEDIDOS
+   =================================== */
+.mis-pedidos-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.45);
+    padding: 16px;
+}
+
+.mis-pedidos-modal-inner {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 28px 28px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,.18);
+}
+
+.mis-pedidos-modal-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--bordo);
+    margin: 0 0 6px;
+}
+
+.mis-pedidos-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: #999;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: color .2s;
+}
+.mis-pedidos-close:hover { color: var(--bordo); }
 
 .mis-pedidos-desc {
     color: #777;
-    font-size: 0.95rem;
-    margin-bottom: 24px;
+    font-size: 0.93rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
+
+.mis-pedidos-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.mis-pedidos-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mis-pedidos-field label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--bordo);
+}
+
+.mis-pedidos-field input {
+    padding: 9px 14px;
+    border: 1.5px solid rgba(139,46,58,.28);
+    border-radius: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color .2s;
+}
+.mis-pedidos-field input:focus { border-color: var(--bordo); }
+
+.btn-buscar-pedidos {
+    background: var(--bordo);
+    color: white;
+    border: none;
+    padding: 11px 0;
+    border-radius: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity .2s;
+}
+.btn-buscar-pedidos:hover { opacity: .85; }
 
 .pedidos-loading,
 .pedidos-empty {
@@ -989,26 +1280,55 @@
 }
 
 .pedido-prods {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.pedido-prod-tag {
-    background: #f5ede8;
+.pedido-prod-item {
+    font-size: 0.9rem;
+    color: #333;
+    padding: 4px 0;
+    border-bottom: 1px solid #f0e8e3;
+}
+.pedido-prod-item:last-child { border-bottom: none; }
+
+.pedido-prod-total {
     color: var(--bordo);
     font-size: 0.82rem;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: 500;
 }
 
-.pedido-total {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 12px;
+.pedido-totales {
+    border-top: 1px solid #f0e8e3;
+    margin: 8px 0 12px;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
+
+.pedido-total-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: #555;
+    padding: 2px 0;
+}
+
+.pedido-total-line strong { color: #333; }
+
+.pedido-total-grande {
+    font-size: 1rem;
+    font-weight: 600;
+    border-top: 1px solid #e0d4cc;
+    margin-top: 4px;
+    padding-top: 6px;
+}
+
+.pedido-total-grande strong { color: var(--bordo); }
 
 .pedido-msg {
     font-size: 0.9rem;

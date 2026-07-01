@@ -21,9 +21,19 @@ const Usuarios = {
 
   async _load() {
     try {
-      const snap = await db.collection('admin_usuarios').orderBy('email').get();
-      this.usuarios = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    } catch {
+      let snap;
+      if (this.isAdmin) {
+        snap = await db.collection('admin_usuarios').get();
+      } else {
+        snap = await db.collection('admin_usuarios')
+          .where('email', '==', App.currentUser.email)
+          .get();
+      }
+      this.usuarios = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (a.email || '').localeCompare(b.email || ''));
+    } catch (e) {
+      console.error('Error cargando usuarios:', e);
       this.usuarios = [];
     }
   },
@@ -33,7 +43,7 @@ const Usuarios = {
     document.getElementById('mainContent').innerHTML = `
       <div class="section-wrapper">
         <div class="tab-header">
-          <h3>Usuarios <span class="count-badge">${this.usuarios.length}</span></h3>
+          <h3>USUARIOS <span class="count-badge">${this.usuarios.length}</span></h3>
           ${canEdit
             ? `<button class="btn-primary" id="btnAddUser">+ Añadir usuario</button>`
             : '<span style="font-size:.8rem;color:var(--text-muted)">Solo la cuenta principal puede gestionar usuarios</span>'}
@@ -50,7 +60,7 @@ const Usuarios = {
                   style="grid-template-columns:1fr 120px 120px 80px">
                   <span class="prod-nombre">${this._esc(u.email || '—')}</span>
                   <span>${this._esc(u.nombre || '—')}</span>
-                  <span><span class="badge ${u.rol === 'admin' ? 'badge-info' : 'badge-muted'}">${u.rol || 'viewer'}</span></span>
+                  <span><span class="badge ${u.rol === 'full' ? 'badge-info' : 'badge-muted'}">${u.rol === 'full' ? 'Full' : 'Limitado'}</span></span>
                   <span><span class="badge ${u.activo !== false ? 'badge-success' : 'badge-error'}">${u.activo !== false ? 'Activo' : 'Inactivo'}</span></span>
                 </div>`).join('')}
         </div>
@@ -85,9 +95,8 @@ const Usuarios = {
           <div class="field-group">
             <label>Rol</label>
             <select id="uRol">
-              <option value="viewer" ${(item?.rol || 'viewer') === 'viewer' ? 'selected' : ''}>Visualizador</option>
-              <option value="editor" ${item?.rol === 'editor' ? 'selected' : ''}>Editor</option>
-              <option value="admin"  ${item?.rol === 'admin'  ? 'selected' : ''}>Administrador</option>
+              <option value="full"     ${(item?.rol || 'limitado') === 'full'     ? 'selected' : ''}>Full</option>
+              <option value="limitado" ${(item?.rol || 'limitado') === 'limitado' ? 'selected' : ''}>Limitado</option>
             </select>
           </div>
           <div class="field-group">
@@ -107,7 +116,7 @@ const Usuarios = {
       </form>`, 'sm');
 
     document.getElementById('btnDelUser')?.addEventListener('click', async () => {
-      App.closeModal();
+      App.closeModalForce();
       await this._delete(item.id, item.email);
     });
 
@@ -129,14 +138,21 @@ const Usuarios = {
         }
         if (isEdit) {
           await db.collection('admin_usuarios').doc(item.id).update(data);
+          App.closeModalForce();
+          App.toast('Usuario actualizado', 'success');
+          await this._load();
+          this._renderList();
         } else {
+          // Crear cuenta en Firebase Auth con contraseña temporal aleatoria
+          const tempPass = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6).toUpperCase() + '!1';
           data.creadoEn = firebase.firestore.FieldValue.serverTimestamp();
+          // createUserWithEmailAndPassword cambia la sesión activa al nuevo usuario
+          const cred = await auth.createUserWithEmailAndPassword(data.email, tempPass);
           await db.collection('admin_usuarios').add(data);
+          // Cerrar sesión del nuevo usuario para volver al login
+          await auth.signOut();
+          App.toast('Usuario creado. Para ingresar, el usuario debe usar "Recuperar contraseña" con su email.', 'success');
         }
-        App.closeModal();
-        App.toast(isEdit ? 'Usuario actualizado' : 'Usuario creado', 'success');
-        await this._load();
-        this._renderList();
       } catch (err) {
         console.error(err);
         App.toast('Error al guardar', 'error');

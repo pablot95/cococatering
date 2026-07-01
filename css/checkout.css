@@ -308,6 +308,35 @@
     margin: 20px 0 12px 0;
 }
 
+/* Entrega toggle (envío / retiro) */
+.entrega-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.entrega-opt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.97rem;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1.5px solid var(--bordo);
+    transition: background 0.2s, color 0.2s;
+}
+
+.entrega-opt:has(input:checked) {
+    background: var(--bordo);
+    color: #fff;
+}
+
+.entrega-opt input[type="radio"] {
+    accent-color: var(--bordo);
+}
+
 /* Form Styles */
 .form-row {
     display: grid;
